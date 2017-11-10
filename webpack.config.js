@@ -37,7 +37,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: 'LICENSE', to: './extension' },
-      { from: './src/extension/manifest.json', to: './extension/' }
+      { from: './src/extension/manifest.json', to: './extension/' },
+      { from: './src/extension/images/icon.svg', to: './extension/images/icon.svg' }
     ]),
     new WriteFilePlugin()
   ],
