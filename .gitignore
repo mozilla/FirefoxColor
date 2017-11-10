@@ -1,0 +1,11 @@
+# File types to ignore globally
+*.DS_Store
+*.sw?
+*~
+
+package-lock.json
+npm-debug.log
+
+# Directories to ignore
+build/
+node_modules/
