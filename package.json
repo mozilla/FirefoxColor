@@ -6,11 +6,11 @@
   "scripts": {
     "start": "npm run server",
     "server": "NODE_ENV=development webpack-dev-server",
-    "build": "NODE_ENV=production webpack -p",
     "watch": "NODE_ENV=development webpack --watch --progress --colors",
-    "package": "npm run build && web-ext build --artifacts-dir=. --source-dir=build/extension",
+    "build": "NODE_ENV=production webpack -p",
+    "clean": "rm -rf addon.xpi build web-ext-artifacts",
+    "package": "npm run clean && npm run build && web-ext build --overwrite-dest --source-dir=build/extension && mv web-ext-artifacts/*.zip ./addon.xpi",
     "run": "npm run build && web-ext run --artifacts-dir=. --source-dir=build/extension",
-    "clean": "rm -rf build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {

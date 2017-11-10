@@ -7,5 +7,7 @@ package-lock.json
 npm-debug.log
 
 # Directories to ignore
+*.xpi
+*.zip
 build/
 node_modules/
