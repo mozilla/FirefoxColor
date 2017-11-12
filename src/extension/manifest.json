@@ -9,7 +9,7 @@
   ],
   "browser_action": {
     "browser_style": true,
-    "default_title": "Themr",
+    "default_title": "ThemesRFun",
     "default_icon": {
         "32": "images/icon.svg"
     }
@@ -19,16 +19,15 @@
   },
   "content_scripts": [
     {
-      "js": ["content-script.js"],
+      "js": ["contentScript.js"],
       "matches": [
         "*://localhost/*",
         "https://*.mozilla.org/"
-      ],
-      "run_at": "document_start"
+      ]
     }
   ],
   "icons": {
-    "48":"images/icon.svg",
+    "48": "images/icon.svg",
     "96": "images/icon.svg"
   },
   "version": "0.0.4",
