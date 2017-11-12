@@ -20,7 +20,7 @@ Theming demo for Firefox Quantum and beyond.
    watcher that will rebuild the browser extension with every file change.
 
 1. In Firefox 57 + open `about:debugging` and load the
-   `build/extension/mainfest.json` file.
+   `build/extension/manifest.json` file.
 
 1. Visit `http://localhost:8080` to see the web-based theme editor - changes
    should be relayed through the temporarily installed add-on and alter the
