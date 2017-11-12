@@ -14,11 +14,11 @@
     "build:extension": "NODE_ENV=production webpack -p --config webpack.extension.js",
     "clean": "rm -rf addon.xpi build web-ext-artifacts",
     "package": "npm run clean && npm run build:extension && web-ext build --overwrite-dest --source-dir=build/extension && mv web-ext-artifacts/*.zip ./addon.xpi",
-    "run": "npm run build && web-ext run --artifacts-dir=. --source-dir=build/extension",
+    "run": "npm run build:extension && web-ext run --source-dir=build/extension",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": ">=8.9.0"
+    "node": ">=6.2.0"
   },
   "author": "",
   "license": "MPL2",
