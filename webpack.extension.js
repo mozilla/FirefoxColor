@@ -39,7 +39,6 @@ function buildManifest(compilation, cb) {
     homepage,
     extensionManifest
   } = packageMeta;
-  console.log('dfooooo', packageMeta);
   const manifest = Object.assign({}, extensionManifest, {
     manifest_version: 2,
     name,
