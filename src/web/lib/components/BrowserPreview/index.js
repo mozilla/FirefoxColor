@@ -10,11 +10,11 @@ export default class BrowserPreview extends React.Component {
   render() {
     const { backgroundIndex, colors, selectedTab = 1 } = this.props;
 
-    const Button = ({ name, children }) => {
+    const Button = ({ name, colorName = 'toolbar_text' }) => {
       return (
         <span className="button">
           <ReactSVG
-            style={{ fill: colors.toolbar_text }}
+            style={{ fill: colors[colorName] }}
             path={`../../../../images/${name}-16.svg`}
           />
         </span>
@@ -69,6 +69,7 @@ export default class BrowserPreview extends React.Component {
               backgroundColor: colors.toolbar_field
             }}
           >
+            <Button name="info" colorName="toolbar_field_text" />
             <span
               className="location"
               style={{
@@ -77,6 +78,8 @@ export default class BrowserPreview extends React.Component {
             >
               example.com
             </span>
+            <Button name="more" colorName="toolbar_field_text" />
+            <Button name="bookmark" colorName="toolbar_field_text" />
           </span>
           <Button name="menu" />
         </section>

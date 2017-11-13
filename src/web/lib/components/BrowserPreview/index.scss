@@ -54,12 +54,17 @@ $grid: 4px;
     display: flex;
     
     .field {
+      font-size: $grid * 3.5;
       display: flex;
       flex-grow: 1;
       align-items: center;
       border: 1px solid #666;
       margin: $grid $grid * 1.5;
       padding: $grid;
+
+      .location {
+        flex-grow: 1;
+      }
     }
     
     .button {
