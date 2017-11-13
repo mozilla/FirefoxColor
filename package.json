@@ -1,8 +1,13 @@
 {
   "name": "themesrfun",
+  "description": "Theming demo for Firefox Quantum and beyond.",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "id": "themesrfun@mozilla.com",
+  "author": "Les Orchard <ma@lmorchard.com>",
+  "contributors": [
+    "John Gruen <john.gruen@gmail.com>"
+  ],
+  "main": "src/web/index.js",
   "scripts": {
     "start": "npm-run-all --parallel server watch:extension",
     "server": "NODE_ENV=development webpack-dev-server --config webpack.web.js",
@@ -20,7 +25,6 @@
   "engines": {
     "node": ">=6.2.0"
   },
-  "author": "",
   "license": "MPL2",
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -35,6 +39,7 @@
     "css-loader": "^0.28.7",
     "ejs": "^2.5.7",
     "extract-text-webpack-plugin": "^3.0.2",
+    "generate-asset-webpack-plugin": "^0.3.0",
     "html-webpack-plugin": "^2.30.1",
     "image-webpack-loader": "^3.4.2",
     "node-sass": "^4.6.1",
@@ -53,5 +58,39 @@
   "dependencies": {
     "react": "^16.1.0",
     "react-dom": "^16.1.0"
+  },
+  "extensionManifest": {
+    "permissions": [
+      "theme",
+      "storage"
+    ],
+    "browser_action": {
+      "browser_style": true,
+      "default_title": "ThemesRFun",
+      "default_icon": {
+          "32": "images/icon.svg"
+      }
+    },
+    "background": {
+      "scripts": ["background.js"]
+    },
+    "content_scripts": [
+      {
+        "js": ["contentScript.js"],
+        "matches": [
+          "*://localhost/*",
+          "https://*.mozilla.org/"
+        ]
+      }
+    ],
+    "icons": {
+      "48": "images/icon.svg",
+      "96": "images/icon.svg"
+    },
+    "applications": {
+      "gecko": {
+        "strict_min_version": "57.0a1"
+      }
+    }
   }
 }
