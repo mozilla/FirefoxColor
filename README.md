@@ -76,3 +76,13 @@ If you'd like to create a `userChrome.css` file you can do so by finding your
 Firefox profile, making a directory called `chrome` and in it, a file called
 `userChrome.css`. Pasting the above CSS and restarting Firefox will make your
 world nicer as you demo this webExtension.
+
+## TODO
+
+- [ ] Import theme via URL params
+
+- [ ] Export & share theme via URL params
+
+- [ ] Pre-made curated themes (via link?)
+
+- [ ] Button for firefox to install themesrfun add-on to use theme

@@ -1,11 +1,34 @@
-import { CHANNEL_NAME } from '../lib/constants';
-
-import './index.css';
-import './lib/colors.css';
-
 import $ from './lib/jquery.min.js';
+import React from 'react';
+import { render } from 'react-dom';
+
+import { CHANNEL_NAME, defaultColors } from '../lib/constants';
+
+import BrowserPreview from './lib/components/BrowserPreview';
+
+import './index.scss';
 
 const appColors = [];
+let backgroundIndex = 0;
+
+const renderBrowserPreview = () => {
+  const theme = { backgroundIndex, colors: {} };
+  defaultColors.forEach((defaultColor, idx) => {
+    const color = appColors[idx] || defaultColor;
+    let val;
+    if (typeof color.a !== 'undefined') {
+      const alpha = color.a * 0.01;
+      val = `hsla(${color.h},${color.s}%,${color.l}%, ${alpha})`;
+    } else {
+      val = `hsl(${color.h},${color.s}%,${color.l}%)`;
+    }
+    theme.colors[color.slug] = val;
+  });
+  render(
+    <BrowserPreview {...theme} />,
+    document.querySelector('.preview')
+  );
+};
 
 const postMessage = (type, index, target, value) => {
   window.postMessage({
@@ -71,6 +94,7 @@ const updateColors = (index, target, value, source) => {
   if (index === 2) {
     $('.bg-inner').css('background-color', `hsl(${color.h}, ${color.s}%, ${color.l}%)`);
   }
+  renderBrowserPreview();
 };
 
 const initColors = (colors) => {
@@ -140,6 +164,8 @@ const bindBackgrounds = () => {
     $('.bg').removeClass('active');
     $(this).addClass('active');
     postMessage('update-background', index);
+    backgroundIndex = index;
+    renderBrowserPreview();
   });
 };
 
@@ -158,12 +184,12 @@ const bindNumInputs = () => {
 };
 
 const init = (message) => {
-  console.log('FRONTEND INIT', message);
   initColors(message.colors);
   initBackgrounds(message.background, message.colors[2]);
   bindSliders();
   bindNumInputs();
   bindBackgrounds();
+  renderBrowserPreview();
 };
 
 window.addEventListener('message', event => {
@@ -175,3 +201,5 @@ window.addEventListener('message', event => {
     if (event.data.type === 'init') { init(event.data); }
   }
 });
+
+renderBrowserPreview();

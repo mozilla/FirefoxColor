@@ -18,10 +18,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  plugins: [
-    extractCSS,
-    new WriteFilePlugin()
-  ],
+  plugins: [extractCSS, new WriteFilePlugin()],
   module: {
     rules: [
       {
