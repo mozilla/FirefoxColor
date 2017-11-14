@@ -1,0 +1,31 @@
+@import '../../common.scss';
+
+.theme-colors-editor {
+  margin: $grid * 10 auto;
+  width: 75%;
+  dl {
+    position: relative;
+    margin: 0 4 * $grid;
+    dt {
+      width: 50%;
+      margin: $grid * 4;
+      cursor: pointer;
+      padding: $grid * 2;
+      border: 1px solid #aaa;
+      text-shadow: 0px 0px $grid * 2 #fff;
+      &.selected {
+        border: 2px dashed #888;
+        padding: ($grid * 2) - 1;
+      }
+    }
+    dd {
+      display: none;
+      position: absolute;
+      left: 55%;
+      top: 0;
+      &.selected {
+        display: block;
+      }
+    }
+  }
+}

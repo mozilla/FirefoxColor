@@ -22,7 +22,9 @@ module.exports = merge(common, {
       chunks: ['index']
     }),
     new CopyWebpackPlugin([
-      { from: './src/images', to: 'images' }
+      { from: './src/images', to: 'images' },
+      // FIXME: Bundling this in webpack causes it to fail, just copy for now
+      { from: './node_modules/json-url/dist/browser', to: 'vendor' }
     ])
   ]
 });

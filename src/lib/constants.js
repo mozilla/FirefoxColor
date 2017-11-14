@@ -1,48 +1,45 @@
 export const CHANNEL_NAME = 'ThemesRFun';
 
-export const defaultColors = [
-  {
-    slug: 'toolbar',
-    name: 'Toolbar Color',
+export const colorLabels = {
+  toolbar: 'Toolbar Color',
+  toolbar_text: 'Toolbar Text Color',
+  accentcolor: 'Tab Bar Background Color',
+  textcolor: 'Background Tab Text Color',
+  toolbar_field: 'Toolbar Input Background Color',
+  toolbar_field_text: 'Toolbar Input Text Color'
+};
+
+export const defaultColors = {
+  toolbar: {
     h: 180,
     s: 44,
     l: 96,
     a: 100
   },
-  {
-    slug: 'toolbar_text',
-    name: 'Toolbar Text Color',
+  toolbar_text: {
     h: 174,
     s: 42,
     l: 65,
   },
-  {
-    slug: 'accentcolor',
-    name: 'Tab Bar Background Color',
+  accentcolor: {
     h: 360,
     s: 100,
     l: 100
   },
-  {
-    slug: 'textcolor',
-    name: 'Background Tab Text Color',
+  textcolor: {
     h: 174,
     s: 42,
     l: 65
   },
-  {
-    slug: 'toolbar_field',
-    name: 'Toolbar Input Background Color',
+  toolbar_field: {
     h: 360,
     s: 100,
     l: 100,
     a: 100
   },
-  {
-    slug: 'toolbar_field_text',
-    name: 'Toolbar Input Text Color',
+  toolbar_field_text: {
     h: 174,
     s: 42,
     l: 65
   },
-];
+};

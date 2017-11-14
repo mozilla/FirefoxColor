@@ -1,52 +1,72 @@
+import { applyMiddleware } from 'redux';
+
 import { defaultColors } from '../lib/constants';
+import { createAppStore, selectors, makeActions } from '../lib/store';
+import { colorToCSS } from '../lib/utils';
 
-const colors = [];
-let background = 0;
+const actions = makeActions({ context: 'extension' });
 
-const theme = {
-  images: {
-    headerURL: 'images/bg-0.png',
-    additional_backgrounds: ['bg-0.png']
-  },
-  properties: {
-    additional_backgrounds_alignment: ['top'],
-    additional_backgrounds_tiling: ['repeat']
-  },
-  colors: {}
-};
+const ports = [];
 
-const updateTheme = () => {
-  for (const color of colors) {
-    if (typeof color.a === 'undefined') {
-      theme.colors[color.slug] = `hsla(${color.h},${color.s}%,${color.l}% )`;
-    } else {
-      theme.colors[color.slug] = `hsla(${color.h},${color.s}%,${color.l}%, ${color.a * 0.01})`;
-    }
+const relayToContentMiddleware = store => next => action => {
+  const result = next(action);
+  // Only relay actions that came from our extension context.
+  if (action.meta.context === 'extension') {
+    window.postMessage(
+      {
+        channel: `${CHANNEL_NAME}-background`,
+        type: 'storeAction',
+        action
+      },
+      '*'
+    );
   }
-  theme.images.additional_backgrounds[0] = `images/bg-${background}.png`;
+  return result;
 };
 
-const setTheme = () => {
-  browser.theme.update(theme);
-};
+const store = createAppStore(
+  {},
+  applyMiddleware(relayToContentMiddleware)
+);
 
-const connected = (port) => {
-  port.postMessage({ type: 'init', colors, background });
-  port.onMessage.addListener((message) => {
-    if (message.type === 'update-color') {
-      const { index, target, value } = message;
-      colors[index][target] = value;
-      browser.storage.local.set({ colors });
-    } else if (message.type === 'update-background') {
-      const { index } = message;
-      background = index;
-      browser.storage.local.set({ background });
+store.subscribe(() => {
+  const state = store.getState();
+
+  const newTheme = {
+    images: {
+      headerURL: 'images/bg-0.png',
+      additional_backgrounds: ['bg-0.png']
+    },
+    properties: {
+      additional_backgrounds_alignment: ['top'],
+      additional_backgrounds_tiling: ['repeat']
+    },
+    colors: {}
+  };
+
+  const theme = selectors.theme(state);
+  for (let key in theme.colors) {
+    newTheme.colors[key] = colorToCSS(theme.colors[key]);
+  }
+
+  browser.theme.update(newTheme);
+});
+
+browser.runtime.onConnect.addListener(port => {
+  ports.push(port);
+  // port.postMessage({ type: 'init', colors, background });
+  port.onMessage.addListener(message => {
+    if (message.type === 'storeAction') {
+      const action = message.action;
+      if (action.meta.context === 'web') {
+        // Only accept related actions from web context.
+        store.dispatch(action);
+      }
     }
-    updateTheme();
-    setTheme();
   });
-};
+});
 
+/*
 const getThemeFromStorage = browser.storage.local.get();
 
 getThemeFromStorage.then((store) => {
@@ -63,5 +83,4 @@ getThemeFromStorage.then((store) => {
   updateTheme();
   setTheme();
 });
-
-browser.runtime.onConnect.addListener(connected);
+*/

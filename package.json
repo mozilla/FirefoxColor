@@ -56,8 +56,15 @@
     "write-file-webpack-plugin": "^4.2.0"
   },
   "dependencies": {
+    "json-url": "^2.3.1",
+    "query-string": "^5.0.1",
     "react": "^16.1.0",
-    "react-dom": "^16.1.0"
+    "react-color": "^2.13.8",
+    "react-dom": "^16.1.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-actions": "^2.2.1",
+    "redux-devtools-extension": "^2.13.2"
   },
   "extensionManifest": {
     "permissions": [
@@ -68,15 +75,19 @@
       "browser_style": true,
       "default_title": "ThemesRFun",
       "default_icon": {
-          "32": "images/icon.svg"
+        "32": "images/icon.svg"
       }
     },
     "background": {
-      "scripts": ["background.js"]
+      "scripts": [
+        "background.js"
+      ]
     },
     "content_scripts": [
       {
-        "js": ["contentScript.js"],
+        "js": [
+          "contentScript.js"
+        ],
         "matches": [
           "*://localhost/*",
           "https://*.mozilla.org/"

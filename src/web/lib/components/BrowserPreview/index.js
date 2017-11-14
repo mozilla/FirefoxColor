@@ -2,13 +2,23 @@ import React from 'react';
 import ReactSVG from 'react-svg';
 import classnames from 'classnames';
 
+import { defaultColors } from '../../../../lib/constants';
+import { colorToCSS } from '../../../../lib/utils';
+
 import './index.scss';
 
 const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
 
 export default class BrowserPreview extends React.Component {
   render() {
-    const { backgroundIndex, colors, selectedTab = 1 } = this.props;
+    const { theme, selectedTab = 1 } = this.props;
+
+    const backgroundIndex = 0;
+
+    const colors = {};
+    for (let key in theme.colors) {
+      colors[key] = colorToCSS(theme.colors[key]);
+    }
 
     const Button = ({ name, colorName = 'toolbar_text' }) => {
       return (
