@@ -1,8 +1,7 @@
 {
   "name": "themesrfun",
   "description": "Theming demo for Firefox Quantum and beyond.",
-  "version": "0.0.1",
-  "id": "themesrfun@mozilla.com",
+  "version": "0.0.3",
   "author": "Les Orchard <ma@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"
@@ -17,8 +16,11 @@
     "build": "npm-run-all --parallel build:*",
     "build:web": "NODE_ENV=production webpack -p --config webpack.web.js",
     "build:extension": "NODE_ENV=production webpack -p --config webpack.extension.js",
-    "clean": "rm -rf addon.xpi build web-ext-artifacts",
-    "package": "npm run clean && npm run build:extension && web-ext build --overwrite-dest --source-dir=build/extension && mv web-ext-artifacts/*.zip ./addon.xpi",
+    "clean": "npm-run-all clean:*",
+    "clean:web": "rm -rf build/web",
+    "clean:extension": "rm -rf addon.xpi build/extension web-ext-artifacts",
+    "package": "npm run clean:extension && npm run build:extension && web-ext build --overwrite-dest --source-dir=build/extension && mv web-ext-artifacts/*.zip ./addon.xpi",
+    "sign": "npm run clean:extension && npm run build:extension && web-ext sign --source-dir=build/extension && mv web-ext-artifacts/*.xpi ./addon.xpi",
     "run": "npm run build:extension && web-ext run --source-dir=build/extension",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -102,6 +104,7 @@
     },
     "applications": {
       "gecko": {
+        "id": "themesrfun@mozilla.com",
         "strict_min_version": "57.0a1"
       }
     }

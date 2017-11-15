@@ -23,7 +23,8 @@ module.exports = merge(common, {
       fn: buildManifest
     }),
     new CopyWebpackPlugin([
-      { from: 'LICENSE' }
+      { from: 'LICENSE' },
+      { from: 'src/images/icon.svg', to: 'images/' }
     ])
   ]
 });
@@ -46,7 +47,7 @@ function buildManifest(compilation, cb) {
     version,
     description,
     author,
-    homepage_url: homepage
+    homepage_url: homepage,
   });
   return cb(null, JSON.stringify(manifest, null, '  '));
 }
