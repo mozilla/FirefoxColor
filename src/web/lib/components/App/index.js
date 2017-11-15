@@ -24,7 +24,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export const App = ({ theme, hasExtension, selectedColor, setColor, setSelectedColor }) =>
   <div>
     {!hasExtension && <ExtensionInstallButton />}
-    <BrowserPreview {...{ theme }} />
+    <BrowserPreview {...{ theme, selectedColor, setSelectedColor }} />
     <ThemeColorsEditor
       {...{ theme, selectedColor, setColor, setSelectedColor }}
     />

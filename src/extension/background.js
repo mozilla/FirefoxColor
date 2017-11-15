@@ -8,13 +8,13 @@ const actions = makeActions({ context: 'extension' });
 
 const ports = new Set();
 
-const relayToContentMiddleware = store => next => action => {
-  const result = next(action);
+const relayToContentMiddleware = ({ getState }) => next => action => {
+  const returnValue = next(action);
   if (action.meta.context === 'extension') {
     // Only relay actions that came from our extension context.
     ports.forEach(port => port.postMessage({ type: 'storeAction', action }));
   }
-  return result;
+  return returnValue;
 };
 
 const updateStoreMiddleware = ({ getState }) => next => action => {
@@ -27,12 +27,9 @@ const updateStoreMiddleware = ({ getState }) => next => action => {
   return returnValue;
 };
 
-const store = createAppStore(
-  {},
-  applyMiddleware(relayToContentMiddleware, updateStoreMiddleware)
-);
+const updateBrowserThemeMiddleware = ({ getState }) => next => action => {
+  const returnValue = next(action);
 
-store.subscribe(() => {
   const state = store.getState();
 
   const newTheme = {
@@ -53,7 +50,18 @@ store.subscribe(() => {
   }
 
   browser.theme.update(newTheme);
-});
+
+  return returnValue;
+};
+
+const store = createAppStore(
+  {},
+  applyMiddleware(
+    relayToContentMiddleware,
+    updateStoreMiddleware,
+    updateBrowserThemeMiddleware
+  )
+);
 
 const loadTheme = () => {
   browser.storage.local.get('theme').then(({ theme }) => {

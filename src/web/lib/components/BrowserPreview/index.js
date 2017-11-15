@@ -11,18 +11,33 @@ const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
 
 export default class BrowserPreview extends React.Component {
   render() {
-    const { theme, selectedTab = 1 } = this.props;
+    const {
+      theme,
+      selectedColor,
+      setSelectedColor,
+      selectedTab = 1
+    } = this.props;
 
     const backgroundIndex = 0;
+
+    const clickSelectColor = name => e => {
+      setSelectedColor({ name });
+      e.stopPropagation();
+      return false;
+    };
 
     const colors = {};
     for (let key in theme.colors) {
       colors[key] = colorToCSS(theme.colors[key]);
     }
 
-    const Button = ({ name, colorName = 'toolbar_text' }) => {
+    const Button = ({
+      name,
+      onClick = clickSelectColor('toolbar_text'),
+      colorName = 'toolbar_text'
+    }) => {
       return (
-        <span className="button">
+        <span className="button" onClick={onClick}>
           <ReactSVG
             style={{ fill: colors[colorName] }}
             path={`../../../../images/${name}-16.svg`}
@@ -34,6 +49,7 @@ export default class BrowserPreview extends React.Component {
     const Tab = ({ text, selected }) =>
       <li
         className={classnames('tab', { selected })}
+        onClick={clickSelectColor(selected ? 'toolbar' : 'accentcolor')}
         style={{
           color: selected ? colors.toolbar_text : colors.textcolor,
           backgroundColor: selected ? colors.toolbar : colors.accentcolor
@@ -41,6 +57,7 @@ export default class BrowserPreview extends React.Component {
       >
         <p
           className="title"
+          onClick={clickSelectColor(selected ? 'toolbar_text' : 'textcolor')}
           style={{
             color: selected ? colors.toolbar_text : colors.textcolor
           }}
@@ -54,6 +71,7 @@ export default class BrowserPreview extends React.Component {
       <div className="doll">
         <div
           className="background"
+          onClick={clickSelectColor('accentcolor')}
           style={{
             backgroundImage: `url(${bgImages(`./bg-${backgroundIndex}.png`)})`
           }}
@@ -65,6 +83,7 @@ export default class BrowserPreview extends React.Component {
         </ul>
         <section
           className="toolbar"
+          onClick={clickSelectColor('toolbar')}
           style={{ backgroundColor: colors.toolbar }}
         >
           <Button name="back" />
@@ -74,22 +93,36 @@ export default class BrowserPreview extends React.Component {
           <Button name="sidebar" />
           <span
             className="field"
+            onClick={clickSelectColor('toolbar_field')}
             style={{
               color: colors.toolbar_field_text,
               backgroundColor: colors.toolbar_field
             }}
           >
-            <Button name="info" colorName="toolbar_field_text" />
+            <Button
+              name="info"
+              onClick={clickSelectColor('toolbar_field_text')}
+              colorName="toolbar_field_text"
+            />
             <span
               className="location"
+              onClick={clickSelectColor('toolbar_field_text')}
               style={{
                 color: colors.toolbar_field_text
               }}
             >
               example.com
             </span>
-            <Button name="more" colorName="toolbar_field_text" />
-            <Button name="bookmark" colorName="toolbar_field_text" />
+            <Button
+              name="more"
+              onClick={clickSelectColor('toolbar_field_text')}
+              colorName="toolbar_field_text"
+            />
+            <Button
+              name="bookmark"
+              onClick={clickSelectColor('toolbar_field_text')}
+              colorName="toolbar_field_text"
+            />
           </span>
           <Button name="menu" />
         </section>

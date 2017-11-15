@@ -13,9 +13,14 @@
       padding: $grid * 2;
       border: 1px solid #aaa;
       text-shadow: 0px 0px $grid * 2 #fff;
-      &.selected {
-        border: 2px dashed #888;
-        padding: ($grid * 2) - 1;
+      &::before {
+        content: "\26AA";
+        font-size: $grid * 4;
+        line-height: $grid * 4;
+        padding-right: $grid * 2;
+      }
+      &.selected::before {
+        content: "\26AB";
       }
     }
     dd {
