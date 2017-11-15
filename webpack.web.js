@@ -11,6 +11,9 @@ module.exports = merge(common, {
   entry: {
     index: './src/web/index'
   },
+  devServer: {
+    contentBase: path.join(__dirname, 'build/web')
+  },
   output: {
     path: path.resolve(__dirname, 'build/web'),
     filename: '[name].js'

@@ -95,6 +95,7 @@ browser.runtime.onConnect.addListener(port => {
       port.postMessage({ type: 'pong' });
     }
   });
+  port.postMessage({ type: 'hello' });
 });
 
 loadTheme();

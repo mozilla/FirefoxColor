@@ -11,6 +11,10 @@ import App from './lib/components/App';
 
 import './index.scss';
 
+const PING_PERIOD = 1000;
+const MAX_OUTSTANDING_PINGS = 2;
+let outstandingPings = 0;
+
 const jsonCodec = JsonUrl('lzma');
 
 const actions = makeActions({ context: 'web' });
@@ -62,14 +66,19 @@ window.addEventListener('popstate', ({ state: { theme } }) => {
   store.dispatch(action);
 });
 
+
 window.addEventListener('message', ({ source, data: message }) => {
   if (
     source === window &&
     message &&
     message.channel === `${CHANNEL_NAME}-web`
   ) {
-    if (message.type === 'pong') {
-      store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
+    if (message.type === 'hello' || message.type === 'pong') {
+      outstandingPings = 0;
+      const hasExtension = selectors.hasExtension(store.getState()); 
+      if (!hasExtension) {
+        store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
+      }
     }
     if (message.type === 'storeAction') {
       const action = message.action;
@@ -81,14 +90,25 @@ window.addEventListener('message', ({ source, data: message }) => {
   }
 });
 
+// Periodicelly ping the extension to detect install / uninstall, since we have
+// no access to mozAddonManager.
+setInterval(() => {
+  postMessage('ping');
+  const hasExtension = selectors.hasExtension(store.getState()); 
+  if (hasExtension) {
+    outstandingPings++;
+    if (outstandingPings >= MAX_OUTSTANDING_PINGS) {
+      store.dispatch(actions.ui.setHasExtension({ hasExtension: false }));
+    }
+  }
+}, PING_PERIOD);
+
 render(
   <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById('root')
 );
-
-postMessage('ping');
 
 const params = queryString.parse(location.search);
 if (params.theme) {

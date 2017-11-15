@@ -11,9 +11,6 @@ const extractCSS = new ExtractTextPlugin({
 });
 
 module.exports = {
-  devServer: {
-    contentBase: 'build'
-  },
   devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx']

@@ -3,7 +3,8 @@
 .extension-install-button {
   text-align: center;
 
-  button {
+  .installButton {
+    border: 1px solid #333;
     padding: $grid * 2;
   }
 }
