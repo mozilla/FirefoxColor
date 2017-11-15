@@ -5,79 +5,96 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import queryString from 'query-string';
 
-import { CHANNEL_NAME, defaultColors } from '../lib/constants';
-import { createAppStore, selectors } from '../lib/store';
+import { CHANNEL_NAME } from '../lib/constants';
+import { createAppStore, makeActions, selectors } from '../lib/store';
 import App from './lib/components/App';
 
 import './index.scss';
 
 const jsonCodec = JsonUrl('lzma');
 
-const params = queryString.parse(location.search);
-if (!params.state) {
-  init();
-} else {
-  jsonCodec
-    .decompress(params.state)
-    .then(state => {
-      const { theme, ui } = state;
-      init({ theme, ui });
-    })
-    .catch(() => init());
-}
+const actions = makeActions({ context: 'web' });
 
-window.addEventListener('message', event => {
+const postMessage = (type, data = {}) =>
+  window.postMessage(
+    { ...data, type, channel: `${CHANNEL_NAME}-extension` },
+    '*'
+  );
+
+const composeEnhancers = composeWithDevTools({});
+
+const relayToExtensionMiddleware = store => next => action => {
+  const returnValue = next(action);
+  if (action.meta.context === 'web') {
+    // Only relay actions that came from our web context.
+    postMessage('storeAction', { action });
+  }
+  return returnValue;
+};
+
+const updateHistoryMiddleware = ({ getState }) => next => action => {
+  const returnValue = next(action);
+  if (!action.meta.popstate) {
+    // Only update history if this action wasn't from popstate event.
+    const theme = selectors.theme(getState());
+    jsonCodec.compress(theme).then(value => {
+      const { protocol, host, pathname } = window.location;
+      window.history.pushState(
+        { theme },
+        '',
+        `${protocol}//${host}${pathname}?theme=${value}`
+      );
+    });
+  }
+  return returnValue;
+};
+
+const store = createAppStore(
+  {},
+  composeEnhancers(
+    applyMiddleware(relayToExtensionMiddleware, updateHistoryMiddleware)
+  )
+);
+
+window.addEventListener('popstate', ({ state: { theme } }) => {
+  const action = actions.theme.setTheme({ theme });
+  action.meta.popstate = true;
+  store.dispatch(action);
+});
+
+window.addEventListener('message', ({ source, data: message }) => {
   if (
-    event.source === window &&
-    event.data &&
-    event.data.channel === `${CHANNEL_NAME}-web`
+    source === window &&
+    message &&
+    message.channel === `${CHANNEL_NAME}-web`
   ) {
-    if (event.data.type === 'init') {
+    if (message.type === 'pong') {
+      store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
+    }
+    if (message.type === 'storeAction') {
+      const action = message.action;
+      if (action.meta.context === 'extension') {
+        // Only accept relayed actions from extension context
+        store.dispatch(action);
+      }
     }
   }
 });
 
-const relayToExtensionMiddleware = store => next => action => {
-  const result = next(action);
-  // Only relay actions that came from our web context.
-  if (action.meta.context === 'web') {
-    window.postMessage(
-      {
-        channel: `${CHANNEL_NAME}-background`,
-        type: 'storeAction',
-        action
-      },
-      '*'
-    );
-  }
-  return result;
-};
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
 
-function init(initialState) {
-  const composeEnhancers = composeWithDevTools({
+postMessage('ping');
+
+const params = queryString.parse(location.search);
+if (params.theme) {
+  jsonCodec.decompress(params.theme).then(theme => {
+    store.dispatch(actions.theme.setTheme({ theme }));
   });
-
-  const store = createAppStore(
-    initialState,
-    composeEnhancers(applyMiddleware(relayToExtensionMiddleware))
-  );
-
-  store.subscribe(() => {
-    const state = store.getState();
-    jsonCodec.compress(state).then(value => {
-      const { protocol, host, pathname } = window.location;
-      window.history.replaceState(
-        state,
-        '',
-        `${protocol}//${host}${pathname}?state=${value}`
-      );
-    });
-  });
-
-  render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById('root')
-  );
+} else {
+  postMessage('loadTheme');
 }

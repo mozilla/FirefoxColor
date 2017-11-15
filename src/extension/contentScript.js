@@ -18,7 +18,7 @@ window.addEventListener('message', event => {
   if (
     event.source === window &&
     event.data &&
-    event.data.channel === `${CHANNEL_NAME}-background`
+    event.data.channel === `${CHANNEL_NAME}-extension`
   ) {
     port.postMessage({
       ...event.data,

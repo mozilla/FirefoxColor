@@ -5,11 +5,13 @@ import { createAppStore, makeActions, selectors } from '../../../../lib/store';
 
 import BrowserPreview from '../BrowserPreview';
 import ThemeColorsEditor from '../ThemeColorsEditor';
+import ExtensionInstallButton from '../ExtensionInstallButton';
 
 const actions = makeActions({ context: 'web' });
 
 const mapStateToProps = (state, ownProps) => ({
   theme: selectors.theme(state),
+  hasExtension: selectors.hasExtension(state),
   selectedColor: selectors.selectedColor(state)
 });
 
@@ -19,8 +21,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args))
 });
 
-export const App = ({ theme, selectedColor, setColor, setSelectedColor }) =>
+export const App = ({ theme, hasExtension, selectedColor, setColor, setSelectedColor }) =>
   <div>
+    {!hasExtension && <ExtensionInstallButton />}
     <BrowserPreview {...{ theme }} />
     <ThemeColorsEditor
       {...{ theme, selectedColor, setColor, setSelectedColor }}

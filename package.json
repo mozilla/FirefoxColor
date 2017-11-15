@@ -91,7 +91,8 @@
         "matches": [
           "*://localhost/*",
           "https://*.mozilla.org/"
-        ]
+        ],
+        "run_at": "document_start"
       }
     ],
     "icons": {

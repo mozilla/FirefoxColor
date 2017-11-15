@@ -1,0 +1,9 @@
+@import '../../common.scss';
+
+.extension-install-button {
+  text-align: center;
+
+  button {
+    padding: $grid * 2;
+  }
+}

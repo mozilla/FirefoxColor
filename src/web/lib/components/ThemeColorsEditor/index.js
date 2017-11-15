@@ -37,7 +37,7 @@ export default class ThemeColorsEditor extends React.Component {
               >
                 <SketchPicker
                   color={color}
-                  onChange={({ hsl: { h, s, l, a } }) =>
+                  onChangeComplete={({ hsl: { h, s, l, a } }) =>
                     setColor({ name, h, s: s * 100, l: l * 100, a: a * 100 })}
                 />
               </dd>
