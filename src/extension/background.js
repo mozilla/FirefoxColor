@@ -4,6 +4,8 @@ import { CHANNEL_NAME } from '../lib/constants';
 import { createAppStore, selectors, makeActions } from '../lib/store';
 import { colorToCSS } from '../lib/utils';
 
+const bgImages = require.context('../images/', false, /bg-.*\.png/);
+
 const actions = makeActions({ context: 'extension' });
 
 const ports = new Set();
@@ -45,9 +47,16 @@ const updateBrowserThemeMiddleware = ({ getState }) => next => action => {
   };
 
   const theme = selectors.theme(state);
+
   for (let key in theme.colors) {
     newTheme.colors[key] = colorToCSS(theme.colors[key]);
   }
+
+  newTheme.images.additional_backgrounds[0] = newTheme.images.headerURL = bgImages
+    .keys()
+    .includes(theme.images.headerURL)
+    ? bgImages(theme.images.headerURL)
+    : '';
 
   browser.theme.update(newTheme);
 

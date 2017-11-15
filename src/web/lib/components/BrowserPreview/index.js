@@ -9,127 +9,126 @@ import './index.scss';
 
 const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
 
-export default class BrowserPreview extends React.Component {
-  render() {
-    const {
-      theme,
-      selectedColor,
-      setSelectedColor,
-      selectedTab = 1
-    } = this.props;
+export const BrowserPreview = ({
+  theme,
+  selectedColor,
+  setSelectedColor,
+  selectedTab = 1
+}) => {
+  const clickSelectColor = name => e => {
+    setSelectedColor({ name });
+    e.stopPropagation();
+    return false;
+  };
 
-    const backgroundIndex = 0;
+  const colors = {};
+  for (let key in theme.colors) {
+    colors[key] = colorToCSS(theme.colors[key]);
+  }
 
-    const clickSelectColor = name => e => {
-      setSelectedColor({ name });
-      e.stopPropagation();
-      return false;
-    };
+  const Button = ({
+    name,
+    onClick = clickSelectColor('toolbar_text'),
+    colorName = 'toolbar_text'
+  }) =>
+    <span className="button" onClick={onClick}>
+      <ReactSVG
+        style={{ fill: colors[colorName] }}
+        path={`../../../../images/${name}-16.svg`}
+      />
+    </span>;
 
-    const colors = {};
-    for (let key in theme.colors) {
-      colors[key] = colorToCSS(theme.colors[key]);
-    }
-
-    const Button = ({
-      name,
-      onClick = clickSelectColor('toolbar_text'),
-      colorName = 'toolbar_text'
-    }) => {
-      return (
-        <span className="button" onClick={onClick}>
-          <ReactSVG
-            style={{ fill: colors[colorName] }}
-            path={`../../../../images/${name}-16.svg`}
-          />
-        </span>
-      );
-    };
-
-    const Tab = ({ text, selected }) =>
-      <li
-        className={classnames('tab', { selected })}
-        onClick={clickSelectColor(selected ? 'toolbar' : 'accentcolor')}
+  const Tab = ({ text, selected }) =>
+    <li
+      className={classnames('tab', { selected })}
+      onClick={clickSelectColor(selected ? 'toolbar' : 'accentcolor')}
+      style={{
+        color: selected ? colors.toolbar_text : colors.textcolor,
+        backgroundColor: selected ? colors.toolbar : null
+      }}
+    >
+      <p
+        className="title"
+        onClick={clickSelectColor(selected ? 'toolbar_text' : 'textcolor')}
         style={{
-          color: selected ? colors.toolbar_text : colors.textcolor,
-          backgroundColor: selected ? colors.toolbar : colors.accentcolor
+          color: selected ? colors.toolbar_text : colors.textcolor
         }}
       >
-        <p
-          className="title"
-          onClick={clickSelectColor(selected ? 'toolbar_text' : 'textcolor')}
-          style={{
-            color: selected ? colors.toolbar_text : colors.textcolor
-          }}
-        >
-          {text}
-        </p>
-        <Button name="close" />
-      </li>;
+        {text}
+      </p>
+      <Button name="close" />
+    </li>;
 
-    return (
-      <div className="doll">
-        <div
-          className="background"
-          onClick={clickSelectColor('accentcolor')}
+  const headerBackgroundImage = bgImages
+    .keys()
+    .includes(theme.images.headerURL)
+    ? `url(${bgImages(theme.images.headerURL)})`
+    : '';
+
+  return (
+    <div className="doll">
+      <ul
+        className="tabbar"
+        onClick={clickSelectColor('accentcolor')}
+        style={{
+          backgroundColor: colors.accentcolor,
+          backgroundImage: headerBackgroundImage
+        }}
+      >
+        {['One', 'Two', 'Three', 'Four'].map((text, key) =>
+          <Tab {...{ key, text, colors, selected: key === selectedTab }} />
+        )}
+      </ul>
+      <section
+        className="toolbar"
+        onClick={clickSelectColor('toolbar')}
+        style={{ backgroundColor: colors.toolbar }}
+      >
+        <Button name="back" />
+        <Button name="forward" />
+        <Button name="refresh" />
+        <Button name="home" />
+        <Button name="sidebar" />
+        <span
+          className="field"
+          onClick={clickSelectColor('toolbar_field')}
           style={{
-            backgroundImage: `url(${bgImages(`./bg-${backgroundIndex}.png`)})`
+            color: colors.toolbar_field_text,
+            backgroundColor: colors.toolbar_field
           }}
-        />
-        <ul className="tabbar" style={{ backgroundColor: colors.accentcolor }}>
-          {['One', 'Two', 'Three', 'Four'].map((text, key) =>
-            <Tab {...{ key, text, colors, selected: key === selectedTab }} />
-          )}
-        </ul>
-        <section
-          className="toolbar"
-          onClick={clickSelectColor('toolbar')}
-          style={{ backgroundColor: colors.toolbar }}
         >
-          <Button name="back" />
-          <Button name="forward" />
-          <Button name="refresh" />
-          <Button name="home" />
-          <Button name="sidebar" />
+          <Button
+            name="info"
+            onClick={clickSelectColor('toolbar_field_text')}
+            colorName="toolbar_field_text"
+          />
           <span
-            className="field"
-            onClick={clickSelectColor('toolbar_field')}
+            className="location"
+            onClick={clickSelectColor('toolbar_field_text')}
             style={{
-              color: colors.toolbar_field_text,
-              backgroundColor: colors.toolbar_field
+              color: colors.toolbar_field_text
             }}
           >
-            <Button
-              name="info"
-              onClick={clickSelectColor('toolbar_field_text')}
-              colorName="toolbar_field_text"
-            />
-            <span
-              className="location"
-              onClick={clickSelectColor('toolbar_field_text')}
-              style={{
-                color: colors.toolbar_field_text
-              }}
-            >
-              example.com
-            </span>
-            <Button
-              name="more"
-              onClick={clickSelectColor('toolbar_field_text')}
-              colorName="toolbar_field_text"
-            />
-            <Button
-              name="bookmark"
-              onClick={clickSelectColor('toolbar_field_text')}
-              colorName="toolbar_field_text"
-            />
+            example.com
           </span>
-          <Button name="menu" />
-        </section>
-        <section className="content">
-          <p>Hello, world!</p>
-        </section>
-      </div>
-    );
-  }
-}
+          <Button
+            name="more"
+            onClick={clickSelectColor('toolbar_field_text')}
+            colorName="toolbar_field_text"
+          />
+          <Button
+            name="bookmark"
+            onClick={clickSelectColor('toolbar_field_text')}
+            colorName="toolbar_field_text"
+          />
+        </span>
+        <Button name="menu" />
+      </section>
+      <section className="content">
+        <p>Hello, world!</p>
+      </section>
+    </div>
+  );
+};
+
+export default BrowserPreview;

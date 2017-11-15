@@ -23,9 +23,7 @@ module.exports = merge(common, {
       fn: buildManifest
     }),
     new CopyWebpackPlugin([
-      { from: 'LICENSE' },
-      // { from: './src/extension/manifest.json' },
-      { from: './src/images', to: 'images' }
+      { from: 'LICENSE' }
     ])
   ]
 });

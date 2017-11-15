@@ -66,7 +66,7 @@ export const reducers = {
 
       SET_BACKGROUND: (state, { payload: { url } }) => {
         const newImages = { ...state.images };
-        newImage.headerURL = url;
+        newImages.headerURL = url;
         return { ...state, images: newImages };
       }
     },

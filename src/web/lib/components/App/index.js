@@ -5,6 +5,7 @@ import { createAppStore, makeActions, selectors } from '../../../../lib/store';
 
 import BrowserPreview from '../BrowserPreview';
 import ThemeColorsEditor from '../ThemeColorsEditor';
+import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
 import ExtensionInstallButton from '../ExtensionInstallButton';
 
 const actions = makeActions({ context: 'web' });
@@ -21,16 +22,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args))
 });
 
-export const App = ({ theme, hasExtension, selectedColor, setColor, setSelectedColor }) =>
-  <div>
+export const App = ({
+  theme,
+  hasExtension,
+  selectedColor,
+  setColor,
+  setSelectedColor,
+  setBackground
+}) =>
+  <div className="app">
     {!hasExtension && <ExtensionInstallButton />}
     <BrowserPreview {...{ theme, selectedColor, setSelectedColor }} />
     <ThemeColorsEditor
       {...{ theme, selectedColor, setColor, setSelectedColor }}
     />
-    <div className="themr">
-      <div className="backgrounds" />
-    </div>
+    <ThemeBackgroundPicker {...{ theme, setBackground }} />
   </div>;
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

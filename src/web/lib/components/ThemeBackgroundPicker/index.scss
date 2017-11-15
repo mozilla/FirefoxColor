@@ -1,0 +1,33 @@
+@import '../../common.scss';
+
+.theme-background-picker {
+
+  .backgrounds {
+    margin: $grid * 10 auto;
+    width: 75%;
+    display: grid;
+    grid-auto-rows: 120px;
+    grid-gap: 20px;
+    grid-template-columns: repeat(5, 120px);
+    justify-content: center;
+  }
+
+  .bg {
+    background: white;
+    border: 1px solid transparent;
+    box-shadow: var(--unit-box-shadow-1), var(--unit-box-shadow-2);;
+    cursor: pointer;
+    display: flex;
+    padding: 10px;
+  }
+
+  .bg-inner {
+    flex: 1;
+    border-radius: 3px;
+  }
+
+  .bg.active {
+    border: 1px solid var(--teal-60);
+  }
+
+}
