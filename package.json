@@ -67,6 +67,7 @@
     "redux-devtools-extension": "^2.13.2"
   },
   "extensionManifest": {
+    "name": "ThemesRFun",
     "permissions": [
       "theme",
       "storage"

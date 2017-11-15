@@ -33,6 +33,7 @@ module.exports = merge(common, {
 function buildManifest(compilation, cb) {
   const {
     name,
+    displayName,
     version,
     description,
     author,
@@ -41,7 +42,9 @@ function buildManifest(compilation, cb) {
   } = packageMeta;
   const manifest = Object.assign({}, extensionManifest, {
     manifest_version: 2,
-    name,
+    // HACK: Accept override in extensionManifest - npm disallows caps &
+    // spaces, but we want them in an extension name
+    name: extensionManifest.name || name,
     version,
     description,
     author,
