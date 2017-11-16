@@ -23,7 +23,9 @@ function connect() {
 // HACK: try reconnecting when reloaded from about:debugging
 function reconnect() {
   setTimeout(() => {
-    if (port) { return; }
+    if (port) {
+      return;
+    }
     connect();
     reconnect();
   }, 1000);
@@ -33,11 +35,12 @@ function reconnect() {
 // (Not a security feature so much as a noise filter)
 window.addEventListener('message', event => {
   if (
+    port &&
     event.source === window &&
     event.data &&
     event.data.channel === `${CHANNEL_NAME}-extension`
   ) {
-    port && port.postMessage({
+    port.postMessage({
       ...event.data,
       location: window.location.href
     });

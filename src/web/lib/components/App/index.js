@@ -1,28 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { createAppStore, makeActions, selectors } from '../../../../lib/store';
+import { actions, selectors } from '../../../../lib/store';
 
 import BrowserPreview from '../BrowserPreview';
 import ThemeColorsEditor from '../ThemeColorsEditor';
 import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
 import ExtensionInstallButton from '../ExtensionInstallButton';
 
-const actions = makeActions({ context: 'web' });
-
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   theme: selectors.theme(state),
   hasExtension: selectors.hasExtension(state),
   selectedColor: selectors.selectedColor(state)
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = dispatch => ({
   setBackground: args => dispatch(actions.theme.setBackground(args)),
   setColor: args => dispatch(actions.theme.setColor(args)),
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args))
 });
 
-export const App = ({
+export const AppComponent = ({
   theme,
   hasExtension,
   selectedColor,
@@ -39,4 +37,4 @@ export const App = ({
     <ThemeBackgroundPicker {...{ theme, setBackground }} />
   </div>;
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);

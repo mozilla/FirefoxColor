@@ -10,12 +10,22 @@ const extractCSS = new ExtractTextPlugin({
   filename: '[name].css'
 });
 
+const DEBUG = process.env.NODE_ENV === 'development';
+
 module.exports = {
   devtool: 'source-map',
   resolve: {
     extensions: ['.js', '.jsx']
   },
-  plugins: [extractCSS, new WriteFilePlugin()],
+  plugins: [
+    extractCSS, 
+    new WriteFilePlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    })
+  ],
   module: {
     rules: [
       {

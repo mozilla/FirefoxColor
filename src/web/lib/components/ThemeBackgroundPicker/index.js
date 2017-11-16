@@ -31,7 +31,8 @@ export const ThemeBackgroundPicker = ({ theme, setBackground }) => {
           .keys()
           .map((src, key) =>
             <Background
-              {...{ key, src, active: theme.images.headerURL === src }}
+              key={key}
+              {...{ src, active: theme.images.headerURL === src }}
             />
           )}
       </div>

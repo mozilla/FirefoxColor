@@ -2,7 +2,6 @@ import React from 'react';
 import ReactSVG from 'react-svg';
 import classnames from 'classnames';
 
-import { defaultColors } from '../../../../lib/constants';
 import { colorToCSS } from '../../../../lib/utils';
 
 import './index.scss';
@@ -11,7 +10,6 @@ const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
 
 export const BrowserPreview = ({
   theme,
-  selectedColor,
   setSelectedColor,
   selectedTab = 1
 }) => {
@@ -22,9 +20,9 @@ export const BrowserPreview = ({
   };
 
   const colors = {};
-  for (let key in theme.colors) {
+  Object.keys(theme.colors).forEach(key => {
     colors[key] = colorToCSS(theme.colors[key]);
-  }
+  });
 
   const Button = ({
     name,
@@ -59,9 +57,7 @@ export const BrowserPreview = ({
       <Button name="close" />
     </li>;
 
-  const headerBackgroundImage = bgImages
-    .keys()
-    .includes(theme.images.headerURL)
+  const headerBackgroundImage = bgImages.keys().includes(theme.images.headerURL)
     ? `url(${bgImages(theme.images.headerURL)})`
     : '';
 
@@ -76,7 +72,7 @@ export const BrowserPreview = ({
         }}
       >
         {['One', 'Two', 'Three', 'Four'].map((text, key) =>
-          <Tab {...{ key, text, colors, selected: key === selectedTab }} />
+          <Tab key={key} {...{ text, selected: key === selectedTab }} />
         )}
       </ul>
       <section

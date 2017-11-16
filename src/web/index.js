@@ -1,15 +1,20 @@
+/* global JsonUrl */
+
 import React from 'react';
-import { compose, applyMiddleware } from 'redux';
+import { applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import queryString from 'query-string';
 
+// import { makeLog } from '../lib/utils';
 import { CHANNEL_NAME } from '../lib/constants';
-import { createAppStore, makeActions, selectors } from '../lib/store';
+import { createAppStore, actions, selectors } from '../lib/store';
 import App from './lib/components/App';
 
 import './index.scss';
+
+// const log = makeLog('web');
 
 const PING_PERIOD = 1000;
 const MAX_OUTSTANDING_PINGS = 2;
@@ -17,28 +22,21 @@ let outstandingPings = 0;
 
 const jsonCodec = JsonUrl('lzma');
 
-const actions = makeActions({ context: 'web' });
-
 const postMessage = (type, data = {}) =>
   window.postMessage(
     { ...data, type, channel: `${CHANNEL_NAME}-extension` },
     '*'
   );
 
-const composeEnhancers = composeWithDevTools({});
-
-const relayToExtensionMiddleware = store => next => action => {
+const updateExtensionThemeMiddleware = ({ getState }) => next => action => {
   const returnValue = next(action);
-  if (action.meta.context === 'web') {
-    // Only relay actions that came from our web context.
-    postMessage('storeAction', { action });
-  }
+  postMessage('setTheme', { theme: selectors.theme(getState()) });
   return returnValue;
 };
 
 const updateHistoryMiddleware = ({ getState }) => next => action => {
   const returnValue = next(action);
-  if (!action.meta.popstate) {
+  if (!action.meta || !action.meta.popstate) {
     // Only update history if this action wasn't from popstate event.
     const theme = selectors.theme(getState());
     jsonCodec.compress(theme).then(value => {
@@ -53,19 +51,21 @@ const updateHistoryMiddleware = ({ getState }) => next => action => {
   return returnValue;
 };
 
+const composeEnhancers = composeWithDevTools({});
+
 const store = createAppStore(
   {},
   composeEnhancers(
-    applyMiddleware(relayToExtensionMiddleware, updateHistoryMiddleware)
+    applyMiddleware(updateExtensionThemeMiddleware, updateHistoryMiddleware)
   )
 );
 
-window.addEventListener('popstate', ({ state: { theme } }) => {
-  const action = actions.theme.setTheme({ theme });
-  action.meta.popstate = true;
-  store.dispatch(action);
-});
-
+window.addEventListener('popstate', ({ state: { theme } }) =>
+  store.dispatch({
+    ...actions.theme.setTheme({ theme }),
+    meta: { popstate: true }
+  })
+);
 
 window.addEventListener('message', ({ source, data: message }) => {
   if (
@@ -75,17 +75,13 @@ window.addEventListener('message', ({ source, data: message }) => {
   ) {
     if (message.type === 'hello' || message.type === 'pong') {
       outstandingPings = 0;
-      const hasExtension = selectors.hasExtension(store.getState()); 
+      const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
       }
     }
-    if (message.type === 'storeAction') {
-      const action = message.action;
-      if (action.meta.context === 'extension') {
-        // Only accept relayed actions from extension context
-        store.dispatch(action);
-      }
+    if (message.type === 'fetchedTheme') {
+      store.dispatch(actions.theme.setTheme({ theme: message.theme }));
     }
   }
 });
@@ -94,7 +90,7 @@ window.addEventListener('message', ({ source, data: message }) => {
 // no access to mozAddonManager.
 setInterval(() => {
   postMessage('ping');
-  const hasExtension = selectors.hasExtension(store.getState()); 
+  const hasExtension = selectors.hasExtension(store.getState());
   if (hasExtension) {
     outstandingPings++;
     if (outstandingPings >= MAX_OUTSTANDING_PINGS) {
@@ -110,11 +106,11 @@ render(
   document.getElementById('root')
 );
 
-const params = queryString.parse(location.search);
-if (params.theme) {
+const params = queryString.parse(window.location.search);
+if (!params.theme) {
+  postMessage('fetchTheme');
+} else {
   jsonCodec.decompress(params.theme).then(theme => {
     store.dispatch(actions.theme.setTheme({ theme }));
   });
-} else {
-  postMessage('loadTheme');
 }

@@ -1,0 +1,27 @@
+env:
+  browser: true
+  es6: true
+  jquery: true
+  webextensions: true
+
+extends:
+- eslint:recommended
+- airbnb-base
+- plugin:react/recommended
+
+parserOptions:
+  ecmaVersion: 6
+
+rules:
+  arrow-parens: 0
+  comma-dangle: 0
+  function-paren-newline: 0
+  guard-for-in: 0
+  import/no-named-as-default: 0
+  import/prefer-default-export: 0
+  no-multi-assign: 0
+  no-plusplus: 0
+  no-restricted-syntax: 0
+  no-use-before-define: 0
+  object-curly-newline: 0
+  react/prop-types: 0
