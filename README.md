@@ -28,6 +28,29 @@ Theming demo for Firefox Quantum and beyond.
 
 [nvm]: https://github.com/creationix/nvm
 
+## Build & Release
+
+Deploying a release of this thing is currently manual and limited to @lmorchard
+due to AMO signing keys. (TODO: Hook that up to circleci for dev, switch to
+different keys for release)
+
+The script `npm run release:dev` in `package.json` takes care of the following:
+
+* Set `ADDON_URL` and `SITE_URL` vars to point at lmorchard.github.io/ThemesRFun
+
+* Build the site
+
+* Build & sign the add-on
+
+* Copy the signed add-on into the site
+
+* Deploy the site to Github Pages
+
+Signing depends on [`WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` environment
+variables being set for use by `web-ext sign`][sign].
+
+[sign]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#web-ext_sign
+
 ## Caveats on Theming
 
 It is my contention that there are a few issues with Lightweight Themes in FF
