@@ -79,10 +79,9 @@ world nicer as you demo this webExtension.
 
 ## TODO
 
-- [ ] Import theme via URL params
-
-- [ ] Export & share theme via URL params
+- [ ] Social sharing buttons
 
 - [ ] Pre-made curated themes (via link?)
 
-- [ ] Button for firefox to install themesrfun add-on to use theme
+- [ ] Tweak build & release for prod where add-on & site will be at different
+  URLs and neither on github
