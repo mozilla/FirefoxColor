@@ -16,6 +16,8 @@ import './index.scss';
 
 // const log = makeLog('web');
 
+const addonUrl = process.env.ADDON_URL;
+
 const PING_PERIOD = 1000;
 const MAX_OUTSTANDING_PINGS = 2;
 let outstandingPings = 0;
@@ -101,7 +103,7 @@ setInterval(() => {
 
 render(
   <Provider store={store}>
-    <App />
+    <App addonUrl={addonUrl} />
   </Provider>,
   document.getElementById('root')
 );

@@ -21,6 +21,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const AppComponent = ({
+  addonUrl,
   theme,
   hasExtension,
   selectedColor,
@@ -29,7 +30,7 @@ export const AppComponent = ({
   setBackground
 }) =>
   <div className="app">
-    {!hasExtension && <ExtensionInstallButton />}
+    {!hasExtension && <ExtensionInstallButton {...{ addonUrl }} />}
     <BrowserPreview {...{ theme, selectedColor, setSelectedColor }} />
     <ThemeColorsEditor
       {...{ theme, selectedColor, setColor, setSelectedColor }}

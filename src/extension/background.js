@@ -4,9 +4,11 @@ const log = makeLog('background');
 
 const bgImages = require.context('../images/', false, /bg-.*\.png/);
 
+const siteUrl = process.env.SITE_URL;
+
 const init = () => {
   browser.browserAction.onClicked.addListener(() =>
-    browser.tabs.create({ url: 'editor.html' })
+    browser.tabs.create({ url: siteUrl })
   );
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(

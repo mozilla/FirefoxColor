@@ -10,7 +10,16 @@ const extractCSS = new ExtractTextPlugin({
   filename: '[name].css'
 });
 
-const DEBUG = process.env.NODE_ENV === 'development';
+const defaultEnv = {
+  NODE_ENV: 'development',
+  ADDON_URL: 'addon.xpi',
+  SITE_URL: 'http://localhost:8080/'
+};
+
+const processEnv = {};
+Object.keys(defaultEnv).forEach(key => {
+  processEnv[key] = JSON.stringify(process.env[key] || defaultEnv[key]);
+});
 
 module.exports = {
   devtool: 'source-map',
@@ -18,13 +27,9 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   plugins: [
-    extractCSS, 
+    extractCSS,
     new WriteFilePlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    })
+    new webpack.DefinePlugin({ 'process.env': processEnv })
   ],
   module: {
     rules: [

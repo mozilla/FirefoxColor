@@ -1,7 +1,7 @@
 {
   "name": "themesrfun",
   "description": "Theming demo for Firefox Quantum and beyond.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Les Orchard <ma@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"
@@ -24,7 +24,10 @@
     "sign": "npm run clean:extension && npm run build:extension && web-ext sign --source-dir=build/extension && mv web-ext-artifacts/*.xpi ./addon.xpi",
     "run": "npm run build:extension && web-ext run --source-dir=build/extension",
     "lint": "eslint --color src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d build/web",
+    "release:base": "npm run clean && npm run build:web && npm run sign && mv addon.xpi build/web && npm run deploy",
+    "release:dev": "ADDON_URL='https://lmorchard.github.io/ThemesRFun/addon.xpi' SITE_URL='https://lmorchard.github.io/ThemesRFun/' npm run release:base"
   },
   "engines": {
     "node": ">=6.2.0"
@@ -47,6 +50,7 @@
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "generate-asset-webpack-plugin": "^0.3.0",
+    "gh-pages": "^1.0.0",
     "html-webpack-plugin": "^2.30.1",
     "image-webpack-loader": "^3.4.2",
     "node-sass": "^4.6.1",
