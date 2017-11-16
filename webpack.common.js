@@ -63,31 +63,11 @@ module.exports = {
         })
       },
       {
-        test: /\.(jpe?g|gif|png)$/i,
+        test: /\.(jpe?g|gif|png|svg)$/i,
         use: [
           {
             loader: 'file-loader',
             options: {
-              hash: 'sha512',
-              digest: 'hex',
-              name: 'images/[name]-[hash].[ext]'
-            }
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              bypassOnDebug: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.svg$/i,
-        use: [
-          {
-            loader: 'svg-url-loader',
-            options: {
-              limit: 8192,
               hash: 'sha512',
               digest: 'hex',
               name: 'images/[name]-[hash].[ext]'

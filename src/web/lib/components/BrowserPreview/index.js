@@ -7,6 +7,7 @@ import { colorToCSS } from '../../../../lib/utils';
 import './index.scss';
 
 const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
+const buttonImages = require.context('../../../../images/', false, /.*-16\.svg/);
 
 export const BrowserPreview = ({
   theme,
@@ -32,7 +33,7 @@ export const BrowserPreview = ({
     <span className="button" onClick={onClick}>
       <ReactSVG
         style={{ fill: colors[colorName] }}
-        path={`../../../../images/${name}-16.svg`}
+        path={buttonImages(`./${name}-16.svg`)}
       />
     </span>;
 
