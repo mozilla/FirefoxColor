@@ -8,6 +8,8 @@ const GenerateAssetWebpackPlugin = require('generate-asset-webpack-plugin');
 const packageMeta = require('./package.json');
 const common = require('./webpack.common.js');
 
+const siteUrl = process.env.SITE_URL;
+
 module.exports = merge(common, {
   entry: {
     background: './src/extension/background',
@@ -49,5 +51,9 @@ function buildManifest(compilation, cb) {
     author,
     homepage_url: homepage,
   });
+  
+  // Update content script to run on configured SITE_URL
+  manifest.content_scripts[0].matches.push(siteUrl + '*');
+
   return cb(null, JSON.stringify(manifest, null, '  '));
 }

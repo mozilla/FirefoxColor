@@ -103,8 +103,7 @@
           "contentScript.js"
         ],
         "matches": [
-          "*://localhost/*",
-          "https://*.mozilla.org/"
+          "*://localhost/*"
         ],
         "run_at": "document_start"
       }
