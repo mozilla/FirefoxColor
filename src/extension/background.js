@@ -44,6 +44,9 @@ const storeTheme = ({ theme }) => browser.storage.local.set({ theme });
 
 const applyTheme = ({ theme }) => {
   log('applyTheme', theme);
+
+  if (!theme) { return; }
+
   const backgroundImage = bgImages.keys().includes(theme.images.headerURL)
     ? bgImages(theme.images.headerURL)
     : 'images/bg-0.png';

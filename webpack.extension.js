@@ -8,7 +8,7 @@ const GenerateAssetWebpackPlugin = require('generate-asset-webpack-plugin');
 const packageMeta = require('./package.json');
 const common = require('./webpack.common.js');
 
-const siteUrl = process.env.SITE_URL;
+const siteUrl = process.env.SITE_URL || 'http://localhost:8080/';
 
 module.exports = merge(common, {
   entry: {
