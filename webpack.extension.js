@@ -52,8 +52,8 @@ function buildManifest(compilation, cb) {
     homepage_url: homepage,
   });
   
-  // Update content script to run on configured SITE_URL
-  manifest.content_scripts[0].matches.push(siteUrl + '*');
+  // Configure content script to run against SITE_URL
+  manifest.content_scripts[0].matches = [siteUrl + '*'];
 
   return cb(null, JSON.stringify(manifest, null, '  '));
 }
