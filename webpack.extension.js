@@ -49,11 +49,13 @@ function buildManifest(compilation, cb) {
     version,
     description,
     author,
-    homepage_url: homepage,
+    homepage_url: homepage
   });
-  
-  // Configure content script to run against SITE_URL
-  manifest.content_scripts[0].matches = [siteUrl + '*'];
+
+  // Configure content script to run on SITE_URL, omitting port if any
+  manifest.content_scripts[0].matches = [
+    siteUrl.replace(/:(\d+)\/?$/, '/') + '*'
+  ];
 
   return cb(null, JSON.stringify(manifest, null, '  '));
 }
