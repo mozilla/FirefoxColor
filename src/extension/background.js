@@ -67,7 +67,7 @@ const applyTheme = ({ theme }) => {
     newTheme.colors[key] = colorToCSS(theme.colors[key]);
   });
 
-  return browser.theme.update(newTheme);
+  browser.theme.update(newTheme);
 };
 
 init();
