@@ -39,20 +39,15 @@ export const reducers = {
   theme: handleActions(
     {
       SET_THEME: (state, { payload: { theme } }) => ({ ...theme }),
-
       SET_COLORS: (state, { payload: { colors } }) => ({ ...state, colors }),
-
-      SET_COLOR: (state, { payload: { name, h, s, l, a } }) => {
-        const newColors = { ...state.colors };
-        newColors[name] = { ...state.colors[name], h, s, l, a };
-        return { ...state, colors: newColors };
-      },
-
-      SET_BACKGROUND: (state, { payload: { url } }) => {
-        const newImages = { ...state.images };
-        newImages.headerURL = url;
-        return { ...state, images: newImages };
-      }
+      SET_COLOR: (state, { payload: { name, h, s, l, a } }) => ({
+        ...state,
+        colors: { ...state.colors, [name]: { h, s, l, a } }
+      }),
+      SET_BACKGROUND: (state, { payload: { url } }) => ({
+        ...state,
+        images: { ...state.images, headerURL: url }
+      })
     },
     {
       images: { headerURL: '' },
