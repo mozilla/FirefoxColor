@@ -24,7 +24,7 @@
     "package": "npm-run-all clean:extension build:extension && web-ext build --overwrite-dest --source-dir=build/extension && mv web-ext-artifacts/*.zip ./addon.xpi",
     "sign": "npm-run-all clean:extension build:extension && web-ext sign --source-dir=build/extension && mv web-ext-artifacts/*.xpi ./addon.xpi",
     "run": "npm run build:extension && web-ext run --source-dir=build/extension",
-    "lint": "eslint --color src",
+    "lint": "eslint --color .",
     "test": "npm run lint",
     "deploy": "gh-pages -d build/web",
     "release:base": "npm-run-all clean build:web sign && mv addon.xpi build/web && npm run deploy",
