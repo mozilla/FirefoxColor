@@ -1,5 +1,6 @@
+/* eslint import/no-extraneous-dependencies: off */
+
 const path = require('path');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -34,7 +35,6 @@ module.exports = merge(common, {
 function buildManifest(compilation, cb) {
   const {
     name,
-    displayName,
     version,
     description,
     author,
@@ -54,7 +54,7 @@ function buildManifest(compilation, cb) {
 
   // Configure content script to run on SITE_URL, omitting port if any
   manifest.content_scripts[0].matches = [
-    siteUrl.replace(/:(\d+)\/?$/, '/') + '*'
+    `${siteUrl.replace(/:(\d+)\/?$/, '/')}*`
   ];
 
   return cb(null, JSON.stringify(manifest, null, '  '));
