@@ -1,7 +1,7 @@
 {
   "name": "themesrfun",
   "description": "Theming demo for Firefox Quantum and beyond.",
-  "version": "0.0.11",
+  "version": "0.0.16",
   "author": "Les Orchard <me@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"
@@ -26,7 +26,7 @@
     "run": "npm run build:extension && web-ext run --source-dir=build/extension",
     "lint": "eslint --color src",
     "test": "npm run lint",
-    "deploy": "gh-pages -d build/web",
+    "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/lmorchard/ThemesRFun.git\"",
     "release:base": "npm-run-all clean build:web sign && mv addon.xpi build/web && npm run deploy",
     "release:dev": "ADDON_URL='https://lmorchard.github.io/ThemesRFun/addon.xpi' SITE_URL='https://lmorchard.github.io/ThemesRFun/' npm run release:base"
   },

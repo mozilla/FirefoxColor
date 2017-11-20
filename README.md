@@ -32,9 +32,8 @@ Theming demo for Firefox Quantum and beyond.
 
 ## Build & Release
 
-Deploying a release of this thing is currently manual and limited to @lmorchard
-due to AMO signing keys. (TODO: Hook that up to circleci for dev, switch to
-different keys for release)
+Deploying a development release consists of pushing to the `development` branch
+on this repo. Production release process is TBD.
 
 The script `npm run release:dev` in `package.json` takes care of the following:
 
@@ -49,8 +48,12 @@ The script `npm run release:dev` in `package.json` takes care of the following:
 * Deploy the site to Github Pages
 
 Signing depends on [`WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` environment
-variables being set for use by `web-ext sign`][sign].
+variables being set for use by `web-ext sign`][sign]. Deployment depends on
+[`GH_TOKEN` being set with a personal access token from GitHub][ghtoken]. These
+are currently configured in CircleCI to support deployment after successful
+test runs.
 
+[ghtoken]: https://github.com/settings/tokens
 [sign]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#web-ext_sign
 
 ## Caveats on Theming
