@@ -1,8 +1,8 @@
 {
   "name": "themesrfun",
   "description": "Theming demo for Firefox Quantum and beyond.",
-  "version": "0.0.9",
-  "author": "Les Orchard <ma@lmorchard.com>",
+  "version": "0.0.11",
+  "author": "Les Orchard <me@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"
   ],
@@ -21,13 +21,13 @@
     "clean": "npm-run-all clean:*",
     "clean:web": "rm -rf build/web",
     "clean:extension": "rm -rf addon.xpi build/extension web-ext-artifacts",
-    "package": "npm run clean:extension && npm run build:extension && web-ext build --overwrite-dest --source-dir=build/extension && mv web-ext-artifacts/*.zip ./addon.xpi",
-    "sign": "npm run clean:extension && npm run build:extension && web-ext sign --source-dir=build/extension && mv web-ext-artifacts/*.xpi ./addon.xpi",
+    "package": "npm-run-all clean:extension build:extension && web-ext build --overwrite-dest --source-dir=build/extension && mv web-ext-artifacts/*.zip ./addon.xpi",
+    "sign": "npm-run-all clean:extension build:extension && web-ext sign --source-dir=build/extension && mv web-ext-artifacts/*.xpi ./addon.xpi",
     "run": "npm run build:extension && web-ext run --source-dir=build/extension",
     "lint": "eslint --color src",
     "test": "npm run lint",
     "deploy": "gh-pages -d build/web",
-    "release:base": "npm run clean && npm run build:web && npm run sign && mv addon.xpi build/web && npm run deploy",
+    "release:base": "npm-run-all clean build:web sign && mv addon.xpi build/web && npm run deploy",
     "release:dev": "ADDON_URL='https://lmorchard.github.io/ThemesRFun/addon.xpi' SITE_URL='https://lmorchard.github.io/ThemesRFun/' npm run release:base"
   },
   "engines": {
