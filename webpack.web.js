@@ -1,5 +1,6 @@
+/* eslint import/no-extraneous-dependencies: off */
+
 const path = require('path');
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');

@@ -1,9 +1,8 @@
-const path = require('path');
+/* eslint import/no-extraneous-dependencies: off */
+
 const webpack = require('webpack');
-const packageJSON = require('./package.json');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 
 const extractCSS = new ExtractTextPlugin({
