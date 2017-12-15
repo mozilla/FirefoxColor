@@ -107,9 +107,31 @@ world nicer as you demo this webExtension.
 
 ## TODO
 
+- [ ] Links to docs and calls-to-action to learn & make more complex themes
+
+- [ ] Make editor local only to extension? Only show preview on web?
+
 - [ ] Social sharing buttons
 
 - [ ] Pre-made curated themes (via link?)
 
 - [ ] Tweak build & release for prod where add-on & site will be at different
   URLs and neither on github
+
+## Notes
+
+- Further reading for themes
+  - Other addons for managing & creating themes
+    - https://addons.mozilla.org/en-US/firefox/collections/ntim/theming-extensions/
+  - An example of a more complex dynamically changing theme
+    - https://github.com/mdn/webextensions-examples/tree/master/dynamic-theme
+  - Dynamic theme with colors based on favicon
+    - https://addons.mozilla.org/en-US/firefox/addon/vivaldifox/
+  - Theme API
+    - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/theme
+  - Hacks post on Theme API
+    - https://hacks.mozilla.org/2017/12/using-the-new-theming-api-in-firefox/
+  - theme.getCurrent()
+    - Useful for other webextensions to match current theme colors with their own UIs
+    - Maybe pre-load web page with current theme?
+    - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/theme/getCurrent
