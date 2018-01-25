@@ -7,7 +7,7 @@ general:
       - gh-pages
 deployment:
   static_development:
-    owner: lmorchard
+    owner: mozilla
     branch:
       - development
     commands:
