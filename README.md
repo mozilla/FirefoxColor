@@ -6,8 +6,7 @@ Theming demo for Firefox Quantum and beyond.
 
 ## Get Started
 
-1. Install Node 6.2.x (e.g. using [node version manger][nvm]) - the latest LTS
-   version seems to have issues running web-ext
+1. Install Node 8.9.4+ (e.g. using [node version manger][nvm])
 
 1. Clone the repo, install dependencies, start the dev environment:
    

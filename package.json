@@ -1,7 +1,7 @@
 {
   "name": "themesrfun",
   "description": "Theming demo for Firefox Quantum and beyond.",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "author": "Les Orchard <me@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"
@@ -31,7 +31,7 @@
     "release:dev": "ADDON_URL='https://mozilla.github.io/ThemesRFun/addon.xpi' SITE_URL='https://mozilla.github.io/ThemesRFun/' npm run release:base"
   },
   "engines": {
-    "node": ">=6.2.0"
+    "node": ">=8.9.4"
   },
   "license": "MPL-2.0",
   "repository": "mozilla/ThemesRFun",

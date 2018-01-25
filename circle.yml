@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 6.2.0
+    version: 8.9.4
 general:
   branches:
     ignore:
