@@ -1,6 +1,6 @@
 # ThemesRFun
 
-[![CircleCI](https://circleci.com/gh/lmorchard/ThemesRFun.svg?style=svg)](https://circleci.com/gh/lmorchard/ThemesRFun)
+[![CircleCI](https://circleci.com/gh/mozilla/ThemesRFun.svg?style=svg)](https://circleci.com/gh/mozilla/ThemesRFun)
 
 Theming demo for Firefox Quantum and beyond. 
 
