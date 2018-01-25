@@ -12,7 +12,7 @@ Theming demo for Firefox Quantum and beyond.
 1. Clone the repo, install dependencies, start the dev environment:
    
    ```
-   git clone https://github.com/lmorchard/ThemesRFun.git
+   git clone https://github.com/mozilla/ThemesRFun.git
    cd ThemesRFun
    npm install
    npm start
@@ -37,7 +37,7 @@ on this repo. Production release process is TBD.
 
 The script `npm run release:dev` in `package.json` takes care of the following:
 
-* Set `ADDON_URL` and `SITE_URL` vars to point at lmorchard.github.io/ThemesRFun
+* Set `ADDON_URL` and `SITE_URL` vars to point at mozilla.github.io/ThemesRFun
 
 * Build the site
 
