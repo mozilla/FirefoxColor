@@ -3,9 +3,10 @@ import React from 'react';
 import './index.scss';
 
 export const ExtensionInstallButton = ({ addonUrl }) =>
-  <div className="extension-install-button">
+  <div className="extension-install-button banner">
+    <span>Get TRF today</span>
     <a href={addonUrl} className="installButton">
-      Install the extension for fun with themes!
+      Install TRF
     </a>
   </div>;
 

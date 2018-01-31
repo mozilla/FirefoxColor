@@ -1,33 +1,55 @@
 @import '../../common.scss';
 
 .theme-colors-editor {
-  margin: $grid * 10 auto;
-  width: 75%;
+  @include unit;
+  padding: 6 * $grid;
+  min-width: 600px;
+
   dl {
     position: relative;
-    margin: 0 4 * $grid;
+    margin: 0;
+
     dt {
-      width: 50%;
-      margin: $grid * 4;
+      align-items: center;
       cursor: pointer;
-      padding: $grid * 2;
-      border: 1px solid #aaa;
+      display: flex;
+      font-size: 16px;
+      padding: $grid * 2.5;
       text-shadow: 0px 0px $grid * 2 #fff;
-      &::before {
-        content: "\26AA";
-        font-size: $grid * 4;
-        line-height: $grid * 4;
-        padding-right: $grid * 2;
+      width: 50%;
+      transition: font-size 100ms, color 100ms;
+      height: 50px;
+
+      span {
+        width: 24px;
+        border-radius: 50%;
+        height: 24px;
+        margin-right: 10px;
+        box-shadow: 0 0 0 1px var(--grey-20);
       }
-      &.selected::before {
-        content: "\26AB";
+
+      &.selected {
+        span {
+          box-shadow: 0 0 0 2px var(--blue-50);
+        }
+
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--blue-50);
+      }
+
+      &:hover {
+        background: var(--grey-10);
+        border-radius: 2px;
       }
     }
+
     dd {
       display: none;
       position: absolute;
       left: 55%;
       top: 0;
+
       &.selected {
         display: block;
       }
