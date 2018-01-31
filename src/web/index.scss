@@ -2,46 +2,18 @@
 
 :root {
   --slider-height: 26px;
-  --unit-box-shadow-1: 0 0 0 1px rgba(0, 0, 0, 0.04);
-  --unit-box-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.04);
   --white: #fff;
+  --unit-box-shadow: 0 5px 10px 5px rgba(0, 0, 0, .1);
+  --unit-border-radius: 4px;
 }
 
 html,
 * {
   box-sizing: border-box;
   color: var(--grey-90);
+  font-family: "fira sans", sans-serif;
 }
 
 body {
-  background: var(--grey-10);
-  font-family: "fira sans", sans-serif;
   margin: 0;
-}
-
-header {
-  background: var(--white);
-  box-shadow: var(--unit-box-shadow-1), var(--unit-box-shadow-2);
-  display: flex;
-  justify-content: center;
-  margin-bottom: 40px;
-}
-
-header h1 {
-  background-image: url(../images/icon.svg);
-  background-position: left 2px;
-  background-repeat: no-repeat;
-  background-size: 20px auto;
-  font-size: 20px;
-  padding-left: 26px;
-}
-
-h1,
-h2 {
-  font-weight: 300;
-}
-
-h2 {
-  font-size: 22px;
-  margin-top: 0;
 }

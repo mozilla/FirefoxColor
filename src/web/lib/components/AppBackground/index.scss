@@ -1,0 +1,32 @@
+.app-background {
+  bottom: 0;
+  left: 0;
+  opacity: .6;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 0;
+
+  &::after {
+    background: linear-gradient(rgba(0, 0, 0, .2), transparent 25%);
+    bottom: 0;
+    content: '';
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+  }
+
+  .app-background__texture {
+    background-repeat: no-repeat;
+    background-size: 466px 644px;
+    background: url(../../../../images/bg_texture_01.svg);
+    height: 644px;
+    opacity: .5;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 446px;
+  }
+}

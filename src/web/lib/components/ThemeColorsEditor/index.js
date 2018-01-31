@@ -26,8 +26,8 @@ export default class ThemeColorsEditor extends React.Component {
                 key={`dt-${idx}`}
                 className={classnames({ selected: selectedColor === name })}
                 onClick={() => setSelectedColor({ name })}
-                style={{ backgroundColor: colorToCSS(color) }}
               >
+                <span style={{ backgroundColor: colorToCSS(color) }} />
                 {colorLabels[name]}
               </dt>,
               <dd

@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 
 import { actions, selectors } from '../../../../lib/store';
 
+import AppBackground from '../AppBackground';
 import BrowserPreview from '../BrowserPreview';
 import ThemeColorsEditor from '../ThemeColorsEditor';
 import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
 import ExtensionInstallButton from '../ExtensionInstallButton';
+
+import './index.scss';
 
 const mapStateToProps = state => ({
   theme: selectors.theme(state),
@@ -30,12 +33,19 @@ export const AppComponent = ({
   setBackground
 }) =>
   <div className="app">
+    <AppBackground {...{ theme }} />
     {!hasExtension && <ExtensionInstallButton {...{ addonUrl }} />}
-    <BrowserPreview {...{ theme, selectedColor, setSelectedColor }} />
-    <ThemeColorsEditor
-      {...{ theme, selectedColor, setColor, setSelectedColor }}
-    />
-    <ThemeBackgroundPicker {...{ theme, setBackground }} />
+    <div className="app-content">
+      <header>
+        <h1>Themes Are Fun</h1>
+        <p>A Firefox Test Pilot experiment</p>
+      </header>
+      <ThemeColorsEditor
+        {...{ theme, selectedColor, setColor, setSelectedColor }}
+      />
+      <BrowserPreview {...{ theme, selectedColor, setSelectedColor }} />
+      <ThemeBackgroundPicker {...{ theme, setBackground }} />
+    </div>
   </div>;
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);

@@ -1,10 +1,19 @@
 @import '../../common.scss';
 
 .extension-install-button {
-  text-align: center;
+  position: relative;
+  z-index: 1;
+  align-items: center;
+  background: var(--grey-20);
+  display: flex;
+  height: 56px;
+
+  span {
+    font-size: 17px;
+    padding: 0 10px;
+  }
 
   .installButton {
-    border: 1px solid #333;
-    padding: $grid * 2;
+    @include button;
   }
 }

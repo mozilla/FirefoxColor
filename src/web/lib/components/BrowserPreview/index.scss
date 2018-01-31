@@ -1,46 +1,37 @@
 @import '../../common.scss';
 
 .doll {
+  @include unit;
+  font-family: sans-serif;
+  overflow: hidden;
   position: relative;
-  border: 1px solid #666;
-  margin: $grid * 10 auto;
-  width: 75%;
+  width: 100%;
 
   .background {
+    height: $grid * 10;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
-    height: $grid * 10;
   }
 
   .tabbar {
-    height: $grid * 10;
-    margin: 0;
-    padding: 0 $grid * 10;
-    list-style-type: none;
     display: flex;
     flex-direction: row;
+    height: 60px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0 $grid * 10;
 
     li {
-      font-size: $grid * 3;
-      padding: $grid * 2;
+      align-items: center;
       display: flex;
       flex-direction: row;
-      align-items: center;
+      font-size: $grid * 3;
       margin: 0;
-      border-left: 0.5px solid #666;
-      border-right: 0.5px solid #666;
+      padding: $grid * 2;
       width: $grid * 50;
-      height: $grid * 10;
 
-      &.selected {
-        margin: $grid * 0.5 0 -1px 0;
-        padding-bottom: $grid * 2.5;
-        height: $grid * 10;
-        border-bottom: 0;
-        z-index: 1000;
-      }
 
       .title {
         flex-grow: 1;
@@ -50,18 +41,18 @@
   }
 
   .toolbar {
-    height: $grid * 10;
-    border-top: 1px solid #666;
+    align-items: center;
     display: flex;
+    height: 96px;
     
     .field {
-      font-size: $grid * 3.5;
+      align-items: center;
+      border-radius: 3px;
       display: flex;
       flex-grow: 1;
-      align-items: center;
-      border: 1px solid #666;
+      font-size: $grid * 5;
+      height: 42px;
       margin: $grid $grid * 1.5;
-      padding: $grid;
 
       .location {
         flex-grow: 1;
@@ -69,22 +60,32 @@
     }
     
     .button {
+      align-items: center;
       display: flex;
       flex-grow: 0;
-      align-items: center;
-      margin: $grid;
-      padding: $grid;
+      margin: 0 $grid * 2;
+      padding: 0 $grid * 2;
+
+      .field & {
+        padding: 0 $grid;
+      }
+
+      > div > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
       img, svg {
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
       }
     }
   }
 
   .content{
     padding: $grid * 4;
-    height: $grid * 20;
+    flex: 1;
     text-align: center;
   }
 }
