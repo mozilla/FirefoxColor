@@ -12,7 +12,7 @@ const buttonImages = require.context('../../../../images/', false, /.*-16\.svg/)
 export const BrowserPreview = ({
   theme,
   setSelectedColor,
-  selectedTab = 1
+  selectedTab = 0
 }) => {
   const clickSelectColor = name => e => {
     setSelectedColor({ name });
@@ -27,14 +27,18 @@ export const BrowserPreview = ({
 
   const Button = ({
     name,
+    asset = false,
     onClick = clickSelectColor('toolbar_text'),
     colorName = 'toolbar_text'
   }) =>
     <span className="button" onClick={onClick}>
-      <ReactSVG
+      {asset && <ReactSVG
         style={{ fill: colors[colorName] }}
         path={buttonImages(`./${name}-16.svg`)}
-      />
+      />}
+      {!asset && <div className="button-inner"
+        style={{ backgroundColor: colors[colorName] }}
+      />}
     </span>;
 
   const Tab = ({ text, selected }) =>
@@ -47,15 +51,13 @@ export const BrowserPreview = ({
       }}
     >
       <p
-        className="title"
+        className={`title ${text}`}
         onClick={clickSelectColor(selected ? 'toolbar_text' : 'textcolor')}
         style={{
-          color: selected ? colors.toolbar_text : colors.textcolor
+          backgroundColor: selected ? colors.toolbar_text : colors.textcolor
         }}
       >
-        {text}
       </p>
-      <Button name="close" />
     </li>;
 
   const headerBackgroundImage = bgImages.keys().includes(theme.images.headerURL)
@@ -72,57 +74,56 @@ export const BrowserPreview = ({
           backgroundImage: headerBackgroundImage
         }}
       >
-        {['One', 'Two', 'Three', 'Four'].map((text, key) =>
+        {['One', 'Two', 'Three'].map((text, key) =>
           <Tab key={key} {...{ text, selected: key === selectedTab }} />
         )}
       </ul>
-      <section
-        className="toolbar"
-        onClick={clickSelectColor('toolbar')}
-        style={{ backgroundColor: colors.toolbar }}
-      >
-        <Button name="back" />
-        <Button name="forward" />
-        <Button name="refresh" />
-        <Button name="home" />
-        <Button name="sidebar" />
-        <span
-          className="field"
-          onClick={clickSelectColor('toolbar_field')}
-          style={{
-            color: colors.toolbar_field_text,
-            backgroundColor: colors.toolbar_field
-          }}
+      <div
+        className="toolbar-wrapper"
+        style={{
+          backgroundColor: colors.accentcolor,
+          backgroundImage: headerBackgroundImage,
+          backgroundPositionY: '-80'
+        }}>
+        <section
+          className="toolbar"
+          onClick={clickSelectColor('toolbar')}
+          style={{ backgroundColor: colors.toolbar }}
         >
-          <Button
-            name="info"
-            onClick={clickSelectColor('toolbar_field_text')}
-            colorName="toolbar_field_text"
-          />
+          <Button name="back" />
+          <Button name="forward" />
           <span
-            className="location"
-            onClick={clickSelectColor('toolbar_field_text')}
+            className="field"
+            onClick={clickSelectColor('toolbar_field')}
             style={{
-              color: colors.toolbar_field_text
+              color: colors.toolbar_field_text,
+              backgroundColor: colors.toolbar_field
             }}
           >
-            example.com
+            <span
+              className="location"
+              onClick={clickSelectColor('toolbar_field_text')}
+              style={{
+                backgroundColor: colors.toolbar_field_text
+              }}
+            />
+            <Button
+              name="bookmark"
+              onClick={clickSelectColor('toolbar_field_text')}
+              colorName="toolbar_field_text"
+            />
           </span>
-          <Button
-            name="more"
-            onClick={clickSelectColor('toolbar_field_text')}
-            colorName="toolbar_field_text"
-          />
-          <Button
-            name="bookmark"
-            onClick={clickSelectColor('toolbar_field_text')}
-            colorName="toolbar_field_text"
-          />
-        </span>
-        <Button name="menu" />
-      </section>
+          <Button name="menu" asset={ true }/>
+        </section>
+      </div>
       <section className="content">
-        <p>Hello, world!</p>
+        <form className="theme-url-generator">
+          <label>Share your theme:</label>
+          <fieldset>
+            <input type="text" value="https://mythemerules.com" />
+            <input type="submit" value="Copy" />
+          </fieldset>
+        </form>
       </section>
     </div>
   );
