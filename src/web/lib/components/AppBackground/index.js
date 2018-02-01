@@ -14,7 +14,8 @@ export const AppBackground = ({ theme }) => {
 
   return (
     <div className="app-background" style={{ background: bgGradient }}>
-      <div className="app-background__texture"/>
+      <div className="app-background__texture-1"/>
+      <div className="app-background__texture-2"/>
     </div>
   );
 };

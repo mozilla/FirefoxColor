@@ -37,7 +37,7 @@ export const AppComponent = ({
     {!hasExtension && <ExtensionInstallButton {...{ addonUrl }} />}
     <div className="app-content">
       <header>
-        <h1>Themes Are Fun</h1>
+        <h1>THEMEZ𝕽FUN!</h1>
         <p>A Firefox Test Pilot experiment</p>
       </header>
       <ThemeColorsEditor

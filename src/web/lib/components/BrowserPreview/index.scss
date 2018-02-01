@@ -2,10 +2,11 @@
 
 .doll {
   @include unit;
+  display: flex;
+  flex-direction: column;
   font-family: sans-serif;
   overflow: hidden;
   position: relative;
-  width: 100%;
 
   .background {
     height: $grid * 10;
@@ -17,25 +18,25 @@
 
   .tabbar {
     display: flex;
-    flex-direction: row;
-    height: 60px;
+    flex: 0 0 $grid * 20;
     list-style-type: none;
     margin: 0;
-    padding: 0 $grid * 10;
+    padding: 0 $grid * 12.5;
 
     li {
       align-items: center;
       display: flex;
       flex-direction: row;
+      flex: 0 0 $grid * 55;
       font-size: $grid * 3;
+      justify-content: center;
       margin: 0;
       padding: $grid * 2;
-      width: $grid * 50;
-
 
       .title {
-        flex-grow: 1;
-        z-index: 1000;
+        border-radius: 5px;
+        height: 10px;
+        width: 160px;
       }
     }
   }
@@ -44,7 +45,8 @@
     align-items: center;
     display: flex;
     height: 96px;
-    
+    padding: 0 $grid * 2.5 0 $grid * 6.5;
+
     .field {
       align-items: center;
       border-radius: 3px;
@@ -52,10 +54,25 @@
       flex-grow: 1;
       font-size: $grid * 5;
       height: 42px;
-      margin: $grid $grid * 1.5;
+      margin: $grid $grid * 2.5 $grid $grid * 7.5;
+
+      .button {
+        flex: 0 0 18px;
+        height: 18px;
+        margin: 16px;
+        padding: 0;
+
+        .button-inner {
+          flex: 0 0 18px;
+          height: 18px;
+        }
+      }
 
       .location {
-        flex-grow: 1;
+        border-radius: 5px;
+        flex: 1;
+        height: 10px;
+        margin: 0 0 0 $grid * 10;
       }
     }
     
@@ -63,16 +80,18 @@
       align-items: center;
       display: flex;
       flex-grow: 0;
-      margin: 0 $grid * 2;
-      padding: 0 $grid * 2;
+      margin: 0;
+      padding: 0 $grid * 3.5;
 
-      .field & {
-        padding: 0 $grid;
+      .button-inner {
+        border-radius: 50%;
+        height: 24px;
+        width: 24px;
       }
 
       > div > div {
-        display: flex;
         align-items: center;
+        display: flex;
         justify-content: center;
       }
 
@@ -84,9 +103,45 @@
   }
 
   .content{
-    padding: $grid * 4;
     flex: 1;
-    text-align: center;
+    font-size: 16px;
+    padding: $grid * 4;
+    display: flex;
+    
+    .theme-url-generator {
+      justify-content: flex-end;
+      display: flex;
+      flex-direction: column;
+      padding: $grid * 6;
+
+      label {
+        padding-bottom: $grid * 3;
+      }
+
+      fieldset {
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+
+      input[type="text"] {
+        border-radius: 3px 0 0 3px;
+        border: 1px solid var(--grey-30);
+        font-size: 16px;
+        height: $grid * 10;
+        padding: 0 $grid * 2;
+        width: 320px;
+      }
+
+      input[type="submit"] {
+        @include buttonDefault;
+        border-radius: 0 3px 3px 0;
+        border: 0;
+        font-size: 16px;
+        height: 40px;
+        min-width: 90px;
+      }
+    }
   }
 }
 

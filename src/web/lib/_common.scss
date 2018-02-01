@@ -2,10 +2,8 @@ $grid: 4px;
 
 @mixin button {
   align-items: center;
-  background: var(--green-60);
   border-radius: 2px;
   border: none;
-  color: var(--white);
   display: flex;
   font-size: 18px;
   height: 34px;
@@ -13,13 +11,31 @@ $grid: 4px;
   text-decoration: none;
   transition: background 50ms;
   width: 200px;
-  
+}
+
+@mixin buttonPrimary {
+  color: var(--white);
+  background: var(--green-60);
+
   &:hover {
     background: var(--green-70);
   }
 
   &:active {
     background: var(--green-80);
+  }
+}
+
+@mixin buttonDefault {
+  color: var(--white);
+  background: var(--blue-50);
+
+  &:hover {
+    background: var(--blue-60);
+  }
+
+  &:active {
+    background: var(--blue-70);
   }
 }
 
