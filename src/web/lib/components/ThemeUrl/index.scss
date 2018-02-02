@@ -1,0 +1,37 @@
+@import '../../common.scss';
+
+.theme-url {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  justify-content: flex-end;
+  padding: $grid * 6;
+
+  label {
+    padding-bottom: $grid * 3;
+  }
+
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  input[type="text"] {
+    border-radius: 3px 0 0 3px;
+    border: 1px solid var(--grey-30);
+    font-size: 16px;
+    height: $grid * 10;
+    padding: 0 $grid * 2;
+    width: 320px;
+  }
+
+  input[type="submit"] {
+    @include buttonDefault;
+    border-radius: 0 3px 3px 0;
+    border: 0;
+    font-size: 16px;
+    height: 40px;
+    min-width: 90px;
+  }
+}

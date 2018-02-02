@@ -6,8 +6,10 @@ import { actions, selectors } from '../../../../lib/store';
 import AppBackground from '../AppBackground';
 import BrowserPreview from '../BrowserPreview';
 import ThemeColorsEditor from '../ThemeColorsEditor';
+import PresetThemeSelector from '../PresetThemeSelector';
 import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
 import ExtensionInstallButton from '../ExtensionInstallButton';
+import ThemeUrl from '../ThemeUrl';
 
 import './index.scss';
 
@@ -20,7 +22,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setBackground: args => dispatch(actions.theme.setBackground(args)),
   setColor: args => dispatch(actions.theme.setColor(args)),
-  setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args))
+  setTheme: args => dispatch(actions.theme.setTheme(args)),
+  setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
 });
 
 export const AppComponent = ({
@@ -29,6 +32,7 @@ export const AppComponent = ({
   hasExtension,
   selectedColor,
   setColor,
+  setTheme,
   setSelectedColor,
   setBackground
 }) =>
@@ -40,10 +44,13 @@ export const AppComponent = ({
         <h1>THEMEZ𝕽FUN!</h1>
         <p>A Firefox Test Pilot experiment</p>
       </header>
+      <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
+        <ThemeUrl />
+      </BrowserPreview>
       <ThemeColorsEditor
         {...{ theme, selectedColor, setColor, setSelectedColor }}
       />
-      <BrowserPreview {...{ theme, selectedColor, setSelectedColor }} />
+      <PresetThemeSelector {...{ setSelectedColor, setTheme }}/>
       <ThemeBackgroundPicker {...{ theme, setBackground }} />
     </div>
   </div>;

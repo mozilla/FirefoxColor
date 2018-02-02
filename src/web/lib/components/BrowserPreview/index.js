@@ -10,16 +10,37 @@ const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
 const buttonImages = require.context('../../../../images/', false, /.*-16\.svg/);
 
 export const BrowserPreview = ({
+  size,
   theme,
   setSelectedColor,
-  selectedTab = 0
+  selectedTab = 0,
+  children = null,
+  setTheme = null
 }) => {
   const clickSelectColor = name => e => {
-    setSelectedColor({ name });
-    e.stopPropagation();
+    if (size === 'large') {
+      setSelectedColor({ name });
+      e.stopPropagation();
+    }
     return false;
   };
 
+  const clickDoll = e => {
+    if (setTheme) {
+      setTheme({ theme });
+      e.stopPropagation();
+    }
+
+    return false;
+  };
+
+  const tabGenerator = () => {
+    const tabTitles = ['Tab One', 'Tab Two'];
+    if (size === 'large') {
+      tabTitles.push('Tab Three');
+    }
+    return tabTitles;
+  };
   const colors = {};
   Object.keys(theme.colors).forEach(key => {
     colors[key] = colorToCSS(theme.colors[key]);
@@ -31,12 +52,12 @@ export const BrowserPreview = ({
     onClick = clickSelectColor('toolbar_text'),
     colorName = 'toolbar_text'
   }) =>
-    <span className="button" onClick={onClick}>
+    <span className="doll__button" onClick={onClick}>
       {asset && <ReactSVG
         style={{ fill: colors[colorName] }}
         path={buttonImages(`./${name}-16.svg`)}
       />}
-      {!asset && <div className="button-inner"
+      {!asset && <div className="doll__button-inner"
         style={{ backgroundColor: colors[colorName] }}
       />}
     </span>;
@@ -63,37 +84,35 @@ export const BrowserPreview = ({
   const headerBackgroundImage = bgImages.keys().includes(theme.images.headerURL)
     ? `url(${bgImages(theme.images.headerURL)})`
     : '';
-
   return (
-    <div className="doll">
+    <div className={`doll doll--${size}`} onClick={clickDoll}>
       <ul
-        className="tabbar"
+        className="doll__tabbar"
         onClick={clickSelectColor('accentcolor')}
         style={{
           backgroundColor: colors.accentcolor,
           backgroundImage: headerBackgroundImage
         }}
       >
-        {['One', 'Two', 'Three'].map((text, key) =>
+        {tabGenerator().map((text, key) =>
           <Tab key={key} {...{ text, selected: key === selectedTab }} />
         )}
       </ul>
       <div
-        className="toolbar-wrapper"
+        className="doll__toolbar-wrapper"
         style={{
           backgroundColor: colors.accentcolor,
           backgroundImage: headerBackgroundImage,
-          backgroundPositionY: '-80'
         }}>
         <section
-          className="toolbar"
+          className="doll__toolbar"
           onClick={clickSelectColor('toolbar')}
           style={{ backgroundColor: colors.toolbar }}
         >
           <Button name="back" />
           <Button name="forward" />
           <span
-            className="field"
+            className="doll__field"
             onClick={clickSelectColor('toolbar_field')}
             style={{
               color: colors.toolbar_field_text,
@@ -101,29 +120,23 @@ export const BrowserPreview = ({
             }}
           >
             <span
-              className="location"
+              className="doll__location"
               onClick={clickSelectColor('toolbar_field_text')}
               style={{
                 backgroundColor: colors.toolbar_field_text
               }}
             />
-            <Button
+            {(size === 'large') && <Button
               name="bookmark"
               onClick={clickSelectColor('toolbar_field_text')}
               colorName="toolbar_field_text"
-            />
+            />}
           </span>
-          <Button name="menu" asset={ true }/>
+          <Button name="menu" asset={ size === 'large' }/>
         </section>
       </div>
-      <section className="content">
-        <form className="theme-url-generator">
-          <label>Share your theme:</label>
-          <fieldset>
-            <input type="text" value="https://mythemerules.com" />
-            <input type="submit" value="Copy" />
-          </fieldset>
-        </form>
+      <section className="doll__content">
+        { children }
       </section>
     </div>
   );
