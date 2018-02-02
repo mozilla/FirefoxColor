@@ -6,9 +6,11 @@ import './index.scss';
 
 export const AppBackground = ({ theme }) => {
   const colors = {};
-  Object.keys(theme.colors).forEach(key => {
-    colors[key] = colorToCSS(theme.colors[key]);
-  });
+  if (theme) {
+    Object.keys(theme.colors).forEach(key => {
+      colors[key] = colorToCSS(theme.colors[key]);
+    });
+  }
 
   const bgGradient = `linear-gradient(${colors.toolbar} 32.5%, ${colors.accentcolor} 78.1%)`;
 
