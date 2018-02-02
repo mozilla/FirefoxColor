@@ -3,7 +3,6 @@
 .theme-colors-editor {
   @include unit;
   padding: 6 * $grid;
-  min-width: 600px;
 
   dl {
     position: relative;

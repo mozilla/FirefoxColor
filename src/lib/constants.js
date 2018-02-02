@@ -43,3 +43,73 @@ export const defaultColors = {
     l: 65
   },
 };
+
+export const presetColors = [
+  {
+    toolbar: {
+      h: 0,
+      s: 50,
+      l: 50,
+      a: 100
+    },
+    toolbar_text: {
+      h: 0,
+      s: 0,
+      l: 0,
+    },
+    accentcolor: {
+      h: 0,
+      s: 0,
+      l: 0
+    },
+    textcolor: {
+      h: 0,
+      s: 0,
+      l: 0
+    },
+    toolbar_field: {
+      h: 0,
+      s: 0,
+      l: 0,
+      a: 100
+    },
+    toolbar_field_text: {
+      h: 0,
+      s: 0,
+      l: 100
+    }
+  }, {
+    toolbar: {
+      h: 180,
+      s: 50,
+      l: 50,
+      a: 100
+    },
+    toolbar_text: {
+      h: 360,
+      s: 100,
+      l: 100,
+    },
+    accentcolor: {
+      h: 360,
+      s: 100,
+      l: 100
+    },
+    textcolor: {
+      h: 360,
+      s: 100,
+      l: 100
+    },
+    toolbar_field: {
+      h: 360,
+      s: 100,
+      l: 100,
+      a: 100
+    },
+    toolbar_field_text: {
+      h: 0,
+      s: 0,
+      l: 0
+    }
+  }
+];

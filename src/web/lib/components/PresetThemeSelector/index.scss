@@ -1,0 +1,13 @@
+@import '../../common.scss';
+
+.preset-theme-selector {
+  @include unit;
+  display: grid;
+  grid-gap: $grid * 6;
+  grid-template-columns: repeat(auto-fill, 200px);
+  padding: $grid * 6;
+}
+
+.preset-theme-preview {
+  cursor: pointer;
+}

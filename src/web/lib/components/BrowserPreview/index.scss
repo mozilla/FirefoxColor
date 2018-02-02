@@ -1,147 +1,187 @@
 @import '../../common.scss';
 
 .doll {
-  @include unit;
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
-  overflow: hidden;
   position: relative;
+}
 
-  .background {
-    height: $grid * 10;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
+.doll--small {
+  @include unit('small');
+  width: $grid * 50;
+  height: $grid * 13.25;
+
+  .doll__tabbar {
+    flex: 0 0 $grid * 4;
+    padding: 0 $grid * 4;
+
+
+    li {
+      flex: 0 0 $grid * 14;
+    }
+
+    .title {
+      height: $grid;
+      width: $grid * 8;
+      border-radius: 2px;
+    }
   }
 
-  .tabbar {
-    display: flex;
+  .doll__toolbar-wrapper {
+    background-position-y: $grid * -4;
+    flex: $grid * 6.75;
+  }
+
+  .doll__toolbar {
+    height: $grid * 6.75;
+    padding: 0 $grid 0 $grid * .5;
+  }
+
+  .doll__field {
+    height: $grid * 3.5;
+    margin: 0 $grid;
+
+    .doll__location {
+      border-radius: $grid * .5;
+      height: $grid;
+      margin: 0 $grid * 7.5 0 $grid * 2;
+    }
+  }
+
+  .doll__button {
+    padding: 0 $grid;
+
+    .doll__button-inner {
+      height: $grid * 2;
+      width: $grid * 2;
+    }
+  }
+
+  .doll__content {
+    flex: 0 0 $grid * 2.5;
+  }
+}
+
+.doll--large {
+  @include unit('large');
+  .doll__tabbar {
     flex: 0 0 $grid * 20;
-    list-style-type: none;
-    margin: 0;
     padding: 0 $grid * 12.5;
 
     li {
-      align-items: center;
-      display: flex;
-      flex-direction: row;
       flex: 0 0 $grid * 55;
-      font-size: $grid * 3;
-      justify-content: center;
-      margin: 0;
       padding: $grid * 2;
+    }
 
-      .title {
-        border-radius: 5px;
-        height: 10px;
-        width: 160px;
-      }
+    .title {
+      border-radius: 5px;
+      height: 10px;
+      width: 160px;
     }
   }
 
-  .toolbar {
-    align-items: center;
-    display: flex;
+  .doll__toolbar-wrapper {
+    background-position-y: -80px;
+    flex: 0 0 $grid * 19;
+  }
+
+  .doll__toolbar {
     height: 96px;
     padding: 0 $grid * 2.5 0 $grid * 6.5;
+  }
 
-    .field {
-      align-items: center;
-      border-radius: 3px;
-      display: flex;
-      flex-grow: 1;
-      font-size: $grid * 5;
-      height: 42px;
-      margin: $grid $grid * 2.5 $grid $grid * 7.5;
+  .doll__field {
+    font-size: $grid * 5;
+    height: $grid * 10.5;
+    margin: $grid $grid * 2.5 $grid $grid * 7.5;
 
-      .button {
+    .doll__location {
+      border-radius: 5px;
+      height: 10px;
+      margin: 0 0 0 $grid * 10;
+    }
+
+    .doll__button {
+      flex: 0 0 18px;
+      height: 18px;
+      margin: 16px;
+      padding: 0;
+
+      .doll__button-inner {
         flex: 0 0 18px;
         height: 18px;
-        margin: 16px;
-        padding: 0;
-
-        .button-inner {
-          flex: 0 0 18px;
-          height: 18px;
-        }
-      }
-
-      .location {
-        border-radius: 5px;
-        flex: 1;
-        height: 10px;
-        margin: 0 0 0 $grid * 10;
-      }
-    }
-    
-    .button {
-      align-items: center;
-      display: flex;
-      flex-grow: 0;
-      margin: 0;
-      padding: 0 $grid * 3.5;
-
-      .button-inner {
-        border-radius: 50%;
-        height: 24px;
-        width: 24px;
-      }
-
-      > div > div {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-      }
-
-      img, svg {
-        width: 24px;
-        height: 24px;
       }
     }
   }
 
-  .content{
-    flex: 1;
-    font-size: 16px;
-    padding: $grid * 4;
-    display: flex;
-    
-    .theme-url-generator {
-      justify-content: flex-end;
+  .doll__button {
+    padding: 0 $grid * 3.5;
+
+    .doll__button-inner {
+      height: 24px;
+      width: 24px;
+    }
+
+    > div > div {
+      align-items: center;
       display: flex;
-      flex-direction: column;
-      padding: $grid * 6;
+      justify-content: center;
+    }
 
-      label {
-        padding-bottom: $grid * 3;
-      }
+    img, svg {
+      width: 24px;
+      height: 24px;
+    }
+  }
 
-      fieldset {
-        border: 0;
-        margin: 0;
-        padding: 0;
-      }
+  .doll__content {
+    display: flex;
+    flex: 1;
+    padding: $grid * 4;
+  }
+}
 
-      input[type="text"] {
-        border-radius: 3px 0 0 3px;
-        border: 1px solid var(--grey-30);
-        font-size: 16px;
-        height: $grid * 10;
-        padding: 0 $grid * 2;
-        width: 320px;
-      }
+.doll__tabbar {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
 
-      input[type="submit"] {
-        @include buttonDefault;
-        border-radius: 0 3px 3px 0;
-        border: 0;
-        font-size: 16px;
-        height: 40px;
-        min-width: 90px;
-      }
+  li {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+
+    > p {
+      margin: 0;
     }
   }
 }
 
+.doll__toolbar {
+  align-items: center;
+  display: flex;
+
+  .doll__field {
+    align-items: center;
+    border-radius: 3px;
+    display: flex;
+    flex-grow: 1;
+
+    .doll__location {
+      flex: 1;
+    }
+  }
+
+  .doll__button {
+    align-items: center;
+    display: flex;
+    flex-grow: 0;
+    margin: 0;
+
+    .doll__button-inner {
+      border-radius: 50%;
+    }
+  }
+}

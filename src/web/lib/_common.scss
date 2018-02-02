@@ -39,9 +39,9 @@ $grid: 4px;
   }
 }
 
-@mixin unit {
-  border-radius: var(--unit-border-radius);
-  box-shadow: var(--unit-box-shadow);
+@mixin unit($size: 'large') {
+  border-radius: var(--#{$size}-unit-border-radius);
+  box-shadow: var(--#{$size}-unit-box-shadow);
   background: var(--white);
   overflow: hidden;
 }
