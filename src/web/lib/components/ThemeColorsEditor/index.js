@@ -1,8 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { SketchPicker } from 'react-color';
-
-import { colorLabels } from '../../../../lib/constants';
+import { colorLabels, colorsWithAlpha } from '../../../../lib/constants';
 import { colorToCSS } from '../../../../lib/utils';
 
 import './index.scss';
@@ -36,6 +35,7 @@ export default class ThemeColorsEditor extends React.Component {
               >
                 <SketchPicker
                   color={{ h: color.h, s: color.s, l: color.l, a: color.a * 0.01 }}
+                  disableAlpha={!colorsWithAlpha.includes(name)}
                   onChangeComplete={({ hsl: { h, s, l, a } }) =>
                     setColor({ name, h, s: s * 100, l: l * 100, a: a * 100 })}
                 />
