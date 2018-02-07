@@ -4,6 +4,30 @@
   @include unit;
   padding: 6 * $grid;
 
+  .undoRedo {
+    text-align: right;
+
+    button {
+      background: transparent;
+      border: none;
+      height: 36px;
+      margin: 20px;
+      padding: 0;
+      width: 36px;
+
+      &.disabled {
+        opacity: 0.4;
+      }
+      &:hover {
+        background: rgba(12, 12, 13, 0.1);
+      }
+      &:active {
+        background: rgba(12, 12, 13, 0.2);
+        padding: 0;
+      }
+    }
+  }
+
   dl {
     position: relative;
     margin: 0;
@@ -46,7 +70,7 @@
     dd {
       display: none;
       position: absolute;
-      left: 55%;
+      right: 10px;
       top: 0;
 
       &.selected {

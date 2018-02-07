@@ -15,6 +15,8 @@ import './index.scss';
 
 const mapStateToProps = state => ({
   theme: selectors.theme(state),
+  themeCanUndo: selectors.themeCanUndo(state),
+  themeCanRedo: selectors.themeCanRedo(state),
   hasExtension: selectors.hasExtension(state),
   selectedColor: selectors.selectedColor(state)
 });
@@ -24,6 +26,8 @@ const mapDispatchToProps = dispatch => ({
   setColor: args => dispatch(actions.theme.setColor(args)),
   setTheme: args => dispatch(actions.theme.setTheme(args)),
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
+  undo: () => dispatch(actions.theme.undo()),
+  redo: () => dispatch(actions.theme.redo())
 });
 
 export const AppComponent = ({
@@ -31,12 +35,16 @@ export const AppComponent = ({
   urlEncodeTheme,
   clipboard,
   theme,
+  themeCanUndo,
+  themeCanRedo,
   hasExtension,
   selectedColor,
   setColor,
   setTheme,
   setSelectedColor,
-  setBackground
+  setBackground,
+  undo,
+  redo
 }) =>
   <div className="app">
     <AppBackground {...{ theme }} />
@@ -49,9 +57,16 @@ export const AppComponent = ({
       <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
         <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
       </BrowserPreview>
-      <ThemeColorsEditor
-        {...{ theme, selectedColor, setColor, setSelectedColor }}
-      />
+      <ThemeColorsEditor {...{
+        theme,
+        selectedColor,
+        setColor,
+        setSelectedColor,
+        undo,
+        redo,
+        themeCanUndo,
+        themeCanRedo
+      }} />
       <PresetThemeSelector {...{ setSelectedColor, setTheme }}/>
       <ThemeBackgroundPicker {...{ theme, setBackground }} />
     </div>
