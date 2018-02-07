@@ -9,6 +9,11 @@ export const colorLabels = {
   toolbar_field_text: 'Toolbar Input Text Color'
 };
 
+export const colorsWithAlpha = [
+  'toolbar',
+  'toolbar_field'
+];
+
 export const defaultColors = {
   toolbar: {
     h: 180,
