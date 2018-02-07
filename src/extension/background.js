@@ -1,5 +1,8 @@
 import { makeLog, colorToCSS } from '../lib/utils';
 
+// Blank 1x1 PNG from http://png-pixel.com/
+const BLANK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+
 const log = makeLog('background');
 
 const bgImages = require.context('../images/', false, /bg-.*\.png/);
@@ -53,7 +56,9 @@ const applyTheme = ({ theme }) => {
 
   const newTheme = {
     images: {
-      headerURL: backgroundImage,
+      // HACK: use a transparent pixel image for headerURL - because headerURL
+      // won't tile but additional_backgrounds won't appear without it.
+      headerURL: BLANK_IMAGE,
       additional_backgrounds: [backgroundImage]
     },
     properties: {
