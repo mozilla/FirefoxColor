@@ -70,4 +70,8 @@ const applyTheme = ({ theme }) => {
   browser.theme.update(newTheme);
 };
 
+browser.windows.onCreated.addListener(() => {
+  fetchTheme().then(applyTheme);
+});
+
 init();
