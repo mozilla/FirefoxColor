@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import queryString from 'query-string';
+import Clipboard from 'clipboard';
 
 // import { makeLog } from '../lib/utils';
 import { CHANNEL_NAME } from '../lib/constants';
@@ -16,6 +17,8 @@ import './index.scss';
 
 // const log = makeLog('web');
 
+const clipboard = new Clipboard('.clipboardButton');
+
 const addonUrl = process.env.ADDON_URL;
 
 const PING_PERIOD = 1000;
@@ -23,6 +26,12 @@ const MAX_OUTSTANDING_PINGS = 2;
 let outstandingPings = 0;
 
 const jsonCodec = JsonUrl('lzma');
+
+const urlEncodeTheme = theme =>
+  jsonCodec.compress(theme).then(value => {
+    const { protocol, host, pathname } = window.location;
+    return `${protocol}//${host}${pathname}?theme=${value}`;
+  });
 
 const postMessage = (type, data = {}) =>
   window.postMessage(
@@ -41,14 +50,8 @@ const updateHistoryMiddleware = ({ getState }) => next => action => {
   if (!action.meta || !action.meta.popstate) {
     // Only update history if this action wasn't from popstate event.
     const theme = selectors.theme(getState());
-    jsonCodec.compress(theme).then(value => {
-      const { protocol, host, pathname } = window.location;
-      window.history.pushState(
-        { theme },
-        '',
-        `${protocol}//${host}${pathname}?theme=${value}`
-      );
-    });
+    urlEncodeTheme(theme).then(url =>
+      window.history.pushState({ theme }, '', url));
   }
   return returnValue;
 };
@@ -103,7 +106,7 @@ setInterval(() => {
 
 render(
   <Provider store={store}>
-    <App addonUrl={addonUrl} />
+    <App {...{ addonUrl, urlEncodeTheme, clipboard }} />
   </Provider>,
   document.getElementById('root')
 );

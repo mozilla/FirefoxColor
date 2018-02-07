@@ -28,6 +28,8 @@ const mapDispatchToProps = dispatch => ({
 
 export const AppComponent = ({
   addonUrl,
+  urlEncodeTheme,
+  clipboard,
   theme,
   hasExtension,
   selectedColor,
@@ -45,7 +47,7 @@ export const AppComponent = ({
         <p>A Firefox Test Pilot experiment</p>
       </header>
       <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
-        <ThemeUrl />
+        <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
       </BrowserPreview>
       <ThemeColorsEditor
         {...{ theme, selectedColor, setColor, setSelectedColor }}
