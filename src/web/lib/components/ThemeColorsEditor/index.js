@@ -6,13 +6,40 @@ import { colorToCSS } from '../../../../lib/utils';
 
 import './index.scss';
 
+import iconRedo from './icon_redo.svg';
+import iconUndo from './icon_undo.svg';
+import iconReset from './icon_reset.svg';
+
+export const UndoRedoButtons = ({
+  undo,
+  redo,
+  themeCanUndo,
+  themeCanRedo
+}) => (
+  <div className="undoRedo">
+    <button className={classnames('undo', { disabled: !themeCanUndo })} onClick={undo}>
+      <img src={iconUndo} />
+    </button>
+    <button className={classnames('redo', { disabled: !themeCanRedo })} onClick={redo}>
+      <img src={iconRedo} />
+    </button>
+    <button className="reset">
+      <img src={iconReset} />
+    </button>
+  </div>
+);
+
 export default class ThemeColorsEditor extends React.Component {
   render() {
     const {
       theme: { colors },
+      themeCanUndo,
+      themeCanRedo,
       selectedColor,
       setColor,
-      setSelectedColor
+      setSelectedColor,
+      undo,
+      redo
     } = this.props;
 
     return (
@@ -43,6 +70,7 @@ export default class ThemeColorsEditor extends React.Component {
             ];
           })}
         </dl>
+        <UndoRedoButtons {...{ undo, redo, themeCanUndo, themeCanRedo }} />
       </div>
     );
   }

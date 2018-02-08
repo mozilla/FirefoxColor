@@ -81,7 +81,8 @@
     "react-svg": "^2.1.22",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
-    "redux-devtools-extension": "^2.13.2"
+    "redux-devtools-extension": "^2.13.2",
+    "redux-undo": "^1.0.0-beta9-9-7"
   },
   "extensionManifest": {
     "name": "ThemesRFun",
