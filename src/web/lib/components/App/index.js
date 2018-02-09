@@ -9,6 +9,7 @@ import ThemeColorsEditor from '../ThemeColorsEditor';
 import PresetThemeSelector from '../PresetThemeSelector';
 import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
 import ExtensionInstallButton from '../ExtensionInstallButton';
+import SharedThemeDialog from '../SharedThemeDialog';
 import ThemeUrl from '../ThemeUrl';
 
 import './index.scss';
@@ -18,13 +19,19 @@ const mapStateToProps = state => ({
   themeCanUndo: selectors.themeCanUndo(state),
   themeCanRedo: selectors.themeCanRedo(state),
   hasExtension: selectors.hasExtension(state),
-  selectedColor: selectors.selectedColor(state)
+  selectedColor: selectors.selectedColor(state),
+  shouldOfferPendingTheme: selectors.shouldOfferPendingTheme(state),
+  pendingTheme: selectors.pendingTheme(state)
 });
 
 const mapDispatchToProps = dispatch => ({
   setBackground: args => dispatch(actions.theme.setBackground(args)),
   setColor: args => dispatch(actions.theme.setColor(args)),
-  setTheme: args => dispatch(actions.theme.setTheme(args)),
+  setTheme: args => dispatch({
+    ...actions.theme.setTheme(args),
+    meta: { userEdit: true }
+  }),
+  clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
   undo: () => dispatch(actions.theme.undo()),
   redo: () => dispatch(actions.theme.redo())
@@ -40,6 +47,9 @@ export const AppComponent = ({
   hasExtension,
   selectedColor,
   setColor,
+  pendingTheme,
+  shouldOfferPendingTheme,
+  clearPendingTheme,
   setTheme,
   setSelectedColor,
   setBackground,
@@ -47,6 +57,8 @@ export const AppComponent = ({
   redo
 }) =>
   <div className="app">
+    {hasExtension && shouldOfferPendingTheme &&
+      <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />}
     <AppBackground {...{ theme }} />
     {!hasExtension && <ExtensionInstallButton {...{ addonUrl }} />}
     <div className="app-content">
@@ -67,7 +79,7 @@ export const AppComponent = ({
         themeCanUndo,
         themeCanRedo
       }} />
-      <PresetThemeSelector {...{ setSelectedColor, setTheme }}/>
+      <PresetThemeSelector {...{ setTheme }}/>
       <ThemeBackgroundPicker {...{ theme, setBackground }} />
     </div>
   </div>;

@@ -6,7 +6,7 @@ import { presetColors } from '../../../../lib/constants';
 
 import './index.scss';
 
-export const PresetThemeSelector = ({ setSelectedColor, setTheme }) =>
+export const PresetThemeSelector = ({ setTheme }) =>
   <div className="preset-theme-selector">
     { presetColors.map((colors, key) => {
       const theme = {
@@ -15,7 +15,7 @@ export const PresetThemeSelector = ({ setSelectedColor, setTheme }) =>
       };
       return (
         <div key={key} className="preset-theme-preview">
-          <BrowserPreview {...{ size: 'small', theme, setSelectedColor, setTheme }} />
+          <BrowserPreview {...{ size: 'small', theme, setTheme }} />
         </div>
       );
     })}

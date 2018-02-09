@@ -18,7 +18,7 @@ export const BrowserPreview = ({
   setTheme = null
 }) => {
   const clickSelectColor = name => e => {
-    if (size === 'large') {
+    if (setSelectedColor) {
       setSelectedColor({ name });
       e.stopPropagation();
     }
@@ -30,7 +30,6 @@ export const BrowserPreview = ({
       setTheme({ theme });
       e.stopPropagation();
     }
-
     return false;
   };
 
