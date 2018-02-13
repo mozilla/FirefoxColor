@@ -11,6 +11,15 @@ $grid: 4px;
   text-decoration: none;
   transition: background 50ms;
   width: 200px;
+  background: rgba(12,12,13,0.10);
+
+  &:hover {
+    background: rgba(12,12,13,0.20);
+  }
+
+  &:active {
+    background: rgba(12,12,13,0.30);
+  }
 }
 
 @mixin buttonPrimary {
@@ -45,6 +54,3 @@ $grid: 4px;
   background: var(--white);
   overflow: hidden;
 }
-
-
-
