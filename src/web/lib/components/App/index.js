@@ -10,6 +10,7 @@ import PresetThemeSelector from '../PresetThemeSelector';
 import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
 import ExtensionInstallButton from '../ExtensionInstallButton';
 import SharedThemeDialog from '../SharedThemeDialog';
+import AppLoadingIndicator from '../AppLoadingIndicator';
 import ThemeUrl from '../ThemeUrl';
 
 import './index.scss';
@@ -19,6 +20,7 @@ const mapStateToProps = state => ({
   themeCanUndo: selectors.themeCanUndo(state),
   themeCanRedo: selectors.themeCanRedo(state),
   hasExtension: selectors.hasExtension(state),
+  loaderDelayExpired: selectors.loaderDelayExpired(state),
   selectedColor: selectors.selectedColor(state),
   shouldOfferPendingTheme: selectors.shouldOfferPendingTheme(state),
   pendingTheme: selectors.pendingTheme(state)
@@ -45,6 +47,7 @@ export const AppComponent = ({
   themeCanUndo,
   themeCanRedo,
   hasExtension,
+  loaderDelayExpired,
   selectedColor,
   setColor,
   pendingTheme,
@@ -57,6 +60,7 @@ export const AppComponent = ({
   redo
 }) =>
   <div className="app">
+    {!loaderDelayExpired && <AppLoadingIndicator />}
     {hasExtension && shouldOfferPendingTheme &&
       <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />}
     <AppBackground {...{ theme }} />
