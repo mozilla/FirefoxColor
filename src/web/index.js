@@ -21,8 +21,10 @@ const clipboard = new Clipboard('.clipboardButton');
 
 const addonUrl = process.env.ADDON_URL;
 
+// Period after which app loading indicator will disappear if add-on not found
+const LOADER_DELAY_PERIOD = 500;
 const PING_PERIOD = 1000;
-const MAX_OUTSTANDING_PINGS = 2;
+const MAX_OUTSTANDING_PINGS = 3;
 let outstandingPings = 0;
 
 const jsonCodec = JsonUrl('lzma');
@@ -124,6 +126,36 @@ render(
 );
 
 /**
+ * We display a loading indicator on startup that overlays the rest of the app.
+ * Several Redux state changes happen immediately after startup.
+ *
+ * We set up a timer that re-starts with each state change. Once no more state
+ * changes come and that timer expires, we consider loading done and dismiss
+ * the indicator.
+ */
+const unsubscribeLoader = store.subscribe(() => {
+  if (selectors.loaderDelayExpired(store.getState())) {
+    // State settled down long enough for timer to expire - stop listening.
+    unsubscribeLoader();
+  } else {
+    // Reset the timer again.
+    startLoaderDelay();
+  }
+});
+
+// Utility to (re)start up a timer to dismiss the loading indicator
+let loaderTimer = null;
+function startLoaderDelay() {
+  if (loaderTimer) {
+    clearTimeout(loaderTimer);
+  }
+  loaderTimer = setTimeout(
+    () => store.dispatch(actions.ui.setLoaderDelayExpired(true)),
+    LOADER_DELAY_PERIOD
+  );
+}
+
+/**
  * Some notes on the startup flow, here:
  *
  * If there's no ?theme param, just ask for a current theme from the add-on. If
@@ -147,11 +179,12 @@ render(
  * For more details on this flow, check out src/lib/store.js - pay particular
  * attention to the logic involved in the shouldOfferPendingTheme selector.
  */
-
 const params = queryString.parse(window.location.search);
 if (!params.theme) {
   // Fire off a message to request current theme from the add-on.
   postMessage('fetchTheme');
+  // The add-on may never answer, so start the loader delay.
+  startLoaderDelay();
 } else {
   log('Received shared theme');
   urlDecodeTheme(params.theme).then(theme => {

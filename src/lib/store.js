@@ -12,7 +12,8 @@ export const actions = {
     'SET_SELECTED_COLOR',
     'SET_HAS_EXTENSION',
     'SET_PENDING_THEME',
-    'CLEAR_PENDING_THEME'
+    'CLEAR_PENDING_THEME',
+    'SET_LOADER_DELAY_EXPIRED'
   ),
   theme: {
     ...createActions({}, ...themeChangeActions),
@@ -30,6 +31,7 @@ const themesEqual = (themeA, themeB) =>
 
 export const selectors = {
   hasExtension: state => state.ui.hasExtension,
+  loaderDelayExpired: state => state.ui.loaderDelayExpired,
   selectedColor: state => state.ui.selectedColor,
   shouldOfferPendingTheme: state =>
     !state.ui.userHasEdited &&
@@ -57,6 +59,10 @@ export const reducers = {
         ...state,
         hasExtension
       }),
+      SET_LOADER_DELAY_EXPIRED: (state, { payload: loaderDelayExpired }) => ({
+        ...state,
+        loaderDelayExpired
+      }),
       SET_THEME: (state, { meta }) => ({
         ...state,
         userHasEdited: meta && meta.userEdit ? true : state.userHasEdited
@@ -68,7 +74,8 @@ export const reducers = {
       userHasEdited: false,
       pendingTheme: null,
       selectedColor: 'toolbar',
-      hasExtension: false
+      hasExtension: false,
+      loaderDelayExpired: false
     }
   ),
   theme: undoable(
