@@ -1,4 +1,4 @@
-import { makeLog, colorToCSS } from '../lib/utils';
+import { makeLog, colorToCSS, normalizeTheme } from '../lib/utils';
 
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
@@ -31,8 +31,9 @@ const messageHandlers = {
       port.postMessage({ type: 'fetchedTheme', theme })
     );
   },
-  setTheme: ({ message: { theme } }) => {
-    log('setTheme', theme);
+  setTheme: ({ message: { theme: themeIn } }) => {
+    log('setTheme', themeIn);
+    const theme = normalizeTheme(themeIn);
     storeTheme({ theme });
     applyTheme({ theme });
   },
@@ -47,7 +48,6 @@ const storeTheme = ({ theme }) => browser.storage.local.set({ theme });
 
 const applyTheme = ({ theme }) => {
   log('applyTheme', theme);
-
   if (!theme) { return; }
 
   const backgroundImage = bgImages.keys().includes(theme.images.headerURL)

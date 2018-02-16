@@ -1,7 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 import { createActions, handleActions } from 'redux-actions';
 import undoable, { ActionCreators } from 'redux-undo';
-import { defaultColors } from './constants';
+import {
+  normalizeTheme,
+  normalizeThemeColor,
+  normalizeThemeColors
+} from './utils';
 
 // Actions that should trigger a theme update in URL history and the add-on
 export const themeChangeActions = ['SET_THEME', 'SET_COLOR', 'SET_BACKGROUND'];
@@ -48,7 +52,7 @@ export const reducers = {
     {
       SET_PENDING_THEME: (state, { payload: { theme } }) => ({
         ...state,
-        pendingTheme: theme
+        pendingTheme: normalizeTheme(theme)
       }),
       CLEAR_PENDING_THEME: state => ({ ...state, pendingTheme: null }),
       SET_SELECTED_COLOR: (state, { payload: { name } }) => ({
@@ -81,21 +85,24 @@ export const reducers = {
   theme: undoable(
     handleActions(
       {
-        SET_THEME: (state, { payload: { theme } }) => ({ ...theme }),
-        SET_COLORS: (state, { payload: { colors } }) => ({ ...state, colors }),
+        SET_THEME: (state, { payload: { theme } }) => normalizeTheme(theme),
+        SET_COLORS: (state, { payload: { colors } }) => ({
+          ...state,
+          colors: normalizeThemeColors(colors)
+        }),
         SET_COLOR: (state, { payload: { name, h, s, l, a } }) => ({
           ...state,
-          colors: { ...state.colors, [name]: { h, s, l, a } }
+          colors: {
+            ...state.colors,
+            [name]: normalizeThemeColor({ h, s, l, a })
+          }
         }),
         SET_BACKGROUND: (state, { payload: { url } }) => ({
           ...state,
           images: { ...state.images, headerURL: url }
         })
       },
-      {
-        images: { headerURL: '' },
-        colors: defaultColors
-      }
+      normalizeTheme()
     )
   )
 };
