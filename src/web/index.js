@@ -10,7 +10,12 @@ import Clipboard from 'clipboard';
 
 import { makeLog } from '../lib/utils';
 import { CHANNEL_NAME } from '../lib/constants';
-import { createAppStore, actions, selectors, themeChangeActions } from '../lib/store';
+import {
+  createAppStore,
+  actions,
+  selectors,
+  themeChangeActions
+} from '../lib/store';
 import App from './lib/components/App';
 
 import './index.scss';
@@ -33,8 +38,7 @@ const urlEncodeTheme = theme =>
     return `${protocol}//${host}${pathname}?theme=${value}`;
   });
 
-const urlDecodeTheme = themeString =>
-  jsonCodec.decompress(themeString);
+const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
 
 const postMessage = (type, data = {}) =>
   window.postMessage(
@@ -57,7 +61,8 @@ const updateHistoryMiddleware = ({ getState }) => next => action => {
   if (!meta.skipHistory && themeChangeActions.includes(action.type)) {
     const theme = selectors.theme(getState());
     urlEncodeTheme(theme).then(url =>
-      window.history.pushState({ theme }, '', url));
+      window.history.pushState({ theme }, '', url)
+    );
   }
   return returnValue;
 };
@@ -67,10 +72,7 @@ const composeEnhancers = composeWithDevTools({});
 const store = createAppStore(
   {},
   composeEnhancers(
-    applyMiddleware(
-      updateExtensionThemeMiddleware,
-      updateHistoryMiddleware
-    )
+    applyMiddleware(updateExtensionThemeMiddleware, updateHistoryMiddleware)
   )
 );
 
@@ -154,20 +156,23 @@ if (!params.theme) {
   postMessage('fetchTheme');
 } else {
   log('Received shared theme');
-  urlDecodeTheme(params.theme).then(theme => {
-    // Set the pending theme - only matters if add-on is installed
-    store.dispatch(actions.ui.setPendingTheme({ theme }));
-    // Set the current editor theme - but skip history & add-on updates
-    store.dispatch({
-      ...actions.theme.setTheme({ theme }),
-      meta: {
-        // Skip updating history for this theme, because it came from the URL
-        skipHistory: true,
-        // Skip updating the add-on for this theme, because it needs approval
-        skipAddon: true
-      }
-    });
-    // Fire off a message to request current theme from the add-on.
-    postMessage('fetchTheme');
-  });
+  urlDecodeTheme(params.theme)
+    .then(theme => {
+      // Set the current editor theme - but skip history & add-on updates
+      store.dispatch({
+        ...actions.theme.setTheme({ theme }),
+        meta: {
+          // Skip updating history for this theme, because it came from the URL
+          skipHistory: true,
+          // Skip updating the add-on for this theme, because it needs approval
+          skipAddon: true
+        }
+      });
+      // Set the pending theme - only matters if add-on is installed
+      store.dispatch(actions.ui.setPendingTheme({ theme }));
+      // Fire off a message to request current theme from the add-on.
+      postMessage('fetchTheme');
+    })
+    // If the theme decoding fails, just ignore it.
+    .catch(() => postMessage('fetchTheme'));
 }
