@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import { createActions, handleActions } from 'redux-actions';
-import undoable, { ActionCreators } from 'redux-undo';
+import undoable, { ActionCreators, ActionTypes } from 'redux-undo';
 import {
   normalizeTheme,
   normalizeThemeColor,
@@ -8,7 +8,13 @@ import {
 } from './utils';
 
 // Actions that should trigger a theme update in URL history and the add-on
-export const themeChangeActions = ['SET_THEME', 'SET_COLOR', 'SET_BACKGROUND'];
+export const themeChangeActions = [
+  'SET_THEME',
+  'SET_COLOR',
+  'SET_BACKGROUND',
+  ActionTypes.UNDO,
+  ActionTypes.REDO
+];
 
 export const actions = {
   ui: createActions(
@@ -20,7 +26,7 @@ export const actions = {
     'SET_LOADER_DELAY_EXPIRED'
   ),
   theme: {
-    ...createActions({}, ...themeChangeActions),
+    ...createActions({}, 'SET_THEME', 'SET_COLOR', 'SET_BACKGROUND'),
     // HACK: Seems like redux-undo doesn't have sub-tree specific undo/redo
     // actions - but let's fake it for now.
     undo: ActionCreators.undo,
