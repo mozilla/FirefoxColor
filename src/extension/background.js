@@ -14,31 +14,32 @@ const init = () => {
     browser.tabs.create({ url: siteUrl })
   );
   browser.runtime.onConnect.addListener(port => {
-    port.onMessage.addListener(
-      message =>
-        message.type in messageHandlers &&
-        messageHandlers[message.type]({ port, message })
-    );
+    port.onMessage.addListener(messageListener(port));
     port.postMessage({ type: 'hello' });
   });
   fetchTheme().then(applyTheme);
 };
 
-const messageHandlers = {
-  fetchTheme: ({ port }) => {
-    log('fetchTheme');
-    fetchTheme().then(({ theme }) =>
-      port.postMessage({ type: 'fetchedTheme', theme })
-    );
-  },
-  setTheme: ({ message: { theme: themeIn } }) => {
-    log('setTheme', themeIn);
-    const theme = normalizeTheme(themeIn);
-    storeTheme({ theme });
-    applyTheme({ theme });
-  },
-  ping: ({ port }) => {
-    port.postMessage({ type: 'pong' });
+const messageListener = port => message => {
+  let theme;
+  switch (message.type) {
+    case 'fetchTheme':
+      log('fetchTheme');
+      fetchTheme().then(({ theme: currentTheme }) =>
+        port.postMessage({ type: 'fetchedTheme', theme: currentTheme })
+      );
+      break;
+    case 'setTheme':
+      theme = normalizeTheme(message.theme);
+      log('setTheme', theme);
+      storeTheme({ theme });
+      applyTheme({ theme });
+      break;
+    case 'ping':
+      port.postMessage({ type: 'pong' });
+      break;
+    default:
+      log('unexpected message', message);
   }
 };
 
