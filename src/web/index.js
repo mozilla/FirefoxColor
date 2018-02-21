@@ -17,6 +17,7 @@ import {
   themeChangeActions
 } from '../lib/store';
 import App from './lib/components/App';
+import storage from './lib/storage';
 
 import './index.scss';
 
@@ -78,6 +79,8 @@ const store = createAppStore(
   )
 );
 
+storage.init(store);
+
 window.addEventListener('popstate', ({ state: { theme } }) =>
   store.dispatch({
     ...actions.theme.setTheme({ theme }),
@@ -122,7 +125,12 @@ setInterval(() => {
 
 render(
   <Provider store={store}>
-    <App {...{ addonUrl, urlEncodeTheme, clipboard }} />
+    <App {...{
+      addonUrl,
+      urlEncodeTheme,
+      clipboard,
+      storage
+    }} />
   </Provider>,
   document.getElementById('root')
 );
