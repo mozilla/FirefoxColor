@@ -1,0 +1,35 @@
+@import '../../common.scss';
+
+$banner-height: 71px;
+
+.banner__content {
+  position: fixed;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  display: flex;
+  height: $banner-height;
+  position: fixed;
+  width: 100%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .05),
+              0 0 10px rgba(0, 0, 0, .05);
+
+  .banner--bottom & {
+    bottom: 0;
+  }
+
+  span {
+    font-size: 20px;
+    padding: 0 10px;
+  }
+
+  .banner__button {
+    @include buttonPrimary;
+    @include button(48px, 18px, 24px);
+  }
+}
+
+.banner__spacer {
+    height: $banner-height;
+}

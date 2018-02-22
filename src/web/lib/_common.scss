@@ -1,24 +1,29 @@
 $grid: 4px;
 
-@mixin button {
+@mixin button($height: 34px, $font: 18px, $border: 2px) {
   align-items: center;
-  border-radius: 2px;
+  border-radius: $border;
   border: none;
+  cursor: pointer;
   display: flex;
-  font-size: 18px;
-  height: 34px;
+  font-size: $font;
+  height: $height;
   justify-content: center;
   text-decoration: none;
   transition: background 50ms;
-  width: 200px;
-  background: rgba(12,12,13,0.10);
+  min-width: 200px;
+  padding: 0 12px;
+}
+
+@mixin buttonSecondary {
+  background: rgba(12, 12, 13, 0.10);
 
   &:hover {
-    background: rgba(12,12,13,0.20);
+    background: rgba(12, 12, 13, 0.20);
   }
 
   &:active {
-    background: rgba(12,12,13,0.30);
+    background: rgba(12, 12, 13, 0.30);
   }
 }
 
@@ -51,6 +56,6 @@ $grid: 4px;
 @mixin unit($size: 'large') {
   border-radius: var(--#{$size}-unit-border-radius);
   box-shadow: var(--#{$size}-unit-box-shadow);
-  background: var(--white);
+  background: var(--white-a96);
   overflow: hidden;
 }
