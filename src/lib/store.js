@@ -23,7 +23,8 @@ export const actions = {
     'SET_HAS_EXTENSION',
     'SET_PENDING_THEME',
     'CLEAR_PENDING_THEME',
-    'SET_LOADER_DELAY_EXPIRED'
+    'SET_LOADER_DELAY_EXPIRED',
+    'SET_SAVED_THEMES'
   ),
   theme: {
     ...createActions({}, 'SET_THEME', 'SET_COLOR', 'SET_BACKGROUND'),
@@ -48,6 +49,7 @@ export const selectors = {
     state.ui.pendingTheme !== null &&
     !themesEqual(state.ui.pendingTheme, state.theme.present),
   pendingTheme: state => state.ui.pendingTheme,
+  savedThemes: state => state.ui.savedThemes,
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0
@@ -61,6 +63,10 @@ export const reducers = {
         pendingTheme: normalizeTheme(theme)
       }),
       CLEAR_PENDING_THEME: state => ({ ...state, pendingTheme: null }),
+      SET_SAVED_THEMES: (state, { payload: { savedThemes } }) => ({
+        ...state,
+        savedThemes
+      }),
       SET_SELECTED_COLOR: (state, { payload: { name } }) => ({
         ...state,
         selectedColor: name
@@ -83,6 +89,7 @@ export const reducers = {
     {
       userHasEdited: false,
       pendingTheme: null,
+      savedThemes: {},
       selectedColor: 'toolbar',
       hasExtension: false,
       loaderDelayExpired: false

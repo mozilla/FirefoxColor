@@ -12,27 +12,29 @@ import ExtensionInstallButton from '../ExtensionInstallButton';
 import SharedThemeDialog from '../SharedThemeDialog';
 import AppLoadingIndicator from '../AppLoadingIndicator';
 import ThemeUrl from '../ThemeUrl';
+import ThemeSaveButton from '../ThemeSaveButton';
+import SavedThemeSelector from '../SavedThemeSelector';
 
 import './index.scss';
 
-const mapStateToProps = state => ({
-  theme: selectors.theme(state),
-  themeCanUndo: selectors.themeCanUndo(state),
-  themeCanRedo: selectors.themeCanRedo(state),
-  hasExtension: selectors.hasExtension(state),
-  loaderDelayExpired: selectors.loaderDelayExpired(state),
-  selectedColor: selectors.selectedColor(state),
-  shouldOfferPendingTheme: selectors.shouldOfferPendingTheme(state),
-  pendingTheme: selectors.pendingTheme(state)
-});
+const mapStateToProps = state => {
+  const mappedSelectors = Object.entries(selectors).reduce(
+    (acc, [name, selector]) => ({ ...acc, [name]: selector(state) }),
+    {}
+  );
+  return {
+    ...mappedSelectors
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   setBackground: args => dispatch(actions.theme.setBackground(args)),
   setColor: args => dispatch(actions.theme.setColor(args)),
-  setTheme: args => dispatch({
-    ...actions.theme.setTheme(args),
-    meta: { userEdit: true }
-  }),
+  setTheme: args =>
+    dispatch({
+      ...actions.theme.setTheme(args),
+      meta: { userEdit: true }
+    }),
   clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
   undo: () => dispatch(actions.theme.undo()),
@@ -51,18 +53,22 @@ export const AppComponent = ({
   selectedColor,
   setColor,
   pendingTheme,
+  savedThemes,
   shouldOfferPendingTheme,
   clearPendingTheme,
   setTheme,
   setSelectedColor,
   setBackground,
   undo,
-  redo
-}) =>
+  redo,
+  storage
+}) => (
   <div className="app">
     {!loaderDelayExpired && <AppLoadingIndicator />}
-    {hasExtension && shouldOfferPendingTheme &&
-      <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />}
+    {hasExtension &&
+      shouldOfferPendingTheme && (
+        <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />
+      )}
     <AppBackground {...{ theme }} />
     {!hasExtension && <ExtensionInstallButton {...{ addonUrl }} />}
     <div className="app-content">
@@ -72,20 +78,38 @@ export const AppComponent = ({
       </header>
       <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
         <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
+        <ThemeSaveButton
+          {...{
+            theme,
+            savedThemes,
+            generateThemeKey: storage.generateThemeKey,
+            putTheme: storage.putTheme
+          }}
+        />
       </BrowserPreview>
-      <ThemeColorsEditor {...{
-        theme,
-        selectedColor,
-        setColor,
-        setSelectedColor,
-        undo,
-        redo,
-        themeCanUndo,
-        themeCanRedo
-      }} />
-      <PresetThemeSelector {...{ setTheme }}/>
+      <ThemeColorsEditor
+        {...{
+          theme,
+          selectedColor,
+          setColor,
+          setSelectedColor,
+          undo,
+          redo,
+          themeCanUndo,
+          themeCanRedo
+        }}
+      />
+      <PresetThemeSelector {...{ setTheme }} />
+      <SavedThemeSelector
+        {...{
+          setTheme,
+          savedThemes,
+          deleteTheme: storage.deleteTheme
+        }}
+      />
       <ThemeBackgroundPicker {...{ theme, setBackground }} />
     </div>
-  </div>;
+  </div>
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
