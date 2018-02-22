@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 
 import { actions, selectors } from '../../../../lib/store';
 
+import AppHeader from '../AppHeader';
 import AppBackground from '../AppBackground';
 import BrowserPreview from '../BrowserPreview';
 import ThemeColorsEditor from '../ThemeColorsEditor';
 import PresetThemeSelector from '../PresetThemeSelector';
 import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
-import ExtensionInstallButton from '../ExtensionInstallButton';
+import Banner from '../Banner';
 import SharedThemeDialog from '../SharedThemeDialog';
 import AppLoadingIndicator from '../AppLoadingIndicator';
 import ThemeUrl from '../ThemeUrl';
@@ -64,12 +65,9 @@ export const AppComponent = ({
     {hasExtension && shouldOfferPendingTheme &&
       <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />}
     <AppBackground {...{ theme }} />
-    {!hasExtension && <ExtensionInstallButton {...{ addonUrl }} />}
+    {!hasExtension && <Banner {...{ addonUrl, bottom: true }} />}
     <div className="app-content">
-      <header>
-        <h1>THEMEZ𝕽FUN!</h1>
-        <p>A Firefox Test Pilot experiment</p>
-      </header>
+      <AppHeader {...{ hasExtension }} />
       <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
         <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
       </BrowserPreview>

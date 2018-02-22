@@ -1,0 +1,77 @@
+@import '../../common.scss';
+
+
+.app-header {
+  align-items: center;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / -1;
+  justify-content: center;
+
+  .app-header__content {
+    display: flex;
+  }
+
+  //TODO: placeholder for actual app icon
+  .app-header__icon {
+    content: '🚀';
+    background: black;
+    height: 64px;
+    margin-right: 20px;
+    width: 64px;
+    border-radius: 50%;
+  }
+
+  h1 {
+    font-weight: 300;
+    margin: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+
+  .app-header__survey {
+    @include buttonDefault;
+    align-items: center;
+    border-radius: 2px;
+    cursor: pointer;  
+    display: flex;
+    font-size: 14px;
+    height: 28px;
+    justify-content: flex-end;
+    overflow: hidden;
+    padding: 0 5px 0 7px;
+    position: absolute;
+    right: 0;
+    text-decoration: none;
+    transition: size 125ms;
+    user-select: none;
+    white-space: nowrap;
+    width: 28px;
+    transition: width 200ms;
+    user-select: none;
+
+    span {
+      color: var(--white);
+      transform-origin: right center;
+      transition: transform 200ms, width 200ms;
+    }
+
+    // TODO: we may need to revisit this if/when we l10n
+    &:hover {
+      width: 100px;
+    }
+
+    > div {
+      margin: 0 1px 0 7px;
+
+      > div {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

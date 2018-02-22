@@ -2,7 +2,7 @@
 
 .app-loading-indicator {
   align-items: center;
-  background: rgba(12,12,13,0.95);
+  background: var(--white);
   display: flex;
   height: 100%;
   justify-content: center;
@@ -13,16 +13,37 @@
   z-index: 20000;
 
   p {
-    font-size: 600%;
-    color: white;
-    animation-name: rotate;
-    animation-duration: 2s;
+    align-items: center;
+    animation-direction: alternate;
+    animation-duration: .5s;
     animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    animation-name: scale-and-fade;
+    animation-timing-function: ease-in-out;
+    background: linear-gradient(
+      hsl(0, 50, 50),
+      hsl(60, 50, 50),
+      hsl(120, 50, 50),
+      hsl(180, 50, 50),
+      hsl(240, 50, 50),
+      hsl(300, 50, 50));
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    font-size: 400%;
+    height: 120px;
+    justify-content: center;
+    line-height: 400%;
+    width: 120px;
   }
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(359deg); }
+@keyframes scale-and-fade {
+  from { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    opacity: .8;
+    transform: scale(1.01);
+  }
 }

@@ -1,4 +1,6 @@
-export const CHANNEL_NAME = 'ThemesRFun';
+export const CHANNEL_NAME = 'Themer';
+
+export const surveyUrl = 'https://qsurvey.mozilla.com/s3/Test-Pilot-Themer-Feedback';
 
 export const colorLabels = {
   toolbar: 'Toolbar Color',
