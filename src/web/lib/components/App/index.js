@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { actions, selectors } from '../../../../lib/store';
 
+import AppFooter from '../AppFooter';
 import AppHeader from '../AppHeader';
 import AppBackground from '../AppBackground';
 import BrowserPreview from '../BrowserPreview';
@@ -71,7 +72,7 @@ export const AppComponent = ({
         <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />
       )}
     <AppBackground {...{ theme }} />
-    {!hasExtension && <Banner {...{ addonUrl, bottom: true }} />}
+    {!hasExtension && <Banner {...{ addonUrl, bottom: false }} />}
     <div className="app-content">
       <AppHeader {...{ hasExtension }} />
       <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
@@ -106,6 +107,7 @@ export const AppComponent = ({
         }}
       />
       <ThemeBackgroundPicker {...{ theme, setBackground }} />
+      <AppFooter/>
     </div>
   </div>
 );
