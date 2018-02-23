@@ -10,14 +10,14 @@
   "main": "src/web/index.js",
   "scripts": {
     "start": "npm-run-all --parallel server watch:extension watch:lint",
-    "server": "NODE_ENV=development webpack-dev-server --config webpack.web.js",
+    "server": "cross-env NODE_ENV=development webpack-dev-server --config webpack.web.js",
     "watch": "npm-run-all --parallel watch:*",
-    "watch:web": "NODE_ENV=development webpack --watch --progress --colors --config webpack.web.js",
-    "watch:extension": "NODE_ENV=development webpack --watch --progress --colors --config webpack.extension.js",
+    "watch:web": "cross-env NODE_ENV=development webpack --watch --progress --colors --config webpack.web.js",
+    "watch:extension": "cross-env NODE_ENV=development webpack --watch --progress --colors --config webpack.extension.js",
     "watch:lint": "onchange -p -v \"src/**/*.js\" -- npm run lint",
     "build": "npm-run-all --parallel build:*",
-    "build:web": "NODE_ENV=production webpack -p --config webpack.web.js",
-    "build:extension": "NODE_ENV=production webpack -p --config webpack.extension.js",
+    "build:web": "cross-env NODE_ENV=production webpack -p --config webpack.web.js",
+    "build:extension": "cross-env NODE_ENV=production webpack -p --config webpack.extension.js",
     "clean": "npm-run-all clean:*",
     "clean:web": "rimraf build/web",
     "clean:extension": "rimraf addon.xpi build/extension web-ext-artifacts",
@@ -28,7 +28,7 @@
     "test": "npm run lint",
     "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/mozilla/ThemesRFun.git\"",
     "release:base": "npm-run-all clean build:web sign && mv addon.xpi build/web && npm run deploy",
-    "release:dev": "ADDON_URL='https://mozilla.github.io/ThemesRFun/addon.xpi' SITE_URL='https://mozilla.github.io/ThemesRFun/' npm run release:base"
+    "release:dev": "cross-env ADDON_URL='https://mozilla.github.io/ThemesRFun/addon.xpi' SITE_URL='https://mozilla.github.io/ThemesRFun/' npm run release:base"
   },
   "engines": {
     "node": ">=8.9.4"
@@ -43,6 +43,7 @@
     "babel-preset-node8": "^1.2.0",
     "babel-preset-react": "^6.24.1",
     "copy-webpack-plugin": "^4.2.0",
+    "cross-env": "^5.1.3",
     "css-loader": "^0.28.7",
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^12.1.0",
