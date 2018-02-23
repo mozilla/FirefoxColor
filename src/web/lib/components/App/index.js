@@ -76,7 +76,6 @@ export const AppComponent = ({
     <div className="app-content">
       <AppHeader {...{ hasExtension }} />
       <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
-        <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
         <ThemeSaveButton
           {...{
             theme,
@@ -85,19 +84,21 @@ export const AppComponent = ({
             putTheme: storage.putTheme
           }}
         />
+        {loaderDelayExpired && <ThemeColorsEditor
+          {...{
+            theme,
+            selectedColor,
+            setColor,
+            setSelectedColor,
+            undo,
+            redo,
+            themeCanUndo,
+            themeCanRedo
+          }}
+        />}
+        {loaderDelayExpired && <ThemeBackgroundPicker {...{ theme, setBackground }} />}
       </BrowserPreview>
-      <ThemeColorsEditor
-        {...{
-          theme,
-          selectedColor,
-          setColor,
-          setSelectedColor,
-          undo,
-          redo,
-          themeCanUndo,
-          themeCanRedo
-        }}
-      />
+      <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
       <PresetThemeSelector {...{ setTheme }} />
       <SavedThemeSelector
         {...{
@@ -106,9 +107,8 @@ export const AppComponent = ({
           deleteTheme: storage.deleteTheme
         }}
       />
-      <ThemeBackgroundPicker {...{ theme, setBackground }} />
-      <AppFooter/>
     </div>
+    <AppFooter />
   </div>
 );
 

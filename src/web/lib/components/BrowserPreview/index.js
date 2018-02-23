@@ -33,13 +33,6 @@ export const BrowserPreview = ({
     return false;
   };
 
-  const tabGenerator = () => {
-    const tabTitles = ['Tab One', 'Tab Two'];
-    if (size === 'large') {
-      tabTitles.push('Tab Three');
-    }
-    return tabTitles;
-  };
   const colors = {};
   Object.keys(theme.colors).forEach(key => {
     colors[key] = colorToCSS(theme.colors[key]);
@@ -93,7 +86,7 @@ export const BrowserPreview = ({
           backgroundImage: headerBackgroundImage
         }}
       >
-        {tabGenerator().map((text, key) =>
+        {['Tab One', 'Tab Two'].map((text, key) =>
           <Tab key={key} {...{ text, selected: key === selectedTab }} />
         )}
       </ul>

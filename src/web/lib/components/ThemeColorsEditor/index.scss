@@ -1,8 +1,9 @@
 @import '../../common.scss';
+@import '../../picker.scss';
 
 .theme-colors-editor {
-  @include unit;
-  padding: 6 * $grid;
+  position: absolute;
+  width: 100%;
 
   .undoRedo {
     text-align: right;
@@ -27,55 +28,89 @@
       }
     }
   }
+}
 
-  dl {
-    position: relative;
-    margin: 0;
+.colors {
+  position: relative;
+  margin: 0;
+  width: 100%;
 
-    dt {
-      align-items: center;
-      cursor: pointer;
-      display: flex;
-      font-size: 16px;
-      padding: $grid * 2.5;
-      text-shadow: 0px 0px $grid * 2 #fff;
-      width: 50%;
-      transition: font-size 100ms, color 100ms;
-      height: 50px;
+  .color {
+    @include picker-group;
 
-      span {
-        width: 24px;
-        border-radius: 50%;
-        height: 24px;
-        margin-right: 10px;
-        box-shadow: 0 0 0 1px var(--grey-20);
-      }
+    &.toolbar {
+      top: -44px;
+      left: -40px;
+    }
 
-      &.selected {
-        span {
-          box-shadow: 0 0 0 2px var(--blue-50);
-        }
+    &.toolbar_text {
+      top: -180px;
+      left: -58px;
+      flex-direction: row-reverse;
+      animation-delay: 100ms;
+    }
 
-        font-size: 22px;
-        font-weight: 600;
-        color: var(--blue-50);
-      }
+    &.accentcolor {
+      top: -219px;
+      right: -24px;
+      animation-delay: 200ms;
+    }
 
-      &:hover {
-        background: var(--grey-10);
-        border-radius: 2px;
+    &.textcolor {
+      top: -180px;
+      left: 360px;
+      animation-delay: 300ms;
+    }
+
+    &.toolbar_field {
+      top: -78px;
+      left: 118px;
+      flex-direction: row-reverse;
+      animation-delay: 400ms;
+    }
+
+    &.toolbar_field_text {
+      top: -107px;
+      right: 170px;
+      animation-delay: 500ms;
+    }
+
+    &.accentcolor,
+    &.toolbar,
+    &.toolbar_field_text,
+    &.textcolor {
+      .color__picker {
+        left: -58px;
       }
     }
 
-    dd {
-      display: none;
-      position: absolute;
-      right: 10px;
-      top: 0;
+    &.toolbar_text,
+    &.toolbar_field {
+      .color__picker {
+        right: -56px;
+      }
+    }
 
-      &.selected {
+    &.selected {
+      .color__picker {
         display: block;
       }
     }
   }
+
+  .color__swatch {
+    @include picker-swatch;
+  }
+
+  .color__label {
+    @include picker-text;
+  }
+
+  .color__picker {
+    display: none;
+    position: absolute;
+    top: 58px;
+    z-index: 999;
+  }
 }
+

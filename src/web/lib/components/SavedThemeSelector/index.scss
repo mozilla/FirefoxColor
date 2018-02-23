@@ -1,0 +1,7 @@
+@import '../../common.scss';
+
+.saved-theme-selector {
+  @include unit;
+  grid-column: 1 / -1;
+  padding: 20px;
+}

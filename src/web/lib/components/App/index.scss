@@ -1,8 +1,7 @@
 .app {
-  margin: 0;
+  margin: 0 auto;
   min-height: 100vh;
   position: relative;
-  width: 100%;
 }
 
 .app-content {
@@ -11,9 +10,11 @@
   grid-gap: 20px;
   grid-template-columns: 6fr 5fr;
   grid-template-rows: 131px 320px;
-  margin: 0 20px;
+  margin: 0 auto;
+  min-width: 750px;
   opacity: 0;
   position: relative;
+  width: 80%;
   z-index: 1;
 
   > .doll {
