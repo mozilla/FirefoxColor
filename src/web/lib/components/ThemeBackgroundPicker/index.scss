@@ -1,31 +1,73 @@
 @import '../../common.scss';
+@import '../../picker.scss';
 
 .theme-background-picker {
-  @include unit;
-  grid-column: 1 / -1;
+  @include picker-group;
+  right: 200px;
+  top: -27px;
 
-  .backgrounds {
-    background: var(--white);
-    display: grid;
-    grid-auto-rows: 120px;
-    grid-gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    padding: 24px;
+  .theme-background-picker__swatch {
+    @include picker-swatch;
   }
 
+  .theme-background-picker__text {
+    @include picker-text;
+  }
+
+  .theme-background-picker__backgrounds {
+    @include unit;
+    background: var(--white);
+    position: absolute;
+    top: 61px;
+    left: -3px;
+    padding: 24px;
+    width: 260px;
+    height: 360px;
+    display: none;
+
+    &::before {
+      background-color: var(--white);
+      content: ' ';
+      height: 15px;
+      position: absolute;
+      top: -7px;
+      transform: rotate(45deg);
+      width: 15px;
+    }
+  }
+
+  &.selected {
+    .theme-background-picker__backgrounds {
+      display: block;
+    }
+  }
+
+  .theme-background-picker__backgrounds-inner {
+    display: grid;
+    overflow: auto;
+    grid-auto-rows: 64px;
+    grid-gap: 10px;
+    height: 312px;
+    grid-template-columns: repeat(auto-fill, 64px);
+    padding-bottom: 24px;
+    width: 226px;
+  }
+
+
   .bg {
-    background: white;
+    background: var(--white);
     border: 1px solid transparent;
     cursor: pointer;
     display: flex;
   }
 
-  .bg-inner {
+  .bg__inner {
     border-radius: 3px;
     flex: 1;
   }
 
   .bg.active {
     border: 2px solid var(--teal-60);
+    border-radius: 5px;
   }
 }

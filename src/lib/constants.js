@@ -4,11 +4,11 @@ export const surveyUrl = 'https://qsurvey.mozilla.com/s3/Test-Pilot-Themer-Feedb
 
 export const colorLabels = {
   toolbar: 'Toolbar Color',
-  toolbar_text: 'Toolbar Text Color',
-  accentcolor: 'Tab Bar Background Color',
+  toolbar_text: 'Toolbar Icons and Text',
+  accentcolor: 'Background Color',
   textcolor: 'Background Tab Text Color',
-  toolbar_field: 'Toolbar Input Background Color',
-  toolbar_field_text: 'Toolbar Input Text Color'
+  toolbar_field: 'Search Bar Color',
+  toolbar_field_text: 'Search Text'
 };
 
 export const colorsWithAlpha = [
@@ -18,36 +18,36 @@ export const colorsWithAlpha = [
 
 export const defaultColors = {
   toolbar: {
-    h: 180,
-    s: 44,
-    l: 96,
+    h: 213,
+    s: 43,
+    l: 89,
     a: 100
   },
   toolbar_text: {
-    h: 174,
-    s: 42,
-    l: 65,
+    h: 187,
+    s: 77,
+    l: 53
   },
   accentcolor: {
-    h: 360,
-    s: 100,
-    l: 100
+    h: 213,
+    s: 13,
+    l: 47
   },
   textcolor: {
-    h: 174,
-    s: 42,
-    l: 65
+    h: 187,
+    s: 77,
+    l: 53
   },
   toolbar_field: {
-    h: 360,
-    s: 100,
-    l: 100,
+    h: 213,
+    s: 13,
+    l: 47,
     a: 100
   },
   toolbar_field_text: {
-    h: 174,
-    s: 42,
-    l: 65
+    h: 0,
+    s: 0,
+    l: 100
   },
 };
 

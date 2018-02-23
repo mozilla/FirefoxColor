@@ -90,7 +90,7 @@ export const reducers = {
       userHasEdited: false,
       pendingTheme: null,
       savedThemes: {},
-      selectedColor: 'toolbar',
+      selectedColor: 'none',
       hasExtension: false,
       loaderDelayExpired: false
     }
