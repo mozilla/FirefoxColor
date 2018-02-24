@@ -8,8 +8,8 @@ import './index.scss';
 
 export const AppFooter = () =>
   <footer className="app-footer">
-    <div className="app-footer__legal">
-      <a className="app-footer__legal-link" href="https://www.mozilla.org">
+    <nav className="app-footer__legal">
+      <a className="app-footer__legal-link" href="https://www.mozilla.org" aria-label="Mozilla logo">
         <ReactSVG path={ iconMoz } className="app-footer__legal-logo"/>
       </a>
       <a className="app-footer__legal-link" href="https://www.mozilla.org/about/legal">
@@ -27,15 +27,15 @@ export const AppFooter = () =>
       <a className="app-footer__legal-link" href="https://www.mozilla.org/privacy/websites/#cookies">
         Cookies
       </a>
-    </div>
-    <div className="app-footer__social">
-      <a className="app-footer__social-link" href="https://twitter.com/FxTestPilot">
+    </nav>
+    <nav className="app-footer__social">
+      <a className="app-footer__social-link" href="https://twitter.com/FxTestPilot" aria-label="@FxTestPilot Twitter">
         <ReactSVG path={ iconTwitter } className="app-footer__social-logo"/>
       </a>
-      <a className="app-footer__social-link" href="https://github.com/mozilla/ThemesRFun/">
+      <a className="app-footer__social-link" href="https://github.com/mozilla/ThemesRFun/" aria-label="Themer GitHub">
         <ReactSVG path={ iconGH } className="app-footer__social-logo"/>
       </a>
-    </div>
+    </nav>
   </footer>;
 
 export default AppFooter;
