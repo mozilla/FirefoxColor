@@ -1,34 +1,11 @@
 import React from 'react';
 import classnames from 'classnames';
-import { BlockPicker } from 'react-color';
+import { SketchPicker } from 'react-color';
 import onClickOutside from 'react-onclickoutside';
 import { colorLabels, colorsWithAlpha } from '../../../../lib/constants';
 import { colorToCSS } from '../../../../lib/utils';
 
 import './index.scss';
-
-import iconRedo from './icon_redo.svg';
-import iconUndo from './icon_undo.svg';
-import iconReset from './icon_reset.svg';
-
-export const UndoRedoButtons = ({
-  undo,
-  redo,
-  themeCanUndo,
-  themeCanRedo
-}) => (
-  <div className="undoRedo">
-    <button className={classnames('undo', { disabled: !themeCanUndo })} onClick={undo}>
-      <img src={iconUndo} />
-    </button>
-    <button className={classnames('redo', { disabled: !themeCanRedo })} onClick={redo}>
-      <img src={iconRedo} />
-    </button>
-    <button className="reset">
-      <img src={iconReset} />
-    </button>
-  </div>
-);
 
 class ThemeColorsEditor extends React.Component {
   handleClickOutside() {
@@ -38,13 +15,9 @@ class ThemeColorsEditor extends React.Component {
   render() {
     const {
       theme: { colors },
-      themeCanUndo,
-      themeCanRedo,
       selectedColor,
       setColor,
-      setSelectedColor,
-      undo,
-      redo
+      setSelectedColor
     } = this.props;
 
     return (
@@ -61,7 +34,7 @@ class ThemeColorsEditor extends React.Component {
                 <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />
                 <span className="color__label">{colorLabels[name]}</span>
                 <span className="color__picker">
-                  <BlockPicker
+                  <SketchPicker
                     color={{ h: color.h, s: color.s, l: color.l, a: color.a * 0.01 }}
                     disableAlpha={!colorsWithAlpha.includes(name)}
                     onChangeComplete={({ hsl: { h, s, l, a } }) =>
@@ -72,7 +45,6 @@ class ThemeColorsEditor extends React.Component {
             ];
           })}
         </ul>
-        <UndoRedoButtons {...{ undo, redo, themeCanUndo, themeCanRedo }} />
       </div>
     );
   }

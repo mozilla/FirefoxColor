@@ -2,23 +2,28 @@
   margin: 0 auto;
   min-height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 750px;
+  max-width: 1100px;
+  justify-content: flex-start;
 }
 
-.app-content {
-  animation: fade-in forwards 500ms ease-in;
+.app__content {
+  animation: fade-in forwards 250ms ease-in;
   display: grid;
   grid-gap: 20px;
-  grid-template-columns: 6fr 5fr;
-  grid-template-rows: 131px 320px;
   margin: 0 auto;
-  min-width: 750px;
   opacity: 0;
   position: relative;
-  width: 80%;
   z-index: 1;
+  width: 90%;
 
-  > .doll {
-      grid-column: 1 / -1;
+  .app__controls {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 1fr 200px;
+    padding: 40px;
   }
 }
 

@@ -4,30 +4,6 @@
 .theme-colors-editor {
   position: absolute;
   width: 100%;
-
-  .undoRedo {
-    text-align: right;
-
-    button {
-      background: transparent;
-      border: none;
-      height: 36px;
-      margin: 20px;
-      padding: 0;
-      width: 36px;
-
-      &.disabled {
-        opacity: 0.4;
-      }
-      &:hover {
-        background: rgba(12, 12, 13, 0.1);
-      }
-      &:active {
-        background: rgba(12, 12, 13, 0.2);
-        padding: 0;
-      }
-    }
-  }
 }
 
 .colors {
@@ -39,39 +15,39 @@
     @include picker-group;
 
     &.toolbar {
-      top: -44px;
-      left: -40px;
+      top: -28px;
+      left: -24px;
     }
 
     &.toolbar_text {
-      top: -180px;
-      left: -58px;
+      top: -164px;
+      left: -42px;
       flex-direction: row-reverse;
       animation-delay: 100ms;
     }
 
     &.accentcolor {
-      top: -219px;
-      right: -24px;
+      top: -203px;
+      right: -40px;
       animation-delay: 200ms;
     }
 
     &.textcolor {
-      top: -180px;
-      left: 360px;
+      top: -164px;
+      left: 376px;
       animation-delay: 300ms;
     }
 
     &.toolbar_field {
-      top: -78px;
-      left: 118px;
+      top: -62px;
+      left: 134px;
       flex-direction: row-reverse;
       animation-delay: 400ms;
     }
 
     &.toolbar_field_text {
-      top: -107px;
-      right: 170px;
+      top: -91px;
+      right: 154px;
       animation-delay: 500ms;
     }
 

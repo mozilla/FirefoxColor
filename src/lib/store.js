@@ -50,6 +50,7 @@ export const selectors = {
     !themesEqual(state.ui.pendingTheme, state.theme.present),
   pendingTheme: state => state.ui.pendingTheme,
   savedThemes: state => state.ui.savedThemes,
+  hasSavedThemes: state => Object.keys(state.ui.savedThemes).length > 0,
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0

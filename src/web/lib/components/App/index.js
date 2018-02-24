@@ -16,6 +16,7 @@ import AppLoadingIndicator from '../AppLoadingIndicator';
 import ThemeUrl from '../ThemeUrl';
 import ThemeSaveButton from '../ThemeSaveButton';
 import SavedThemeSelector from '../SavedThemeSelector';
+import UndoRedoButtons from '../UndoRedoButtons';
 
 import './index.scss';
 
@@ -56,6 +57,7 @@ export const AppComponent = ({
   setColor,
   pendingTheme,
   savedThemes,
+  hasSavedThemes,
   shouldOfferPendingTheme,
   clearPendingTheme,
   setTheme,
@@ -73,41 +75,50 @@ export const AppComponent = ({
       )}
     <AppBackground {...{ theme }} />
     {!hasExtension && <Banner {...{ addonUrl, bottom: false }} />}
-    <div className="app-content">
-      <AppHeader {...{ hasExtension }} />
-      <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
-        <ThemeSaveButton
-          {...{
-            theme,
-            savedThemes,
-            generateThemeKey: storage.generateThemeKey,
-            putTheme: storage.putTheme
-          }}
-        />
-        {loaderDelayExpired && <ThemeColorsEditor
-          {...{
-            theme,
-            selectedColor,
-            setColor,
-            setSelectedColor,
-            undo,
-            redo,
-            themeCanUndo,
-            themeCanRedo
-          }}
-        />}
-        {loaderDelayExpired && <ThemeBackgroundPicker {...{ theme, setBackground }} />}
-      </BrowserPreview>
-      <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
-      <PresetThemeSelector {...{ setTheme }} />
-      <SavedThemeSelector
-        {...{
-          setTheme,
-          savedThemes,
-          deleteTheme: storage.deleteTheme
-        }}
-      />
-    </div>
+    {loaderDelayExpired && (
+      <div className="app__content">
+        <AppHeader {...{ hasExtension }} />
+        <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
+          <div className="app__theme-element-pickers">
+            <ThemeColorsEditor
+              {...{
+                theme,
+                selectedColor,
+                setColor,
+                setSelectedColor
+              }}
+            />
+            <ThemeBackgroundPicker {...{ theme, setBackground }} />
+            {(themeCanUndo || themeCanRedo) && (
+              <UndoRedoButtons
+                {...{ undo, redo, themeCanUndo, themeCanRedo }}
+              />
+            )}
+          </div>
+          <div className="app__controls">
+            <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
+            <ThemeSaveButton
+              {...{
+                theme,
+                savedThemes,
+                generateThemeKey: storage.generateThemeKey,
+                putTheme: storage.putTheme
+              }}
+            />
+          </div>
+        </BrowserPreview>
+        <PresetThemeSelector {...{ setTheme }} />
+        {hasSavedThemes && (
+          <SavedThemeSelector
+            {...{
+              setTheme,
+              savedThemes,
+              deleteTheme: storage.deleteTheme
+            }}
+          />
+        )}
+      </div>
+    )}
     <AppFooter />
   </div>
 );
