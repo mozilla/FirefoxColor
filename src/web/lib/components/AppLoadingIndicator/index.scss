@@ -19,13 +19,15 @@
     animation-iteration-count: infinite;
     animation-name: scale-and-fade;
     animation-timing-function: ease-in-out;
-    background: linear-gradient(
-      hsl(0, 50, 50),
-      hsl(60, 50, 50),
-      hsl(120, 50, 50),
-      hsl(180, 50, 50),
-      hsl(240, 50, 50),
-      hsl(300, 50, 50));
+    background:
+      linear-gradient(
+        hsl(0, 50, 50),
+        hsl(60, 50, 50),
+        hsl(120, 50, 50),
+        hsl(180, 50, 50),
+        hsl(240, 50, 50),
+        hsl(300, 50, 50)
+      );
     border-radius: 50%;
     color: white;
     display: flex;
@@ -38,10 +40,11 @@
 }
 
 @keyframes scale-and-fade {
-  from { 
+  from {
     transform: scale(1);
     opacity: 1;
   }
+
   to {
     opacity: .8;
     transform: scale(1.01);

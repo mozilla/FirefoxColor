@@ -1,6 +1,5 @@
 @import '../../common.scss';
 
-
 .app-footer {
   align-items: flex-end;
   bottom: 0;
@@ -27,7 +26,7 @@
 .app-footer__legal-link {
   color: var(--grey-90);
   margin-right: 2vw;
-  opacity: 0.9;
+  opacity: .9;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -50,10 +49,6 @@
   display: flex;
   justify-content: space-between;
   width: 94px;
-}
-
-.app-footer__social-link {
-  opacity: 0.9;
 }
 
 .app-footer__social-link {
@@ -98,7 +93,7 @@
     padding: 0 0 10px;
   }
 
-.app-footer__social {
+  .app-footer__social {
     align-self: flex-start;
     margin-top: 20px;
   }
