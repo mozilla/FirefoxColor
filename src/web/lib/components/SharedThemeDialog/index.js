@@ -1,13 +1,16 @@
 import React from 'react';
+import Metrics from '../../../../lib/metrics';
 import BrowserPreview from '../BrowserPreview';
 import './index.scss';
 
 export const SharedThemeDialog = ({ pendingTheme, setTheme, clearPendingTheme }) => {
   const onApply = () => {
+    Metrics.receiveTheme('apply', pendingTheme);
     setTheme({ theme: pendingTheme });
     clearPendingTheme();
   };
   const onSkip = () => {
+    Metrics.receiveTheme('reject', pendingTheme);
     clearPendingTheme();
   };
   const onClickBackdrop = ev => {

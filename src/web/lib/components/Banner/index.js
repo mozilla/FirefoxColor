@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { DOWNLOAD_FIREFOX_URL } from '../../../../lib/constants';
+import Metrics from '../../../../lib/metrics';
 
 import './index.scss';
 
@@ -10,7 +11,11 @@ export const Banner = ({ isFirefox, addonUrl, bottom = false }) => (
     {isFirefox ? (
       <div className="banner__content">
         <span>Put the 🔥 in Firefox</span>
-        <a href={addonUrl} className="banner__button">
+        <a
+          href={addonUrl}
+          onClick={() => Metrics.installStart()}
+          className="banner__button"
+        >
           Install Themer
         </a>
       </div>
