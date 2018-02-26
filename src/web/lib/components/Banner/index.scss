@@ -3,23 +3,25 @@
 $banner-height: 71px;
 
 .banner__content {
-  position: fixed;
-  z-index: 999;
   align-items: center;
-  justify-content: center;
   background: var(--white);
-  display: flex;
-  height: $banner-height;
-  position: fixed;
-  width: 100%;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .05),
               0 0 10px rgba(0, 0, 0, .05);
+  display: flex;
+  height: $banner-height;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  width: 100%;
+  z-index: 999;
 
   .banner--bottom & {
     bottom: 0;
   }
 
   span {
+    font-weight: 600;
     font-size: 20px;
     padding: 0 10px;
   }

@@ -32,8 +32,8 @@ export const AppFooter = () =>
       <a className="app-footer__social-link" href="https://twitter.com/FxTestPilot">
         <ReactSVG path={ iconTwitter } className="app-footer__social-logo"/>
       </a>
-      <a className="app-footer__social-link" href="https://twitter.com/FxTestPilot">
-        <ReactSVG path={ iconGH } className="app-footer__legal-logo"/>
+      <a className="app-footer__social-link" href="https://github.com/mozilla/ThemesRFun/">
+        <ReactSVG path={ iconGH } className="app-footer__social-logo"/>
       </a>
     </div>
   </footer>;

@@ -4,6 +4,8 @@ import BrowserPreview from '../BrowserPreview';
 
 import './index.scss';
 
+import iconClose from './close.svg';
+
 export const SavedThemeSelector = ({ setTheme, savedThemes, deleteTheme }) => {
   const sortedSavedThemes = Object.entries(savedThemes).sort(
     ([, aData], [, bData]) => bData.modified - aData.modified
@@ -11,11 +13,11 @@ export const SavedThemeSelector = ({ setTheme, savedThemes, deleteTheme }) => {
 
   return (
     <div className="saved-theme-selector">
-      <p>Saved themes:</p>
+      <h2>Saved themes</h2>
       {sortedSavedThemes.map(([key, { theme }]) => (
         <div key={key} className="saved-theme-preview">
-          <button className="delete-theme" onClick={() => deleteTheme(key)}>
-            Delete
+          <button className="delete-theme" onClick={() => deleteTheme(key)} title="delete">
+            <img src={iconClose} />
           </button>
           <BrowserPreview {...{ size: 'small', theme, setTheme }} />
         </div>

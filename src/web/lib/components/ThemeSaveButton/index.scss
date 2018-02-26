@@ -1,0 +1,14 @@
+@import '../../common.scss';
+.theme-save-button {
+  flex: 0;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  button {
+    @include button;
+    @include buttonSecondary;
+    height: 40px;
+  }
+}

@@ -2,35 +2,25 @@
 
 
 .app-header {
-  align-items: center;
-  align-items: flex-start;
   display: flex;
   flex-direction: column;
-  grid-column: 1 / -1;
-  justify-content: center;
+  height: 120px;
+  padding-top: 40px;
+  align-items: center;
 
   .app-header__content {
     display: flex;
   }
 
-  //TODO: placeholder for actual app icon
-  .app-header__icon {
-    content: '🚀';
-    background: black;
-    height: 64px;
-    margin-right: 20px;
-    width: 64px;
-    border-radius: 50%;
-  }
-
   h1 {
-    font-weight: 300;
     margin: 0;
+    text-align: center;
   }
 
   h3 {
     margin: 0;
     font-size: 16px;
+    text-align: center;
   }
 
   .app-header__survey {
@@ -69,8 +59,8 @@
       margin: 0 1px 0 7px;
 
       > div {
-        display: flex;
         align-items: center;
+        display: flex;
       }
     }
   }

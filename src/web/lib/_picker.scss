@@ -2,7 +2,7 @@
   align-items: center;
   animation-duration: 250ms;
   animation-fill-mode: forwards;
-  animation-name: picker-pop-in;
+  animation-name: pop-in;
   animation-timing-function: ease-out;
   background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .95));
   border-radius: 27px;
@@ -43,18 +43,4 @@
 @mixin picker-text {
   padding-left: $grid * 2.5;
   user-select: none;
-}
-
-@keyframes picker-pop-in {
-  0% {
-    opacity: 0;
-  }
-  80% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
 }

@@ -21,6 +21,7 @@ rules:
   guard-for-in: off
   import/no-named-as-default: off
   import/prefer-default-export: off
+  linebreak-style: off
   no-multi-assign: off
   no-plusplus: off
   no-restricted-syntax: off

@@ -58,3 +58,17 @@ $grid: 4px;
   box-shadow: var(--#{$size}-unit-box-shadow);
   background: var(--white-a96);
 }
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

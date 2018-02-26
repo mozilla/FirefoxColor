@@ -8,6 +8,7 @@ import './index.scss';
 
 export const PresetThemeSelector = ({ setTheme }) =>
   <div className="preset-theme-selector">
+    <h2>Choose a preset theme</h2>
     { presetColors.map((colors, key) => {
       const theme = {
         images: '',

@@ -1,0 +1,51 @@
+.undoRedo {
+  text-align: right;
+  position: absolute;
+  right: -27px;
+  top: -22px;
+
+  button {
+    animation-duration: 250ms;
+    animation-fill-mode: forwards;
+    animation-name: pop-in;
+    animation-timing-function: ease-out;
+    opacity: 0;
+    animation-delay: 250ms;
+    border: 0;
+    height: 56px;
+    padding: 0;
+    width: 56px;
+    cursor: pointer;
+    background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .95));
+    border-radius: 27px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    transition: box-shadow 75ms;
+
+    img {
+      transition: opacity 100ms;
+    }
+
+    &.disabled {
+      background: white;
+
+      img {
+        opacity: .4;
+      }
+    }
+
+    &:not(.disabled):hover {
+      background: var(--white);
+    }
+
+    &:not(.disabled):active {
+      background: var(--white);
+      box-shadow: 0 0 10px rgba(0, 0, 0, .1), 0 0 0 3px var(--blue-40);
+    }
+  }
+
+  .redo {
+    margin-left: 10px;
+    animation-delay: 450ms;
+  }
+}
+
