@@ -99,6 +99,7 @@ window.addEventListener('message', ({ source, data: message }) => {
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
+        postMessage('setTheme', { theme: selectors.theme(store.getState()) });
       }
     }
     if (message.type === 'fetchedTheme') {
