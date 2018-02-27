@@ -236,5 +236,43 @@ export const presetColors = [
       l: 48,
       a: 100
     }
+  }, {
+    // Hotdog Stand 🌭
+    toolbar: {
+      h: 60,
+      s: 100,
+      l: 50,
+      a: 100
+    },
+    toolbar_text: {
+      h: 0,
+      s: 0,
+      l: 0,
+      a: 100
+    },
+    accentcolor: {
+      h: 0,
+      s: 100,
+      l: 50,
+      a: 100
+    },
+    textcolor: {
+      h: 0,
+      s: 0,
+      l: 0,
+      a: 100
+    },
+    toolbar_field: {
+      h: 0,
+      s: 0,
+      l: 0,
+      a: 100
+    },
+    toolbar_field_text: {
+      h: 0,
+      s: 0,
+      l: 100,
+      a: 100
+    }
   }
 ];
