@@ -124,13 +124,19 @@ setInterval(() => {
   }
 }, PING_PERIOD);
 
+const userAgent = navigator.userAgent.toLowerCase();
+const isMobile = userAgent.includes('mobi') || userAgent.includes('tablet');
+const isFirefox = userAgent.includes('firefox/') && !userAgent.includes('fxios');
+
 render(
   <Provider store={store}>
     <App {...{
       addonUrl,
       urlEncodeTheme,
       clipboard,
-      storage
+      storage,
+      isMobile,
+      isFirefox
     }} />
   </Provider>,
   document.getElementById('root')
