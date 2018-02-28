@@ -98,20 +98,17 @@ export const presetColors = [
     toolbar_text: {
       h: 213,
       s: 43,
-      l: 89,
-      a: 100
+      l: 89
     },
     accentcolor: {
       h: 187,
       s: 77,
-      l: 53,
-      a: 100
+      l: 53
     },
     textcolor: {
       h: 187,
       s: 0,
-      l: 33,
-      a: 100
+      l: 33
     },
     toolbar_field: {
       h: 211,
@@ -122,8 +119,7 @@ export const presetColors = [
     toolbar_field_text: {
       h: 317,
       s: 100,
-      l: 64,
-      a: 100
+      l: 64
     }
   },
   {
@@ -136,20 +132,17 @@ export const presetColors = [
     toolbar_text: {
       h: 172,
       s: 0,
-      l: 8,
-      a: 100
+      l: 8
     },
     accentcolor: {
       h: 266,
       s: 35,
-      l: 26,
-      a: 100
+      l: 26
     },
     textcolor: {
       h: 174,
       s: 86,
-      l: 50,
-      a: 100
+      l: 50
     },
     toolbar_field: {
       h: 260,
@@ -160,8 +153,7 @@ export const presetColors = [
     toolbar_field_text: {
       h: 172,
       s: 0,
-      l: 3,
-      a: 100
+      l: 3
     }
   },
   {
@@ -174,20 +166,17 @@ export const presetColors = [
     toolbar_text: {
       h: 65,
       s: 0,
-      l: 100,
-      a: 100
+      l: 100
     },
     accentcolor: {
       h: 231,
       s: 63,
-      l: 8,
-      a: 100
+      l: 8
     },
     textcolor: {
       h: 213,
       s: 43,
-      l: 89,
-      a: 100
+      l: 89
     },
     toolbar_field: {
       h: 233,
@@ -198,8 +187,7 @@ export const presetColors = [
     toolbar_field_text: {
       h: 0,
       s: 0,
-      l: 100,
-      a: 100
+      l: 100
     }
   }, {
     toolbar: {
@@ -211,20 +199,17 @@ export const presetColors = [
     toolbar_text: {
       h: 65,
       s: 0,
-      l: 100,
-      a: 100
+      l: 100
     },
     accentcolor: {
       h: 228,
       s: 10,
-      l: 92,
-      a: 100
+      l: 92
     },
     textcolor: {
       h: 213,
       s: 54,
-      l: 49,
-      a: 100
+      l: 49
     },
     toolbar_field: {
       h: 233,
@@ -235,8 +220,7 @@ export const presetColors = [
     toolbar_field_text: {
       h: 212,
       s: 54,
-      l: 48,
-      a: 100
+      l: 48
     }
   }, {
     // Hotdog Stand 🌭
@@ -249,20 +233,17 @@ export const presetColors = [
     toolbar_text: {
       h: 0,
       s: 0,
-      l: 0,
-      a: 100
+      l: 0
     },
     accentcolor: {
       h: 0,
       s: 100,
-      l: 50,
-      a: 100
+      l: 50
     },
     textcolor: {
       h: 0,
       s: 0,
-      l: 0,
-      a: 100
+      l: 0
     },
     toolbar_field: {
       h: 0,
@@ -273,8 +254,7 @@ export const presetColors = [
     toolbar_field_text: {
       h: 0,
       s: 0,
-      l: 100,
-      a: 100
+      l: 100
     }
   }
 ];
