@@ -1,17 +1,17 @@
-import { createStore, combineReducers } from 'redux';
-import { createActions, handleActions } from 'redux-actions';
-import undoable, { ActionCreators, ActionTypes } from 'redux-undo';
+import { createStore, combineReducers } from "redux";
+import { createActions, handleActions } from "redux-actions";
+import undoable, { ActionCreators, ActionTypes } from "redux-undo";
 import {
   normalizeTheme,
   normalizeThemeColor,
   normalizeThemeColors
-} from './utils';
+} from "./utils";
 
 // Actions that should trigger a theme update in URL history and the add-on
 export const themeChangeActions = [
-  'SET_THEME',
-  'SET_COLOR',
-  'SET_BACKGROUND',
+  "SET_THEME",
+  "SET_COLOR",
+  "SET_BACKGROUND",
   ActionTypes.UNDO,
   ActionTypes.REDO
 ];
@@ -19,15 +19,15 @@ export const themeChangeActions = [
 export const actions = {
   ui: createActions(
     {},
-    'SET_SELECTED_COLOR',
-    'SET_HAS_EXTENSION',
-    'SET_PENDING_THEME',
-    'CLEAR_PENDING_THEME',
-    'SET_LOADER_DELAY_EXPIRED',
-    'SET_SAVED_THEMES'
+    "SET_SELECTED_COLOR",
+    "SET_HAS_EXTENSION",
+    "SET_PENDING_THEME",
+    "CLEAR_PENDING_THEME",
+    "SET_LOADER_DELAY_EXPIRED",
+    "SET_SAVED_THEMES"
   ),
   theme: {
-    ...createActions({}, 'SET_THEME', 'SET_COLOR', 'SET_BACKGROUND'),
+    ...createActions({}, "SET_THEME", "SET_COLOR", "SET_BACKGROUND"),
     // HACK: Seems like redux-undo doesn't have sub-tree specific undo/redo
     // actions - but let's fake it for now.
     undo: ActionCreators.undo,

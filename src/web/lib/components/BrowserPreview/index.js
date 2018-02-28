@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactSVG from 'react-svg';
-import classnames from 'classnames';
+import React from "react";
+import ReactSVG from "react-svg";
+import classnames from "classnames";
 
-import { colorToCSS } from '../../../../lib/utils';
+import { colorToCSS } from "../../../../lib/utils";
 
-import './index.scss';
+import "./index.scss";
 
-const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
-const buttonImages = require.context('../../../../images/', false, /.*-16\.svg/);
+const bgImages = require.context("../../../../images/", false, /bg-.*\.png/);
+const buttonImages = require.context("../../../../images/", false, /.*-16\.svg/);
 
 export const BrowserPreview = ({
   size,
@@ -41,8 +41,8 @@ export const BrowserPreview = ({
   const Button = ({
     name,
     asset = false,
-    onClick = clickSelectColor('toolbar_text'),
-    colorName = 'toolbar_text'
+    onClick = clickSelectColor("toolbar_text"),
+    colorName = "toolbar_text"
   }) =>
     <span className="doll__button" onClick={onClick}>
       {asset && <ReactSVG
@@ -56,8 +56,8 @@ export const BrowserPreview = ({
 
   const Tab = ({ text, selected }) =>
     <li
-      className={classnames('tab', { selected })}
-      onClick={clickSelectColor(selected ? 'toolbar' : 'accentcolor')}
+      className={classnames("tab", { selected })}
+      onClick={clickSelectColor(selected ? "toolbar" : "accentcolor")}
       style={{
         color: selected ? colors.toolbar_text : colors.textcolor,
         backgroundColor: selected ? colors.toolbar : null
@@ -65,7 +65,7 @@ export const BrowserPreview = ({
     >
       <p
         className={`title ${text}`}
-        onClick={clickSelectColor(selected ? 'toolbar_text' : 'textcolor')}
+        onClick={clickSelectColor(selected ? "toolbar_text" : "textcolor")}
         style={{
           backgroundColor: selected ? colors.toolbar_text : colors.textcolor
         }}
@@ -75,18 +75,18 @@ export const BrowserPreview = ({
 
   const headerBackgroundImage = bgImages.keys().includes(theme.images.headerURL)
     ? `url(${bgImages(theme.images.headerURL)})`
-    : '';
+    : "";
   return (
     <div className={`doll doll--${size}`} onClick={clickDoll}>
       <ul
         className="doll__tabbar"
-        onClick={clickSelectColor('accentcolor')}
+        onClick={clickSelectColor("accentcolor")}
         style={{
           backgroundColor: colors.accentcolor,
           backgroundImage: headerBackgroundImage
         }}
       >
-        {['Tab One', 'Tab Two'].map((text, key) =>
+        {["Tab One", "Tab Two"].map((text, key) =>
           <Tab key={key} {...{ text, selected: key === selectedTab }} />
         )}
       </ul>
@@ -98,14 +98,14 @@ export const BrowserPreview = ({
         }}>
         <section
           className="doll__toolbar"
-          onClick={clickSelectColor('toolbar')}
+          onClick={clickSelectColor("toolbar")}
           style={{ backgroundColor: colors.toolbar }}
         >
           <Button name="back" />
           <Button name="forward" />
           <span
             className="doll__field"
-            onClick={clickSelectColor('toolbar_field')}
+            onClick={clickSelectColor("toolbar_field")}
             style={{
               color: colors.toolbar_field_text,
               backgroundColor: colors.toolbar_field
@@ -113,18 +113,18 @@ export const BrowserPreview = ({
           >
             <span
               className="doll__location"
-              onClick={clickSelectColor('toolbar_field_text')}
+              onClick={clickSelectColor("toolbar_field_text")}
               style={{
                 backgroundColor: colors.toolbar_field_text
               }}
             />
-            {(size === 'large') && <Button
+            {(size === "large") && <Button
               name="bookmark"
-              onClick={clickSelectColor('toolbar_field_text')}
+              onClick={clickSelectColor("toolbar_field_text")}
               colorName="toolbar_field_text"
             />}
           </span>
-          <Button name="menu" asset={ size === 'large' }/>
+          <Button name="menu" asset={ size === "large" }/>
         </section>
       </div>
       <section className="doll__content">

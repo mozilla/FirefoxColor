@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { colorToCSS } from '../../../../lib/utils';
+import { colorToCSS } from "../../../../lib/utils";
 
-import './index.scss';
+import "./index.scss";
 
 export const AppBackground = ({ theme }) => {
   const style = {};

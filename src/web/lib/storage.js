@@ -1,9 +1,9 @@
-import { actions } from '../../lib/store';
-import { makeLog } from '../../lib/utils';
+import { actions } from "../../lib/store";
+import { makeLog } from "../../lib/utils";
 
-const log = makeLog('web.storage');
+const log = makeLog("web.storage");
 
-const THEME_STORAGE_PREFIX = 'THEME-';
+const THEME_STORAGE_PREFIX = "THEME-";
 
 const themeStorageKey = key => `${THEME_STORAGE_PREFIX}${key}`;
 
@@ -16,7 +16,7 @@ const generateThemeKey = () =>
   `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
 function putTheme(key, theme) {
-  log('putTheme', key, theme);
+  log("putTheme", key, theme);
   const storageKey = themeStorageKey(key);
   localStorage.setItem(
     storageKey,
@@ -29,7 +29,7 @@ function putTheme(key, theme) {
 }
 
 function deleteTheme(key) {
-  log('deleteTheme', key);
+  log("deleteTheme", key);
   const storageKey = themeStorageKey(key);
   localStorage.removeItem(storageKey);
   notifySelfForStorage(storageKey);
@@ -61,8 +61,8 @@ function listThemes() {
 // HACK: Storage events are dispatched to all windows *except* the one that
 // made the change. This utility sends a storage event to the current window.
 function notifySelfForStorage(storageKey) {
-  const event = document.createEvent('Event');
-  event.initEvent('storage', true, true);
+  const event = document.createEvent("Event");
+  event.initEvent("storage", true, true);
   event.key = storageKey;
   window.dispatchEvent(event);
 }
@@ -70,16 +70,16 @@ function notifySelfForStorage(storageKey) {
 function init(store) {
   const updateSavedThemesInStore = () => {
     const savedThemes = listThemes();
-    log('updateSavedThemesInStore', savedThemes);
+    log("updateSavedThemesInStore", savedThemes);
     store.dispatch(actions.ui.setSavedThemes({ savedThemes }));
   };
 
   updateSavedThemesInStore();
 
   window.addEventListener(
-    'storage',
+    "storage",
     e => {
-      log('storage event', e);
+      log("storage event", e);
       if (isThemeStorageKey(e.key)) {
         updateSavedThemesInStore();
       }

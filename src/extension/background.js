@@ -1,11 +1,11 @@
-import { makeLog, colorToCSS, normalizeTheme } from '../lib/utils';
+import { makeLog, colorToCSS, normalizeTheme } from "../lib/utils";
 
 // Blank 1x1 PNG from http://png-pixel.com/
-const BLANK_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+const BLANK_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
-const log = makeLog('background');
+const log = makeLog("background");
 
-const bgImages = require.context('../images/', false, /bg-.*\.png/);
+const bgImages = require.context("../images/", false, /bg-.*\.png/);
 
 const siteUrl = process.env.SITE_URL;
 
@@ -15,7 +15,7 @@ const init = () => {
   );
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
-    port.postMessage({ type: 'hello' });
+    port.postMessage({ type: "hello" });
   });
   fetchTheme().then(applyTheme);
 };
@@ -23,37 +23,37 @@ const init = () => {
 const messageListener = port => message => {
   let theme;
   switch (message.type) {
-    case 'fetchTheme':
-      log('fetchTheme');
+    case "fetchTheme":
+      log("fetchTheme");
       fetchTheme().then(({ theme: currentTheme }) =>
-        port.postMessage({ type: 'fetchedTheme', theme: currentTheme })
+        port.postMessage({ type: "fetchedTheme", theme: currentTheme })
       );
       break;
-    case 'setTheme':
+    case "setTheme":
       theme = normalizeTheme(message.theme);
-      log('setTheme', theme);
+      log("setTheme", theme);
       storeTheme({ theme });
       applyTheme({ theme });
       break;
-    case 'ping':
-      port.postMessage({ type: 'pong' });
+    case "ping":
+      port.postMessage({ type: "pong" });
       break;
     default:
-      log('unexpected message', message);
+      log("unexpected message", message);
   }
 };
 
-const fetchTheme = () => browser.storage.local.get('theme');
+const fetchTheme = () => browser.storage.local.get("theme");
 
 const storeTheme = ({ theme }) => browser.storage.local.set({ theme });
 
 const applyTheme = ({ theme }) => {
-  log('applyTheme', theme);
+  log("applyTheme", theme);
   if (!theme) { return; }
 
   const backgroundImage = bgImages.keys().includes(theme.images.headerURL)
     ? bgImages(theme.images.headerURL)
-    : 'images/bg-0.png';
+    : "images/bg-0.png";
 
   const newTheme = {
     images: {
@@ -63,8 +63,8 @@ const applyTheme = ({ theme }) => {
       additional_backgrounds: [backgroundImage]
     },
     properties: {
-      additional_backgrounds_alignment: ['top'],
-      additional_backgrounds_tiling: ['repeat']
+      additional_backgrounds_alignment: ["top"],
+      additional_backgrounds_tiling: ["repeat"]
     },
     colors: {}
   };

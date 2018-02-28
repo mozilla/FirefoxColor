@@ -1,13 +1,13 @@
-import TestPilotGA from 'testpilot-ga';
+import TestPilotGA from "testpilot-ga";
 
 // Use of package.json for configuration
-import packageMeta from '../../package.json';
+import packageMeta from "../../package.json";
 
-import { DEBUG, makeLog } from './utils';
-import { selectors } from './store';
-import { colorsWithAlpha } from './constants';
+import { DEBUG, makeLog } from "./utils";
+import { selectors } from "./store";
+import { colorsWithAlpha } from "./constants";
 
-const log = makeLog('metrics');
+const log = makeLog("metrics");
 
 let analytics = null;
 
@@ -40,19 +40,19 @@ let cd10; // hsl (csv) of the toolbar_field_text
 let cd11; // unique integer id of the background pattern selected
 
 const COLORS_TO_DIMENSIONS = {
-  toolbar: 'cd5',
-  toolbar_text: 'cd6',
-  accentcolor: 'cd7',
-  textcolor: 'cd8',
-  toolbar_field: 'cd9',
-  toolbar_field_text: 'cd10'
+  toolbar: "cd5",
+  toolbar_text: "cd6",
+  accentcolor: "cd7",
+  textcolor: "cd8",
+  toolbar_field: "cd9",
+  toolbar_field_text: "cd10"
 };
 
 const hslaToCSV = (name, { h, s, l, a }) =>
-  `${h},${s},${l}${colorsWithAlpha.includes(name) ? `,${a}` : ''}`;
+  `${h},${s},${l}${colorsWithAlpha.includes(name) ? `,${a}` : ""}`;
 
 const Metrics = {
-  init(appContext = 'web') {
+  init(appContext = "web") {
     /* eslint-disable prefer-destructuring */
     analytics = new TestPilotGA({
       aid: packageMeta.extensionManifest.applications.gecko.id,
@@ -61,7 +61,7 @@ const Metrics = {
       ds: appContext,
       tid: packageMeta.config.GA_TRACKING_ID,
       // TODO: add some env vars or use window.location to determine local / dev / stage / prod?
-      cd19: DEBUG ? 'dev' : 'production'
+      cd19: DEBUG ? "dev" : "production"
     });
     /* eslint-enable prefer-destructuring */
 
@@ -84,7 +84,7 @@ const Metrics = {
     return ({ getState }) => next => action => {
       const result = next(action);
 
-      if (action.type === 'SET_THEME') {
+      if (action.type === "SET_THEME") {
         const theme = selectors.theme(getState());
         this.setTheme(theme);
         if (action.meta && action.meta.userEdit) {
@@ -124,7 +124,7 @@ const Metrics = {
 
   setTheme(theme) {
     const themeDimensions = this.themeToDimensions(theme);
-    log('update theme', themeDimensions);
+    log("update theme", themeDimensions);
     ({ cd5, cd6, cd7, cd8, cd9, cd10, cd11 } = themeDimensions);
   },
 
@@ -136,8 +136,8 @@ const Metrics = {
       this.installFailure();
     }, INSTALL_FAILURE_DELAY);
 
-    this.sendEvent('install-addon', 'button-click', {
-      el: 'install-trigger',
+    this.sendEvent("install-addon", "button-click", {
+      el: "install-trigger",
       cm1,
       cm2,
       cm3,
@@ -154,8 +154,8 @@ const Metrics = {
   },
 
   installFailure() {
-    this.sendEvent('install-addon', 'poll-event', {
-      el: 'install-fail'
+    this.sendEvent("install-addon", "poll-event", {
+      el: "install-fail"
     });
   },
 
@@ -165,15 +165,15 @@ const Metrics = {
       return;
     }
     clearTimeout(installTimer);
-    this.sendEvent('install-addon', 'poll-event', {
-      el: 'install-success'
+    this.sendEvent("install-addon", "poll-event", {
+      el: "install-success"
     });
   },
 
   themeChangeFull(themeId) {
     cm1++;
     this.setThemeChanged(true);
-    this.sendEvent('theme-change', 'select-full', {
+    this.sendEvent("theme-change", "select-full", {
       el: themeId,
       cm1,
       cm2,
@@ -186,7 +186,7 @@ const Metrics = {
   themeChangeBackground(backgroundId) {
     cm2++;
     this.setThemeChanged(true);
-    this.sendEvent('theme-change', 'select-background', {
+    this.sendEvent("theme-change", "select-background", {
       el: backgroundId,
       cm1,
       cm2,
@@ -201,7 +201,7 @@ const Metrics = {
   themeChangeColor(colorName) {
     cm3++;
     this.setThemeChanged(true);
-    this.sendEvent('theme-change', 'select-color', {
+    this.sendEvent("theme-change", "select-color", {
       el: colorName,
       cm1,
       cm2,
@@ -213,7 +213,7 @@ const Metrics = {
   },
 
   shareClick() {
-    this.sendEvent('share-engagement', 'button-click', {
+    this.sendEvent("share-engagement", "button-click", {
       cm1,
       cm2,
       cm3,
@@ -234,8 +234,8 @@ const Metrics = {
   linkClick(el) {
     // if el === download-firefox, add the following dimensions to this event
     const downloadFirefoxDimensions =
-      el !== 'download-firefox' ? {} : { cd5, cd6, cd7, cd8, cd9, cd10, cd11 };
-    this.sendEvent('link-engagement', 'click', {
+      el !== "download-firefox" ? {} : { cd5, cd6, cd7, cd8, cd9, cd10, cd11 };
+    this.sendEvent("link-engagement", "click", {
       el,
       cm1,
       cm2,
@@ -249,7 +249,7 @@ const Metrics = {
   },
 
   receiveTheme(action, theme) {
-    this.sendEvent('receive-theme', 'button-click', {
+    this.sendEvent("receive-theme", "button-click", {
       el: action,
       cd1,
       ...this.themeToDimensions(theme)
@@ -257,7 +257,7 @@ const Metrics = {
   },
 
   finishVisit() {
-    this.sendEvent('finish-visit', 'leave', {
+    this.sendEvent("finish-visit", "leave", {
       cm2,
       cm3,
       cd1,

@@ -1,24 +1,24 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { actions, selectors } from '../../../../lib/store';
+import { actions, selectors } from "../../../../lib/store";
 
-import AppFooter from '../AppFooter';
-import AppHeader from '../AppHeader';
-import AppBackground from '../AppBackground';
-import BrowserPreview from '../BrowserPreview';
-import ThemeColorsEditor from '../ThemeColorsEditor';
-import PresetThemeSelector from '../PresetThemeSelector';
-import ThemeBackgroundPicker from '../ThemeBackgroundPicker';
-import Banner from '../Banner';
-import SharedThemeDialog from '../SharedThemeDialog';
-import AppLoadingIndicator from '../AppLoadingIndicator';
-import ThemeUrl from '../ThemeUrl';
-import ThemeSaveButton from '../ThemeSaveButton';
-import SavedThemeSelector from '../SavedThemeSelector';
-import UndoRedoButtons from '../UndoRedoButtons';
+import AppFooter from "../AppFooter";
+import AppHeader from "../AppHeader";
+import AppBackground from "../AppBackground";
+import BrowserPreview from "../BrowserPreview";
+import ThemeColorsEditor from "../ThemeColorsEditor";
+import PresetThemeSelector from "../PresetThemeSelector";
+import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
+import Banner from "../Banner";
+import SharedThemeDialog from "../SharedThemeDialog";
+import AppLoadingIndicator from "../AppLoadingIndicator";
+import ThemeUrl from "../ThemeUrl";
+import ThemeSaveButton from "../ThemeSaveButton";
+import SavedThemeSelector from "../SavedThemeSelector";
+import UndoRedoButtons from "../UndoRedoButtons";
 
-import './index.scss';
+import "./index.scss";
 
 const mapStateToProps = state => {
   const mappedSelectors = Object.entries(selectors).reduce(
@@ -80,7 +80,7 @@ export const AppComponent = ({
     {loaderDelayExpired && (
       <div className="app__content">
         <AppHeader {...{ hasExtension }} />
-        <BrowserPreview {...{ theme, setSelectedColor, size: 'large' }}>
+        <BrowserPreview {...{ theme, setSelectedColor, size: "large" }}>
           <div className="app__theme-element-pickers">
             <ThemeColorsEditor
               {...{
