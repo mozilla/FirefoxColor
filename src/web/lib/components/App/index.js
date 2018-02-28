@@ -45,6 +45,8 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const AppComponent = ({
+  isFirefox,
+  isMobile,
   addonUrl,
   urlEncodeTheme,
   clipboard,
@@ -74,7 +76,7 @@ export const AppComponent = ({
         <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />
       )}
     <AppBackground {...{ theme }} />
-    {!hasExtension && <Banner {...{ addonUrl, bottom: false }} />}
+    {!hasExtension && !isMobile && <Banner {...{ isFirefox, addonUrl, bottom: false }} />}
     {loaderDelayExpired && (
       <main className="app__content">
         <AppHeader {...{ hasExtension }} />

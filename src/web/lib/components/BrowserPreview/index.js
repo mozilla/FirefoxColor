@@ -15,7 +15,7 @@ export const BrowserPreview = ({
   setSelectedColor,
   selectedTab = 0,
   children = null,
-  setTheme = null
+  onClick: onClickDoll = null
 }) => {
   const clickSelectColor = name => e => {
     if (setSelectedColor) {
@@ -26,8 +26,8 @@ export const BrowserPreview = ({
   };
 
   const clickDoll = e => {
-    if (setTheme) {
-      setTheme({ theme });
+    if (onClickDoll) {
+      onClickDoll(e);
       e.stopPropagation();
     }
     return false;

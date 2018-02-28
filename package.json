@@ -8,6 +8,9 @@
   ],
   "private": true,
   "main": "src/web/index.js",
+  "config": {
+    "GA_TRACKING_ID": "UA-114768519-1"
+  },
   "scripts": {
     "start": "npm-run-all --parallel server watch:extension watch:lint",
     "server": "cross-env NODE_ENV=development webpack-dev-server --config webpack.web.js",
@@ -71,6 +74,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "clipboard": "^1.7.1",
+    "fira": "github:mozilla/fira#4.202",
     "json-url": "^2.3.1",
     "query-string": "^5.0.1",
     "react": "^16.1.0",
@@ -82,7 +86,8 @@
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-devtools-extension": "^2.13.2",
-    "redux-undo": "^1.0.0-beta9-9-7"
+    "redux-undo": "^1.0.0-beta9-9-7",
+    "testpilot-ga": "^0.3.0"
   },
   "extensionManifest": {
     "name": "ThemesRFun",

@@ -3,15 +3,25 @@ import classnames from 'classnames';
 import onClickOutside from 'react-onclickoutside';
 
 import { colorToCSS } from '../../../../lib/utils';
+import Metrics from '../../../../lib/metrics';
 
 import './index.scss';
 
 const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
 
-const Background = ({ src, active, setBackground, accentcolor }) =>
+const Background = ({
+  src,
+  backgroundId,
+  active,
+  setBackground,
+  accentcolor
+}) => (
   <div
     className={classnames('bg', { active })}
-    onClick={() => setBackground({ url: src })}
+    onClick={() => {
+      setBackground({ url: src });
+      Metrics.themeChangeBackground(backgroundId);
+    }}
   >
     <div
       className="bg__inner"
@@ -20,7 +30,8 @@ const Background = ({ src, active, setBackground, accentcolor }) =>
         backgroundImage: `url(${bgImages(src)})`
       }}
     />
-  </div>;
+  </div>
+);
 
 class ThemeBackgroundPicker extends React.Component {
   constructor(props) {
@@ -43,23 +54,38 @@ class ThemeBackgroundPicker extends React.Component {
     const { selected } = this.state;
     const accentcolor = colorToCSS(theme.colors.accentcolor);
     // Note: default theme initializes with no bg so we have to check before adding bg to CSS
-    const backgroundSwatch = theme.images.headerURL ? `url(${bgImages(theme.images.headerURL)})` : '';
+    const backgroundSwatch = theme.images.headerURL
+      ? `url(${bgImages(theme.images.headerURL)})`
+      : '';
     return (
-      <div className={classnames('theme-background-picker', { selected })} onClick={ this.handleClick.bind(this) }>
-        <span className="theme-background-picker__swatch"
-          style={{ backgroundColor: accentcolor, backgroundImage: backgroundSwatch }}
+      <div
+        className={classnames('theme-background-picker', { selected })}
+        onClick={this.handleClick.bind(this)}
+      >
+        <span
+          className="theme-background-picker__swatch"
+          style={{
+            backgroundColor: accentcolor,
+            backgroundImage: backgroundSwatch
+          }}
         />
         <span className="theme-background-picker__text">Theme Texture</span>
         <div className="theme-background-picker__backgrounds">
           <div className="theme-background-picker__backgrounds-inner">
             {bgImages
               .keys()
-              .map((src, key) =>
+              .map((src, backgroundId) => (
                 <Background
-                  key={key}
-                  {...{ src, accentcolor, setBackground, active: theme.images.headerURL === src }}
+                  key={backgroundId}
+                  {...{
+                    src,
+                    backgroundId,
+                    accentcolor,
+                    setBackground,
+                    active: theme.images.headerURL === src
+                  }}
                 />
-              )}
+              ))}
           </div>
         </div>
       </div>

@@ -16,6 +16,8 @@ import {
   selectors,
   themeChangeActions
 } from '../lib/store';
+import Metrics from '../lib/metrics';
+
 import App from './lib/components/App';
 import storage from './lib/storage';
 
@@ -75,11 +77,16 @@ const composeEnhancers = composeWithDevTools({});
 const store = createAppStore(
   {},
   composeEnhancers(
-    applyMiddleware(updateExtensionThemeMiddleware, updateHistoryMiddleware)
+    applyMiddleware(
+      updateExtensionThemeMiddleware,
+      updateHistoryMiddleware,
+      Metrics.storeMiddleware()
+    )
   )
 );
 
 storage.init(store);
+Metrics.init();
 
 window.addEventListener('popstate', ({ state: { theme } }) =>
   store.dispatch({
@@ -99,6 +106,9 @@ window.addEventListener('message', ({ source, data: message }) => {
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
+        Metrics.installSuccess();
+        postMessage('setClientUUID', { clientUUID: Metrics.getClientUUID() });
+        postMessage('setTheme', { theme: selectors.theme(store.getState()) });
       }
     }
     if (message.type === 'fetchedTheme') {
@@ -123,13 +133,19 @@ setInterval(() => {
   }
 }, PING_PERIOD);
 
+const userAgent = navigator.userAgent.toLowerCase();
+const isMobile = userAgent.includes('mobi') || userAgent.includes('tablet');
+const isFirefox = userAgent.includes('firefox/') && !userAgent.includes('fxios');
+
 render(
   <Provider store={store}>
     <App {...{
       addonUrl,
       urlEncodeTheme,
       clipboard,
-      storage
+      storage,
+      isMobile,
+      isFirefox
     }} />
   </Provider>,
   document.getElementById('root')

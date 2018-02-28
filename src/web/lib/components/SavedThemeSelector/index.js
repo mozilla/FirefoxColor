@@ -16,10 +16,20 @@ export const SavedThemeSelector = ({ setTheme, savedThemes, deleteTheme }) => {
       <h2>Saved themes</h2>
       {sortedSavedThemes.map(([key, { theme }]) => (
         <div key={key} className="saved-theme-preview">
-          <button className="delete-theme" onClick={() => deleteTheme(key)} title="delete">
+          <button
+            className="delete-theme"
+            onClick={() => deleteTheme(key)}
+            title="delete"
+          >
             <img src={iconClose} />
           </button>
-          <BrowserPreview {...{ size: 'small', theme, setTheme }} />
+          <BrowserPreview
+            {...{
+              size: 'small',
+              theme,
+              onClick: () => setTheme({ theme })
+            }}
+          />
         </div>
       ))}
     </div>
