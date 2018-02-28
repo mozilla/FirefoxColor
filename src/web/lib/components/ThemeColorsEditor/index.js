@@ -4,12 +4,16 @@ import { SketchPicker } from 'react-color';
 import onClickOutside from 'react-onclickoutside';
 import { colorLabels, colorsWithAlpha } from '../../../../lib/constants';
 import { colorToCSS } from '../../../../lib/utils';
+import Metrics from '../../../../lib/metrics';
 
 import './index.scss';
 
 class ThemeColorsEditor extends React.Component {
   handleClickOutside() {
-    this.props.setSelectedColor({ name: null });
+    const { selectedColor, setSelectedColor } = this.props;
+    if (selectedColor !== null) {
+      setSelectedColor({ name: null });
+    }
   }
 
   render() {
@@ -37,8 +41,10 @@ class ThemeColorsEditor extends React.Component {
                   <SketchPicker
                     color={{ h: color.h, s: color.s, l: color.l, a: color.a * 0.01 }}
                     disableAlpha={!colorsWithAlpha.includes(name)}
-                    onChangeComplete={({ hsl: { h, s, l, a } }) =>
-                      setColor({ name, h, s: s * 100, l: l * 100, a: a * 100 })}
+                    onChangeComplete={({ hsl: { h, s, l, a } }) => {
+                      setColor({ name, h, s: s * 100, l: l * 100, a: a * 100 });
+                      Metrics.themeChangeColor(name);
+                    }}
                   />
                 </span>
               </li>

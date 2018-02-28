@@ -1,4 +1,5 @@
 import React from 'react';
+import Metrics from '../../../../lib/metrics';
 
 import './index.scss';
 
@@ -9,7 +10,10 @@ export default class ThemeUrl extends React.Component {
       themeUrl: '',
       copied: false
     };
-    this.handleCopied = () => this.setState({ copied: true });
+    this.handleCopied = () => {
+      this.setState({ copied: true });
+      Metrics.shareClick();
+    };
   }
 
   componentDidMount() {

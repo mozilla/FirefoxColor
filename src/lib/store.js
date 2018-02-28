@@ -91,7 +91,7 @@ export const reducers = {
       userHasEdited: false,
       pendingTheme: null,
       savedThemes: {},
-      selectedColor: 'none',
+      selectedColor: null,
       hasExtension: false,
       loaderDelayExpired: false
     }
