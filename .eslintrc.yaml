@@ -28,7 +28,6 @@ rules:
   no-use-before-define: off
   object-curly-newline: off
   react/prop-types: off
-  quotes: off
 
 overrides:
   -

@@ -1,13 +1,13 @@
-import React from 'react';
-import Metrics from '../../../../lib/metrics';
+import React from "react";
+import Metrics from "../../../../lib/metrics";
 
-import './index.scss';
+import "./index.scss";
 
 export default class ThemeUrl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      themeUrl: '',
+      themeUrl: "",
       copied: false
     };
     this.handleCopied = () => {
@@ -18,11 +18,11 @@ export default class ThemeUrl extends React.Component {
 
   componentDidMount() {
     this.updateThemeUrl(this.props.theme);
-    this.props.clipboard.on('success', this.handleCopied);
+    this.props.clipboard.on("success", this.handleCopied);
   }
 
   componentWillUnmount() {
-    this.props.clipboard.off('success', this.handleCopied);
+    this.props.clipboard.off("success", this.handleCopied);
   }
 
   componentWillReceiveProps({ theme }) {
@@ -55,7 +55,7 @@ export default class ThemeUrl extends React.Component {
           <input type="text" id="themeUrl" value={themeUrl} />
           <input type="submit" className="clipboardButton"
             data-clipboard-target="#themeUrl"
-            value={copied ? 'Copied!' : 'Copy'} />
+            value={copied ? "Copied!" : "Copy"} />
         </fieldset>
       </form>
     );

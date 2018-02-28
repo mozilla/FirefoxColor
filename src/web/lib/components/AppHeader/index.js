@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactSVG from 'react-svg';
+import React from "react";
+import ReactSVG from "react-svg";
 
-import { surveyUrl } from '../../../../lib/constants';
-import Metrics from '../../../../lib/metrics';
+import { surveyUrl } from "../../../../lib/constants";
+import Metrics from "../../../../lib/metrics";
 
-import iconFeedback from './feedback.svg';
-import './index.scss';
+import iconFeedback from "./feedback.svg";
+import "./index.scss";
 
 export const AppHeader = ({ hasExtension, appVersion = null }) => {
   let survey = `${surveyUrl}?ref=app`;
@@ -21,12 +21,12 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
           <h3>
             <a
               href="https://testpilot.firefox.com"
-              onClick={() => Metrics.linkClick('test-pilot')}
+              onClick={() => Metrics.linkClick("test-pilot")}
               target="_blank"
               rel="noopener noreferrer"
             >
               Firefox Test Pilot
-            </a>{' '}
+            </a>{" "}
             Experiment
           </h3>
         </header>
@@ -34,14 +34,14 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
       {hasExtension && (
         <a
           href={survey}
-          onClick={() => Metrics.linkClick('survey')}
+          onClick={() => Metrics.linkClick("survey")}
           title="survey link"
           className="app-header__survey"
           target="_blank"
           rel="noopener noreferrer"
         >
           <span>Feedback</span>
-          <ReactSVG style={{ fill: '#fff' }} path={iconFeedback} />
+          <ReactSVG style={{ fill: "#fff" }} path={iconFeedback} />
         </a>
       )}
     </div>

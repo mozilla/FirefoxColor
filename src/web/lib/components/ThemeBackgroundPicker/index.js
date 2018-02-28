@@ -1,13 +1,13 @@
-import React from 'react';
-import classnames from 'classnames';
-import onClickOutside from 'react-onclickoutside';
+import React from "react";
+import classnames from "classnames";
+import onClickOutside from "react-onclickoutside";
 
-import { colorToCSS } from '../../../../lib/utils';
-import Metrics from '../../../../lib/metrics';
+import { colorToCSS } from "../../../../lib/utils";
+import Metrics from "../../../../lib/metrics";
 
-import './index.scss';
+import "./index.scss";
 
-const bgImages = require.context('../../../../images/', false, /bg-.*\.png/);
+const bgImages = require.context("../../../../images/", false, /bg-.*\.png/);
 
 const Background = ({
   src,
@@ -17,7 +17,7 @@ const Background = ({
   accentcolor
 }) => (
   <div
-    className={classnames('bg', { active })}
+    className={classnames("bg", { active })}
     onClick={() => {
       setBackground({ url: src });
       Metrics.themeChangeBackground(backgroundId);
@@ -56,10 +56,10 @@ class ThemeBackgroundPicker extends React.Component {
     // Note: default theme initializes with no bg so we have to check before adding bg to CSS
     const backgroundSwatch = theme.images.headerURL
       ? `url(${bgImages(theme.images.headerURL)})`
-      : '';
+      : "";
     return (
       <div
-        className={classnames('theme-background-picker', { selected })}
+        className={classnames("theme-background-picker", { selected })}
         onClick={this.handleClick.bind(this)}
       >
         <span

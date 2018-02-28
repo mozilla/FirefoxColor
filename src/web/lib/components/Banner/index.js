@@ -1,13 +1,13 @@
-import React from 'react';
-import classNames from 'classnames';
+import React from "react";
+import classNames from "classnames";
 
-import { DOWNLOAD_FIREFOX_URL } from '../../../../lib/constants';
-import Metrics from '../../../../lib/metrics';
+import { DOWNLOAD_FIREFOX_URL } from "../../../../lib/constants";
+import Metrics from "../../../../lib/metrics";
 
-import './index.scss';
+import "./index.scss";
 
 export const Banner = ({ isFirefox, addonUrl, bottom = false }) => (
-  <div className={classNames('banner', { banner__bottom: bottom })}>
+  <div className={classNames("banner", { banner__bottom: bottom })}>
     {isFirefox ? (
       <div className="banner__content">
         <span>Put the 🔥 in Firefox</span>

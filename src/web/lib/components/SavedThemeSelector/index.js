@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import BrowserPreview from '../BrowserPreview';
+import BrowserPreview from "../BrowserPreview";
 
-import './index.scss';
+import "./index.scss";
 
-import iconClose from './close.svg';
+import iconClose from "./close.svg";
 
 export const SavedThemeSelector = ({ setTheme, savedThemes, deleteTheme }) => {
   const sortedSavedThemes = Object.entries(savedThemes).sort(
@@ -25,7 +25,7 @@ export const SavedThemeSelector = ({ setTheme, savedThemes, deleteTheme }) => {
           </button>
           <BrowserPreview
             {...{
-              size: 'small',
+              size: "small",
               theme,
               onClick: () => setTheme({ theme })
             }}

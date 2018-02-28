@@ -1,31 +1,31 @@
 /* global JsonUrl */
 
-import React from 'react';
-import { applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import queryString from 'query-string';
-import Clipboard from 'clipboard';
+import React from "react";
+import { applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { render } from "react-dom";
+import { Provider } from "react-redux";
+import queryString from "query-string";
+import Clipboard from "clipboard";
 
-import { makeLog } from '../lib/utils';
-import { CHANNEL_NAME } from '../lib/constants';
+import { makeLog } from "../lib/utils";
+import { CHANNEL_NAME } from "../lib/constants";
 import {
   createAppStore,
   actions,
   selectors,
   themeChangeActions
-} from '../lib/store';
-import Metrics from '../lib/metrics';
+} from "../lib/store";
+import Metrics from "../lib/metrics";
 
-import App from './lib/components/App';
-import storage from './lib/storage';
+import App from "./lib/components/App";
+import storage from "./lib/storage";
 
-import './index.scss';
+import "./index.scss";
 
-const log = makeLog('web');
+const log = makeLog("web");
 
-const clipboard = new Clipboard('.clipboardButton');
+const clipboard = new Clipboard(".clipboardButton");
 
 const addonUrl = process.env.ADDON_URL;
 
@@ -35,7 +35,7 @@ const PING_PERIOD = 1000;
 const MAX_OUTSTANDING_PINGS = 3;
 let outstandingPings = 0;
 
-const jsonCodec = JsonUrl('lzma');
+const jsonCodec = JsonUrl("lzma");
 
 const urlEncodeTheme = theme =>
   jsonCodec.compress(theme).then(value => {
@@ -48,14 +48,14 @@ const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
 const postMessage = (type, data = {}) =>
   window.postMessage(
     { ...data, type, channel: `${CHANNEL_NAME}-extension` },
-    '*'
+    "*"
   );
 
 const updateExtensionThemeMiddleware = ({ getState }) => next => action => {
   const returnValue = next(action);
   const meta = action.meta || {};
   if (!meta.skipAddon && themeChangeActions.includes(action.type)) {
-    postMessage('setTheme', { theme: selectors.theme(getState()) });
+    postMessage("setTheme", { theme: selectors.theme(getState()) });
   }
   return returnValue;
 };
@@ -66,7 +66,7 @@ const updateHistoryMiddleware = ({ getState }) => next => action => {
   if (!meta.skipHistory && themeChangeActions.includes(action.type)) {
     const theme = selectors.theme(getState());
     urlEncodeTheme(theme).then(url =>
-      window.history.pushState({ theme }, '', url)
+      window.history.pushState({ theme }, "", url)
     );
   }
   return returnValue;
@@ -88,30 +88,30 @@ const store = createAppStore(
 storage.init(store);
 Metrics.init();
 
-window.addEventListener('popstate', ({ state: { theme } }) =>
+window.addEventListener("popstate", ({ state: { theme } }) =>
   store.dispatch({
     ...actions.theme.setTheme({ theme }),
     meta: { skipHistory: true }
   })
 );
 
-window.addEventListener('message', ({ source, data: message }) => {
+window.addEventListener("message", ({ source, data: message }) => {
   if (
     source === window &&
     message &&
     message.channel === `${CHANNEL_NAME}-web`
   ) {
-    if (message.type === 'hello' || message.type === 'pong') {
+    if (message.type === "hello" || message.type === "pong") {
       outstandingPings = 0;
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
         Metrics.installSuccess();
-        postMessage('setClientUUID', { clientUUID: Metrics.getClientUUID() });
-        postMessage('setTheme', { theme: selectors.theme(store.getState()) });
+        postMessage("setClientUUID", { clientUUID: Metrics.getClientUUID() });
+        postMessage("setTheme", { theme: selectors.theme(store.getState()) });
       }
     }
-    if (message.type === 'fetchedTheme') {
+    if (message.type === "fetchedTheme") {
       store.dispatch({
         ...actions.theme.setTheme({ theme: message.theme }),
         meta: { fromAddon: true }
@@ -123,7 +123,7 @@ window.addEventListener('message', ({ source, data: message }) => {
 // Periodicelly ping the extension to detect install / uninstall, since we have
 // no access to mozAddonManager.
 setInterval(() => {
-  postMessage('ping');
+  postMessage("ping");
   const hasExtension = selectors.hasExtension(store.getState());
   if (hasExtension) {
     outstandingPings++;
@@ -134,8 +134,8 @@ setInterval(() => {
 }, PING_PERIOD);
 
 const userAgent = navigator.userAgent.toLowerCase();
-const isMobile = userAgent.includes('mobi') || userAgent.includes('tablet');
-const isFirefox = userAgent.includes('firefox/') && !userAgent.includes('fxios');
+const isMobile = userAgent.includes("mobi") || userAgent.includes("tablet");
+const isFirefox = userAgent.includes("firefox/") && !userAgent.includes("fxios");
 
 render(
   <Provider store={store}>
@@ -148,7 +148,7 @@ render(
       isFirefox
     }} />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 /**
@@ -208,11 +208,11 @@ function startLoaderDelay() {
 const params = queryString.parse(window.location.search);
 if (!params.theme) {
   // Fire off a message to request current theme from the add-on.
-  postMessage('fetchTheme');
+  postMessage("fetchTheme");
   // The add-on may never answer, so start the loader delay.
   startLoaderDelay();
 } else {
-  log('Received shared theme');
+  log("Received shared theme");
   urlDecodeTheme(params.theme)
     .then(theme => {
       // Set the current editor theme - but skip history & add-on updates
@@ -228,8 +228,8 @@ if (!params.theme) {
       // Set the pending theme - only matters if add-on is installed
       store.dispatch(actions.ui.setPendingTheme({ theme }));
       // Fire off a message to request current theme from the add-on.
-      postMessage('fetchTheme');
+      postMessage("fetchTheme");
     })
     // If the theme decoding fails, just ignore it.
-    .catch(() => postMessage('fetchTheme'));
+    .catch(() => postMessage("fetchTheme"));
 }

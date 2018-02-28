@@ -1,12 +1,12 @@
-import React from 'react';
-import classnames from 'classnames';
-import { SketchPicker } from 'react-color';
-import onClickOutside from 'react-onclickoutside';
-import { colorLabels, colorsWithAlpha } from '../../../../lib/constants';
-import { colorToCSS } from '../../../../lib/utils';
-import Metrics from '../../../../lib/metrics';
+import React from "react";
+import classnames from "classnames";
+import { SketchPicker } from "react-color";
+import onClickOutside from "react-onclickoutside";
+import { colorLabels, colorsWithAlpha } from "../../../../lib/constants";
+import { colorToCSS } from "../../../../lib/utils";
+import Metrics from "../../../../lib/metrics";
 
-import './index.scss';
+import "./index.scss";
 
 class ThemeColorsEditor extends React.Component {
   handleClickOutside() {
@@ -32,7 +32,7 @@ class ThemeColorsEditor extends React.Component {
             return [
               <li
                 key={`dt-${idx}`}
-                className={classnames(name, 'color', { selected: selectedColor === name })}
+                className={classnames(name, "color", { selected: selectedColor === name })}
                 onClick={() => setSelectedColor({ name })}
               >
                 <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />

@@ -1,6 +1,6 @@
-import { defaultColors } from './constants';
+import { defaultColors } from "./constants";
 
-export const DEBUG = process.env.NODE_ENV === 'development';
+export const DEBUG = process.env.NODE_ENV === "development";
 
 export const makeLog = context => (...args) =>
   // eslint-disable-next-line no-console
@@ -8,7 +8,7 @@ export const makeLog = context => (...args) =>
 
 export const colorToCSS = color => {
   const { h, s, l, a } = color;
-  return typeof a === 'undefined'
+  return typeof a === "undefined"
     ? `hsl(${h}, ${s}%, ${l}%)`
     : `hsla(${h}, ${s}%, ${l}%, ${a * 0.01})`;
 };
@@ -36,7 +36,7 @@ export const normalizeThemeColors = (colors = {}) => {
 export const normalizeTheme = (data = {}) => {
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultColors),
-    images: { headerURL: '' }
+    images: { headerURL: "" }
   };
   const images = data.images ? data.images : {};
   if (images.headerURL) {

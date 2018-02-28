@@ -1,33 +1,33 @@
 /* eslint import/no-extraneous-dependencies: off */
 
-const path = require('path');
-const merge = require('webpack-merge');
+const path = require("path");
+const merge = require("webpack-merge");
 
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const GenerateAssetWebpackPlugin = require('generate-asset-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const GenerateAssetWebpackPlugin = require("generate-asset-webpack-plugin");
 
-const packageMeta = require('./package.json');
-const common = require('./webpack.common.js');
+const packageMeta = require("./package.json");
+const common = require("./webpack.common.js");
 
-const siteUrl = process.env.SITE_URL || 'http://localhost:8080/';
+const siteUrl = process.env.SITE_URL || "http://localhost:8080/";
 
 module.exports = merge(common, {
   entry: {
-    background: './src/extension/background',
-    contentScript: './src/extension/contentScript'
+    background: "./src/extension/background",
+    contentScript: "./src/extension/contentScript"
   },
   output: {
-    path: path.resolve(__dirname, 'build/extension'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, "build/extension"),
+    filename: "[name].js"
   },
   plugins: [
     new GenerateAssetWebpackPlugin({
-      filename: 'manifest.json',
+      filename: "manifest.json",
       fn: buildManifest
     }),
     new CopyWebpackPlugin([
-      { from: 'LICENSE' },
-      { from: 'src/images/icon.svg', to: 'images/' }
+      { from: "LICENSE" },
+      { from: "src/images/icon.svg", to: "images/" }
     ])
   ]
 });
@@ -54,8 +54,8 @@ function buildManifest(compilation, cb) {
 
   // Configure content script to run on SITE_URL, omitting port if any
   manifest.content_scripts[0].matches = [
-    `${siteUrl.replace(/:(\d+)\/?$/, '/')}*`
+    `${siteUrl.replace(/:(\d+)\/?$/, "/")}*`
   ];
 
-  return cb(null, JSON.stringify(manifest, null, '  '));
+  return cb(null, JSON.stringify(manifest, null, "  "));
 }

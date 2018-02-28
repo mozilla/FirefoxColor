@@ -1,18 +1,18 @@
 /* eslint import/no-extraneous-dependencies: off */
 
-const webpack = require('webpack');
+const webpack = require("webpack");
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WriteFilePlugin = require('write-file-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const WriteFilePlugin = require("write-file-webpack-plugin");
 
 const extractCSS = new ExtractTextPlugin({
-  filename: '[name].css'
+  filename: "[name].css"
 });
 
 const defaultEnv = {
-  NODE_ENV: 'development',
-  ADDON_URL: 'addon.xpi',
-  SITE_URL: 'http://localhost:8080/'
+  NODE_ENV: "development",
+  ADDON_URL: "addon.xpi",
+  SITE_URL: "http://localhost:8080/"
 };
 
 const processEnv = {};
@@ -21,14 +21,14 @@ Object.keys(defaultEnv).forEach(key => {
 });
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: "source-map",
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: [".js", ".jsx"]
   },
   plugins: [
     extractCSS,
     new WriteFilePlugin(),
-    new webpack.DefinePlugin({ 'process.env': processEnv })
+    new webpack.DefinePlugin({ "process.env": processEnv })
   ],
   module: {
     rules: [
@@ -36,40 +36,40 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
             cacheDirectory: true,
             presets: [
-              ['env', { targets: ['last 2 versions'], modules: false }],
-              'react'
+              ["env", { targets: ["last 2 versions"], modules: false }],
+              "react"
             ],
-            plugins: ['transform-object-rest-spread']
+            plugins: ["transform-object-rest-spread"]
           }
         }
       },
       {
         test: /\.scss$/,
         use: extractCSS.extract({
-          use: [{ loader: 'css-loader' }, { loader: 'sass-loader' }],
-          fallback: 'style-loader'
+          use: [{ loader: "css-loader" }, { loader: "sass-loader" }],
+          fallback: "style-loader"
         })
       },
       {
         test: /\.css$/,
         use: extractCSS.extract({
-          use: [{ loader: 'css-loader' }],
-          fallback: 'style-loader'
+          use: [{ loader: "css-loader" }],
+          fallback: "style-loader"
         })
       },
       {
         test: /\.(ttf|woff|eot)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              hash: 'sha512',
-              digest: 'hex',
-              name: 'fonts/[name]-[hash].[ext]'
+              hash: "sha512",
+              digest: "hex",
+              name: "fonts/[name]-[hash].[ext]"
             }
           }
         ]
@@ -78,15 +78,15 @@ module.exports = {
         test: /\.(jpe?g|gif|png|svg)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              hash: 'sha512',
-              digest: 'hex',
-              name: 'images/[name]-[hash].[ext]'
+              hash: "sha512",
+              digest: "hex",
+              name: "images/[name]-[hash].[ext]"
             }
           },
           {
-            loader: 'image-webpack-loader',
+            loader: "image-webpack-loader",
             options: {
               bypassOnDebug: true
             }
