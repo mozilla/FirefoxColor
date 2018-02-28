@@ -62,6 +62,19 @@ module.exports = {
         })
       },
       {
+        test: /\.(ttf|woff|eot)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              hash: 'sha512',
+              digest: 'hex',
+              name: 'fonts/[name]-[hash].[ext]'
+            }
+          }
+        ]
+      },
+      {
         test: /\.(jpe?g|gif|png|svg)$/i,
         use: [
           {
