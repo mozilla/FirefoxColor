@@ -83,8 +83,7 @@ function init(store) {
       if (isThemeStorageKey(e.key)) {
         updateSavedThemesInStore();
       }
-    },
-    false
+    }
   );
 }
 

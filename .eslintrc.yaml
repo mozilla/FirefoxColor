@@ -1,13 +1,13 @@
+extends:
+- eslint:recommended
+- plugin:import/recommended
+- plugin:mozilla/recommended
+- plugin:react/recommended
+
 env:
   browser: true
   es6: true
   jquery: true
-  webextensions: true
-
-extends:
-- eslint:recommended
-- airbnb-base
-- plugin:react/recommended
 
 parserOptions:
   ecmaVersion: 6
@@ -28,3 +28,21 @@ rules:
   no-use-before-define: off
   object-curly-newline: off
   react/prop-types: off
+  quotes: off
+
+overrides:
+  -
+    files: ['src/**/*.js']
+    globals:
+      process: true
+      require: true
+  -
+    files: ['src/extension/**/*.js']
+    env:
+      webextensions: true
+  -
+    files: ['webpack.*.js']
+    rules:
+      import/unambiguous: off
+    env:
+      node: true
