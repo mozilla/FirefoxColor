@@ -27,7 +27,8 @@ module.exports = merge(common, {
     }),
     new CopyWebpackPlugin([
       { from: "LICENSE" },
-      { from: "src/images/icon.svg", to: "images/" }
+      { from: "src/images/icon.svg", to: "images/" },
+      { from: "src/images/logo.svg", to: "images/" }
     ])
   ]
 });
