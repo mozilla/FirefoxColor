@@ -3,6 +3,7 @@
 
 .theme-background-picker {
   @include picker-group;
+
   right: 200px;
   top: -203px;
 
@@ -16,6 +17,7 @@
 
   .theme-background-picker__backgrounds {
     @include unit;
+
     background: var(--white);
     position: absolute;
     top: 61px;
@@ -52,7 +54,6 @@
     padding-bottom: 24px;
     width: 226px;
   }
-
 
   .bg {
     background: var(--white);

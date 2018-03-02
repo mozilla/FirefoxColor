@@ -16,14 +16,14 @@ $grid: 4px;
 }
 
 @mixin buttonSecondary {
-  background: rgba(12, 12, 13, 0.10);
+  background: rgba(12, 12, 13, .1);
 
   &:hover {
-    background: rgba(12, 12, 13, 0.20);
+    background: rgba(12, 12, 13, .2);
   }
 
   &:active {
-    background: rgba(12, 12, 13, 0.30);
+    background: rgba(12, 12, 13, .3);
   }
 }
 
@@ -63,10 +63,12 @@ $grid: 4px;
   0% {
     opacity: 0;
   }
+
   80% {
     opacity: 1;
     transform: scale(1.08);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);

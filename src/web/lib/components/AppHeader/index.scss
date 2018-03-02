@@ -1,6 +1,5 @@
 @import '../../common.scss';
 
-
 .app-header {
   display: flex;
   flex-direction: column;
@@ -25,9 +24,10 @@
 
   .app-header__survey {
     @include buttonDefault;
+
     align-items: center;
     border-radius: 2px;
-    cursor: pointer;  
+    cursor: pointer;
     display: flex;
     font-size: 14px;
     height: 28px;
@@ -37,12 +37,10 @@
     position: absolute;
     right: 0;
     text-decoration: none;
-    transition: size 125ms;
+    transition: size 125ms, width 200ms;
     user-select: none;
     white-space: nowrap;
     width: 28px;
-    transition: width 200ms;
-    user-select: none;
 
     span {
       color: var(--white);

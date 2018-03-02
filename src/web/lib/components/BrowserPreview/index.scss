@@ -8,12 +8,12 @@
 
 .doll--small {
   @include unit('small');
+
   height: $grid * 13.25;
 
   > .doll__tabbar {
     flex: 0 0 $grid * 4;
     padding: 0 $grid * 4;
-
 
     li {
       flex: 0 0 $grid * 14;
@@ -63,6 +63,7 @@
 
 .doll--large {
   @include unit('large');
+
   > .doll__tabbar {
     flex: 0 0 $grid * 20;
     padding: 0 $grid * 12.5;
@@ -126,7 +127,8 @@
         justify-content: center;
       }
 
-      img, svg {
+      img,
+      svg {
         height: 24px;
         width: 24px;
       }
@@ -140,6 +142,7 @@
 
 .doll--medium {
   @include unit('medium');
+
   > .doll__tabbar {
     flex: 0 0 $grid * 10;
     padding: 0 $grid * 8;
