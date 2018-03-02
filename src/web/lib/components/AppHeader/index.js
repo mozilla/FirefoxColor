@@ -19,6 +19,8 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
         <header>
           <h1>Themer</h1>
           <h3>
+            A
+            {" "}
             <a
               href="https://testpilot.firefox.com"
               onClick={() => Metrics.linkClick("test-pilot")}

@@ -125,8 +125,10 @@
       }
     ],
     "icons": {
-      "48": "images/icon.svg",
-      "96": "images/icon.svg"
+      "32": "images/logo.svg",
+      "48": "images/logo.svg",
+      "96": "images/logo.svg",
+      "128": "images/logo.svg"
     },
     "applications": {
       "gecko": {

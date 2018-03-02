@@ -5,21 +5,41 @@
   flex-direction: column;
   height: 120px;
   padding-top: 40px;
-  align-items: center;
+  align-items: left;
 
   .app-header__content {
     display: flex;
   }
 
+  .app-header__icon {
+    background-image: url(../../../../images/logo.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 44px;
+    width: 44px;
+    margin-right: 7px;
+  }
+
   h1 {
+    color: #3e3d40;
+    font-size: 24px;
+    letter-spacing: -.2px;
     margin: 0;
-    text-align: center;
+    text-align: left;
   }
 
   h3 {
+    color: #3e3d40;
+    font-size: 11px;
+    letter-spacing: 0;
     margin: 0;
-    font-size: 16px;
-    text-align: center;
+    text-align: left;
+
+    a {
+      color: #00001c;
+      line-height: 13px;
+      text-decoration: none;
+    }
   }
 
   .app-header__survey {
