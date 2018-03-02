@@ -1,4 +1,5 @@
 /* eslint import/no-extraneous-dependencies: off */
+const path = require("path");
 
 const webpack = require("webpack");
 
@@ -20,6 +21,15 @@ Object.keys(defaultEnv).forEach(key => {
   processEnv[key] = JSON.stringify(process.env[key] || defaultEnv[key]);
 });
 
+const commonBabelOptions = {
+  cacheDirectory: true,
+  presets: [
+    ["env", { targets: ["last 2 versions"], modules: false }],
+    "react"
+  ],
+  plugins: ["transform-object-rest-spread"]
+};
+
 module.exports = {
   devtool: "source-map",
   resolve: {
@@ -33,19 +43,21 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            cacheDirectory: true,
-            presets: [
-              ["env", { targets: ["last 2 versions"], modules: false }],
-              "react"
+        test: /\.js$/,
+        oneOf: [
+          {
+            exclude: /node_modules/,
+            loader: "babel-loader",
+            options: commonBabelOptions
+          },
+          {
+            include: [
+              path.resolve(__dirname, "node_modules/testpilot-ga"),
             ],
-            plugins: ["transform-object-rest-spread"]
+            loader: "babel-loader",
+            options: commonBabelOptions
           }
-        }
+        ]
       },
       {
         test: /\.scss$/,
