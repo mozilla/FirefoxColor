@@ -5,6 +5,13 @@ general:
   branches:
     ignore:
       - gh-pages
+dependencies:
+  override:
+    - npm install -g npm@5.7.1
+    - npm ci
+compile:
+  override:
+    - npm run build 
 deployment:
   static_development:
     owner: mozilla
