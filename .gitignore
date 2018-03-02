@@ -3,7 +3,6 @@
 *.sw?
 *~
 
-package-lock.json
 npm-debug.log
 
 # Directories to ignore
