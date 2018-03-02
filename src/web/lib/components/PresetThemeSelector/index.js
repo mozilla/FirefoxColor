@@ -2,7 +2,7 @@ import React from "react";
 
 import BrowserPreview from "../BrowserPreview";
 
-import { presetColors } from "../../../../lib/constants";
+import { presetThemes } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
@@ -10,13 +10,13 @@ import "./index.scss";
 export const PresetThemeSelector = ({ setTheme }) => (
   <div className="preset-theme-selector">
     <h2>Choose a preset theme</h2>
-    {presetColors.map((colors, themeId) => {
+    {presetThemes.map((colors, themeId) => {
       const theme = {
         images: "",
         colors
       };
       return (
-        <div key={themeId} className="preset-theme-preview">
+        <div key={themeId} title={colors.title} className="preset-theme-preview">
           <BrowserPreview
             {...{
               size: "small",

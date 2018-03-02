@@ -1,0 +1,35 @@
+{
+  "title": "Default",
+  "toolbar": {
+    "h": 213,
+    "s": 43,
+    "l": 89,
+    "a": 100
+  },
+  "toolbar_text": {
+    "h": 187,
+    "s": 77,
+    "l": 53
+  },
+  "accentcolor": {
+    "h": 213,
+    "s": 13,
+    "l": 47
+  },
+  "textcolor": {
+    "h": 187,
+    "s": 77,
+    "l": 53
+  },
+  "toolbar_field": {
+    "h": 213,
+    "s": 13,
+    "l": 47,
+    "a": 100
+  },
+  "toolbar_field_text": {
+    "h": 0,
+    "s": 0,
+    "l": 100
+  }
+}
