@@ -78,7 +78,7 @@ export const AppComponent = ({
     <AppBackground {...{ theme }} />
     {!hasExtension && !isMobile && <Banner {...{ isFirefox, addonUrl, bottom: false }} />}
     {loaderDelayExpired && (
-      <div className="app__content">
+      <main className="app__content">
         <AppHeader {...{ hasExtension }} />
         <BrowserPreview {...{ theme, setSelectedColor, size: "large" }}>
           <div className="app__theme-element-pickers">
@@ -119,7 +119,7 @@ export const AppComponent = ({
             }}
           />
         )}
-      </div>
+      </main>
     )}
     <AppFooter />
   </div>

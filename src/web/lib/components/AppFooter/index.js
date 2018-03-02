@@ -11,11 +11,12 @@ import "./index.scss";
 
 export const AppFooter = () => (
   <footer className="app-footer">
-    <div className="app-footer__legal">
+    <nav className="app-footer__legal">
       <a
         className="app-footer__legal-link"
         onClick={() => Metrics.linkClick("mozilla-logo")}
         href="https://www.mozilla.org"
+        aria-label="Mozilla logo"
       >
         <ReactSVG path={iconMoz} className="app-footer__legal-logo" />
       </a>
@@ -54,12 +55,13 @@ export const AppFooter = () => (
       >
         Cookies
       </a>
-    </div>
-    <div className="app-footer__social">
+    </nav>
+    <nav className="app-footer__social">
       <a
         className="app-footer__social-link"
         onClick={() => Metrics.linkClick("twitter")}
         href="https://twitter.com/FxTestPilot"
+        aria-label="@FxTestPilot Twitter"
       >
         <ReactSVG path={iconTwitter} className="app-footer__social-logo" />
       </a>
@@ -67,10 +69,11 @@ export const AppFooter = () => (
         className="app-footer__social-link"
         onClick={() => Metrics.linkClick("github")}
         href="https://github.com/mozilla/ThemesRFun/"
+        aria-label="Themer GitHub"
       >
         <ReactSVG path={iconGH} className="app-footer__social-logo" />
       </a>
-    </div>
+    </nav>
   </footer>
 );
 
