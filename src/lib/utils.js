@@ -1,4 +1,4 @@
-import { defaultColors } from "./constants";
+import { defaultTheme } from "./themes";
 
 export const DEBUG = process.env.NODE_ENV === "development";
 
@@ -26,8 +26,8 @@ export const normalizeThemeColor = (data, defaultColor) => {
 
 export const normalizeThemeColors = (colors = {}) => {
   const out = {};
-  Object.keys(defaultColors).forEach(name => {
-    out[name] = normalizeThemeColor(colors[name], defaultColors[name]);
+  Object.keys(defaultTheme).forEach(name => {
+    out[name] = normalizeThemeColor(colors[name], defaultTheme[name]);
   });
   return out;
 };
@@ -35,7 +35,7 @@ export const normalizeThemeColors = (colors = {}) => {
 // Utility to ensure normal properties and values in app theme state
 export const normalizeTheme = (data = {}) => {
   const theme = {
-    colors: normalizeThemeColors(data.colors, defaultColors),
+    colors: normalizeThemeColors(data.colors, defaultTheme),
     images: { headerURL: "" }
   };
   const images = data.images ? data.images : {};
