@@ -24,10 +24,14 @@ class ThemeColorsEditor extends React.Component {
       setSelectedColor
     } = this.props;
 
+    // Select only the color properties from the theme.
+    const colorKeys = Object.keys(colors)
+      .filter(name => name in colorLabels);
+
     return (
       <div className="theme-colors-editor">
         <ul className="colors">
-          {Object.keys(colors).map((name, idx) => {
+          {colorKeys.map((name, idx) => {
             const color = colors[name];
             return [
               <li
