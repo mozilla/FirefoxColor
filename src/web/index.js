@@ -107,7 +107,6 @@ window.addEventListener("message", ({ source, data: message }) => {
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
         Metrics.installSuccess();
-        postMessage("setClientUUID", { clientUUID: Metrics.getClientUUID() });
         postMessage("setTheme", { theme: selectors.theme(store.getState()) });
       }
     }
