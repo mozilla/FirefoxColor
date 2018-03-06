@@ -1,35 +1,40 @@
 {
   "title": "Hotdog Stand 🌭",
-  "toolbar": {
-    "h": 60,
-    "s": 100,
-    "l": 50,
-    "a": 100
+  "colors": {
+    "toolbar": {
+      "h": 60,
+      "s": 100,
+      "l": 50,
+      "a": 100
+    },
+    "toolbar_text": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+    },
+    "accentcolor": {
+      "h": 0,
+      "s": 100,
+      "l": 50
+    },
+    "textcolor": {
+      "h": 0,
+      "s": 0,
+      "l": 0
+    },
+    "toolbar_field": {
+      "h": 0,
+      "s": 0,
+      "l": 0,
+      "a": 100
+    },
+    "toolbar_field_text": {
+      "h": 0,
+      "s": 0,
+      "l": 100
+    }
   },
-  "toolbar_text": {
-    "h": 0,
-    "s": 0,
-    "l": 0
-  },
-  "accentcolor": {
-    "h": 0,
-    "s": 100,
-    "l": 50
-  },
-  "textcolor": {
-    "h": 0,
-    "s": 0,
-    "l": 0
-  },
-  "toolbar_field": {
-    "h": 0,
-    "s": 0,
-    "l": 0,
-    "a": 100
-  },
-  "toolbar_field_text": {
-    "h": 0,
-    "s": 0,
-    "l": 100
+  "images": {
+    "headerURL": ""
   }
 }

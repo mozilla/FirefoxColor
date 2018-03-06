@@ -1,4 +1,5 @@
-import { makeLog, colorToCSS, normalizeTheme } from "../lib/utils";
+import { makeLog } from "../lib/utils";
+import { normalizeTheme, colorToCSS } from "../lib/themes";
 
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";

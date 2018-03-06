@@ -10,13 +10,9 @@ import "./index.scss";
 export const PresetThemeSelector = ({ setTheme }) => (
   <div className="preset-theme-selector">
     <h2>Choose a preset theme</h2>
-    {presetThemes.map((colors, themeId) => {
-      const theme = {
-        images: "",
-        colors
-      };
+    {presetThemes.map((theme, themeId) => {
       return (
-        <div key={themeId} title={colors.title} className="preset-theme-preview">
+        <div key={themeId} title={theme.title} className="preset-theme-preview">
           <BrowserPreview
             {...{
               size: "small",

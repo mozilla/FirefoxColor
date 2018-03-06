@@ -2,7 +2,7 @@ import React from "react";
 import ReactSVG from "react-svg";
 import classnames from "classnames";
 
-import { colorToCSS } from "../../../../lib/utils";
+import { colorToCSS } from "../../../../lib/themes";
 
 import "./index.scss";
 
