@@ -1,35 +1,40 @@
 {
   "title": "003",
-  "toolbar": {
-    "h": 234,
-    "s": 32,
-    "l": 18,
-    "a": 100
+  "colors": {
+    "toolbar": {
+      "h": 234,
+      "s": 32,
+      "l": 18,
+      "a": 100
+    },
+    "toolbar_text": {
+      "h": 65,
+      "s": 0,
+      "l": 100
+    },
+    "accentcolor": {
+      "h": 231,
+      "s": 63,
+      "l": 8
+    },
+    "textcolor": {
+      "h": 213,
+      "s": 43,
+      "l": 89
+    },
+    "toolbar_field": {
+      "h": 233,
+      "s": 24,
+      "l": 28,
+      "a": 100
+    },
+    "toolbar_field_text": {
+      "h": 0,
+      "s": 0,
+      "l": 100
+    }
   },
-  "toolbar_text": {
-    "h": 65,
-    "s": 0,
-    "l": 100
-  },
-  "accentcolor": {
-    "h": 231,
-    "s": 63,
-    "l": 8
-  },
-  "textcolor": {
-    "h": 213,
-    "s": 43,
-    "l": 89
-  },
-  "toolbar_field": {
-    "h": 233,
-    "s": 24,
-    "l": 28,
-    "a": 100
-  },
-  "toolbar_field_text": {
-    "h": 0,
-    "s": 0,
-    "l": 100
+  "images": {
+    "headerURL": ""
   }
 }

@@ -5,7 +5,7 @@ import {
   normalizeTheme,
   normalizeThemeColor,
   normalizeThemeColors
-} from "./utils";
+} from "./themes";
 
 // Actions that should trigger a theme update in URL history and the add-on
 export const themeChangeActions = [
