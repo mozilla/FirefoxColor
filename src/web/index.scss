@@ -6,8 +6,8 @@
   --white-a96: rgba(255, 255, 255, .96);
   --large-unit-box-shadow: 0 5px 10px 5px rgba(0, 0, 0, .1);
   --large-unit-border-radius: 4px;
-  --medium-unit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
-  --medium-unit-border-radius: 3.19px;
+  --medium-unit-box-shadow: 0 2px 16px 0 rgba(0, 0, 0, .2);
+  --medium-unit-border-radius: 3px;
   --small-unit-box-shadow: 0 2px 2px rgba(0, 0, 0, .1);
   --small-unit-border-radius: 2px;
 }
@@ -21,4 +21,30 @@ html,
 
 body {
   margin: 0;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

@@ -2,24 +2,34 @@
 
 .shared-theme-dialog-wrapper {
   align-items: center;
-  background: rgba(12, 12, 13, .4);
+  animation-duration: 250ms;
+  animation-fill-mode: forwards;
+  animation-name: fade-in;
+  background: rgba(12, 12, 13, .6);
   display: flex;
   height: 100%;
   justify-content: center;
   left: 0;
+  opacity: 0;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 10000;
 
   .shared-theme-dialog {
-    background-color: #fff;
-    background-image: url(./top-bg.png);
-    background-repeat: no-repeat;
+    @include unit;
+
+    animation-delay: 500ms;
+    animation-duration: 250ms;
+    animation-fill-mode: forwards;
+    animation-name: pop-in;
+    background: #30324f;
     border-radius: 6px;
     height: 437px;
-    width: 600px;
+    opacity: 0;
+    overflow: hidden;
     position: relative;
+    width: 600px;
 
     .preview {
       display: flex;
@@ -27,22 +37,21 @@
       justify-content: center;
       background-image: url(./stars-bg.svg);
       background-repeat: no-repeat;
-      height: 232px;
+      border-radius: 6px 6px 0 0;
+      height: 282px;
       left: 21px;
       position: absolute;
       top: 50px;
       width: calc(100% - 42px);
+    }
 
-      .doll {
-        //bottom: 0;
-        //left: calc(50% - 477.4px / 2);
-        //position: absolute;
-      }
+    .doll {
+      width: 80%;
     }
 
     .options {
       align-items: center;
-      background: #fff;
+      background: var(--white);
       bottom: 0;
       display: flex;
       flex-direction: column;
@@ -51,6 +60,7 @@
       position: absolute;
       width: 100%;
       z-index: 20000;
+      box-shadow: 0 0 20px rgba(12, 12, 13, .3);
 
       .buttons {
         display: flex;
@@ -59,16 +69,15 @@
         width: 100%;
 
         button {
-          @include button;
+          @include button(34px, 16px);
+          @include buttonDefault;
 
-          cursor: pointer;
-          font-size: 13px;
           margin: 10px;
-          width: 132px;
         }
 
         button.skip {
-          @include buttonDefault;
+          @include button(34px, 16px);
+          @include buttonSecondary;
         }
       }
     }

@@ -143,9 +143,13 @@
 .doll--medium {
   @include unit('medium');
 
+  background: transparent;
+  height: $grid * 56;
+
   > .doll__tabbar {
     flex: 0 0 $grid * 10;
-    padding: 0 $grid * 8;
+    padding: 0 $grid * 9;
+    border-radius: 4px 4px 0 0;
 
     li {
       flex: 0 0 $grid * 30;
@@ -155,16 +159,42 @@
     .title {
       border-radius: 5px;
       height: 10px;
-      width: 160px;
+      width: $grid * 25;
     }
   }
 
   > .doll__toolbar-wrapper {
-    background-position-y: -80px;
-    flex: 0 0 $grid * 19;
+    background-position-y: -10 * $grid;
+    flex: 0 0 $grid * 16;
+
+    .doll__toolbar {
+      height: $grid * 16;
+      padding: 0 $grid * 2.5;
+    }
+
+    .doll__field {
+      height: $grid * 8;
+      margin: 0 $grid * 2.5;
+
+      .doll__location {
+        border-radius: $grid;
+        height: $grid * 2;
+        margin: 0 $grid * 18 0 $grid * 5;
+      }
+    }
+  }
+
+  .doll__button {
+    padding: 0 $grid * 2.5;
+
+    .doll__button-inner {
+      height: $grid * 5;
+      width: $grid * 5;
+    }
   }
 
   > .doll__content {
+    background: var(--white);
     display: flex;
     flex: 1;
     padding: $grid * 4;
