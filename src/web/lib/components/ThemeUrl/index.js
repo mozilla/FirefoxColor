@@ -51,12 +51,10 @@ export default class ThemeUrl extends React.Component {
     return (
       <form className="theme-url" onSubmit={e => e.preventDefault()}>
         <label htmlFor="themeUrl"><h2>Share your theme</h2></label>
-        <fieldset>
-          <input type="text" id="themeUrl" value={themeUrl} />
-          <input type="submit" className="clipboardButton"
-            data-clipboard-target="#themeUrl"
-            value={copied ? "Copied!" : "Copy"} />
-        </fieldset>
+        <input type="text" id="themeUrl" value={themeUrl} />
+        <input type="submit" className="clipboardButton"
+          data-clipboard-target="#themeUrl"
+          value={copied ? "Copied!" : "Copy"} />
       </form>
     );
   }
