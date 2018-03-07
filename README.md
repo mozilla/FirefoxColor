@@ -1,8 +1,8 @@
-# ThemesRFun
+# Themer
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/ThemesRFun.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/Themer.svg)](https://greenkeeper.io/)
 
-[![CircleCI](https://circleci.com/gh/mozilla/ThemesRFun.svg?style=svg)](https://circleci.com/gh/mozilla/ThemesRFun)
+[![CircleCI](https://circleci.com/gh/mozilla/Themer.svg?style=svg)](https://circleci.com/gh/mozilla/Themer)
 
 Theming demo for Firefox Quantum and beyond. 
 
@@ -13,8 +13,8 @@ Theming demo for Firefox Quantum and beyond.
 1. Clone the repo, install dependencies, start the dev environment:
    
    ```
-   git clone https://github.com/mozilla/ThemesRFun.git
-   cd ThemesRFun
+   git clone https://github.com/mozilla/Themer.git
+   cd Themer
    npm install
    npm start
    ```
@@ -38,7 +38,7 @@ on this repo. Production release process is TBD.
 
 The script `npm run release:dev` in `package.json` takes care of the following:
 
-* Set `ADDON_URL` and `SITE_URL` vars to point at mozilla.github.io/ThemesRFun
+* Set `ADDON_URL` and `SITE_URL` vars to point at mozilla.github.io/Themer
 
 * Build the site
 
