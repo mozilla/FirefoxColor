@@ -17,7 +17,7 @@ let analytics = null;
 const INSTALL_FAILURE_DELAY = 10 * 1000;
 let installTimer = null;
 
-// See also: https://github.com/mozilla/ThemesRFun/blob/master/docs/metrics.md
+// See also: https://github.com/mozilla/Themer/blob/master/docs/metrics.md
 
 // Custom metrics
 let cm1; // integer count of select-full events from start of visit

@@ -17,7 +17,7 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
       <div className="app-header__content">
         <div className="app-header__icon" />
         <header>
-          <h1>Themer</h1>
+          <h1>Firefox Themer</h1>
           <h3>
             A
             {" "}
