@@ -58,9 +58,6 @@ const applyTheme = ({ theme }) => {
 
   const newTheme = {
     images: {
-      // HACK: use a transparent pixel image for headerURL - because headerURL
-      // won't tile but additional_backgrounds won't appear without it.
-      headerURL: BLANK_IMAGE,
       additional_backgrounds: [backgroundImage]
     },
     properties: {
@@ -69,6 +66,14 @@ const applyTheme = ({ theme }) => {
     },
     colors: {}
   };
+
+  // the headerURL is required in < 60,
+  // but it creates an ugly text shadow.
+  // So only add it for older FFs only.
+  const fxVersion = navigator.userAgent.toLowerCase().split("firefox/")[1];
+  if (fxVersion < 60) {
+    newTheme.images.headerURL = BLANK_IMAGE;
+  }
 
   Object.keys(theme.colors).forEach(key => {
     newTheme.colors[key] = colorToCSS(theme.colors[key]);
