@@ -27,8 +27,8 @@ export const SharedThemeDialog = ({ pendingTheme, setTheme, clearPendingTheme })
         <div className="options">
           <p>Do you want to apply this custom theme?</p>
           <div className="buttons">
-            <button className="apply" onClick={onApply}>Apply</button>
-            <button className="skip" onClick={onSkip}>Skip</button>
+            <button className="skip" onClick={onSkip}>Nope</button>
+            <button className="apply" onClick={onApply}>Yep</button>
           </div>
         </div>
       </div>

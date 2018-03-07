@@ -14,7 +14,7 @@ export const AppBackground = ({ theme }) => {
       colors[key] = colorToCSS(theme.colors[key]);
     });
     style.background =
-      `linear-gradient(${colors.toolbar} 32.5%, ${colors.accentcolor} 78.1%)`;
+      `linear-gradient(150deg, ${colors.toolbar} 22.5%, ${colors.accentcolor} 68.1%)`;
   }
 
   return (

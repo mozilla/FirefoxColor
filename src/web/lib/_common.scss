@@ -11,11 +11,12 @@ $grid: 4px;
   justify-content: center;
   text-decoration: none;
   transition: background 50ms;
-  min-width: 200px;
+  min-width: 180px;
   padding: 0 12px;
 }
 
 @mixin buttonSecondary {
+  color: var(--grey-90);
   background: rgba(12, 12, 13, .1);
 
   &:hover {
@@ -57,20 +58,4 @@ $grid: 4px;
   border-radius: var(--#{$size}-unit-border-radius);
   box-shadow: var(--#{$size}-unit-box-shadow);
   background: var(--white-a96);
-}
-
-@keyframes pop-in {
-  0% {
-    opacity: 0;
-  }
-
-  80% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
