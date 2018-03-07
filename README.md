@@ -1,5 +1,7 @@
 # ThemesRFun
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/ThemesRFun.svg)](https://greenkeeper.io/)
+
 [![CircleCI](https://circleci.com/gh/mozilla/ThemesRFun.svg?style=svg)](https://circleci.com/gh/mozilla/ThemesRFun)
 
 Theming demo for Firefox Quantum and beyond. 
