@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { actions, selectors } from "../../../../lib/store";
+import { DEBUG } from "../../../../lib/utils";
 
 import AppFooter from "../AppFooter";
 import AppHeader from "../AppHeader";
@@ -13,6 +14,7 @@ import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
 import Banner from "../Banner";
 import SharedThemeDialog from "../SharedThemeDialog";
 import AppLoadingIndicator from "../AppLoadingIndicator";
+import ThemeLogger from "../ThemeLogger";
 import ThemeUrl from "../ThemeUrl";
 import ThemeSaveButton from "../ThemeSaveButton";
 import SavedThemeSelector from "../SavedThemeSelector";
@@ -127,6 +129,7 @@ export const AppComponent = ({
       </main>
     )}
     <AppFooter />
+    {DEBUG && <ThemeLogger {...{ theme }} />}
   </div>
 );
 

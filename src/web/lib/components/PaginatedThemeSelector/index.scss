@@ -28,17 +28,10 @@
 
     button.page {
       &::before {
-<<<<<<< HEAD
         border-radius: 8px;
         border: 2px solid var(--grey-40);
         box-sizing: border-box;
         content: "";
-=======
-        content: "";
-        border-radius: 8px;
-        border: 2px solid var(--grey-40);
-        box-sizing: border-box;
->>>>>>> style tweaks for pagination
         height: 10px;
         left: 4px;
         position: absolute;
@@ -49,21 +42,9 @@
 
     button.current-page {
       &::before {
-<<<<<<< HEAD
         background: var(--grey-60);
         border: 0;
         content: "";
-=======
-        content: "";
-        border-radius: 8px;
-        background: var(--grey-60);
-        box-sizing: border-box;
-        height: 10px;
-        left: 4px;
-        position: absolute;
-        top: 4px;
-        width: 10px;
->>>>>>> style tweaks for pagination
       }
     }
 

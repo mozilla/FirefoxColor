@@ -11,7 +11,7 @@ $grid: 4px;
   justify-content: center;
   text-decoration: none;
   transition: background 50ms;
-  min-width: 180px;
+  min-width: 10 * $font;
   padding: 0 12px;
 }
 
