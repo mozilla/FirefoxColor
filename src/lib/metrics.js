@@ -112,13 +112,16 @@ const Metrics = {
     cd4 = value;
   },
 
-  themeToDimensions(theme) {
-    return Object.entries(theme.colors).reduce(
+  themeToDimensions({ colors, images }) {
+    const bgImage = images.additional_backgrounds
+      ? images.additional_backgrounds[0]
+      : "";
+    return Object.entries(colors).reduce(
       (acc, [name, hsla]) => ({
         ...acc,
         [COLORS_TO_DIMENSIONS[name]]: hslaToCSV(name, hsla)
       }),
-      { cd11: theme.images.headerURL }
+      { cd11: bgImage }
     );
   },
 
