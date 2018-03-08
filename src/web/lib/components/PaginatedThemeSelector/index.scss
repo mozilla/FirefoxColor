@@ -13,37 +13,39 @@
     margin: 0;
 
     button {
-      color: #000;
-      background-color: transparent;
+      background: transparent;
       border: 0;
+      color: transparent;
       cursor: pointer;
-      margin: 2px;
       height: 18px;
+      margin: 2px;
       overflow: hidden;
-      text-indent: 10px;
+      padding: 0;
+      position: relative;
       white-space: nowrap;
-      width: 10px;
+      width: 18px;
     }
 
     button.page {
-      text-indent: 0;
-
       &::before {
-        content: "\25cf";
+        border-radius: 8px;
+        border: 2px solid var(--grey-40);
+        box-sizing: border-box;
+        content: "";
+        height: 10px;
+        left: 4px;
+        position: absolute;
+        top: 4px;
+        width: 10px;
       }
     }
 
     button.current-page {
-      text-indent: 0;
-
       &::before {
-        content: "\25cb";
+        background: var(--grey-60);
+        border: 0;
+        content: "";
       }
-    }
-
-    button.disabled {
-      cursor: auto;
-      opacity: .5;
     }
 
     button.previous,
@@ -51,6 +53,17 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: 10px 18px;
+      opacity: .7;
+      transition: opacity 125ms;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &.disabled {
+        cursor: auto;
+        opacity: .3;
+      }
     }
 
     button.previous {

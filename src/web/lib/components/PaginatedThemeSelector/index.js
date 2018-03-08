@@ -13,7 +13,7 @@ export const PaginatedThemeSelector = ({
   previewClassName,
   onClick,
   onDelete = null,
-  perPage = 8,
+  perPage = 12,
   currentPage = 1,
   setCurrentPage
 }) => {
@@ -60,20 +60,17 @@ export const PaginatedThemeSelector = ({
             onClick={
               prevDisabled ? () => {} : () => setCurrentPage(currentPage - 1)
             }
-          >
-            Previous
-          </button>
+            title="Previous"
+          />
           {[...Array(pageCount)].map((_, idx) => (
             <button
               key={idx}
-              className={classNames({
-                page: idx !== currentPage,
+              className={classNames("page", {
                 "current-page": idx === currentPage
               })}
               onClick={() => setCurrentPage(idx)}
-            >
-              Page #{idx}
-            </button>
+              title={`Page ${idx + 1}`}
+            />
           ))}
           <button
             className={classNames("next", { disabled: nextDisabled })}
@@ -81,9 +78,8 @@ export const PaginatedThemeSelector = ({
             onClick={
               nextDisabled ? () => {} : () => setCurrentPage(currentPage + 1)
             }
-          >
-            Next
-          </button>
+            title="Next"
+          />
         </footer>
       )}
     </div>
