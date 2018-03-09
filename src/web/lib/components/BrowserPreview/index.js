@@ -7,7 +7,11 @@ import { colorToCSS } from "../../../../lib/themes";
 import "./index.scss";
 
 const bgImages = require.context("../../../../images/patterns/", false, /bg-.*\.svg/);
-const buttonImages = require.context("../../../../images/", false, /.*-16\.svg/);
+const buttonImages = require.context(
+  "../../../../images/",
+  false,
+  /.*-16\.svg/
+);
 
 export const BrowserPreview = ({
   size,
@@ -43,18 +47,24 @@ export const BrowserPreview = ({
     asset = false,
     onClick = clickSelectColor("toolbar_text"),
     colorName = "toolbar_text"
-  }) =>
+  }) => (
     <span className="doll__button" onClick={onClick}>
-      {asset && <ReactSVG
-        style={{ fill: colors[colorName] }}
-        path={buttonImages(`./${name}-16.svg`)}
-      />}
-      {!asset && <div className="doll__button-inner"
-        style={{ backgroundColor: colors[colorName] }}
-      />}
-    </span>;
+      {asset && (
+        <ReactSVG
+          style={{ fill: colors[colorName] }}
+          path={buttonImages(`./${name}-16.svg`)}
+        />
+      )}
+      {!asset && (
+        <div
+          className="doll__button-inner"
+          style={{ backgroundColor: colors[colorName] }}
+        />
+      )}
+    </span>
+  );
 
-  const Tab = ({ text, selected }) =>
+  const Tab = ({ text, selected }) => (
     <li
       className={classnames("tab", { selected })}
       onClick={clickSelectColor(selected ? "toolbar" : "accentcolor")}
@@ -69,12 +79,15 @@ export const BrowserPreview = ({
         style={{
           backgroundColor: selected ? colors.toolbar_text : colors.textcolor
         }}
-      >
-      </p>
-    </li>;
+      />
+    </li>
+  );
 
-  const headerBackgroundImage = bgImages.keys().includes(theme.images.headerURL)
-    ? `url(${bgImages(theme.images.headerURL)})`
+  const headerBackground = theme.images.additional_backgrounds[0];
+  const headerBackgroundImage = bgImages
+    .keys()
+    .includes(headerBackground)
+    ? `url(${bgImages(headerBackground)})`
     : "";
   return (
     <div className={`doll doll--${size}`} onClick={clickDoll}>
@@ -86,16 +99,17 @@ export const BrowserPreview = ({
           backgroundImage: headerBackgroundImage
         }}
       >
-        {["Tab One", "Tab Two"].map((text, key) =>
+        {["Tab One", "Tab Two"].map((text, key) => (
           <Tab key={key} {...{ text, selected: key === selectedTab }} />
-        )}
+        ))}
       </ul>
       <div
         className="doll__toolbar-wrapper"
         style={{
           backgroundColor: colors.accentcolor,
-          backgroundImage: headerBackgroundImage,
-        }}>
+          backgroundImage: headerBackgroundImage
+        }}
+      >
         <section
           className="doll__toolbar"
           onClick={clickSelectColor("toolbar")}
@@ -118,18 +132,18 @@ export const BrowserPreview = ({
                 backgroundColor: colors.toolbar_field_text
               }}
             />
-            {(size === "large") && <Button
-              name="bookmark"
-              onClick={clickSelectColor("toolbar_field_text")}
-              colorName="toolbar_field_text"
-            />}
+            {size === "large" && (
+              <Button
+                name="bookmark"
+                onClick={clickSelectColor("toolbar_field_text")}
+                colorName="toolbar_field_text"
+              />
+            )}
           </span>
-          <Button name="menu" asset={ size === "large" }/>
+          <Button name="menu" asset={size === "large"} />
         </section>
       </div>
-      <section className="doll__content">
-        { children }
-      </section>
+      <section className="doll__content">{children}</section>
     </div>
   );
 };

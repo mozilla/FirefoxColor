@@ -6,11 +6,6 @@ const presetThemesContext = require.context(
 
 const defaultTheme = presetThemesContext("./default.json");
 
-export const presetThemes = presetThemesContext
-  .keys()
-  .map((filename, idx) => ({ idx, filename, ...presetThemesContext(filename) }))
-  .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
-
 export const colorToCSS = color => {
   const { h, s, l, a } = color;
   return typeof a === "undefined"
@@ -42,11 +37,25 @@ export const normalizeThemeColors = (colors = {}) => {
 export const normalizeTheme = (data = {}) => {
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),
-    images: { headerURL: "" }
+    images: {
+      additional_backgrounds: []
+    }
   };
   const images = data.images ? data.images : {};
   if (images.headerURL) {
-    theme.images.headerURL = images.headerURL;
+    theme.images.additional_backgrounds = [ images.headerURL ];
+  }
+  if (images.additional_backgrounds) {
+    theme.images.additional_backgrounds = images.additional_backgrounds;
   }
   return theme;
 };
+
+export const presetThemes = presetThemesContext
+  .keys()
+  .map((filename, idx) => ({
+    idx,
+    filename,
+    ...normalizeTheme(presetThemesContext(filename))
+  }))
+  .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));

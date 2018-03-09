@@ -2,7 +2,8 @@ import { makeLog } from "../lib/utils";
 import { normalizeTheme, colorToCSS } from "../lib/themes";
 
 // Blank 1x1 PNG from http://png-pixel.com/
-const BLANK_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+const BLANK_IMAGE =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 const log = makeLog("background");
 
@@ -50,10 +51,13 @@ const storeTheme = ({ theme }) => browser.storage.local.set({ theme });
 
 const applyTheme = ({ theme }) => {
   log("applyTheme", theme);
-  if (!theme) { return; }
+  if (!theme) {
+    return;
+  }
 
-  const backgroundImage = bgImages.keys().includes(theme.images.headerURL)
-    ? bgImages(theme.images.headerURL)
+  const background = theme.images.additional_backgrounds[0];
+  const backgroundImage = bgImages.keys().includes(background)
+    ? bgImages(background)
     : "images/patterns/bg-000.svg";
 
   const newTheme = {
