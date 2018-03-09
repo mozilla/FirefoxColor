@@ -45,14 +45,12 @@
   }
 
   .theme-background-picker__backgrounds-inner {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     overflow: auto;
-    grid-auto-rows: 64px;
-    grid-gap: 10px;
     height: 312px;
-    grid-template-columns: repeat(auto-fill, 64px);
-    padding-bottom: 24px;
-    width: 226px;
+    padding-bottom: 12px;
+    width: 212px;
   }
 
   .bg {
@@ -60,6 +58,8 @@
     border: 1px solid transparent;
     cursor: pointer;
     display: flex;
+    flex: 0 0 64px;
+    margin-bottom: 10px;
   }
 
   .bg__inner {

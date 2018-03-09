@@ -6,7 +6,7 @@ const BLANK_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAA
 
 const log = makeLog("background");
 
-const bgImages = require.context("../images/", false, /bg-.*\.png/);
+const bgImages = require.context("../images/patterns/", false, /bg-.*\.svg/);
 
 const siteUrl = process.env.SITE_URL;
 

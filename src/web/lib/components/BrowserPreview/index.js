@@ -6,7 +6,7 @@ import { colorToCSS } from "../../../../lib/themes";
 
 import "./index.scss";
 
-const bgImages = require.context("../../../../images/", false, /bg-.*\.png/);
+const bgImages = require.context("../../../../images/patterns/", false, /bg-.*\.svg/);
 const buttonImages = require.context("../../../../images/", false, /.*-16\.svg/);
 
 export const BrowserPreview = ({
