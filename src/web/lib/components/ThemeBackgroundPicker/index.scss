@@ -4,8 +4,12 @@
 .theme-background-picker {
   @include picker-group;
 
-  right: 200px;
-  top: -203px;
+  right: 240px;
+  top: -204px;
+
+  &::after {
+    left: 18px;
+  }
 
   .theme-background-picker__swatch {
     @include picker-swatch;
@@ -18,24 +22,15 @@
   .theme-background-picker__backgrounds {
     @include unit;
 
+    box-shadow: rgba(0, 0, 0, .15) 0 0 0 1px, rgba(0, 0, 0, .15) 0 8px 16px;
     background: var(--white);
     position: absolute;
-    top: 61px;
-    left: -3px;
+    top: 59px;
+    left: -20px;
     padding: 24px;
     width: 260px;
     height: 360px;
     display: none;
-
-    &::before {
-      background-color: var(--white);
-      content: ' ';
-      height: 15px;
-      position: absolute;
-      top: -7px;
-      transform: rotate(45deg);
-      width: 15px;
-    }
   }
 
   &.selected {

@@ -14,56 +14,120 @@
   .color {
     @include picker-group;
 
-    &.toolbar {
-      top: -28px;
-      left: -24px;
+    &.accentcolor,
+    &.toolbar,
+    &.toolbar_field_text,
+    &.textcolor,
+    &.toolbar_field {
+      .color__picker {
+        left: -58px;
+      }
+
+      &::after {
+        left: 18px;
+      }
+
+      &::before {
+        left: 16px;
+      }
     }
 
+    &.toolbar,
     &.toolbar_text {
-      top: -164px;
-      left: -42px;
       flex-direction: row-reverse;
-      animation-delay: 100ms;
+
+      .color__picker {
+        right: -56px;
+      }
+
+      .color__label {
+        padding: 0 $grid * 2.5 0 0;
+      }
     }
 
     &.accentcolor {
-      top: -203px;
-      right: -40px;
+      top: -204px;
+      right: -23px;
       animation-delay: 200ms;
     }
 
     &.textcolor {
-      top: -164px;
-      left: 376px;
       animation-delay: 300ms;
+      left: 325px;
+      top: -204px;
     }
 
     &.toolbar_field {
-      top: -62px;
-      left: 134px;
-      flex-direction: row-reverse;
       animation-delay: 400ms;
+      left: 151px;
+      top: -114px;
     }
 
     &.toolbar_field_text {
-      top: -91px;
-      right: 154px;
       animation-delay: 500ms;
+      right: 154px;
+      top: -115px;
     }
 
-    &.accentcolor,
-    &.toolbar,
-    &.toolbar_field_text,
-    &.textcolor {
-      .color__picker {
-        left: -58px;
+    &.toolbar {
+      animation-delay: 200ms;
+      animation-name: slide-up;
+      left: -24px;
+      top: -28px;
+
+      &:hover,
+      &.selected {
+        &::after {
+          border-top-color: var(--white);
+        }
+      }
+
+      &::after {
+        border-top-color: rgba(255, 255, 255, .9);
+        bottom: auto;
+        left: auto;
+        right: 18px;
+        top: -12px;
+        transform: rotate(180deg);
+        z-index: 1;
+      }
+
+      &::before {
+        display: none;
+      }
+
+      &.selected {
+        &::before {
+          display: inline;
+          left: auto;
+          right: 16px;
+          bottom: auto;
+          top: -16px;
+          transform: rotate(180deg);
+        }
       }
     }
 
-    &.toolbar_text,
-    &.toolbar_field {
+    &.toolbar_text {
+      animation-delay: 100ms;
+      left: 23px;
+      top: -204px;
+
       .color__picker {
         right: -56px;
+      }
+
+      .color__label {
+        padding: 0 $grid * 2.5 0 0;
+      }
+
+      &::after {
+        right: 18px;
+      }
+
+      &::before {
+        left: auto;
+        right: 16px;
       }
     }
 
