@@ -7,7 +7,7 @@ import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
-const bgImages = require.context("../../../../images/", false, /bg-.*\.png/);
+const bgImages = require.context("../../../../images/patterns/", false, /bg-.*\.svg/);
 
 const Background = ({
   src,
