@@ -1,7 +1,7 @@
 {
   "name": "themer",
   "description": "Theming demo for Firefox Quantum and beyond.",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "author": "Les Orchard <me@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"

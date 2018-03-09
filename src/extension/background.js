@@ -54,7 +54,7 @@ const applyTheme = ({ theme }) => {
 
   const backgroundImage = bgImages.keys().includes(theme.images.headerURL)
     ? bgImages(theme.images.headerURL)
-    : "images/bg-0.png";
+    : "images/patterns/bg-000.svg";
 
   const newTheme = {
     images: {
