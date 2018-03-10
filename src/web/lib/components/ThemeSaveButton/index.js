@@ -12,7 +12,7 @@ export const ThemeSaveButton = ({
   return (
     <div className="theme-save-button">
       <h2>Save your theme</h2>
-      <button onClick={saveTheme}>Save</button>
+      <button onClick={saveTheme} title="Save">Save</button>
     </div>
   );
 };

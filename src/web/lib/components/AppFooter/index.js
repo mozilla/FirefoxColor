@@ -62,6 +62,7 @@ export const AppFooter = () => (
         onClick={() => Metrics.linkClick("twitter")}
         href="https://twitter.com/FxTestPilot"
         aria-label="@FxTestPilot Twitter"
+        title="Twitter"
       >
         <ReactSVG path={iconTwitter} className="app-footer__social-logo" />
       </a>
@@ -70,6 +71,7 @@ export const AppFooter = () => (
         onClick={() => Metrics.linkClick("github")}
         href="https://github.com/mozilla/Themer/"
         aria-label="Themer GitHub"
+        title="GitHub"
       >
         <ReactSVG path={iconGH} className="app-footer__social-logo" />
       </a>

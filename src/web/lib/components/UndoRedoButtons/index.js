@@ -13,10 +13,10 @@ export const UndoRedoButtons = ({
   themeCanRedo
 }) => (
   <div className="undoRedo">
-    <button title="undo" className={classnames("undo", { disabled: !themeCanUndo })} onClick={undo}>
+    <button title="Undo" className={classnames("undo", { disabled: !themeCanUndo })} onClick={undo}>
       <img src={iconUndo} />
     </button>
-    <button title="redo" className={classnames("redo", { disabled: !themeCanRedo })} onClick={redo}>
+    <button title="Redo" className={classnames("redo", { disabled: !themeCanRedo })} onClick={redo}>
       <img src={iconRedo} />
     </button>
   </div>

@@ -54,7 +54,8 @@ export default class ThemeUrl extends React.Component {
         <input type="text" id="themeUrl" value={themeUrl} />
         <input type="submit" className="clipboardButton"
           data-clipboard-target="#themeUrl"
-          value={copied ? "Copied!" : "Copy"} />
+          value={copied ? "Copied!" : "Copy"}
+          title={copied ? "Copied!" : "Copy"} />
       </form>
     );
   }

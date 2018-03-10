@@ -37,7 +37,7 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
         <a
           href={survey}
           onClick={() => Metrics.linkClick("survey")}
-          title="survey link"
+          title="Feedback"
           className="app-header__survey"
           target="_blank"
           rel="noopener noreferrer"
