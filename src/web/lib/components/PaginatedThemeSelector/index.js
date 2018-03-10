@@ -38,7 +38,7 @@ export const PaginatedThemeSelector = ({
             <button
               className="delete-theme"
               onClick={() => onDelete(key)}
-              title="delete"
+              title="Delete"
             >
               <img src={iconClose} />
             </button>

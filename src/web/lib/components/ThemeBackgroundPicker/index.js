@@ -61,6 +61,7 @@ class ThemeBackgroundPicker extends React.Component {
       <div
         className={classnames("theme-background-picker", { selected })}
         onClick={this.handleClick.bind(this)}
+        title="Theme Texture"
       >
         <span
           className="theme-background-picker__swatch"

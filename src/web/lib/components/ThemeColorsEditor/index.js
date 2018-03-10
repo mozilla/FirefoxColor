@@ -38,6 +38,7 @@ class ThemeColorsEditor extends React.Component {
                 key={`dt-${idx}`}
                 className={classnames(name, "color", { selected: selectedColor === name })}
                 onClick={() => setSelectedColor({ name })}
+                title={colorLabels[name]}
               >
                 <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />
                 <span className="color__label">{colorLabels[name]}</span>
