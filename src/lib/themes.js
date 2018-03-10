@@ -51,6 +51,8 @@ export const normalizeTheme = (data = {}) => {
   return theme;
 };
 
+export const bgImages = require.context("../images/patterns/", false, /bg-.*\.svg/);
+
 export const presetThemes = presetThemesContext
   .keys()
   .map((filename, idx) => ({
@@ -59,3 +61,5 @@ export const presetThemes = presetThemesContext
     ...normalizeTheme(presetThemesContext(filename))
   }))
   .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
+
+
