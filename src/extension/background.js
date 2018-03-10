@@ -1,13 +1,11 @@
 import { makeLog } from "../lib/utils";
-import { normalizeTheme, colorToCSS } from "../lib/themes";
+import { normalizeTheme, colorToCSS, bgImages } from "../lib/themes";
 
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 const log = makeLog("background");
-
-const bgImages = require.context("../images/patterns/", false, /bg-.*\.svg/);
 
 const siteUrl = process.env.SITE_URL;
 

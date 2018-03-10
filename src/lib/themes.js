@@ -51,6 +51,8 @@ export const normalizeTheme = (data = {}) => {
   return theme;
 };
 
+export const bgImages = require.context("../images/patterns/", false, /bg-.*\.svg/);
+
 export const presetThemes = presetThemesContext
   .keys()
   .map((filename, idx) => ({
