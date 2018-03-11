@@ -109,7 +109,8 @@
     "name": "Themer",
     "permissions": [
       "theme",
-      "storage"
+      "storage",
+      "tabs"
     ],
     "browser_action": {
       "browser_style": true,

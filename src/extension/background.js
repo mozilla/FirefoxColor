@@ -12,9 +12,18 @@ const bgImages = require.context("../images/patterns/", false, /bg-.*\.svg/);
 const siteUrl = process.env.SITE_URL;
 
 const init = () => {
-  browser.browserAction.onClicked.addListener(() =>
-    browser.tabs.create({ url: siteUrl })
-  );
+  browser.browserAction.onClicked.addListener(() => {
+    browser.tabs.query({ currentWindow: true })
+      .then(tabs => {
+        const themerTab = tabs.find(tab => {
+          return tab.title === "Firefox Themer";
+        });
+        if (themerTab)
+          browser.tabs.update(themerTab.id, { active: true });
+        else
+          browser.tabs.create({ url: siteUrl });
+      });
+  });
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
     port.postMessage({ type: "hello" });
