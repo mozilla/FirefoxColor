@@ -2,12 +2,9 @@ import React from "react";
 import classnames from "classnames";
 import onClickOutside from "react-onclickoutside";
 
-import { colorToCSS } from "../../../../lib/themes";
+import { colorToCSS, bgImages } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
-
 import "./index.scss";
-
-const bgImages = require.context("../../../../images/patterns/", false, /bg-.*\.svg/);
 
 const Background = ({
   src,
