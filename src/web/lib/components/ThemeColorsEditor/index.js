@@ -47,7 +47,11 @@ class ThemeColorsEditor extends React.Component {
                     color={{ h: color.h, s: color.s, l: color.l, a: color.a * 0.01 }}
                     disableAlpha={!colorsWithAlpha.includes(name)}
                     onChangeComplete={({ hsl: { h, s, l, a } }) => {
-                      setColor({ name, h, s: s * 100, l: l * 100, a: a * 100 });
+                      const newColor = { name, h, s: s * 100, l: l * 100};
+                      if (colorsWithAlpha.includes(name)) {
+                        newColor.a = a * 100;
+                      }
+                      setColor(newColor);
                       Metrics.themeChangeColor(name);
                     }}
                   />
