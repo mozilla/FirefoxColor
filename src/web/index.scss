@@ -23,6 +23,30 @@ body {
   margin: 0;
 }
 
+@keyframes slide-down {
+  0% {
+    transform: translate3d(0, -60px, 0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translate3d(0, 60px, 0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
 @keyframes pop-in {
   0% {
     opacity: 0;

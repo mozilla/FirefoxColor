@@ -1,22 +1,48 @@
 @mixin picker-group {
   align-items: center;
-  animation-duration: 250ms;
+  animation-duration: 500ms;
   animation-fill-mode: forwards;
-  animation-name: pop-in;
+  animation-name: slide-down;
   animation-timing-function: ease-out;
-  background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .95));
-  border-radius: 27px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  background: linear-gradient(rgba(255, 255, 255, .9), var(--white));
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .05), 0 0 10px rgba(0, 0, 0, .1);
   cursor: pointer;
+  border-radius: 2px;
   display: flex;
   font-size: 16px;
   height: 56px;
-  max-width: 200px;
+  max-width: 190px;
   opacity: 0;
   padding: $grid * 2.5;
   position: absolute;
   text-shadow: 0 0 $grid * 2 #fff;
   transition: box-shadow 100ms;
+
+  &::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 12px solid var(--white);
+    position: absolute;
+    bottom: -12px;
+    z-index: -1;
+  }
+
+  &::before {
+    content: "";
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 14px solid rgba(0, 0, 0, .05);
+    bottom: -15px;
+    height: 0;
+    left: 16px;
+    position: absolute;
+    transition: border-top-color 100ms;
+    width: 0;
+    z-index: -2;
+  }
 
   &:hover,
   &.selected {
@@ -30,13 +56,16 @@
   &.selected {
     box-shadow: 0 0 10px rgba(0, 0, 0, .1), 0 0 0 3px var(--blue-40);
     z-index: 999;
+
+    &::before {
+      border-top-color: var(--blue-50);
+    }
   }
 }
 
 @mixin picker-swatch {
-  border-radius: 50%;
-  border: 3px solid var(--grey-20);
-  box-shadow: 0 0 0 transparent;
+  border: 2px solid var(--grey-20);
+  border-radius: 18px;
   flex: 0 0 36px;
   height: 36px;
 }
