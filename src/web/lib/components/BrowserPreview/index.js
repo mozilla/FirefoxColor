@@ -2,11 +2,10 @@ import React from "react";
 import ReactSVG from "react-svg";
 import classnames from "classnames";
 
-import { colorToCSS } from "../../../../lib/themes";
+import { colorToCSS, bgImages } from "../../../../lib/themes";
 
 import "./index.scss";
 
-const bgImages = require.context("../../../../images/patterns/", false, /bg-.*\.svg/);
 const buttonImages = require.context(
   "../../../../images/",
   false,
