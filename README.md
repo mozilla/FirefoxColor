@@ -28,6 +28,16 @@
 
 [nvm]: https://github.com/creationix/nvm
 
+**Note:** If you have problems seeing the editor at `http://localhost:8080/` on
+your computer, it's possible that you already have some other service using
+port 8080. You can change the port that Themer uses for local development:
+
+* For Linux & OS X: `PORT=9090 npm start`
+* For Windows: `.\node_modules\.bin\cross-env PORT=9090 npm start`
+
+This example switches to port 9090, but you can supply a different port as
+needed.
+
 ## Build & Release
 
 Deploying a development release consists of pushing to the `development` branch

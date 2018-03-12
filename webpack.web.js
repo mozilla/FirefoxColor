@@ -8,12 +8,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const common = require("./webpack.common.js");
 
-module.exports = merge(common, {
+module.exports = merge(common.webpackConfig, {
   entry: {
     index: "./src/web/index"
   },
   devServer: {
-    contentBase: path.join(__dirname, "build/web")
+    contentBase: path.join(__dirname, "build/web"),
+    port: common.sitePort
   },
   output: {
     path: path.resolve(__dirname, "build/web"),
