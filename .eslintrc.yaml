@@ -40,7 +40,7 @@ overrides:
     env:
       webextensions: true
   -
-    files: ['webpack.*.js']
+    files: ['webpack.*.js','bin/*.js']
     rules:
       import/unambiguous: off
     env:
