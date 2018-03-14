@@ -1,5 +1,6 @@
 import { actions } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
+import { normalizeTheme } from "../../lib/themes";
 
 const log = makeLog("web.storage");
 
@@ -37,7 +38,9 @@ function deleteTheme(key) {
 
 function getTheme(key) {
   try {
-    return JSON.parse(localStorage.getItem(themeStorageKey(key)));
+    const value = JSON.parse(localStorage.getItem(themeStorageKey(key)));
+    value.theme = normalizeTheme(value.theme);
+    return value;
   } catch (e) {
     return null;
   }
