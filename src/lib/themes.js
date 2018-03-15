@@ -20,7 +20,7 @@ export const colorToCSS = color => {
 };
 
 export const normalizeThemeBackground = background =>
-  bgImages.keys().includes(background) ? background : "";
+  bgImages.keys().includes(background) ? background : null;
 
 // Utility to ensure normal & consistent colors
 export const normalizeThemeColor = (data, defaultColor) => {
@@ -47,17 +47,21 @@ export const normalizeTheme = (data = {}) => {
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),
     images: {
-      additional_backgrounds: [ "" ]
+      additional_backgrounds: [ ]
     }
   };
   const images = data.images ? data.images : {};
   if (images.headerURL) {
-    theme.images.additional_backgrounds = [ normalizeThemeBackground(images.headerURL) ];
+    const background = normalizeThemeBackground(images.headerURL);
+    if (background) {
+      theme.images.additional_backgrounds = [ background ];
+    }
   }
   if (images.additional_backgrounds) {
-    theme.images.additional_backgrounds = [
-      normalizeThemeBackground(images.additional_backgrounds[0])
-    ];
+    const background = normalizeThemeBackground(images.additional_backgrounds[0]);
+    if (background) {
+      theme.images.additional_backgrounds = [ background ];
+    }
   }
   return theme;
 };
