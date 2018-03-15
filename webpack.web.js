@@ -6,6 +6,7 @@ const merge = require("webpack-merge");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+const pkg = require("./package.json");
 const common = require("./webpack.common.js");
 
 module.exports = merge(common.webpackConfig, {
@@ -24,7 +25,10 @@ module.exports = merge(common.webpackConfig, {
     new HtmlWebpackPlugin({
       template: "./src/web/index.html.ejs",
       filename: "index.html",
-      chunks: ["index"]
+      chunks: ["index"],
+      title: pkg.title,
+      description: pkg.description,
+      homepage: pkg.homepage
     }),
     new CopyWebpackPlugin([
       { from: "./src/images", to: "images" },
