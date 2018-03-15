@@ -65,19 +65,22 @@ const applyTheme = ({ theme }) => {
     return;
   }
 
-  const background = theme.images.additional_backgrounds[0];
-  const backgroundImage = bgImages(normalizeThemeBackground(background));
-
   const newTheme = {
-    images: {
-      additional_backgrounds: [backgroundImage]
-    },
     properties: {
       additional_backgrounds_alignment: ["top"],
       additional_backgrounds_tiling: ["repeat"]
     },
     colors: {}
   };
+
+  const background = normalizeThemeBackground(
+    theme.images.additional_backgrounds[0]
+  );
+  if (background) {
+    newTheme.images = {
+      additional_backgrounds: [bgImages(background)]
+    };
+  }
 
   // the headerURL is required in < 60,
   // but it creates an ugly text shadow.
