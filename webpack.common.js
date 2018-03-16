@@ -10,10 +10,13 @@ const extractCSS = new ExtractTextPlugin({
   filename: "[name].css"
 });
 
+const sitePort = process.env.PORT || "8080";
+const siteUrl = process.env.SITE_URL || `http://localhost:${sitePort}/`;
+
 const defaultEnv = {
   NODE_ENV: "development",
   ADDON_URL: "addon.xpi",
-  SITE_URL: "http://localhost:8080/"
+  SITE_URL: siteUrl
 };
 
 const processEnv = {};
@@ -30,7 +33,7 @@ const commonBabelOptions = {
   plugins: ["transform-object-rest-spread"]
 };
 
-module.exports = {
+const webpackConfig = {
   devtool: "source-map",
   resolve: {
     extensions: [".js", ".jsx"]
@@ -53,6 +56,7 @@ module.exports = {
           {
             include: [
               path.resolve(__dirname, "node_modules/testpilot-ga"),
+              path.resolve(__dirname, "node_modules/query-string"),
             ],
             loader: "babel-loader",
             options: commonBabelOptions
@@ -108,3 +112,5 @@ module.exports = {
     ]
   }
 };
+
+module.exports = { sitePort, siteUrl, webpackConfig };

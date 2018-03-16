@@ -1,5 +1,10 @@
 import { makeLog } from "../lib/utils";
-import { normalizeTheme, colorToCSS, bgImages } from "../lib/themes";
+import {
+  normalizeTheme,
+  normalizeThemeBackground,
+  colorToCSS,
+  bgImages
+} from "../lib/themes";
 
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE =
@@ -11,15 +16,14 @@ const siteUrl = process.env.SITE_URL;
 
 const init = () => {
   browser.browserAction.onClicked.addListener(() => {
-    browser.tabs.query({ currentWindow: true })
-      .then(tabs => {
-        const themerTab = tabs.find(tab => tab.url.includes(siteUrl));
-        if (themerTab) {
-          browser.tabs.update(themerTab.id, { active: true });
-        } else {
-          browser.tabs.create({ url: siteUrl });
-        }
-      });
+    browser.tabs.query({ currentWindow: true }).then(tabs => {
+      const themerTab = tabs.find(tab => tab.url.includes(siteUrl));
+      if (themerTab) {
+        browser.tabs.update(themerTab.id, { active: true });
+      } else {
+        browser.tabs.create({ url: siteUrl });
+      }
+    });
   });
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
@@ -61,21 +65,22 @@ const applyTheme = ({ theme }) => {
     return;
   }
 
-  const background = theme.images.additional_backgrounds[0];
-  const backgroundImage = bgImages.keys().includes(background)
-    ? bgImages(background)
-    : "images/patterns/bg-000.svg";
-
   const newTheme = {
-    images: {
-      additional_backgrounds: [backgroundImage]
-    },
     properties: {
       additional_backgrounds_alignment: ["top"],
       additional_backgrounds_tiling: ["repeat"]
     },
     colors: {}
   };
+
+  const background = normalizeThemeBackground(
+    theme.images.additional_backgrounds[0]
+  );
+  if (background) {
+    newTheme.images = {
+      additional_backgrounds: [bgImages(background)]
+    };
+  }
 
   // the headerURL is required in < 60,
   // but it creates an ugly text shadow.

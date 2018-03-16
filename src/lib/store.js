@@ -69,7 +69,10 @@ export const reducers = {
       SET_SAVED_THEMES: (state, { payload: { savedThemes } }) => ({
         ...state,
         savedThemes: Object.entries(savedThemes).reduce(
-          (acc, [key, theme]) => ({ ...acc, [key]: { theme: normalizeTheme(theme) } }),
+          (acc, [key, savedTheme]) => ({
+            ...acc,
+            [key]: { ...savedTheme, theme: normalizeTheme(savedTheme.theme) }
+          }),
           {}
         )
       }),

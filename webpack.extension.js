@@ -9,9 +9,7 @@ const GenerateAssetWebpackPlugin = require("generate-asset-webpack-plugin");
 const packageMeta = require("./package.json");
 const common = require("./webpack.common.js");
 
-const siteUrl = process.env.SITE_URL || "http://localhost:8080/";
-
-module.exports = merge(common, {
+module.exports = merge(common.webpackConfig, {
   entry: {
     background: "./src/extension/background",
     contentScript: "./src/extension/contentScript"
@@ -55,7 +53,7 @@ function buildManifest(compilation, cb) {
 
   // Configure content script to run on SITE_URL, omitting port if any
   manifest.content_scripts[0].matches = [
-    `${siteUrl.replace(/:(\d+)\/?$/, "/")}*`
+    `${common.siteUrl.replace(/:(\d+)\/?$/, "/")}*`
   ];
 
   return cb(null, JSON.stringify(manifest, null, "  "));

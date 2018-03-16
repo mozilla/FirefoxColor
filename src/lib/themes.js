@@ -4,6 +4,12 @@ const presetThemesContext = require.context(
   /.*\.json/
 );
 
+export const bgImages = require.context(
+  "../images/patterns/",
+  false,
+  /bg-.*\.svg/
+);
+
 const defaultTheme = presetThemesContext("./default.json");
 
 export const colorToCSS = color => {
@@ -12,6 +18,9 @@ export const colorToCSS = color => {
     ? `hsl(${h}, ${s}%, ${l}%)`
     : `hsla(${h}, ${s}%, ${l}%, ${a * 0.01})`;
 };
+
+export const normalizeThemeBackground = background =>
+  bgImages.keys().includes(background) ? background : null;
 
 // Utility to ensure normal & consistent colors
 export const normalizeThemeColor = (data, defaultColor) => {
@@ -38,20 +47,24 @@ export const normalizeTheme = (data = {}) => {
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),
     images: {
-      additional_backgrounds: []
+      additional_backgrounds: [ ]
     }
   };
   const images = data.images ? data.images : {};
   if (images.headerURL) {
-    theme.images.additional_backgrounds = [ images.headerURL ];
+    const background = normalizeThemeBackground(images.headerURL);
+    if (background) {
+      theme.images.additional_backgrounds = [ background ];
+    }
   }
   if (images.additional_backgrounds) {
-    theme.images.additional_backgrounds = images.additional_backgrounds;
+    const background = normalizeThemeBackground(images.additional_backgrounds[0]);
+    if (background) {
+      theme.images.additional_backgrounds = [ background ];
+    }
   }
   return theme;
 };
-
-export const bgImages = require.context("../images/patterns/", false, /bg-.*\.svg/);
 
 export const presetThemes = presetThemesContext
   .keys()

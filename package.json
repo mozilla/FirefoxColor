@@ -1,12 +1,14 @@
 {
   "name": "themer",
   "description": "Theming demo for Firefox Quantum and beyond.",
-  "version": "0.0.30",
+  "version": "0.0.32",
   "author": "Les Orchard <me@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"
   ],
   "private": true,
+  "title": "Firefox Themer",
+  "homepage": "https://mozilla.github.io/Themer/",
   "main": "src/web/index.js",
   "config": {
     "GA_TRACKING_ID": "UA-114768519-1"
@@ -92,7 +94,7 @@
     "clipboard": "^2.0.0",
     "fira": "github:mozilla/fira#4.202",
     "json-url": "^2.3.1",
-    "query-string": "^5.0.1",
+    "query-string": "^6.0.0",
     "react": "^16.1.0",
     "react-color": "^2.13.8",
     "react-dom": "^16.1.0",
