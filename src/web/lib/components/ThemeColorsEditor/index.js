@@ -54,13 +54,11 @@ class ThemeColorsEditor extends React.Component {
     const {
       theme: { colors },
       selectedColor,
-      setColor,
-      setSelectedColor
+      setColor
     } = this.props;
 
     const {
-      selected,
-      colorName
+      selected
     } = this.state;
 
     // Select only the color properties from the theme.
