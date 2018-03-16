@@ -9,11 +9,30 @@ import Metrics from "../../../../lib/metrics";
 import "./index.scss";
 
 class ThemeColorsEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: false,
+      colorName: null
+    };
+  }
+
+  handleClick(name) {
+    const { setSelectedColor } = this.props;
+    setSelectedColor({ name });
+    if (this.state.selected && this.state.colorName !== name) {
+      this.setState({selected: this.state.selected, colorName: name });
+    } else {
+      this.setState({ selected: !this.state.selected, colorName: name });
+    }
+  }
+
   handleClickOutside() {
     const { selectedColor, setSelectedColor } = this.props;
     if (selectedColor !== null) {
       setSelectedColor({ name: null });
     }
+    this.setState({ selected: false, colorName: null });
   }
 
   render() {
@@ -23,6 +42,11 @@ class ThemeColorsEditor extends React.Component {
       setColor,
       setSelectedColor
     } = this.props;
+
+    const {
+      selected,
+      colorName
+    } = this.state;
 
     // Select only the color properties from the theme.
     const colorKeys = Object.keys(colors)
@@ -36,8 +60,8 @@ class ThemeColorsEditor extends React.Component {
             return [
               <li
                 key={`dt-${idx}`}
-                className={classnames(name, "color", { selected: selectedColor === name })}
-                onClick={() => setSelectedColor({ name })}
+                className={classnames(name, "color", { selected: selected && selectedColor === name })}
+                onClick={this.handleClick.bind(this, name)}
                 title={colorLabels[name]}
               >
                 <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />
