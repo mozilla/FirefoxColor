@@ -17,3 +17,5 @@ export const colorsWithAlpha = [
   "toolbar",
   "toolbar_field"
 ];
+
+export const ESC = 27;

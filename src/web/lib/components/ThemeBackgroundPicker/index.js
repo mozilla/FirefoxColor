@@ -4,6 +4,7 @@ import onClickOutside from "react-onclickoutside";
 
 import { colorToCSS, bgImages } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
+import { ESC } from "../../../../lib/constants";
 import "./index.scss";
 
 const Background = ({
@@ -48,7 +49,7 @@ class ThemeBackgroundPicker extends React.Component {
   }
 
   handleKeyPress(event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === ESC) {
       this.setState({ selected: false });
     }
   }

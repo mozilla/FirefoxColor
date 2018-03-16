@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
-import { colorLabels, colorsWithAlpha } from "../../../../lib/constants";
+import { colorLabels, colorsWithAlpha, ESC } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
 
@@ -37,7 +37,7 @@ class ThemeColorsEditor extends React.Component {
   }
 
   handleKeyPress(event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === ESC) {
       this.setState({ selected: false, colorName: null });
     }
   }
