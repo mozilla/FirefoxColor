@@ -15,6 +15,7 @@ class ThemeColorsEditor extends React.Component {
       selected: false,
       colorName: null
     };
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleClick(name) {
@@ -33,6 +34,20 @@ class ThemeColorsEditor extends React.Component {
       setSelectedColor({ name: null });
     }
     this.setState({ selected: false, colorName: null });
+  }
+
+  handleKeyPress(event) {
+    if (event.keyCode === 27) {
+      this.setState({ selected: false, colorName: null });
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
   }
 
   render() {

@@ -36,6 +36,7 @@ class ThemeBackgroundPicker extends React.Component {
     this.state = {
       selected: false
     };
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleClick() {
@@ -45,6 +46,21 @@ class ThemeBackgroundPicker extends React.Component {
   handleClickOutside() {
     this.setState({ selected: false });
   }
+
+  handleKeyPress(event) {
+    if (event.keyCode === 27) {
+      this.setState({ selected: false });
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
+
 
   render() {
     const { theme, setBackground } = this.props;
