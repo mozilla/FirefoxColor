@@ -16,9 +16,10 @@ class ThemeColorsEditor extends React.Component {
 
   handleClick(name) {
     const { selectedColor, setSelectedColor } = this.props;
-    setSelectedColor({ name });
     if (selectedColor === name) {
       setSelectedColor({ name: null });
+    } else {
+      setSelectedColor({ name });
     }
   }
 
