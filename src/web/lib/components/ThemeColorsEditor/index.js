@@ -32,10 +32,8 @@ class ThemeColorsEditor extends React.Component {
 
   handleKeyPress(event) {
     const { selectedColor, setSelectedColor } = this.props;
-    if (event.keyCode === ESC) {
-      if (selectedColor !== null) {
+    if (event.keyCode === ESC && selectedColor !== null) {
         setSelectedColor({ name: null });
-      }
     }
   }
 
@@ -66,7 +64,7 @@ class ThemeColorsEditor extends React.Component {
             return [
               <li
                 key={`dt-${idx}`}
-                className={classnames(name, "color", { selected: this.props.selectedColor && selectedColor === name })}
+                className={classnames(name, "color", { selected: selectedColor === name })}
                 onClick={() => this.handleClick(name)}
                 title={colorLabels[name]}
               >
