@@ -2,13 +2,27 @@ import React from "react";
 import classnames from "classnames";
 import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
-import { colorLabels, colorsWithAlpha } from "../../../../lib/constants";
+import { colorLabels, colorsWithAlpha, ESC } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
 class ThemeColorsEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+  }
+
+  handleClick(name) {
+    const { selectedColor, setSelectedColor } = this.props;
+    if (selectedColor === name) {
+      setSelectedColor({ name: null });
+    } else {
+      setSelectedColor({ name });
+    }
+  }
+
   handleClickOutside() {
     const { selectedColor, setSelectedColor } = this.props;
     if (selectedColor !== null) {
@@ -16,12 +30,26 @@ class ThemeColorsEditor extends React.Component {
     }
   }
 
+  handleKeyPress(event) {
+    const { selectedColor, setSelectedColor } = this.props;
+    if (event.keyCode === ESC && selectedColor !== null) {
+        setSelectedColor({ name: null });
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyPress);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyPress);
+  }
+
   render() {
     const {
       theme: { colors },
       selectedColor,
-      setColor,
-      setSelectedColor
+      setColor
     } = this.props;
 
     // Select only the color properties from the theme.
@@ -37,7 +65,7 @@ class ThemeColorsEditor extends React.Component {
               <li
                 key={`dt-${idx}`}
                 className={classnames(name, "color", { selected: selectedColor === name })}
-                onClick={() => setSelectedColor({ name })}
+                onClick={() => this.handleClick(name)}
                 title={colorLabels[name]}
               >
                 <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />
