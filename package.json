@@ -31,6 +31,7 @@
     "sign": "npm-run-all clean:extension build:extension && web-ext sign --source-dir=build/extension && mv web-ext-artifacts/*.xpi ./addon.xpi",
     "run": "npm run build:extension && web-ext run --source-dir=build/extension",
     "lint": "npm-run-all lint:*",
+    "lint:themes": "node ./bin/validate-themes.js",
     "lint:css": "stylelint 'src/**/*.scss'",
     "lint:js": "eslint --color .",
     "validate": "npm-run-all validate:*",

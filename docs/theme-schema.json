@@ -1,0 +1,169 @@
+{
+    "properties": {
+        "title": {
+            "type": "string"
+        },
+        "colors": {
+            "type": "object",
+            "properties": {
+                "toolbar": {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "type": "integer",
+                            "maximum": 360,
+                            "minimum": 0
+                        },
+                        "s": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "l": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "a": {
+                            "type": "number",
+                            "maximum": 100,
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["h", "s", "l", "a"],
+                    "additionalProperties": false
+                },
+                "toolbar_text": {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "type": "integer",
+                            "maximum": 360,
+                            "minimum": 0
+                        },
+                        "s": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "l": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["h", "s", "l"],
+                    "additionalProperties": false
+                },
+                "accentcolor": {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "type": "integer",
+                            "maximum": 360,
+                            "minimum": 0
+                        },
+                        "s": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "l": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["h", "s", "l"],
+                    "additionalProperties": false
+                },
+                "textcolor": {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "type": "integer",
+                            "maximum": 360,
+                            "minimum": 0
+                        },
+                        "s": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "l": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["h", "s", "l"],
+                    "additionalProperties": false
+                },
+                "toolbar_field": {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "type": "integer",
+                            "maximum": 360,
+                            "minimum": 0
+                        },
+                        "s": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "l": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "a": {
+                            "type": "number",
+                            "maximum": 100,
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["h", "s", "l", "a"],
+                    "additionalProperties": false
+                },
+                "toolbar_field_text": {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "type": "integer",
+                            "maximum": 360,
+                            "minimum": 0
+                        },
+                        "s": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "l": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["h", "s", "l"],
+                    "additionalProperties": false
+                }
+            },
+            "required": ["toolbar", "toolbar_text", "accentcolor", "textcolor", "toolbar_field", "toolbar_field_text"],
+            "additionalProperties": false
+        },
+        "images": {
+            "type": "object",
+            "properties": {
+                "headerURL": {
+                    "type": "string"
+                },
+                "additional_backgrounds": {
+                    "type": "array"  
+                }
+            }
+        }
+    },
+    "required": ["title", "colors"],
+    "additionalProperties": false
+}
