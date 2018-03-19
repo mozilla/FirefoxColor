@@ -11,20 +11,14 @@ import "./index.scss";
 class ThemeColorsEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: false,
-      colorName: null
-    };
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleClick(name) {
-    const { setSelectedColor } = this.props;
+    const { selectedColor, setSelectedColor } = this.props;
     setSelectedColor({ name });
-    if (this.state.selected && this.state.colorName !== name) {
-      this.setState({selected: this.state.selected, colorName: name });
-    } else {
-      this.setState({ selected: !this.state.selected, colorName: name });
+    if (selectedColor === name) {
+      setSelectedColor({ name: null });
     }
   }
 
@@ -33,12 +27,14 @@ class ThemeColorsEditor extends React.Component {
     if (selectedColor !== null) {
       setSelectedColor({ name: null });
     }
-    this.setState({ selected: false, colorName: null });
   }
 
   handleKeyPress(event) {
+    const { selectedColor, setSelectedColor } = this.props;
     if (event.keyCode === ESC) {
-      this.setState({ selected: false, colorName: null });
+      if (selectedColor !== null) {
+        setSelectedColor({ name: null });
+      }
     }
   }
 
@@ -57,10 +53,6 @@ class ThemeColorsEditor extends React.Component {
       setColor
     } = this.props;
 
-    const {
-      selected
-    } = this.state;
-
     // Select only the color properties from the theme.
     const colorKeys = Object.keys(colors)
       .filter(name => name in colorLabels);
@@ -73,8 +65,8 @@ class ThemeColorsEditor extends React.Component {
             return [
               <li
                 key={`dt-${idx}`}
-                className={classnames(name, "color", { selected: selected && selectedColor === name })}
-                onClick={this.handleClick.bind(this, name)}
+                className={classnames(name, "color", { selected: this.props.selectedColor && selectedColor === name })}
+                onClick={() => this.handleClick(name)}
                 title={colorLabels[name]}
               >
                 <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />
