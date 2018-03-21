@@ -63,7 +63,42 @@
   }
 
   .bg.active {
-    border: 2px solid var(--teal-60);
     border-radius: 5px;
+    border: 2px solid var(--teal-60);
+  }
+}
+
+@media (max-width: 1090px) {
+  .theme-background-picker {
+    right: 148px;
+  }
+}
+
+@media (max-width: 940px) {
+  .theme-background-picker {
+    @include picker-flipper;
+
+    right: -23px;
+    top: -115px;
+
+    &::after {
+      left: 18px;
+      right: auto;
+    }
+
+    &.selected {
+      &::before {
+        left: 16px;
+        right: auto;
+      }
+    }
+
+    .theme-background-picker__swatch {
+      @include picker-swatch-small;
+    }
+
+    .theme-background-picker__text {
+      @include picker-label-small;
+    }
   }
 }

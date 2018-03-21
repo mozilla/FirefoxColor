@@ -12,7 +12,8 @@ export const colorLabels = {
   accentcolor: "Background Color",
   textcolor: "Background Tab Text Color",
   toolbar_field: "Search Bar Color",
-  toolbar_field_text: "Search Text"
+  toolbar_field_text: "Search Text",
+  tab_line: "Tab Highlight Color"
 };
 
 export const colorsWithAlpha = ["toolbar", "toolbar_field"];

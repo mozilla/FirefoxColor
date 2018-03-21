@@ -1,11 +1,12 @@
 @import '../../common.scss';
 
 .app-header {
+  align-items: left;
   display: flex;
   flex-direction: column;
   height: 120px;
+  margin-bottom: 40px;
   padding-top: 40px;
-  align-items: left;
 
   .app-header__content {
     display: flex;

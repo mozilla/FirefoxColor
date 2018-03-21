@@ -18,7 +18,8 @@
     &.toolbar,
     &.toolbar_field_text,
     &.textcolor,
-    &.toolbar_field {
+    &.toolbar_field,
+    &.tab_line {
       .color__picker {
         left: -58px;
       }
@@ -53,7 +54,7 @@
 
     &.textcolor {
       animation-delay: 300ms;
-      left: 325px;
+      left: 358px;
       top: -204px;
     }
 
@@ -69,48 +70,23 @@
       top: -115px;
     }
 
+    &.tab_line {
+      left: 174px;
+      top: -241px;
+    }
+
     &.toolbar {
+      @include picker-flipper;
+
       animation-delay: 200ms;
       animation-name: slide-up;
       left: -24px;
       top: -28px;
-
-      &:hover,
-      &.selected {
-        &::after {
-          border-top-color: var(--white);
-        }
-      }
-
-      &::after {
-        border-top-color: rgba(255, 255, 255, .9);
-        bottom: auto;
-        left: auto;
-        right: 18px;
-        top: -12px;
-        transform: rotate(180deg);
-        z-index: 1;
-      }
-
-      &::before {
-        display: none;
-      }
-
-      &.selected {
-        &::before {
-          display: inline;
-          left: auto;
-          right: 16px;
-          bottom: auto;
-          top: -16px;
-          transform: rotate(180deg);
-        }
-      }
     }
 
     &.toolbar_text {
       animation-delay: 100ms;
-      left: 23px;
+      left: -30px;
       top: -204px;
 
       .color__picker {
@@ -151,6 +127,34 @@
     position: absolute;
     top: 58px;
     z-index: 999;
+  }
+}
+
+@media (max-width: 940px) {
+  .colors {
+    .color {
+      @include picker-small;
+
+      &.tab_line {
+        left: 137px;
+      }
+
+      &.textcolor {
+        left: 288px;
+      }
+
+      &.toolbar {
+        left: -4px;
+      }
+    }
+
+    .color__swatch {
+      @include picker-swatch-small;
+    }
+
+    .color__label {
+      @include picker-label-small;
+    }
   }
 }
 

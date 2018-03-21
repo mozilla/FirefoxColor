@@ -147,6 +147,28 @@
                     },
                     "required": ["h", "s", "l"],
                     "additionalProperties": false
+                },
+                "tab_line": {
+                    "type": "object",
+                    "properties": {
+                        "h": {
+                            "type": "integer",
+                            "maximum": 360,
+                            "minimum": 0
+                        },
+                        "s": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        },
+                        "l": {
+                            "type": "integer",
+                            "maximum": 100,
+                            "minimum": 0
+                        }
+                    },
+                    "required": ["h", "s", "l"],
+                    "additionalProperties": false
                 }
             },
             "required": ["toolbar", "toolbar_text", "accentcolor", "textcolor", "toolbar_field", "toolbar_field_text"],
@@ -159,7 +181,7 @@
                     "type": "string"
                 },
                 "additional_backgrounds": {
-                    "type": "array"  
+                    "type": "array"
                 }
             }
         }

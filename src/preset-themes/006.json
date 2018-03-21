@@ -1,5 +1,5 @@
 {
-  "title": "002",
+  "title": "006",
   "colors": {
     "toolbar": {
       "h": 4,
@@ -13,9 +13,9 @@
       "l": 8
     },
     "accentcolor": {
-      "h": 266,
-      "s": 35,
-      "l": 26
+      "h": 212,
+      "s": 72,
+      "l": 58
     },
     "textcolor": {
       "h": 174,
@@ -38,5 +38,8 @@
       "s": 71,
       "l": 47
     }
+  },
+  "images": {
+    "additional_backgrounds": []
   }
 }
