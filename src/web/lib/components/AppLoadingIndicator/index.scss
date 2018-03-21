@@ -1,5 +1,9 @@
 @import '../../common.scss';
 
+$spinner-shadow-width: 6px;
+$spinner-size: 72px;
+$spinner-buffer: 2px;
+
 .app-loading-indicator {
   align-items: center;
   background: var(--white);
@@ -11,42 +15,96 @@
   top: 0;
   width: 100%;
   z-index: 20000;
+  flex-direction: column;
 
-  p {
+  .app-loading-indicator__spinner {
     align-items: center;
-    animation-direction: alternate;
-    animation-duration: .5s;
-    animation-iteration-count: infinite;
-    animation-name: scale-and-fade;
-    animation-timing-function: ease-in-out;
-    background:
-      linear-gradient(
-        hsl(0, 50, 50),
-        hsl(60, 50, 50),
-        hsl(120, 50, 50),
-        hsl(180, 50, 50),
-        hsl(240, 50, 50),
-        hsl(300, 50, 50)
-      );
     border-radius: 50%;
     color: white;
     display: flex;
-    font-size: 400%;
-    height: 120px;
-    justify-content: center;
-    line-height: 400%;
-    width: 120px;
+    height: $spinner-size + $spinner-buffer;
+    width: $spinner-size + $spinner-buffer;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      animation-duration: 8s;
+      animation-iteration-count: infinite;
+      animation-name: rainbow;
+      animation-timing-function: ease-in-out;
+      box-shadow: 0 0 0 $spinner-shadow-width inset hsl(0, 50, 50);
+      width: $spinner-size;
+      height: $spinner-size;
+      border-radius: 50%;
+      margin: .5 * $spinner-buffer;
+    }
+
+    &::after {
+      content: "";
+      box-sizing: border-box;
+      width: $spinner-size;
+      height: $spinner-size;
+      animation: rotate linear 1.88s infinite;
+      transform-origin: left top;
+      background: rgba(255, 255, 255, .7);
+      position: absolute;
+      top: (.5 * $spinner-size) + (.5 * $spinner-buffer);
+      left: (.5 * $spinner-size) + (.5 * $spinner-buffer);
+    }
+  }
+
+  .app-loading-indicator__quote {
+    font-size: 24px;
+    line-height: 32px;
+    margin: 40px 0 20px;
+    max-width: 360px;
+    text-align: center;
+  }
+
+  .app-loading-indicator__attribution {
+    font-style: oblique;
+    margin: 0;
+    max-width: 360px;
   }
 }
 
-@keyframes scale-and-fade {
-  from {
-    transform: scale(1);
-    opacity: 1;
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
   }
 
-  to {
-    opacity: .8;
-    transform: scale(1.01);
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    box-shadow: 0 0 0 $spinner-shadow-width inset hsl(0, 50, 50);
+  }
+
+  16% {
+    box-shadow: 0 0 0 $spinner-shadow-width inset hsl(60, 50, 50);
+  }
+
+  32% {
+    box-shadow: 0 0 0 $spinner-shadow-width inset hsl(120, 50, 50);
+  }
+
+  48% {
+    box-shadow: 0 0 0 $spinner-shadow-width inset hsl(180, 50, 50);
+  }
+
+  64% {
+    box-shadow: 0 0 0 $spinner-shadow-width inset hsl(240, 50, 50);
+  }
+
+  80% {
+    box-shadow: 0 0 0 $spinner-shadow-width inset hsl(300, 50, 50);
+  }
+
+  96% {
+    box-shadow: 0 0 0 $spinner-shadow-width inset hsl(360, 50, 50);
   }
 }
