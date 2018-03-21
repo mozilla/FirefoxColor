@@ -129,7 +129,7 @@ export const AppComponent = ({
       </main>
     )}
     <AppFooter />
-    {DEBUG && <ThemeLogger {...{ theme }} />}
+    <ThemeLogger {...{ theme }} debug={DEBUG} />
   </div>
 );
 
