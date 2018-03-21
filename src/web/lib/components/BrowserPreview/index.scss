@@ -16,6 +16,7 @@
     padding: 0 $grid * 4;
 
     li {
+      border-top: 2px solid transparent;
       flex: 0 0 $grid * 14;
     }
 
@@ -69,6 +70,7 @@
     padding: 0 $grid * 12.5;
 
     li {
+      border-top: 6px solid transparent;
       flex: 0 0 $grid * 55;
       padding: $grid * 2;
     }
@@ -152,6 +154,7 @@
     border-radius: 4px 4px 0 0;
 
     li {
+      border-top: 4px solid transparent;
       flex: 0 0 $grid * 30;
       padding: $grid * 2;
     }

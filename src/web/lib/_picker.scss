@@ -5,9 +5,9 @@
   animation-name: slide-down;
   animation-timing-function: ease-out;
   background: linear-gradient(rgba(255, 255, 255, .9), var(--white));
+  border-radius: 2px;
   box-shadow: 0 2px 0 rgba(0, 0, 0, .05), 0 0 10px rgba(0, 0, 0, .1);
   cursor: pointer;
-  border-radius: 2px;
   display: flex;
   font-size: 16px;
   height: 56px;
@@ -16,26 +16,27 @@
   padding: $grid * 2.5;
   position: absolute;
   text-shadow: 0 0 $grid * 2 #fff;
-  transition: box-shadow 100ms;
+  transition: box-shadow 100ms, left 500ms, right 500ms, top 500ms;
+  will-change: left, top, box-shadow, right;
 
   &::after {
     content: "";
-    width: 0;
-    height: 0;
     border-left: 12px solid transparent;
     border-right: 12px solid transparent;
     border-top: 12px solid var(--white);
-    position: absolute;
     bottom: -12px;
+    height: 0;
+    position: absolute;
+    width: 0;
     z-index: -1;
   }
 
   &::before {
-    content: "";
     border-left: 14px solid transparent;
     border-right: 14px solid transparent;
     border-top: 14px solid rgba(0, 0, 0, .05);
     bottom: -15px;
+    content: "";
     height: 0;
     left: 16px;
     position: absolute;
@@ -63,8 +64,45 @@
   }
 }
 
+@mixin picker-flipper {
+  &::after {
+    border-top-color: rgba(255, 255, 255, .9);
+    bottom: auto;
+    left: auto;
+    right: 18px;
+    top: -12px;
+    transform: rotate(180deg);
+    z-index: 1;
+  }
+
+  &::before {
+    display: none;
+  }
+
+  &:hover {
+    &::after {
+      border-top-color: var(--white);
+    }
+  }
+
+  &.selected {
+    &::after {
+      border-top-color: var(--white);
+    }
+
+    &::before {
+      bottom: auto;
+      display: inline;
+      left: auto;
+      right: 16px;
+      top: -16px;
+      transform: rotate(180deg);
+    }
+  }
+}
+
 @mixin picker-swatch {
-  border: 2px solid var(--grey-20);
+  border: 2px solid var(--grey-30);
   border-radius: 18px;
   flex: 0 0 36px;
   height: 36px;
@@ -73,4 +111,21 @@
 @mixin picker-text {
   padding-left: $grid * 2.5;
   user-select: none;
+}
+
+@mixin picker-small {
+  font-size: 14px;
+  max-width: 145px;
+  padding: $grid * 1.5;
+}
+
+@mixin picker-swatch-small {
+  border-radius: 14px;
+  flex: 0 0 28px;
+  height: 28px;
+}
+
+@mixin picker-label-small {
+  font-size: 14px;
+  padding-left: $grid * 1.5;
 }

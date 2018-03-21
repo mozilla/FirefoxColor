@@ -69,6 +69,7 @@ export const BrowserPreview = ({
       onClick={clickSelectColor(selected ? "toolbar" : "accentcolor")}
       style={{
         color: selected ? colors.toolbar_text : colors.textcolor,
+        borderTopColor: selected ? colors.tab_line : "transparent",
         backgroundColor: selected ? colors.toolbar : null
       }}
     >
