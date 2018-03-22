@@ -1,177 +1,92 @@
 {
+    "definitions": {
+        "h": {
+            "type": "integer",
+            "maximum": 360,
+            "minimum": 0
+        },
+        "s": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 0
+        },
+        "l": {
+            "type": "integer",
+            "maximum": 100,
+            "minimum": 0
+        },
+        "a": {
+            "type": "number",
+            "maximum": 100,
+            "minimum": 0
+        },
+        "hsl": {
+            "type": "object",
+            "properties": {
+                "h": {
+                    "$ref": "#/definitions/h"
+                },
+                "s": {
+                    "$ref": "#/definitions/s"
+                },
+                "l": {
+                    "$ref": "#/definitions/l"
+                }
+            },
+            "required": ["h", "s", "l"],
+            "additionalProperties": false
+        },
+        "hsla": {
+            "type": "object",
+            "properties": {
+                "h": {
+                    "$ref": "#/definitions/h"
+                },
+                "s": {
+                    "$ref": "#/definitions/s"
+                },
+                "l": {
+                    "$ref": "#/definitions/l"
+                },
+                "a": {
+                    "$ref": "#/definitions/a"
+                }
+            },
+            "required": ["h", "s", "l", "a"],
+            "additionalProperties": false
+        }
+    },
     "properties": {
         "title": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
         },
         "colors": {
             "type": "object",
             "properties": {
-                "toolbar": {
-                    "type": "object",
-                    "properties": {
-                        "h": {
-                            "type": "integer",
-                            "maximum": 360,
-                            "minimum": 0
-                        },
-                        "s": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "l": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "a": {
-                            "type": "number",
-                            "maximum": 100,
-                            "minimum": 0
-                        }
-                    },
-                    "required": ["h", "s", "l", "a"],
-                    "additionalProperties": false
-                },
-                "toolbar_text": {
-                    "type": "object",
-                    "properties": {
-                        "h": {
-                            "type": "integer",
-                            "maximum": 360,
-                            "minimum": 0
-                        },
-                        "s": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "l": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        }
-                    },
-                    "required": ["h", "s", "l"],
-                    "additionalProperties": false
-                },
                 "accentcolor": {
-                    "type": "object",
-                    "properties": {
-                        "h": {
-                            "type": "integer",
-                            "maximum": 360,
-                            "minimum": 0
-                        },
-                        "s": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "l": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        }
-                    },
-                    "required": ["h", "s", "l"],
-                    "additionalProperties": false
+                    "$ref": "#/definitions/hsl"
                 },
                 "textcolor": {
-                    "type": "object",
-                    "properties": {
-                        "h": {
-                            "type": "integer",
-                            "maximum": 360,
-                            "minimum": 0
-                        },
-                        "s": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "l": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        }
-                    },
-                    "required": ["h", "s", "l"],
-                    "additionalProperties": false
+                    "$ref": "#/definitions/hsl"
+                },
+                "toolbar": {
+                    "$ref": "#/definitions/hsla"
                 },
                 "toolbar_field": {
-                    "type": "object",
-                    "properties": {
-                        "h": {
-                            "type": "integer",
-                            "maximum": 360,
-                            "minimum": 0
-                        },
-                        "s": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "l": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "a": {
-                            "type": "number",
-                            "maximum": 100,
-                            "minimum": 0
-                        }
-                    },
-                    "required": ["h", "s", "l", "a"],
-                    "additionalProperties": false
+                    "$ref": "#/definitions/hsla"
                 },
                 "toolbar_field_text": {
-                    "type": "object",
-                    "properties": {
-                        "h": {
-                            "type": "integer",
-                            "maximum": 360,
-                            "minimum": 0
-                        },
-                        "s": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "l": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        }
-                    },
-                    "required": ["h", "s", "l"],
-                    "additionalProperties": false
+                    "$ref": "#/definitions/hsl"
+                },
+                "toolbar_text": {
+                    "$ref": "#/definitions/hsl"
                 },
                 "tab_line": {
-                    "type": "object",
-                    "properties": {
-                        "h": {
-                            "type": "integer",
-                            "maximum": 360,
-                            "minimum": 0
-                        },
-                        "s": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        },
-                        "l": {
-                            "type": "integer",
-                            "maximum": 100,
-                            "minimum": 0
-                        }
-                    },
-                    "required": ["h", "s", "l"],
-                    "additionalProperties": false
+                    "$ref": "#/definitions/hsl"
                 }
             },
-            "required": ["toolbar", "toolbar_text", "accentcolor", "textcolor", "toolbar_field", "toolbar_field_text"],
+            "required": ["toolbar", "toolbar_text", "accentcolor", "textcolor", "toolbar_field", "toolbar_field_text", "tab_line"],
             "additionalProperties": false
         },
         "images": {
