@@ -17,15 +17,15 @@ export default class ThemeLogger extends React.Component {
 
   render() {
     const { isExpanded } = this.state;
-    const { theme } = this.props;
+    const { theme, debug } = this.props;
     console.log(theme.title); // eslint-disable-line
     const loggerButtonText = isExpanded ? "Hide Logger" : "Show Logger";
     return (
-      <div className="theme-logger">
+      <div className={classNames("theme-logger", {debug})}>
         <pre className={classNames("theme-logger__display", {"show": isExpanded})}>
         { JSON.stringify(theme, null, 2) }
         </pre>
-        <button className="theme-logger__toggle" onClick={this.toggleLogger.bind(this)}>
+        <button className="theme-logger__toggle" onClick={this.toggleLogger.bind(this)} tabIndex="-1">
           { loggerButtonText }
         </button>
       </div>
