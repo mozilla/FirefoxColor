@@ -8,15 +8,18 @@ import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
+const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
+
 class ThemeColorsEditor extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
-  handleClick(name) {
+  handleClick(ev, name) {
     const { selectedColor, setSelectedColor } = this.props;
-    if (selectedColor === name) {
+    const { className } = ev.target;
+    if (selectedColor === name && DISMISS_CLASSNAMES.includes(className)) {
       setSelectedColor({ name: null });
     } else {
       setSelectedColor({ name });
@@ -65,7 +68,7 @@ class ThemeColorsEditor extends React.Component {
               <li
                 key={`dt-${idx}`}
                 className={classnames(name, "color", { selected: selectedColor === name })}
-                onClick={() => this.handleClick(name)}
+                onClick={ev => this.handleClick(ev, name)}
                 title={colorLabels[name]}
               >
                 <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />
