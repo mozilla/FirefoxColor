@@ -74,16 +74,16 @@ class ThemeBackgroundPicker extends React.Component {
       <div
         className={classnames("theme-background-picker", { selected })}
         onClick={this.handleClick.bind(this)}
-        title="Theme Texture"
       >
         <span
           className="theme-background-picker__swatch"
+          title="Theme Texture"
           style={{
             backgroundColor: accentcolor,
             backgroundImage: backgroundSwatch
           }}
         />
-        <span className="theme-background-picker__text">Theme Texture</span>
+        <span className="theme-background-picker__text" title="Theme Texture">Theme Texture</span>
         <div className="theme-background-picker__backgrounds">
           <div className="theme-background-picker__backgrounds-inner">
             {bgImages.keys().map((src, backgroundId) => (
