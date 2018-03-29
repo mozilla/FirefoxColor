@@ -69,10 +69,9 @@ class ThemeColorsEditor extends React.Component {
                 key={`dt-${idx}`}
                 className={classnames(name, "color", { selected: selectedColor === name })}
                 onClick={ev => this.handleClick(ev, name)}
-                title={colorLabels[name]}
               >
-                <span className="color__swatch"style={{ backgroundColor: colorToCSS(color) }} />
-                <span className="color__label">{colorLabels[name]}</span>
+                <span className="color__swatch" style={{ backgroundColor: colorToCSS(color) }} title={colorLabels[name]} />
+                <span className="color__label" title={colorLabels[name]} >{colorLabels[name]}</span>
                 <span className="color__picker">
                   <SketchPicker
                     color={{ h: color.h, s: color.s, l: color.l, a: color.a * 0.01 }}
