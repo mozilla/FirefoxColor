@@ -10,11 +10,13 @@ const extractCSS = new ExtractTextPlugin({
   filename: "[name].css"
 });
 
+const nodeEnv = process.env.NODE_ENV || "production";
 const sitePort = process.env.PORT || "8080";
 const siteUrl = process.env.SITE_URL || `http://localhost:${sitePort}/`;
+const siteId = process.env.SITE_ID || "";
 
 const defaultEnv = {
-  NODE_ENV: "development",
+  NODE_ENV: nodeEnv,
   ADDON_URL: "addon.xpi",
   SITE_URL: siteUrl
 };
@@ -113,4 +115,4 @@ const webpackConfig = {
   }
 };
 
-module.exports = { sitePort, siteUrl, webpackConfig };
+module.exports = { sitePort, siteUrl, siteId, nodeEnv, webpackConfig };
