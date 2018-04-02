@@ -34,9 +34,12 @@
       "l": 64
     },
     "tab_line": {
-      "h": 307,
-      "s": 71,
-      "l": 47
+      "h": 316,
+      "s": 100,
+      "l": 63
     }
+  },
+  "images": {
+    "additional_backgrounds": ["./bg-024.svg"]
   }
 }
