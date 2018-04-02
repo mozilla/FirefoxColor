@@ -7,9 +7,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const GenerateAssetWebpackPlugin = require("generate-asset-webpack-plugin");
 
 const packageMeta = require("./package.json");
-const common = require("./webpack.common.js");
+const { siteUrl, siteId, nodeEnv, webpackConfig } = require("./webpack.common.js");
 
-module.exports = merge(common.webpackConfig, {
+module.exports = merge(webpackConfig, {
   entry: {
     background: "./src/extension/background",
     contentScript: "./src/extension/contentScript"
@@ -40,6 +40,7 @@ function buildManifest(compilation, cb) {
     homepage,
     extensionManifest
   } = packageMeta;
+
   const manifest = Object.assign({}, extensionManifest, {
     manifest_version: 2,
     // HACK: Accept override in extensionManifest - npm disallows caps &
@@ -51,9 +52,23 @@ function buildManifest(compilation, cb) {
     homepage_url: homepage
   });
 
+  let idSuffix = [];
+  if (siteId) {
+    idSuffix.push(siteId);
+  }
+  if (nodeEnv === "development") {
+    idSuffix.push("dev");
+  }
+  if (idSuffix.length > 0) {
+    idSuffix = idSuffix.join("-");
+    manifest.applications.gecko.id =
+      manifest.applications.gecko.id.replace("@", `-${idSuffix}@`);
+    manifest.name = `${manifest.name} (${idSuffix})`;
+  }
+
   // Configure content script to run on SITE_URL, omitting port if any
   manifest.content_scripts[0].matches = [
-    `${common.siteUrl.replace(/:(\d+)\/?$/, "/")}*`
+    `${siteUrl.replace(/:(\d+)\/?$/, "/")}*`
   ];
 
   return cb(null, JSON.stringify(manifest, null, "  "));
