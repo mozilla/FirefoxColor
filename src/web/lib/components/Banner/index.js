@@ -16,7 +16,7 @@ export const Banner = ({ isFirefox, addonUrl, bottom = false }) => (
           onClick={() => Metrics.installStart()}
           className="banner__button"
         >
-          Install Themer
+          Install Firefox Color
         </a>
       </div>
     ) : (

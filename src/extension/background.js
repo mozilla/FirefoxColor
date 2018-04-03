@@ -17,9 +17,9 @@ const siteUrl = process.env.SITE_URL;
 const init = () => {
   browser.browserAction.onClicked.addListener(() => {
     browser.tabs.query({ currentWindow: true }).then(tabs => {
-      const themerTab = tabs.find(tab => tab.url.includes(siteUrl));
-      if (themerTab) {
-        browser.tabs.update(themerTab.id, { active: true });
+      const siteTab = tabs.find(tab => tab.url.includes(siteUrl));
+      if (siteTab) {
+        browser.tabs.update(siteTab.id, { active: true });
       } else {
         browser.tabs.create({ url: siteUrl });
       }

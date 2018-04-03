@@ -69,8 +69,8 @@ export const AppFooter = () => (
       <a
         className="app-footer__social-link"
         onClick={() => Metrics.linkClick("github")}
-        href="https://github.com/mozilla/Themer/"
-        aria-label="Themer GitHub"
+        href="https://github.com/mozilla/FirefoxColor/"
+        aria-label="Firefox Color GitHub"
         title="GitHub"
       >
         <ReactSVG path={iconGH} className="app-footer__social-logo" />
