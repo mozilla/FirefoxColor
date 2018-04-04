@@ -1,8 +1,8 @@
-# Themer
+# Firefox Color
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/Themer.svg)](https://greenkeeper.io/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/FirefoxColor.svg)](https://greenkeeper.io/)
 
-[![CircleCI](https://circleci.com/gh/mozilla/Themer.svg?style=svg)](https://circleci.com/gh/mozilla/Themer)
+[![CircleCI](https://circleci.com/gh/mozilla/FirefoxColor.svg?style=svg)](https://circleci.com/gh/mozilla/FirefoxColor)
 
 ## Get Started
 
@@ -10,8 +10,8 @@
 
 1. Clone the repo, install dependencies, start the dev environment:
    ```
-   git clone https://github.com/mozilla/Themer.git
-   cd Themer
+   git clone https://github.com/mozilla/FirefoxColor.git
+   cd FirefoxColor
    npm install
    npm start
    ```
@@ -30,7 +30,7 @@
 
 **Note:** If you have problems seeing the editor at `http://localhost:8080/` on
 your computer, it's possible that you already have some other service using
-port 8080. You can change the port that Themer uses for local development:
+port 8080. You can change the port that Firefox Color uses for local development:
 
 * For Linux & OS X: `PORT=9090 npm start`
 * For Windows: `.\node_modules\.bin\cross-env PORT=9090 npm start`
@@ -45,7 +45,7 @@ on this repo. Production release process is TBD.
 
 The script `npm run release:dev` in `package.json` takes care of the following:
 
-* Set `ADDON_URL` and `SITE_URL` vars to point at mozilla.github.io/Themer
+* Set `ADDON_URL` and `SITE_URL` vars to point at mozilla.github.io/FirefoxColor
 
 * Build the site
 

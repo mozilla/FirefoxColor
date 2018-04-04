@@ -5,8 +5,8 @@ agree to abide by our [License][license].
 
 Developer setup steps are covered in the [README][dev setup]. This file explains how our dev process works. If you'd like to contribute and don't understand something here, reach out on IRC, and we'll be happy to offer solutions. Additionally, we welcome any attempts to engage with the project - through acquiring the source code, following documentation steps to get started, and then offering feedback in our communications channels on how this process could be improved.
 
-[license]: https://github.com/mozilla/Themer/blob/master/LICENSE
-[dev setup]: https://github.com/mozilla/Themer/blob/master/README.md
+[license]: https://github.com/mozilla/FirefoxColor/blob/master/LICENSE
+[dev setup]: https://github.com/mozilla/FirefoxColor/blob/master/README.md
 
 ### Say Hi!
 
@@ -15,7 +15,7 @@ by finding issues that are a good fit for your skills/interests, and ensuring
 you have a contact person to guide you through the bug fixing process, answer
 any questions, and help if you get stuck.
 
-Find us in #themer IRC. If you need help with IRC setup, the Mozilla [wiki][wiki] has instructions.
+Find us in #FirefoxColor IRC. If you need help with IRC setup, the Mozilla [wiki][wiki] has instructions.
 
 [wiki]: https://wiki.mozilla.org/IRC
 
@@ -23,8 +23,8 @@ Find us in #themer IRC. If you need help with IRC setup, the Mozilla [wiki][wiki
 
 The project uses an [issue tracker][issue] to keep information about bugs to fix, project features to implement, documentation to write, and more. If you're new to the project, you can look for newcomer-friendly issues to use for their first contributions by looking for the following [good first issue][good first] tags in the project issue tracker.
 
-[issue]: https://github.com/mozilla/Themer/issues/
-[good first]: https://github.com/mozilla/Themer/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
+[issue]: https://github.com/mozilla/FirefoxColor/issues/
+[good first]: https://github.com/mozilla/FirefoxColor/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22
 
 ### Contributing code
 
@@ -34,7 +34,7 @@ We use the same process for community members and paid staff.
 
 Fork the [repository][repo] and create a clone to your personal system.
 
-[repo]: https://github.com/mozilla/Themer
+[repo]: https://github.com/mozilla/FirefoxColor
 
 #### Branches
 

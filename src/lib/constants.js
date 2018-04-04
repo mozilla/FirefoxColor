@@ -1,10 +1,10 @@
-export const CHANNEL_NAME = "Themer";
+export const CHANNEL_NAME = "FirefoxColor";
 
 export const DOWNLOAD_FIREFOX_URL =
-  "https://www.mozilla.org/firefox/new/?utm_campaign=themer-acquisition&utm_medium=referral&utm_source=themer.firefox.com";
+  `https://www.mozilla.org/firefox/new/?utm_campaign=firefoxcolor-acquisition&utm_medium=referral&utm_source=${process.env.DOWNLOAD_FIREFOX_UTM_SOURCE}`;
 
 export const surveyUrl =
-  "https://qsurvey.mozilla.com/s3/Test-Pilot-Themer-Feedback";
+  "https://qsurvey.mozilla.com/s3/Test-Pilot-Firefox-Color-Feedback";
 
 export const colorLabels = {
   toolbar: "Toolbar Color",
