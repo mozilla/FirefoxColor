@@ -1,5 +1,6 @@
 /* eslint import/no-extraneous-dependencies: off */
 const path = require("path");
+const url = require("url");
 
 const webpack = require("webpack");
 
@@ -14,11 +15,14 @@ const nodeEnv = process.env.NODE_ENV || "production";
 const sitePort = process.env.PORT || "8080";
 const siteUrl = process.env.SITE_URL || `http://localhost:${sitePort}/`;
 const siteId = process.env.SITE_ID || "";
+const downloadFirefoxUtmSource =
+  process.env.DOWNLOAD_FIREFOX_UTM_SOURCE || new url.URL(siteUrl).hostname;
 
 const defaultEnv = {
   NODE_ENV: nodeEnv,
   ADDON_URL: "addon.xpi",
-  SITE_URL: siteUrl
+  SITE_URL: siteUrl,
+  DOWNLOAD_FIREFOX_UTM_SOURCE: downloadFirefoxUtmSource
 };
 
 const processEnv = {};
@@ -28,10 +32,7 @@ Object.keys(defaultEnv).forEach(key => {
 
 const commonBabelOptions = {
   cacheDirectory: true,
-  presets: [
-    ["env", { targets: ["last 2 versions"], modules: false }],
-    "react"
-  ],
+  presets: [["env", { targets: ["last 2 versions"], modules: false }], "react"],
   plugins: ["transform-object-rest-spread"]
 };
 
@@ -58,7 +59,7 @@ const webpackConfig = {
           {
             include: [
               path.resolve(__dirname, "node_modules/testpilot-ga"),
-              path.resolve(__dirname, "node_modules/query-string"),
+              path.resolve(__dirname, "node_modules/query-string")
             ],
             loader: "babel-loader",
             options: commonBabelOptions
