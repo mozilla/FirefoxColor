@@ -2,25 +2,25 @@
   "title": "003",
   "colors": {
     "toolbar": {
-      "h": 201,
-      "s": 31,
-      "l": 91,
-      "a": 100
+      "h": 200,
+      "s": 29,
+      "l": 32,
+      "a": 17
     },
     "toolbar_text": {
-      "h": 347,
-      "s": 100,
-      "l": 77
+      "h": 168,
+      "s": 52,
+      "l": 98
     },
     "accentcolor": {
-      "h": 202,
+      "h": 193,
       "s": 20,
-      "l": 84
+      "l": 68
     },
     "textcolor": {
-      "h": 347,
-      "s": 100,
-      "l": 77
+      "h": 346,
+      "s": 0,
+      "l": 100
     },
     "toolbar_field": {
       "h": 163,
@@ -34,12 +34,12 @@
       "l": 64
     },
     "tab_line": {
-      "h": 347,
-      "s": 100,
-      "l": 77
+      "h": 7,
+      "s": 56,
+      "l": 67
     }
   },
   "images": {
-    "additional_backgrounds": []
+    "additional_backgrounds": ["./bg-036.svg"]
   }
 }
