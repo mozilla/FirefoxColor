@@ -1,10 +1,10 @@
 {
-  "title": "default",
+  "title": "017",
   "colors": {
     "toolbar": {
-      "h": 201,
-      "s": 31,
-      "l": 91,
+      "h": 235,
+      "s": 40,
+      "l": 94,
       "a": 100
     },
     "toolbar_text": {
@@ -13,9 +13,9 @@
       "l": 77
     },
     "accentcolor": {
-      "h": 202,
-      "s": 20,
-      "l": 84
+      "h": 289,
+      "s": 19,
+      "l": 90
     },
     "textcolor": {
       "h": 347,
@@ -23,23 +23,23 @@
       "l": 77
     },
     "toolbar_field": {
-      "h": 163,
+      "h": 232,
       "s": 0,
       "l": 100,
       "a": 100
     },
     "toolbar_field_text": {
-      "h": 237,
-      "s": 44,
-      "l": 64
+      "h": 270,
+      "s": 100,
+      "l": 60
     },
     "tab_line": {
-      "h": 347,
+      "h": 271,
       "s": 100,
-      "l": 77
+      "l": 60
     }
   },
   "images": {
-    "additional_backgrounds": []
+    "additional_backgrounds": ["./bg-012.svg"]
   }
 }
