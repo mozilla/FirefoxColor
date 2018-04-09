@@ -113,7 +113,7 @@
     "testpilot-ga": "^0.3.0"
   },
   "extensionManifest": {
-    "name": "Firefox Color",
+    "name": "Theme Loader for Fx Color",
     "permissions": [
       "theme",
       "storage",
