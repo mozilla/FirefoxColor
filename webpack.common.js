@@ -11,6 +11,8 @@ const extractCSS = new ExtractTextPlugin({
   filename: "[name].css"
 });
 
+const UNOFFICIAL_SITE_IDS = ["local", "github"];
+
 const nodeEnv = process.env.NODE_ENV || "production";
 const sitePort = process.env.PORT || "8080";
 const siteUrl = process.env.SITE_URL || `http://localhost:${sitePort}/`;
@@ -116,4 +118,11 @@ const webpackConfig = {
   }
 };
 
-module.exports = { sitePort, siteUrl, siteId, nodeEnv, webpackConfig };
+module.exports = {
+  UNOFFICIAL_SITE_IDS,
+  sitePort,
+  siteUrl,
+  siteId,
+  nodeEnv,
+  webpackConfig
+};
