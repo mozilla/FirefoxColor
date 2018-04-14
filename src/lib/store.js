@@ -36,7 +36,7 @@ export const actions = {
   }
 };
 
-const themesEqual = (themeA, themeB) =>
+export const themesEqual = (themeA, themeB) =>
   // HACK: "deep equal" via stringify
   // http://www.mattzeunert.com/2016/01/28/javascript-deep-equal.html
   JSON.stringify(themeA) === JSON.stringify(themeB);

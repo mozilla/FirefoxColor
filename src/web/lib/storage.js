@@ -1,4 +1,4 @@
-import { actions } from "../../lib/store";
+import { actions, themesEqual } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
 import { normalizeTheme } from "../../lib/themes";
 
@@ -17,16 +17,33 @@ const generateThemeKey = () =>
   `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
 function putTheme(key, theme) {
-  log("putTheme", key, theme);
-  const storageKey = themeStorageKey(key);
-  localStorage.setItem(
-    storageKey,
-    JSON.stringify({
-      theme,
-      modified: Date.now()
-    })
-  );
-  notifySelfForStorage(storageKey);
+  checkDuplicateTheme(theme, (isThemeDuplicate) => {
+    if (!isThemeDuplicate) {
+      log("putTheme", key, theme);
+      const storageKey = themeStorageKey(key);
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({
+          theme,
+          modified: Date.now()
+        })
+      );
+      notifySelfForStorage(storageKey);
+    }
+  });
+}
+
+function checkDuplicateTheme(theme, callback) {
+  const themesList = listThemes();
+  let isThemeDuplicate = false;
+  for (const key of Object.keys(themesList)) {
+    isThemeDuplicate = themesEqual(theme, themesList[key].theme);
+    if (isThemeDuplicate) {
+      callback(isThemeDuplicate);
+      break;
+    }
+  }
+  callback(isThemeDuplicate);
 }
 
 function deleteTheme(key) {
