@@ -39,7 +39,6 @@ function checkDuplicateTheme(theme, callback) {
   for (const key of Object.keys(themesList)) {
     isThemeDuplicate = themesEqual(theme, themesList[key].theme);
     if (isThemeDuplicate) {
-      callback(isThemeDuplicate);
       break;
     }
   }
