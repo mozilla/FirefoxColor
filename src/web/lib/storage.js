@@ -17,32 +17,27 @@ const generateThemeKey = () =>
   `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
 function putTheme(key, theme) {
-  checkDuplicateTheme(theme, (isThemeDuplicate) => {
-    if (!isThemeDuplicate) {
-      log("putTheme", key, theme);
-      const storageKey = themeStorageKey(key);
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          theme,
-          modified: Date.now()
-        })
-      );
-      notifySelfForStorage(storageKey);
-    }
-  });
+  let isThemeDuplicate = checkDuplicateTheme(theme);
+  log("isThemeDuplicate", isThemeDuplicate);
+  if (!isThemeDuplicate) {
+    log("putTheme", key, theme);
+    const storageKey = themeStorageKey(key);
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify({
+        theme,
+        modified: Date.now()
+      })
+    );
+    notifySelfForStorage(storageKey);
+  }
 }
 
-function checkDuplicateTheme(theme, callback) {
+function checkDuplicateTheme(theme) {
   const themesList = listThemes();
-  let isThemeDuplicate = false;
-  for (const key of Object.keys(themesList)) {
-    isThemeDuplicate = themesEqual(theme, themesList[key].theme);
-    if (isThemeDuplicate) {
-      break;
-    }
-  }
-  callback(isThemeDuplicate);
+  return Object.keys(listThemes()).some((key) => {
+    return themesEqual(theme, themesList[key].theme);
+  });
 }
 
 function deleteTheme(key) {
