@@ -75,9 +75,13 @@ const Metrics = {
   },
 
   sendEvent(...params) {
-    if (analytics) {
-      analytics.sendEvent(...params);
+    if (!analytics) {
+      return;
     }
+    analytics
+      .sendEvent(...params)
+      .then(response => log("sendEvent (success)", params, response))
+      .catch(err => log("sendEvent (ERROR)", params, err));
   },
 
   storeMiddleware() {
