@@ -11,7 +11,12 @@
   "homepage": "https://mozilla.github.io/FirefoxColor/",
   "main": "src/web/index.js",
   "config": {
-    "GA_TRACKING_ID": "UA-114768519-1"
+    "development": {
+      "GA_TRACKING_ID": "UA-114768519-1"
+    },
+    "production": {
+      "GA_TRACKING_ID": "UA-77033033-10"
+    }
   },
   "scripts": {
     "start": "npm-run-all --parallel server watch:extension watch:lint watch:validate",
