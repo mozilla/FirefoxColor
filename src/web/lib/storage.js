@@ -18,7 +18,6 @@ const generateThemeKey = () =>
 
 function putTheme(key, theme) {
   let isThemeDuplicate = checkDuplicateTheme(theme);
-  log("isThemeDuplicate", isThemeDuplicate);
   if (!isThemeDuplicate) {
     log("putTheme", key, theme);
     const storageKey = themeStorageKey(key);
