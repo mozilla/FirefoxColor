@@ -7,6 +7,11 @@ import { DEBUG, makeLog } from "./utils";
 import { selectors } from "./store";
 import { colorsWithAlpha } from "./constants";
 
+const { NODE_ENV } = process.env;
+const config =
+  packageMeta.config[NODE_ENV === "production" ? "production" : "development"];
+const { GA_TRACKING_ID } = config;
+
 const log = makeLog("metrics");
 
 let analytics = null;
@@ -59,7 +64,7 @@ const Metrics = {
       an: packageMeta.extensionManifest.name,
       av: packageMeta.version,
       ds: appContext,
-      tid: packageMeta.config.GA_TRACKING_ID,
+      tid: GA_TRACKING_ID,
       // TODO: add some env vars or use window.location to determine local / dev / stage / prod?
       cd19: DEBUG ? "dev" : "production"
     });
