@@ -34,7 +34,7 @@ function putTheme(key, theme) {
 
 function checkDuplicateTheme(theme) {
   const themesList = listThemes();
-  return Object.keys(listThemes()).some((key) => {
+  return Object.keys(themesList).some((key) => {
     return themesEqual(theme, themesList[key].theme);
   });
 }
