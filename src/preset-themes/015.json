@@ -2,44 +2,46 @@
   "title": "015",
   "colors": {
     "toolbar": {
-      "h": 195,
-      "s": 25,
-      "l": 14,
-      "a": 100
+      "r": 27,
+      "g": 40,
+      "b": 45,
+      "a": 1
     },
     "toolbar_text": {
-      "h": 120,
-      "s": 0,
-      "l": 56
+      "r": 143,
+      "g": 143,
+      "b": 143
     },
     "accentcolor": {
-      "h": 240,
-      "s": 0,
-      "l": 0
+      "r": 0,
+      "g": 0,
+      "b": 0
     },
     "textcolor": {
-      "h": 212,
-      "s": 0,
-      "l": 55
+      "r": 140,
+      "g": 140,
+      "b": 140
     },
     "toolbar_field": {
-      "h": 2,
-      "s": 0,
-      "l": 0,
-      "a": 100
+      "r": 0,
+      "g": 0,
+      "b": 0,
+      "a": 1
     },
     "toolbar_field_text": {
-      "h": 0,
-      "s": 0,
-      "l": 100
+      "r": 255,
+      "g": 255,
+      "b": 255
     },
     "tab_line": {
-      "h": 171,
-      "s": 71,
-      "l": 47
+      "r": 35,
+      "g": 205,
+      "b": 179
     }
   },
   "images": {
-    "additional_backgrounds": ["./bg-026.svg"]
+    "additional_backgrounds": [
+      "./bg-026.svg"
+    ]
   }
 }

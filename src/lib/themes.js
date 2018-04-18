@@ -21,13 +21,14 @@ export const themesEqual = (themeA, themeB) =>
   JSON.stringify(themeA) === JSON.stringify(themeB);
 
 export const makeTinycolor = colorIn => {
-  let a = colorIn.a;
-  if (typeof a !== "undefined" && a > 1.0) {
-    // HACK: If the alpha channel is > 1.0 then assume it's a percentage that
-    // needs to be normalized to 0.0 - 1.0 range
-    a = Math.floor(a) / 100.0;
+  const color = { ...colorIn };
+  if ("s" in color) {
+    color.s = Math.floor(color.s) / 100.0;
   }
-  return tinycolor({...colorIn, a});
+  if ("a" in color && color.a > 1.0) {
+    color.a = Math.floor(color.a) / 100.0;
+  }
+  return tinycolor(color);
 };
 
 export const colorToCSS = colorIn => makeTinycolor(colorIn).toRgbString();
