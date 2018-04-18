@@ -1,3 +1,6 @@
+import tinycolor from "tinycolor2";
+import { colorsWithAlpha } from "./constants";
+
 const presetThemesContext = require.context(
   "../preset-themes/",
   false,
@@ -12,32 +15,39 @@ export const bgImages = require.context(
 
 const defaultTheme = presetThemesContext("./default.json");
 
-export const colorToCSS = color => {
-  const { h, s, l, a } = color;
-  return typeof a === "undefined"
-    ? `hsl(${h}, ${s}%, ${l}%)`
-    : `hsla(${h}, ${s}%, ${l}%, ${a * 0.01})`;
+export const themesEqual = (themeA, themeB) =>
+  // HACK: "deep equal" via stringify
+  // http://www.mattzeunert.com/2016/01/28/javascript-deep-equal.html
+  JSON.stringify(themeA) === JSON.stringify(themeB);
+
+export const makeTinycolor = colorIn => {
+  let a = colorIn.a;
+  if (typeof a !== "undefined" && a > 1.0) {
+    // HACK: If the alpha channel is > 1.0 then assume it's a percentage that
+    // needs to be normalized to 0.0 - 1.0 range
+    a = Math.floor(a) / 100.0;
+  }
+  return tinycolor({...colorIn, a});
 };
+
+export const colorToCSS = colorIn => makeTinycolor(colorIn).toRgbString();
 
 export const normalizeThemeBackground = background =>
   bgImages.keys().includes(background) ? background : null;
 
 // Utility to ensure normal & consistent colors
-export const normalizeThemeColor = (data, defaultColor) => {
-  const { h, s, l, a } = data || defaultColor;
-  return {
-    h: Math.floor(h),
-    s: Math.floor(s),
-    l: Math.floor(l),
-    a
-  };
-};
+export const normalizeThemeColor = (data, defaultColor) =>
+  makeTinycolor(data || defaultColor).toRgb();
 
 export const normalizeThemeColors = (colors = {}) => {
   const out = {};
   const { colors: defaultColors } = defaultTheme;
   Object.keys(defaultColors).forEach(name => {
-    out[name] = normalizeThemeColor(colors[name], defaultColors[name]);
+    const color = normalizeThemeColor(colors[name], defaultColors[name]);
+    if (!colorsWithAlpha.includes(name)) {
+      delete color.a;
+    }
+    out[name] = color;
   });
   return out;
 };
@@ -47,20 +57,22 @@ export const normalizeTheme = (data = {}) => {
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),
     images: {
-      additional_backgrounds: [ ]
+      additional_backgrounds: []
     }
   };
   const images = data.images ? data.images : {};
   if (images.headerURL) {
     const background = normalizeThemeBackground(images.headerURL);
     if (background) {
-      theme.images.additional_backgrounds = [ background ];
+      theme.images.additional_backgrounds = [background];
     }
   }
   if (images.additional_backgrounds) {
-    const background = normalizeThemeBackground(images.additional_backgrounds[0]);
+    const background = normalizeThemeBackground(
+      images.additional_backgrounds[0]
+    );
     if (background) {
-      theme.images.additional_backgrounds = [ background ];
+      theme.images.additional_backgrounds = [background];
     }
   }
   return theme;

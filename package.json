@@ -115,7 +115,8 @@
     "redux-actions": "^2.2.1",
     "redux-devtools-extension": "^2.13.2",
     "redux-undo": "^1.0.0-beta9-9-7",
-    "testpilot-ga": "^0.3.0"
+    "testpilot-ga": "^0.3.0",
+    "tinycolor2": "^1.4.1"
   },
   "extensionManifest": {
     "name": "Firefox Color",

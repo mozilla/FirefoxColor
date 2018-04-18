@@ -53,8 +53,8 @@ const COLORS_TO_DIMENSIONS = {
   toolbar_field_text: "cd10"
 };
 
-const hslaToCSV = (name, { h, s, l, a }) =>
-  `${h},${s},${l}${colorsWithAlpha.includes(name) ? `,${a}` : ""}`;
+const rgbaToCSV = (name, { r, g, b, a }) =>
+  `${r},${g},${b}${colorsWithAlpha.includes(name) ? `,${a}` : ""}`;
 
 const Metrics = {
   init(appContext = "web") {
@@ -124,7 +124,7 @@ const Metrics = {
     return Object.entries(colors).reduce(
       (acc, [name, hsla]) => ({
         ...acc,
-        [COLORS_TO_DIMENSIONS[name]]: hslaToCSV(name, hsla)
+        [COLORS_TO_DIMENSIONS[name]]: rgbaToCSV(name, hsla)
       }),
       { cd11: bgImage }
     );
