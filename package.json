@@ -94,7 +94,7 @@
     "svg-url-loader": "^2.3.0",
     "url-loader": "^1.0.1",
     "web-ext": "^2.2.2",
-    "webpack": "^3.10.0",
+    "webpack": "^4.6.0",
     "webpack-dev-server": "^2.9.4",
     "webpack-merge": "^4.1.1",
     "write-file-webpack-plugin": "^4.2.0"
