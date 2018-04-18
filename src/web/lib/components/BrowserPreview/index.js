@@ -15,19 +15,10 @@ const buttonImages = require.context(
 export const BrowserPreview = ({
   size,
   theme,
-  setSelectedColor,
   selectedTab = 0,
   children = null,
   onClick: onClickDoll = null
 }) => {
-  const clickSelectColor = name => e => {
-    if (setSelectedColor) {
-      setSelectedColor({ name });
-      e.stopPropagation();
-    }
-    return false;
-  };
-
   const clickDoll = e => {
     if (onClickDoll) {
       onClickDoll(e);
@@ -44,10 +35,9 @@ export const BrowserPreview = ({
   const Button = ({
     name,
     asset = false,
-    onClick = clickSelectColor("toolbar_text"),
     colorName = "toolbar_text"
   }) => (
-    <span className="doll__button" onClick={onClick}>
+    <span className="doll__button">
       {asset && (
         <ReactSVG
           style={{ fill: colors[colorName] }}
@@ -66,7 +56,6 @@ export const BrowserPreview = ({
   const Tab = ({ text, selected }) => (
     <li
       className={classnames("tab", { selected })}
-      onClick={clickSelectColor(selected ? "toolbar" : "accentcolor")}
       style={{
         color: selected ? colors.toolbar_text : colors.textcolor,
         borderTopColor: selected ? colors.tab_line : "transparent",
@@ -75,7 +64,6 @@ export const BrowserPreview = ({
     >
       <p
         className={`title ${text}`}
-        onClick={clickSelectColor(selected ? "toolbar_text" : "textcolor")}
         style={{
           backgroundColor: selected ? colors.toolbar_text : colors.textcolor
         }}
@@ -93,7 +81,6 @@ export const BrowserPreview = ({
     <div className={`doll doll--${size}`} onClick={clickDoll}>
       <ul
         className="doll__tabbar"
-        onClick={clickSelectColor("accentcolor")}
         style={{
           backgroundColor: colors.accentcolor,
           backgroundImage: headerBackgroundImage
@@ -112,14 +99,12 @@ export const BrowserPreview = ({
       >
         <section
           className="doll__toolbar"
-          onClick={clickSelectColor("toolbar")}
           style={{ backgroundColor: colors.toolbar }}
         >
           <Button name="back" />
           <Button name="forward" />
           <span
             className="doll__field"
-            onClick={clickSelectColor("toolbar_field")}
             style={{
               color: colors.toolbar_field_text,
               backgroundColor: colors.toolbar_field
@@ -127,7 +112,6 @@ export const BrowserPreview = ({
           >
             <span
               className="doll__location"
-              onClick={clickSelectColor("toolbar_field_text")}
               style={{
                 backgroundColor: colors.toolbar_field_text
               }}
@@ -135,7 +119,6 @@ export const BrowserPreview = ({
             {size === "large" && (
               <Button
                 name="bookmark"
-                onClick={clickSelectColor("toolbar_field_text")}
                 colorName="toolbar_field_text"
               />
             )}
