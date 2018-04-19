@@ -9,7 +9,7 @@ import queryString from "query-string";
 import Clipboard from "clipboard";
 
 import { makeLog } from "../lib/utils";
-import { CHANNEL_NAME } from "../lib/constants";
+import { CHANNEL_NAME, loaderQuotes } from "../lib/constants";
 import {
   createAppStore,
   actions,
@@ -30,7 +30,7 @@ const clipboard = new Clipboard(".clipboardButton");
 const addonUrl = process.env.ADDON_URL;
 
 // Period after which app loading indicator will disappear if add-on not found
-const LOADER_DELAY_PERIOD = 500;
+const LOADER_DELAY_PERIOD = 2000;
 const PING_PERIOD = 1000;
 const MAX_OUTSTANDING_PINGS = 3;
 let outstandingPings = 0;
@@ -135,6 +135,7 @@ setInterval(() => {
 const userAgent = navigator.userAgent.toLowerCase();
 const isMobile = userAgent.includes("mobi") || userAgent.includes("tablet");
 const isFirefox = userAgent.includes("firefox/") && !userAgent.includes("fxios");
+const loaderQuote = loaderQuotes[Math.floor(Math.random() * loaderQuotes.length)];
 
 render(
   <Provider store={store}>
@@ -144,7 +145,8 @@ render(
       clipboard,
       storage,
       isMobile,
-      isFirefox
+      isFirefox,
+      loaderQuote
     }} />
   </Provider>,
   document.getElementById("root")
