@@ -47,16 +47,22 @@ function buildManifest(compilation, cb) {
     extensionManifest
   } = packageMeta;
 
-  const manifest = Object.assign({}, extensionManifest, {
-    manifest_version: 2,
-    // HACK: Accept override in extensionManifest - npm disallows caps &
-    // spaces, but we want them in an extension name
-    name: extensionManifest.name || name,
-    version,
-    description,
-    author,
-    homepage_url: homepage
-  });
+  const manifest = Object.assign(
+    {},
+    // HACK: Quick & dirty clone of extensionManifest to break references, so
+    // that later modifications don't change the cached data from package.json
+    JSON.parse(JSON.stringify(extensionManifest)),
+    {
+      manifest_version: 2,
+      // HACK: Accept override in extensionManifest - npm disallows caps &
+      // spaces, but we want them in an extension name
+      name: extensionManifest.name || name,
+      version,
+      description,
+      author,
+      homepage_url: homepage
+    }
+  );
 
   let idSuffix = [];
   if (siteId) {
