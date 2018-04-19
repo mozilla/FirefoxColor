@@ -72,7 +72,8 @@ export const AppComponent = ({
   setBackground,
   undo,
   redo,
-  storage
+  storage,
+  modifiedSinceSave
 }) => (
   <div className="app">
     {!loaderDelayExpired && <AppLoadingIndicator />}

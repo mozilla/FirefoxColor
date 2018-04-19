@@ -56,7 +56,10 @@ export const selectors = {
   hasSavedThemes: state => Object.keys(state.ui.savedThemes).length > 0,
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
-  themeCanRedo: state => state.theme.future.length > 0
+  themeCanRedo: state => state.theme.future.length > 0,
+  modifiedSinceSave: state =>
+    state.ui.userHasEdited &&
+    !themesEqual(state.ui.currentSavedTheme, state.theme.present)
 };
 
 export const reducers = {
