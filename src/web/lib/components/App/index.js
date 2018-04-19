@@ -110,7 +110,8 @@ export const AppComponent = ({
                 theme,
                 savedThemes,
                 generateThemeKey: storage.generateThemeKey,
-                putTheme: storage.putTheme
+                putTheme: storage.putTheme,
+                modifiedSinceSave
               }}
             />
           </div>
