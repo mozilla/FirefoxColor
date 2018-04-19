@@ -72,7 +72,9 @@ export const AppComponent = ({
   setBackground,
   undo,
   redo,
-  storage
+  storage,
+  userHasEdited,
+  modifiedSinceSave
 }) => (
   <div className="app">
     {!loaderDelayExpired && <AppLoadingIndicator />}
@@ -109,7 +111,9 @@ export const AppComponent = ({
                 theme,
                 savedThemes,
                 generateThemeKey: storage.generateThemeKey,
-                putTheme: storage.putTheme
+                putTheme: storage.putTheme,
+                userHasEdited,
+                modifiedSinceSave
               }}
             />
           </div>
