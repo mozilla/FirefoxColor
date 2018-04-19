@@ -85,7 +85,7 @@ export const AppComponent = ({
     {loaderDelayExpired && (
       <main className="app__content">
         <AppHeader {...{ hasExtension }} />
-        <BrowserPreview {...{ theme, setSelectedColor, size: "large" }}>
+        <BrowserPreview {...{ theme, size: "large" }}>
           <div className="app__theme-element-pickers">
             <ThemeColorsEditor
               {...{
