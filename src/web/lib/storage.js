@@ -16,6 +16,8 @@ const themeKeyFromStorage = storageKey =>
 const generateThemeKey = () =>
   `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
+let currentSavedTheme;
+
 function putTheme(key, theme) {
   log("putTheme", key, theme);
   const storageKey = themeStorageKey(key);
@@ -26,6 +28,7 @@ function putTheme(key, theme) {
       modified: Date.now()
     })
   );
+  currentSavedTheme = theme;
   notifySelfForStorage(storageKey);
 }
 
@@ -85,6 +88,7 @@ function init(store) {
       log("storage event", e);
       if (isThemeStorageKey(e.key)) {
         updateSavedThemesInStore();
+        store.dispatch(actions.ui.setCurrentSavedTheme({ currentSavedTheme }));
       }
     }
   );

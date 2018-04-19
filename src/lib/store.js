@@ -25,7 +25,8 @@ export const actions = {
     "CLEAR_PENDING_THEME",
     "SET_LOADER_DELAY_EXPIRED",
     "SET_SAVED_THEMES",
-    "SET_SAVED_THEMES_PAGE"
+    "SET_SAVED_THEMES_PAGE",
+    "SET_CURRENT_SAVED_THEME"
   ),
   theme: {
     ...createActions({}, "SET_THEME", "SET_COLOR", "SET_BACKGROUND"),
@@ -83,6 +84,10 @@ export const reducers = {
         ...state,
         savedThemesPage
       }),
+      SET_CURRENT_SAVED_THEME: (state, { payload: { currentSavedTheme } }) => ({
+        ...state,
+        currentSavedTheme
+      }),
       SET_SELECTED_COLOR: (state, { payload: { name } }) => ({
         ...state,
         selectedColor: name
@@ -107,6 +112,7 @@ export const reducers = {
       pendingTheme: null,
       savedThemes: {},
       savedThemesPage: 0,
+      currentSavedTheme: null,
       selectedColor: null,
       hasExtension: false,
       loaderDelayExpired: false
