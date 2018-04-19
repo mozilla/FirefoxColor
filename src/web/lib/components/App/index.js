@@ -73,6 +73,7 @@ export const AppComponent = ({
   undo,
   redo,
   storage,
+  userHasEdited,
   modifiedSinceSave
 }) => (
   <div className="app">
@@ -111,6 +112,7 @@ export const AppComponent = ({
                 savedThemes,
                 generateThemeKey: storage.generateThemeKey,
                 putTheme: storage.putTheme,
+                userHasEdited,
                 modifiedSinceSave
               }}
             />

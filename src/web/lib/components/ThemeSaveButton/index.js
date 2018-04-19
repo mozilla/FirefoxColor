@@ -6,6 +6,7 @@ export const ThemeSaveButton = ({
   theme,
   generateThemeKey,
   putTheme,
+  userHasEdited,
   modifiedSinceSave
 }) => {
   const saveTheme = () => putTheme(generateThemeKey(), theme);
@@ -13,7 +14,7 @@ export const ThemeSaveButton = ({
   return (
     <div className="theme-save-button">
       <h2>Save your theme</h2>
-      <button onClick={saveTheme} title={modifiedSinceSave ? "Save" : "Saved!"} disabled={!modifiedSinceSave}>{modifiedSinceSave ? "Save" : "Saved!"}</button>
+      <button onClick={saveTheme} title={!userHasEdited || modifiedSinceSave ? "Save" : "Saved!"} disabled={!modifiedSinceSave}>{!userHasEdited || modifiedSinceSave ? "Save" : "Saved!"}</button>
     </div>
   );
 };

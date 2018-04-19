@@ -57,6 +57,7 @@ export const selectors = {
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
+  userHasEdited: state => state.ui.userHasEdited,
   modifiedSinceSave: state =>
     state.ui.userHasEdited &&
     !themesEqual(state.ui.currentSavedTheme, state.theme.present)
