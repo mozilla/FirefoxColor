@@ -2,6 +2,7 @@ import { createStore, combineReducers } from "redux";
 import { createActions, handleActions } from "redux-actions";
 import undoable, { ActionCreators, ActionTypes } from "redux-undo";
 import {
+  themesEqual,
   normalizeTheme,
   normalizeThemeColor,
   normalizeThemeColors
@@ -36,11 +37,6 @@ export const actions = {
     redo: ActionCreators.redo
   }
 };
-
-const themesEqual = (themeA, themeB) =>
-  // HACK: "deep equal" via stringify
-  // http://www.mattzeunert.com/2016/01/28/javascript-deep-equal.html
-  JSON.stringify(themeA) === JSON.stringify(themeB);
 
 export const selectors = {
   hasExtension: state => state.ui.hasExtension,
@@ -130,12 +126,9 @@ export const reducers = {
           ...state,
           colors: normalizeThemeColors(colors)
         }),
-        SET_COLOR: (state, { payload: { name, h, s, l, a } }) => ({
+        SET_COLOR: (state, { payload: { name, color } }) => ({
           ...state,
-          colors: {
-            ...state.colors,
-            [name]: normalizeThemeColor({ h, s, l, a })
-          }
+          colors: { ...state.colors, [name]: normalizeThemeColor(color) }
         }),
         SET_BACKGROUND: (state, { payload: { url } }) => ({
           ...state,

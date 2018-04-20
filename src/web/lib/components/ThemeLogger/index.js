@@ -18,7 +18,6 @@ export default class ThemeLogger extends React.Component {
   render() {
     const { isExpanded } = this.state;
     const { theme, debug } = this.props;
-    console.log(theme.title); // eslint-disable-line
     const loggerButtonText = isExpanded ? "Hide Logger" : "Show Logger";
     return (
       <div className={classNames("theme-logger", {debug})}>
