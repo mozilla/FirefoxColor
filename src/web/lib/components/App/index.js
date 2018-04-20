@@ -48,6 +48,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export const AppComponent = ({
+  loaderQuote,
   isFirefox,
   isMobile,
   addonUrl,
@@ -77,7 +78,7 @@ export const AppComponent = ({
   modifiedSinceSave
 }) => (
   <div className="app">
-    {!loaderDelayExpired && <AppLoadingIndicator />}
+    {!loaderDelayExpired && <AppLoadingIndicator {...{ loaderQuote }} />}
     {hasExtension &&
       shouldOfferPendingTheme && (
         <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />
