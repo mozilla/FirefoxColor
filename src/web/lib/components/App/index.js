@@ -52,6 +52,8 @@ const mapDispatchToProps = dispatch => {
     setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
     setSavedThemesPage: page =>
       dispatch(actions.ui.setSavedThemesPage({ page })),
+    setPresetThemesPage: page =>
+      dispatch(actions.ui.setPresetThemesPage({ page })),
     setDisplayLegalModal: args =>
       dispatch(actions.ui.setDisplayLegalModal(args)),
     undo: () => dispatch(actions.theme.undo()),
