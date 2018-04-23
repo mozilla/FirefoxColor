@@ -1,0 +1,65 @@
+@import '../../common.scss';
+
+.modal {
+  align-items: center;
+  background: var(--grey-90-a60);
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+
+.modal--display {
+  display: flex;
+}
+
+.modal__content {
+  @include unit;
+
+  align-items: center;
+  animation: translate-in 250ms forwards ease-out;
+  background: var(--white-100);
+  box-shadow: 0 10px 20px var(--grey-90-a20);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.5rem;
+  min-height: 300px;
+  padding: 4 * $grid;
+  position: relative;
+  text-align: center;
+  width: 500px;
+  will-change: transform;
+}
+
+.modal__toggle {
+  @include buttonSecondary;
+
+  align-items: center;
+  border-radius: 3px;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  position: absolute;
+  right: $grid * 3;
+  top: $grid * 3;
+  width: 40px;
+}
+
+@keyframes translate-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 120px, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}

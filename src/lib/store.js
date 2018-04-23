@@ -26,7 +26,8 @@ export const actions = {
     "SET_LOADER_DELAY_EXPIRED",
     "SET_SAVED_THEMES",
     "SET_SAVED_THEMES_PAGE",
-    "SET_CURRENT_SAVED_THEME"
+    "SET_CURRENT_SAVED_THEME",
+    "SET_DISPLAY_LEGAL_MODAL"
   ),
   theme: {
     ...createActions({}, "SET_THEME", "SET_COLOR", "SET_BACKGROUND"),
@@ -46,6 +47,7 @@ export const selectors = {
   hasExtension: state => state.ui.hasExtension,
   loaderDelayExpired: state => state.ui.loaderDelayExpired,
   selectedColor: state => state.ui.selectedColor,
+  displayLegalModal: state => state.ui.displayLegalModal,
   shouldOfferPendingTheme: state =>
     !state.ui.userHasEdited &&
     state.ui.pendingTheme !== null &&
@@ -66,6 +68,10 @@ export const selectors = {
 export const reducers = {
   ui: handleActions(
     {
+      SET_DISPLAY_LEGAL_MODAL: (state, { payload: { display } }) => ({
+        ...state,
+        displayLegalModal: display
+      }),
       SET_PENDING_THEME: (state, { payload: { theme } }) => ({
         ...state,
         pendingTheme: normalizeTheme(theme)
@@ -119,7 +125,8 @@ export const reducers = {
       currentSavedTheme: null,
       selectedColor: null,
       hasExtension: false,
-      loaderDelayExpired: false
+      loaderDelayExpired: false,
+      displayLegalModal: false
     }
   ),
   theme: undoable(
