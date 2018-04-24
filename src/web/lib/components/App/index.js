@@ -1,20 +1,21 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
 import { actions, selectors } from "../../../../lib/store";
 import { DEBUG } from "../../../../lib/utils";
 
+import AppBackground from "../AppBackground";
 import AppFooter from "../AppFooter";
 import AppHeader from "../AppHeader";
-import AppBackground from "../AppBackground";
-import PresetThemeSelector from "../PresetThemeSelector";
-import Banner from "../Banner";
-import SharedThemeDialog from "../SharedThemeDialog";
 import AppLoadingIndicator from "../AppLoadingIndicator";
-import ThemeLogger from "../ThemeLogger";
+import Banner from "../Banner";
+import Mobile from "../Mobile";
+import PresetThemeSelector from "../PresetThemeSelector";
 import SavedThemeSelector from "../SavedThemeSelector";
+import SharedThemeDialog from "../SharedThemeDialog";
 import TermsPrivacyModal from "../TermsPrivacyModal";
 import ThemeBuilder from "../ThemeBuilder";
+import ThemeLogger from "../ThemeLogger";
 
 import "./index.scss";
 
@@ -76,55 +77,79 @@ export const AppComponent = ({
   userHasEdited,
   modifiedSinceSave
 }) => (
-  <div className="app">
-    {!loaderDelayExpired && <AppLoadingIndicator {...{ loaderQuote }} />}
-    {hasExtension &&
-      shouldOfferPendingTheme && (
-        <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />
-      )}
-    <AppBackground {...{ theme }} />
-    {!hasExtension &&
-      !isMobile && <Banner {...{ isFirefox, addonUrl, bottom: false }} />}
-    {loaderDelayExpired && (
-      <main className="app__content">
-        <AppHeader {...{ hasExtension }} />
-        <ThemeBuilder
-          {...{
-            clipboard,
-            modifiedSinceSave,
-            redo,
-            savedThemes,
-            selectedColor,
-            setBackground,
-            setColor,
-            setSelectedColor,
-            storage,
-            theme,
-            themeCanRedo,
-            themeCanUndo,
-            undo,
-            urlEncodeTheme,
-            userHasEdited
-          }}
-        />
-        <PresetThemeSelector {...{ setTheme }} />
-        {hasSavedThemes && (
-          <SavedThemeSelector
+  <Fragment>
+    {isMobile &&
+      <Mobile />
+    }
+    {!isMobile && !loaderDelayExpired &&
+      <AppLoadingIndicator {...{ loaderQuote }} />
+    }
+    {!isMobile && loaderDelayExpired &&
+      <div className="app">
+        {hasExtension && shouldOfferPendingTheme &&
+          <SharedThemeDialog
             {...{
+              pendingTheme,
               setTheme,
-              savedThemes,
-              savedThemesPage,
-              setSavedThemesPage,
-              deleteTheme: storage.deleteTheme
+              clearPendingTheme
             }}
           />
-        )}
-      </main>
-    )}
-    <AppFooter {...{ setDisplayLegalModal }} />
-    <TermsPrivacyModal {...{displayLegalModal, setDisplayLegalModal}} />
-    <ThemeLogger {...{ theme }} debug={DEBUG} />
-  </div>
+        }
+        {!hasExtension &&
+          <Banner
+            {...{
+              isFirefox,
+              addonUrl,
+              bottom: false
+            }}
+          />
+        }
+        <AppBackground {...{ theme }} />
+        <main className="app__content">
+          <AppHeader {...{ hasExtension }} />
+          <ThemeBuilder
+            {...{
+              clipboard,
+              modifiedSinceSave,
+              redo,
+              savedThemes,
+              selectedColor,
+              setBackground,
+              setColor,
+              setSelectedColor,
+              storage,
+              theme,
+              themeCanRedo,
+              themeCanUndo,
+              undo,
+              urlEncodeTheme,
+              userHasEdited
+            }}
+          />
+          <PresetThemeSelector {...{ setTheme }} />
+          {hasSavedThemes &&
+            <SavedThemeSelector
+              {...{
+                setTheme,
+                savedThemes,
+                savedThemesPage,
+                setSavedThemesPage,
+                deleteTheme: storage.deleteTheme
+              }}
+            />
+          }
+        </main>
+        <AppFooter {...{ setDisplayLegalModal }} />
+        <TermsPrivacyModal
+          {...{
+            displayLegalModal,
+            setDisplayLegalModal
+          }}
+        />
+        <ThemeLogger {...{ theme }} debug={DEBUG} />
+      </div>
+    }
+  </Fragment>
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
