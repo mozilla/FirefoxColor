@@ -7,18 +7,14 @@ import { DEBUG } from "../../../../lib/utils";
 import AppFooter from "../AppFooter";
 import AppHeader from "../AppHeader";
 import AppBackground from "../AppBackground";
-import BrowserPreview from "../BrowserPreview";
-import ThemeColorsEditor from "../ThemeColorsEditor";
 import PresetThemeSelector from "../PresetThemeSelector";
-import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
 import Banner from "../Banner";
 import SharedThemeDialog from "../SharedThemeDialog";
 import AppLoadingIndicator from "../AppLoadingIndicator";
 import ThemeLogger from "../ThemeLogger";
-import ThemeUrl from "../ThemeUrl";
-import ThemeSaveButton from "../ThemeSaveButton";
 import SavedThemeSelector from "../SavedThemeSelector";
-import UndoRedoButtons from "../UndoRedoButtons";
+import TermsPrivacyModal from "../TermsPrivacyModal";
+import ThemeBuilder from "../ThemeBuilder";
 
 import "./index.scss";
 
@@ -43,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
   clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
   setSavedThemesPage: page => dispatch(actions.ui.setSavedThemesPage({ page })),
+  setDisplayLegalModal: args => dispatch(actions.ui.setDisplayLegalModal(args)),
   undo: () => dispatch(actions.theme.undo()),
   redo: () => dispatch(actions.theme.redo())
 });
@@ -71,6 +68,8 @@ export const AppComponent = ({
   setTheme,
   setSelectedColor,
   setBackground,
+  setDisplayLegalModal,
+  displayLegalModal,
   undo,
   redo,
   storage,
@@ -84,41 +83,30 @@ export const AppComponent = ({
         <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />
       )}
     <AppBackground {...{ theme }} />
-    {!hasExtension && !isMobile && <Banner {...{ isFirefox, addonUrl, bottom: false }} />}
+    {!hasExtension &&
+      !isMobile && <Banner {...{ isFirefox, addonUrl, bottom: false }} />}
     {loaderDelayExpired && (
       <main className="app__content">
         <AppHeader {...{ hasExtension }} />
-        <BrowserPreview {...{ theme, size: "large" }}>
-          <div className="app__theme-element-pickers">
-            <ThemeColorsEditor
-              {...{
-                theme,
-                selectedColor,
-                setColor,
-                setSelectedColor
-              }}
-            />
-            <ThemeBackgroundPicker {...{ theme, setBackground }} />
-            {(themeCanUndo || themeCanRedo) && (
-              <UndoRedoButtons
-                {...{ undo, redo, themeCanUndo, themeCanRedo }}
-              />
-            )}
-          </div>
-          <div className="app__controls">
-            <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
-            <ThemeSaveButton
-              {...{
-                theme,
-                savedThemes,
-                generateThemeKey: storage.generateThemeKey,
-                putTheme: storage.putTheme,
-                userHasEdited,
-                modifiedSinceSave
-              }}
-            />
-          </div>
-        </BrowserPreview>
+        <ThemeBuilder
+          {...{
+            clipboard,
+            modifiedSinceSave,
+            redo,
+            savedThemes,
+            selectedColor,
+            setBackground,
+            setColor,
+            setSelectedColor,
+            storage,
+            theme,
+            themeCanRedo,
+            themeCanUndo,
+            undo,
+            urlEncodeTheme,
+            userHasEdited
+          }}
+        />
         <PresetThemeSelector {...{ setTheme }} />
         {hasSavedThemes && (
           <SavedThemeSelector
@@ -133,7 +121,8 @@ export const AppComponent = ({
         )}
       </main>
     )}
-    <AppFooter />
+    <AppFooter {...{ setDisplayLegalModal }} />
+    <TermsPrivacyModal {...{displayLegalModal, setDisplayLegalModal}} />
     <ThemeLogger {...{ theme }} debug={DEBUG} />
   </div>
 );
