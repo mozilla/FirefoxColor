@@ -43,7 +43,7 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
           rel="noopener noreferrer"
         >
           <span>Feedback</span>
-          <ReactSVG style={{ fill: "#fff" }} path={iconFeedback} />
+          <ReactSVG svgStyle={{ fill: "#fff" }} path={iconFeedback} />
         </a>
       )}
     </div>

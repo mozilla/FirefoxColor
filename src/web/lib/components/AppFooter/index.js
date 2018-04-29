@@ -67,7 +67,7 @@ export const AppFooter = ({ setDisplayLegalModal }) => {
           aria-label="@FxTestPilot Twitter"
           title="Twitter"
         >
-          <ReactSVG path={iconTwitter} className="app-footer__social-logo" />
+          <ReactSVG path={iconTwitter} svgClassName="app-footer__social-logo" />
         </a>
         <a
           className="app-footer__social-link"
@@ -76,7 +76,7 @@ export const AppFooter = ({ setDisplayLegalModal }) => {
           aria-label="Firefox Color GitHub"
           title="GitHub"
         >
-          <ReactSVG path={iconGH} className="app-footer__social-logo" />
+          <ReactSVG path={iconGH} svgClassName="app-footer__social-logo" />
         </a>
       </nav>
     </footer>
