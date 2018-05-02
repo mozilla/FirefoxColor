@@ -208,6 +208,9 @@ function startLoaderDelay() {
  * attention to the logic involved in the shouldOfferPendingTheme selector.
  */
 const params = queryString.parse(window.location.search);
+if (params.fromAddon) {
+  Metrics.setWasAddonClick(true);
+}
 if (!params.theme) {
   // Fire off a message to request current theme from the add-on.
   postMessage("fetchTheme");
