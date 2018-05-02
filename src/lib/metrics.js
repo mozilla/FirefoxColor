@@ -43,6 +43,7 @@ let cd8; // hsl (csv) of the textcolor
 let cd9; // hsla (csv) of the toolbar_field
 let cd10; // hsl (csv) of the toolbar_field_text
 let cd11; // unique integer id of the background pattern selected
+let cd12; // rgb (csv) of the `tab_line`
 
 const COLORS_TO_DIMENSIONS = {
   toolbar: "cd5",
@@ -50,7 +51,8 @@ const COLORS_TO_DIMENSIONS = {
   accentcolor: "cd7",
   textcolor: "cd8",
   toolbar_field: "cd9",
-  toolbar_field_text: "cd10"
+  toolbar_field_text: "cd10",
+  tab_line: "cd12"
 };
 
 const rgbaToCSV = (name, { r, g, b, a }) =>
@@ -137,7 +139,7 @@ const Metrics = {
   setTheme(theme) {
     const themeDimensions = this.themeToDimensions(theme);
     log("update theme", themeDimensions);
-    ({ cd5, cd6, cd7, cd8, cd9, cd10, cd11 } = themeDimensions);
+    ({ cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12 } = themeDimensions);
   },
 
   installStart() {
@@ -161,7 +163,8 @@ const Metrics = {
       cd8,
       cd9,
       cd10,
-      cd11
+      cd11,
+      cd12
     });
   },
 
@@ -239,14 +242,15 @@ const Metrics = {
       cd8,
       cd9,
       cd10,
-      cd11
+      cd11,
+      cd12
     });
   },
 
   linkClick(el) {
     // if el === download-firefox, add the following dimensions to this event
     const downloadFirefoxDimensions =
-      el !== "download-firefox" ? {} : { cd5, cd6, cd7, cd8, cd9, cd10, cd11 };
+      el !== "download-firefox" ? {} : { cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12 };
     this.sendEvent("link-engagement", "click", {
       el,
       cm1,
@@ -282,7 +286,8 @@ const Metrics = {
       cd8,
       cd9,
       cd10,
-      cd11
+      cd11,
+      cd12
     });
   }
 };
