@@ -59,7 +59,8 @@ export const normalizeTheme = (data = {}) => {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),
     images: {
       additional_backgrounds: []
-    }
+    },
+    title: data.title
   };
   const images = data.images ? data.images : {};
   if (images.headerURL) {

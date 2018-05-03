@@ -12,14 +12,14 @@ export const PresetThemeSelector = ({ setTheme }) => (
     <h2>Choose a preset theme</h2>
     {presetThemes.map((theme, themeId) => {
       return (
-        <div key={themeId} title={theme.title} className="preset-theme-preview">
+        <div key={themeId} className="preset-theme-preview">
           <BrowserPreview
             {...{
               size: "small",
               theme,
               onClick: () => {
                 setTheme({ theme });
-                Metrics.themeChangeFull(themeId);
+                Metrics.themeChangeFull(theme.title);
               }
             }}
           />

@@ -29,13 +29,14 @@ Data will be collected with Google Analytics and follow [Test Pilot standards](h
 * `cd2` - did this visit originate from an add-on click. One of `true` or `false`
 * `cd3` - did the user receive a theme as a query parameter. One of `true` or `false`
 * `cd4` - engaged with any `theme-change` event. One of `true` or `false` based on whether user has fired any `theme-change` during their visit.
-* `cd5` - hsla (csv) of the `toolbar`
-* `cd6` - hsl (csv) of the `toolbar_text`
-* `cd7` - hsl (csv) of the `accentcolor`
-* `cd8` - hsl (csv) of the `textcolor`
-* `cd9` - hsla (csv) of the `toolbar_field`
-* `cd10` - hsl (csv) of the `toolbar_field_text`
+* `cd5` - rgba (csv) of the `toolbar`
+* `cd6` - rgb (csv) of the `toolbar_text`
+* `cd7` - rgb (csv) of the `accentcolor`
+* `cd8` - rgb (csv) of the `textcolor`
+* `cd9` - rgba (csv) of the `toolbar_field`
+* `cd10` - rgb (csv) of the `toolbar_field_text`
 * `cd11` - unique integer id of the background pattern selected
+* `cd12` - rgb (csv) of the `tab_line`
 
 ### Events
 
@@ -59,6 +60,7 @@ cd8
 cd9,
 cd10,
 cd11,
+cd12
 ```
 
 ##### If we deem installation fails (based on polling)
@@ -136,7 +138,8 @@ cd7,
 cd8,
 cd9,
 cd10,
-cd11
+cd11,
+cd12
 ```
 
 #### `link-engagement`
@@ -159,7 +162,8 @@ cd7,
 cd8,
 cd9,
 cd10,
-cd11
+cd11,
+cd12
 ```
 
 #### `receive-theme`
@@ -176,7 +180,8 @@ cd7,
 cd8,
 cd9,
 cd10,
-cd11
+cd11,
+cd12
 ```
 
 #### `finish-visit`
