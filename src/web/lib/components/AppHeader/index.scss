@@ -70,7 +70,8 @@
     }
 
     // TODO: we may need to revisit this if/when we l10n
-    &:hover {
+    &:hover,
+    &:focus {
       width: 100px;
     }
 
