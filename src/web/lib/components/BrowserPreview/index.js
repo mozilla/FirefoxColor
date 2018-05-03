@@ -40,7 +40,7 @@ export const BrowserPreview = ({
     <span className="doll__button">
       {asset && (
         <ReactSVG
-          style={{ fill: colors[colorName] }}
+          svgStyle={{ fill: colors[colorName] }}
           path={buttonImages(`./${name}-16.svg`)}
         />
       )}
