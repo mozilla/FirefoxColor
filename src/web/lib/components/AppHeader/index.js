@@ -1,17 +1,15 @@
 import React from "react";
 import ReactSVG from "react-svg";
 
+import { version } from "../../../../../package.json";
 import { surveyUrl } from "../../../../lib/constants";
 import Metrics from "../../../../lib/metrics";
 
 import iconFeedback from "./feedback.svg";
 import "./index.scss";
 
-export const AppHeader = ({ hasExtension, appVersion = null }) => {
-  let survey = `${surveyUrl}?ref=app`;
-  if (appVersion) {
-    survey += `${survey}&ver=${appVersion}`;
-  }
+export const AppHeader = ({ hasExtension }) => {
+  const survey = `${surveyUrl}?ref=app&ver=${version}`;
   return (
     <div className="app-header">
       <div className="app-header__content">
@@ -19,8 +17,7 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
         <header>
           <h1>Firefox Color</h1>
           <h3>
-            A
-            {" "}
+            A{" "}
             <a
               href="https://testpilot.firefox.com"
               onClick={() => Metrics.linkClick("test-pilot")}
