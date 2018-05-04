@@ -1,3 +1,5 @@
+@import '../../common.scss';
+
 .app {
   margin: 0 auto;
   min-height: 100vh;
@@ -13,24 +15,9 @@
   animation: fade-in forwards 250ms ease-in;
   display: grid;
   grid-gap: 20px;
-  margin: 0 auto;
   opacity: 0;
   position: relative;
   z-index: 1;
   width: 90%;
-
-  .app__controls {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: 1fr 200px;
-    padding: 40px;
-  }
-}
-
-@media (max-width: 720px) {
-  .app__content {
-    .app__controls {
-      grid-template-columns: 1fr;
-    }
-  }
+  margin: 0 auto;
 }

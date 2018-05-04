@@ -1,17 +1,19 @@
 import React from "react";
 import ReactSVG from "react-svg";
 
+import { colorToCSS } from "../../../../lib/themes";
 import { surveyUrl } from "../../../../lib/constants";
 import Metrics from "../../../../lib/metrics";
 
 import iconFeedback from "./feedback.svg";
 import "./index.scss";
 
-export const AppHeader = ({ hasExtension, appVersion = null }) => {
+export const AppHeader = ({ theme, hasExtension, appVersion = null }) => {
   let survey = `${surveyUrl}?ref=app`;
   if (appVersion) {
     survey += `${survey}&ver=${appVersion}`;
   }
+  const highlightColor = colorToCSS(theme.colors.tab_line);
   return (
     <div className="app-header">
       <div className="app-header__content">
@@ -19,13 +21,13 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
         <header>
           <h1>Firefox Color</h1>
           <h3>
-            A
-            {" "}
+            A{" "}
             <a
               href="https://testpilot.firefox.com"
               onClick={() => Metrics.linkClick("test-pilot")}
               target="_blank"
               rel="noopener noreferrer"
+              style={{ color: highlightColor }}
             >
               Firefox Test Pilot
             </a>{" "}

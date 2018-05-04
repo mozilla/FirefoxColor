@@ -1,16 +1,17 @@
 import React from "react";
-import classNames from "classnames";
 
 import { DOWNLOAD_FIREFOX_URL } from "../../../../lib/constants";
 import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
-export const Banner = ({ isFirefox, addonUrl, bottom = false }) => (
-  <div className={classNames("banner", { banner__bottom: bottom })}>
+export const Banner = ({ isFirefox, addonUrl }) => (
+  <div className="banner">
     {isFirefox ? (
       <div className="banner__content">
-        <span>Put the 🔥 in Firefox</span>
+        <h2>Put Some 🔥 in Firefox</h2>
+        <h3>Build beautiful themes for your browser with just a few clicks</h3>
+
         <a
           href={addonUrl}
           onClick={() => Metrics.installStart()}
@@ -21,13 +22,14 @@ export const Banner = ({ isFirefox, addonUrl, bottom = false }) => (
       </div>
     ) : (
       <div className="banner__content">
-        <span>Get Firefox to enjoy customizing your theme!</span>
+
+        <h2 className="banner__header-small">Browse Beautiful</h2>
+        <h3>Create custom Firefox themes<br /> with just a few clicks</h3>
         <a href={DOWNLOAD_FIREFOX_URL} className="banner__button">
-          Download Firefox
+            <div className="banner__logo" /> Download Firefox
         </a>
       </div>
     )}
-    {!bottom && <div className="banner__spacer" />}
   </div>
 );
 

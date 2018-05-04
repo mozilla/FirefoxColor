@@ -28,7 +28,8 @@ export const actions = {
     "SET_SAVED_THEMES",
     "SET_SAVED_THEMES_PAGE",
     "SET_CURRENT_SAVED_THEME",
-    "SET_DISPLAY_LEGAL_MODAL"
+    "SET_DISPLAY_LEGAL_MODAL",
+    "SET_JUST_GOT_EXTENSION"
   ),
   theme: {
     ...createActions({}, "SET_THEME", "SET_COLOR", "SET_BACKGROUND"),
@@ -40,6 +41,7 @@ export const actions = {
 };
 
 export const selectors = {
+  justGotExtension: state => state.ui.justGotExtension,
   hasExtension: state => state.ui.hasExtension,
   loaderDelayExpired: state => state.ui.loaderDelayExpired,
   selectedColor: state => state.ui.selectedColor,
@@ -83,6 +85,10 @@ export const reducers = {
           {}
         )
       }),
+      SET_JUST_GOT_EXTENSION: (state, { payload: { justGotExtension } }) => ({
+        ...state,
+        justGotExtension
+      }),
       SET_SAVED_THEMES_PAGE: (
         state,
         { payload: { page: savedThemesPage } }
@@ -122,7 +128,8 @@ export const reducers = {
       selectedColor: null,
       hasExtension: false,
       loaderDelayExpired: false,
-      displayLegalModal: false
+      displayLegalModal: false,
+      justGotExtension: false
     }
   ),
   theme: undoable(

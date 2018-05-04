@@ -25,7 +25,7 @@ export const SharedThemeDialog = ({ pendingTheme, setTheme, clearPendingTheme })
           <BrowserPreview {...{ size: "medium", theme: pendingTheme }} />
         </div>
         <div className="options">
-          <p>Do you want to apply this custom theme?</p>
+          <p>Do you want switch your theme?</p>
           <div className="buttons">
             <button className="skip" onClick={onSkip}>Nope</button>
             <button className="apply" onClick={onApply}>Yep</button>

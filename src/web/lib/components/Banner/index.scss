@@ -1,36 +1,48 @@
 @import '../../common.scss';
 
-$banner-height: 71px;
-
 .banner__content {
   align-items: center;
-  background: var(--white);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 0 10px rgba(0, 0, 0, .05);
   display: flex;
-  height: $banner-height;
+  flex-direction: column;
   justify-content: center;
   left: 0;
-  position: fixed;
+  padding: 80px;
   right: 0;
-  width: 100%;
+  text-align: center;
   z-index: 999;
 
-  .banner__bottom & {
-    bottom: 0;
-  }
-
-  span {
-    font-weight: 600;
-    font-size: 20px;
+  h2 {
+    align-items: center;
+    display: flex;
+    font-size: 42px;
+    font-weight: 300;
+    margin: 0 0 4px;
     padding: 0 10px;
   }
 
+  h3 {
+    color: var(--grey-60);
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 26px;
+    margin: 0;
+  }
+
+  .banner__logo {
+    background-image: url('./firefox-logo.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: auto 44px;
+    height: 44px;
+    margin: 0 10px 0 -6px;
+    width: 44px;
+  }
+
   .banner__button {
+    @include button(72px, 26px, 36px);
     @include buttonPrimary;
-    @include button(48px, 18px, 24px);
+
+    margin: 50px 0 0;
   }
 }
 
-.banner__spacer {
-  height: $banner-height;
-}

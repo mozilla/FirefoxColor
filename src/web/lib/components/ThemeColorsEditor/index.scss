@@ -33,11 +33,19 @@
       }
     }
 
+    &.textcolor,
+    &.tab_line {
+      .color__picker {
+        left: 72px;
+      }
+    }
+
     &.toolbar,
     &.toolbar_text {
       flex-direction: row-reverse;
 
       .color__picker {
+        left: 0;
         right: -56px;
       }
 

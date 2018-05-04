@@ -88,3 +88,13 @@ export const presetThemes = presetThemesContext
     ...normalizeTheme(presetThemesContext(filename))
   }))
   .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
+
+
+const componentToHex = c => {
+  const hex = c.toString(16);
+  return hex.length === 1 ? "0" + hex : hex;
+};
+
+export const rgbToHex = (color) => {
+  return "#" + componentToHex(color.r) + componentToHex(color.g) + componentToHex(color.b);
+};

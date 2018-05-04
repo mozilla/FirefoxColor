@@ -1,10 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 import BrowserPreview from "../BrowserPreview";
 import ThemeColorsEditor from "../ThemeColorsEditor";
 import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
 import UndoRedoButtons from "../UndoRedoButtons";
 import ThemeUrl from "../ThemeUrl";
 import ThemeSaveButton from "../ThemeSaveButton";
+import Banner from "../Banner";
+
+import "./index.scss";
 
 export const ThemeBuilder = ({
   clipboard,
@@ -21,10 +24,14 @@ export const ThemeBuilder = ({
   themeCanUndo,
   undo,
   urlEncodeTheme,
-  userHasEdited
+  userHasEdited,
+  hasExtension,
+  justGotExtension,
+  isFirefox,
+  addonUrl
 }) => (
   <BrowserPreview {...{ theme, size: "large" }}>
-    <div className="app__theme-element-pickers">
+    <Fragment>
       <ThemeColorsEditor
         {...{
           theme,
@@ -37,20 +44,30 @@ export const ThemeBuilder = ({
       {(themeCanUndo || themeCanRedo) && (
         <UndoRedoButtons {...{ undo, redo, themeCanUndo, themeCanRedo }} />
       )}
-    </div>
-    <div className="app__controls">
-      <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
-      <ThemeSaveButton
+    </Fragment>
+    {!hasExtension && (
+      <Banner
         {...{
-          theme,
-          savedThemes,
-          generateThemeKey: storage.generateThemeKey,
-          putTheme: storage.putTheme,
-          userHasEdited,
-          modifiedSinceSave
+          isFirefox,
+          addonUrl
         }}
       />
-    </div>
+    )}
+    {hasExtension && (
+      <div className="theme-share-save">
+        <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
+        <ThemeSaveButton
+          {...{
+            theme,
+            savedThemes,
+            generateThemeKey: storage.generateThemeKey,
+            putTheme: storage.putTheme,
+            userHasEdited,
+            modifiedSinceSave
+          }}
+        />
+      </div>
+    )}
   </BrowserPreview>
 );
 

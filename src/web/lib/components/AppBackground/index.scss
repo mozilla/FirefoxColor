@@ -1,7 +1,7 @@
 .app-background {
   bottom: 0;
   left: 0;
-  opacity: .6;
+  opacity: .7;
   position: fixed;
   right: 0;
   top: 0;
@@ -23,7 +23,6 @@
     background-repeat: no-repeat;
     background-size: 466px 644px;
     height: 644px;
-    opacity: .5;
     position: absolute;
     right: 0;
     top: 0;
@@ -37,8 +36,24 @@
     bottom: 40px;
     height: 411px;
     left: 0;
-    opacity: .3;
     position: absolute;
     width: 236px;
+  }
+
+  .app-background__texture-1,
+  .app-background__texture-2 {
+    opacity: 0;
+    animation: half-fade 500ms forwards;
+    animation-delay: 500ms;
+  }
+}
+
+@keyframes half-fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: .3;
   }
 }
