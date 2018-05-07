@@ -8,7 +8,6 @@ import AppBackground from "../AppBackground";
 import AppFooter from "../AppFooter";
 import AppHeader from "../AppHeader";
 import AppLoadingIndicator from "../AppLoadingIndicator";
-import Banner from "../Banner";
 import Mobile from "../Mobile";
 import PresetThemeSelector from "../PresetThemeSelector";
 import SavedThemeSelector from "../SavedThemeSelector";
@@ -75,80 +74,75 @@ export const AppComponent = ({
   redo,
   storage,
   userHasEdited,
-  modifiedSinceSave
+  modifiedSinceSave,
+  justGotExtension
 }) => (
   <Fragment>
-    {isMobile &&
-      <Mobile />
-    }
-    {!isMobile && !loaderDelayExpired &&
-      <AppLoadingIndicator {...{ loaderQuote }} />
-    }
-    {!isMobile && loaderDelayExpired &&
-      <div className="app">
-        {hasExtension && shouldOfferPendingTheme &&
-          <SharedThemeDialog
-            {...{
-              pendingTheme,
-              setTheme,
-              clearPendingTheme
-            }}
-          />
-        }
-        {!hasExtension &&
-          <Banner
-            {...{
-              isFirefox,
-              addonUrl,
-              bottom: false
-            }}
-          />
-        }
-        <AppBackground {...{ theme }} />
-        <main className="app__content">
-          <AppHeader {...{ hasExtension }} />
-          <ThemeBuilder
-            {...{
-              clipboard,
-              modifiedSinceSave,
-              redo,
-              savedThemes,
-              selectedColor,
-              setBackground,
-              setColor,
-              setSelectedColor,
-              storage,
-              theme,
-              themeCanRedo,
-              themeCanUndo,
-              undo,
-              urlEncodeTheme,
-              userHasEdited
-            }}
-          />
-          <PresetThemeSelector {...{ setTheme }} />
-          {hasSavedThemes &&
-            <SavedThemeSelector
+    {isMobile && <Mobile />}
+    {!isMobile &&
+      !loaderDelayExpired && <AppLoadingIndicator {...{ loaderQuote }} />}
+    {!isMobile &&
+      loaderDelayExpired && (
+        <div className="app">
+          {hasExtension &&
+            shouldOfferPendingTheme && (
+              <SharedThemeDialog
+                {...{
+                  pendingTheme,
+                  setTheme,
+                  clearPendingTheme
+                }}
+              />
+            )}
+          <AppBackground {...{ theme }} />
+          <main className="app__content">
+            <AppHeader {...{ hasExtension, theme }} />
+            <ThemeBuilder
               {...{
-                setTheme,
+                clipboard,
+                modifiedSinceSave,
+                redo,
                 savedThemes,
-                savedThemesPage,
-                setSavedThemesPage,
-                deleteTheme: storage.deleteTheme
+                selectedColor,
+                setBackground,
+                setColor,
+                setSelectedColor,
+                storage,
+                theme,
+                themeCanRedo,
+                themeCanUndo,
+                undo,
+                urlEncodeTheme,
+                userHasEdited,
+                justGotExtension,
+                isFirefox,
+                addonUrl,
+                hasExtension
               }}
             />
-          }
-        </main>
-        <AppFooter {...{ setDisplayLegalModal }} />
-        <TermsPrivacyModal
-          {...{
-            displayLegalModal,
-            setDisplayLegalModal
-          }}
-        />
-        <ThemeLogger {...{ theme }} debug={DEBUG} />
-      </div>
-    }
+            {hasSavedThemes && (
+              <SavedThemeSelector
+                {...{
+                  setTheme,
+                  savedThemes,
+                  savedThemesPage,
+                  setSavedThemesPage,
+                  deleteTheme: storage.deleteTheme
+                }}
+              />
+            )}
+            <PresetThemeSelector {...{ setTheme }} />
+          </main>
+          <AppFooter {...{ hasExtension, setDisplayLegalModal }} />
+          <TermsPrivacyModal
+            {...{
+              displayLegalModal,
+              setDisplayLegalModal
+            }}
+          />
+          <ThemeLogger {...{ theme }} debug={DEBUG} />
+        </div>
+      )}
   </Fragment>
 );
 

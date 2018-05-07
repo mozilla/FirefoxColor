@@ -177,12 +177,13 @@ const Metrics = {
   installSuccess() {
     if (!installTimer) {
       // Skip this event if there's no install timer in progress.
-      return;
+      return false;
     }
     clearTimeout(installTimer);
     this.sendEvent("install-addon", "poll-event", {
       el: "install-success"
     });
+    return true;
   },
 
   themeChangeFull(themeTitle) {

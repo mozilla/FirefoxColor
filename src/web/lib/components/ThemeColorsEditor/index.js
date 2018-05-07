@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
 import { colorLabels, colorsWithAlpha, ESC } from "../../../../lib/constants";
-import { colorToCSS } from "../../../../lib/themes";
+import { colorToCSS, rgbToHex } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
@@ -60,6 +60,11 @@ class ThemeColorsEditor extends React.Component {
     // Select only the color properties from the theme.
     const colorKeys = Object.keys(colors).filter(name => name in colorLabels);
 
+    // Dedupe, and convert to hex to pass in correct colors as presets
+    const hexArray = [...new Set(colorKeys.map((name) => {
+      return rgbToHex(colors[name]);
+    }))];
+
     return (
       <div className="theme-colors-editor">
         <ul className="colors">
@@ -86,6 +91,8 @@ class ThemeColorsEditor extends React.Component {
                     color={color}
                     disableAlpha={!colorsWithAlpha.includes(name)}
                     onChangeComplete={color => this.handleColorChange(name, color)}
+                    presetColors={hexArray}
+                    backgroundColor={"#cca"}
                   />
                 </span>
               </li>

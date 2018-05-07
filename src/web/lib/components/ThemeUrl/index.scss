@@ -1,8 +1,6 @@
 @import '../../common.scss';
 
 .theme-url {
-  flex: 1;
-  margin-right: 24px;
   display: flex;
   flex-wrap: wrap;
 
@@ -11,7 +9,7 @@
   }
 
   label {
-    flex: 1 0 100%;
+    width: 100%;
   }
 
   input[type="text"] {

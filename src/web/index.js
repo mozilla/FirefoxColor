@@ -107,7 +107,12 @@ window.addEventListener("message", ({ source, data: message }) => {
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
-        Metrics.installSuccess();
+
+        // use the result of installSuccess to set whether the add-on just installed.
+        const didInstall = Metrics.installSuccess();
+        if (didInstall) {
+          store.dispatch(actions.ui.setJustGotExtension({ justGotExtension: true }));
+        }
         postMessage("setTheme", { theme: selectors.theme(store.getState()) });
       }
     }
@@ -135,20 +140,24 @@ setInterval(() => {
 
 const userAgent = navigator.userAgent.toLowerCase();
 const isMobile = userAgent.includes("mobi") || userAgent.includes("tablet");
-const isFirefox = userAgent.includes("firefox/") && !userAgent.includes("fxios");
-const loaderQuote = loaderQuotes[Math.floor(Math.random() * loaderQuotes.length)];
+const isFirefox =
+  userAgent.includes("firefox/") && !userAgent.includes("fxios");
+const loaderQuote =
+  loaderQuotes[Math.floor(Math.random() * loaderQuotes.length)];
 
 render(
   <Provider store={store}>
-    <App {...{
-      addonUrl,
-      urlEncodeTheme,
-      clipboard,
-      storage,
-      isMobile,
-      isFirefox,
-      loaderQuote
-    }} />
+    <App
+      {...{
+        addonUrl,
+        urlEncodeTheme,
+        clipboard,
+        storage,
+        isMobile,
+        isFirefox,
+        loaderQuote
+      }}
+    />
   </Provider>,
   document.getElementById("root")
 );

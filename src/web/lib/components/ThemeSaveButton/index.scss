@@ -1,7 +1,7 @@
 @import '../../common.scss';
 
 .theme-save-button {
-  flex: 0;
+  flex: 1;
 
   h2 {
     margin-top: 0;
@@ -9,8 +9,9 @@
 
   button {
     @include button;
-    @include buttonSecondary;
+    @include buttonDefault;
 
     height: 40px;
+    width: 100%;
   }
 }

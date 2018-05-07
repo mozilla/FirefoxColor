@@ -12,7 +12,12 @@ $grid: 4px;
   text-decoration: none;
   transition: background 50ms;
   min-width: 10 * $font;
-  padding: 0 12px;
+  padding: 0 $font;
+
+  &:disabled {
+    opacity: .5;
+    cursor: default;
+  }
 }
 
 @mixin buttonSecondary {
@@ -27,16 +32,12 @@ $grid: 4px;
   &:active:not(:disabled) {
     background: rgba(12, 12, 13, .3);
   }
-
-  &:disabled {
-    color: var(--grey-40);
-    cursor: default;
-  }
 }
 
 @mixin buttonPrimary {
   color: var(--white);
   background: var(--green-60);
+  box-shadow: 0 -3px 0 var(--grey-90-a10) inset;
 
   &:hover,
   &:focus {
@@ -52,12 +53,12 @@ $grid: 4px;
   color: var(--white);
   background: var(--blue-50);
 
-  &:hover,
-  &:focus {
+  &:hover:not(:disabled),
+  &:focus:not(:disabled) {
     background: var(--blue-60);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     background: var(--blue-70);
   }
 }
