@@ -139,7 +139,7 @@ export const AppComponent = ({
             />
           }
         </main>
-        <AppFooter {...{ setDisplayLegalModal }} />
+        <AppFooter {...{ hasExtension, setDisplayLegalModal }} />
         <TermsPrivacyModal
           {...{
             displayLegalModal,
