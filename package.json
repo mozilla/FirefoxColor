@@ -85,7 +85,7 @@
     "image-webpack-loader": "^4.1.0",
     "node-sass": "^4.6.1",
     "npm-run-all": "^4.1.2",
-    "onchange": "^3.2.1",
+    "onchange": "^4.0.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "style-loader": "^0.21.0",
