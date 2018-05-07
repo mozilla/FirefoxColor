@@ -55,10 +55,22 @@ class ThemeColorsEditor extends React.Component {
   }
 
   render() {
-    const { theme: { colors }, selectedColor } = this.props;
+    const {
+      theme: { colors },
+      selectedColor
+    } = this.props;
 
     // Select only the color properties from the theme.
     const colorKeys = Object.keys(colors).filter(name => name in colorLabels);
+
+    // Dedupe colors for swatch presets
+    const uniqueColorArray = [
+      ...new Set(
+        colorKeys.map(name => {
+          return colorToCSS(colors[name]);
+        })
+      )
+    ];
 
     return (
       <div className="theme-colors-editor">
@@ -85,7 +97,10 @@ class ThemeColorsEditor extends React.Component {
                   <SketchPicker
                     color={color}
                     disableAlpha={!colorsWithAlpha.includes(name)}
-                    onChangeComplete={color => this.handleColorChange(name, color)}
+                    onChangeComplete={color =>
+                      this.handleColorChange(name, color)
+                    }
+                    presetColors={uniqueColorArray}
                   />
                 </span>
               </li>
