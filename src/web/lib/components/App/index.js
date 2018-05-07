@@ -106,7 +106,7 @@ export const AppComponent = ({
         }
         <AppBackground {...{ theme }} />
         <main className="app__content">
-          <AppHeader {...{ hasExtension }} />
+          <AppHeader {...{ hasExtension, theme }} />
           <ThemeBuilder
             {...{
               clipboard,
