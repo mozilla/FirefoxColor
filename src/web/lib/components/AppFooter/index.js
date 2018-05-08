@@ -9,7 +9,7 @@ import iconTwitter from "./twitter-logo.svg";
 
 import "./index.scss";
 
-export const AppFooter = ({ setDisplayLegalModal }) => {
+export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
   const toggleModal = name => {
     Metrics.linkClick(name);
     setDisplayLegalModal({ display: true });
@@ -58,6 +58,15 @@ export const AppFooter = ({ setDisplayLegalModal }) => {
         >
           Cookies
         </a>
+        {hasExtension && (
+          <a
+            className="app-footer__legal-link"
+            onClick={() => Metrics.linkClick("uninstall")}
+            href="https://testpilot.firefox.com/experiments/color"
+          >
+            Uninstall
+          </a>
+        )}
       </nav>
       <nav className="app-footer__social">
         <a
