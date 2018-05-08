@@ -2,11 +2,13 @@
 
 const path = require("path");
 const merge = require("webpack-merge");
+const { exec } = require("child_process");
 
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const GenerateAssetWebpackPlugin = require("generate-asset-webpack-plugin");
 
-const pkg = require("./package.json");
+const packageMeta = require("./package.json");
 const common = require("./webpack.common.js");
 
 module.exports = merge(common.webpackConfig, {
@@ -22,13 +24,17 @@ module.exports = merge(common.webpackConfig, {
     filename: "[name].js"
   },
   plugins: [
+    new GenerateAssetWebpackPlugin({
+      filename: "__version__",
+      fn: buildVersionJSON
+    }),
     new HtmlWebpackPlugin({
       template: "./src/web/index.html.ejs",
       filename: "index.html",
       chunks: ["index"],
-      title: pkg.title,
-      description: pkg.description,
-      homepage: pkg.homepage
+      title: packageMeta.title,
+      description: packageMeta.description,
+      homepage: packageMeta.homepage
     }),
     new CopyWebpackPlugin([
       { from: "./src/images", to: "images" },
@@ -37,3 +43,13 @@ module.exports = merge(common.webpackConfig, {
     ])
   ]
 });
+
+function buildVersionJSON(compilation, cb) {
+  exec("git --no-pager log --format=format:\"%H\" -1", (err, stdout, stderr) => {
+    cb(null, JSON.stringify({
+      commit: err ? "" : stdout,
+      version: packageMeta.version,
+      source: `https://github.com/${packageMeta.repository}`
+    }, null, "  "));
+  });
+}
