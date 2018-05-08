@@ -60,6 +60,10 @@
   .bg__inner {
     border-radius: 3px;
     flex: 1;
+
+    &:hover {
+      box-shadow: inset 0 0 0 3px var(--blue-40);
+    }
   }
 
   .bg.active {

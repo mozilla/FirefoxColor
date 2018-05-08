@@ -1,24 +1,21 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { connect } from "react-redux";
 
 import { actions, selectors } from "../../../../lib/store";
 import { DEBUG } from "../../../../lib/utils";
 
+import AppBackground from "../AppBackground";
 import AppFooter from "../AppFooter";
 import AppHeader from "../AppHeader";
-import AppBackground from "../AppBackground";
-import BrowserPreview from "../BrowserPreview";
-import ThemeColorsEditor from "../ThemeColorsEditor";
-import PresetThemeSelector from "../PresetThemeSelector";
-import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
-import Banner from "../Banner";
-import SharedThemeDialog from "../SharedThemeDialog";
 import AppLoadingIndicator from "../AppLoadingIndicator";
-import ThemeLogger from "../ThemeLogger";
-import ThemeUrl from "../ThemeUrl";
-import ThemeSaveButton from "../ThemeSaveButton";
+import Banner from "../Banner";
+import Mobile from "../Mobile";
+import PresetThemeSelector from "../PresetThemeSelector";
 import SavedThemeSelector from "../SavedThemeSelector";
-import UndoRedoButtons from "../UndoRedoButtons";
+import SharedThemeDialog from "../SharedThemeDialog";
+import TermsPrivacyModal from "../TermsPrivacyModal";
+import ThemeBuilder from "../ThemeBuilder";
+import ThemeLogger from "../ThemeLogger";
 
 import "./index.scss";
 
@@ -43,11 +40,13 @@ const mapDispatchToProps = dispatch => ({
   clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
   setSavedThemesPage: page => dispatch(actions.ui.setSavedThemesPage({ page })),
+  setDisplayLegalModal: args => dispatch(actions.ui.setDisplayLegalModal(args)),
   undo: () => dispatch(actions.theme.undo()),
   redo: () => dispatch(actions.theme.redo())
 });
 
 export const AppComponent = ({
+  loaderQuote,
   isFirefox,
   isMobile,
   addonUrl,
@@ -70,67 +69,87 @@ export const AppComponent = ({
   setTheme,
   setSelectedColor,
   setBackground,
+  setDisplayLegalModal,
+  displayLegalModal,
   undo,
   redo,
-  storage
+  storage,
+  userHasEdited,
+  modifiedSinceSave
 }) => (
-  <div className="app">
-    {!loaderDelayExpired && <AppLoadingIndicator />}
-    {hasExtension &&
-      shouldOfferPendingTheme && (
-        <SharedThemeDialog {...{ pendingTheme, setTheme, clearPendingTheme }} />
-      )}
-    <AppBackground {...{ theme }} />
-    {!hasExtension && !isMobile && <Banner {...{ isFirefox, addonUrl, bottom: false }} />}
-    {loaderDelayExpired && (
-      <main className="app__content">
-        <AppHeader {...{ hasExtension }} />
-        <BrowserPreview {...{ theme, setSelectedColor, size: "large" }}>
-          <div className="app__theme-element-pickers">
-            <ThemeColorsEditor
-              {...{
-                theme,
-                selectedColor,
-                setColor,
-                setSelectedColor
-              }}
-            />
-            <ThemeBackgroundPicker {...{ theme, setBackground }} />
-            {(themeCanUndo || themeCanRedo) && (
-              <UndoRedoButtons
-                {...{ undo, redo, themeCanUndo, themeCanRedo }}
-              />
-            )}
-          </div>
-          <div className="app__controls">
-            <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
-            <ThemeSaveButton
-              {...{
-                theme,
-                savedThemes,
-                generateThemeKey: storage.generateThemeKey,
-                putTheme: storage.putTheme
-              }}
-            />
-          </div>
-        </BrowserPreview>
-        <PresetThemeSelector {...{ setTheme }} />
-        {hasSavedThemes && (
-          <SavedThemeSelector
+  <Fragment>
+    {isMobile &&
+      <Mobile />
+    }
+    {!isMobile && !loaderDelayExpired &&
+      <AppLoadingIndicator {...{ loaderQuote }} />
+    }
+    {!isMobile && loaderDelayExpired &&
+      <div className="app">
+        {hasExtension && shouldOfferPendingTheme &&
+          <SharedThemeDialog
             {...{
+              pendingTheme,
               setTheme,
-              savedThemes,
-              savedThemesPage,
-              setSavedThemesPage,
-              deleteTheme: storage.deleteTheme
+              clearPendingTheme
             }}
           />
-        )}
-      </main>
-    )}
-    <AppFooter />
-    <ThemeLogger {...{ theme }} debug={DEBUG} />
-  </div>
+        }
+        {!hasExtension &&
+          <Banner
+            {...{
+              isFirefox,
+              addonUrl,
+              bottom: false
+            }}
+          />
+        }
+        <AppBackground {...{ theme }} />
+        <main className="app__content">
+          <AppHeader {...{ hasExtension, theme }} />
+          <ThemeBuilder
+            {...{
+              clipboard,
+              modifiedSinceSave,
+              redo,
+              savedThemes,
+              selectedColor,
+              setBackground,
+              setColor,
+              setSelectedColor,
+              storage,
+              theme,
+              themeCanRedo,
+              themeCanUndo,
+              undo,
+              urlEncodeTheme,
+              userHasEdited
+            }}
+          />
+          <PresetThemeSelector {...{ setTheme }} />
+          {hasSavedThemes &&
+            <SavedThemeSelector
+              {...{
+                setTheme,
+                savedThemes,
+                savedThemesPage,
+                setSavedThemesPage,
+                deleteTheme: storage.deleteTheme
+              }}
+            />
+          }
+        </main>
+        <AppFooter {...{ hasExtension, setDisplayLegalModal }} />
+        <TermsPrivacyModal
+          {...{
+            displayLegalModal,
+            setDisplayLegalModal
+          }}
+        />
+        <ThemeLogger {...{ theme }} debug={DEBUG} />
+      </div>
+    }
+  </Fragment>
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);

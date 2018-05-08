@@ -1,17 +1,17 @@
 import React from "react";
 import ReactSVG from "react-svg";
 
+import { version } from "../../../../../package.json";
 import { surveyUrl } from "../../../../lib/constants";
+import { colorToCSS } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
 
 import iconFeedback from "./feedback.svg";
 import "./index.scss";
 
-export const AppHeader = ({ hasExtension, appVersion = null }) => {
-  let survey = `${surveyUrl}?ref=app`;
-  if (appVersion) {
-    survey += `${survey}&ver=${appVersion}`;
-  }
+export const AppHeader = ({ theme, hasExtension }) => {
+  const survey = `${surveyUrl}?ref=app&ver=${version}`;
+  const highlightColor = colorToCSS(theme.colors.tab_line);
   return (
     <div className="app-header">
       <div className="app-header__content">
@@ -19,13 +19,13 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
         <header>
           <h1>Firefox Color</h1>
           <h3>
-            A
-            {" "}
+            A{" "}
             <a
               href="https://testpilot.firefox.com"
               onClick={() => Metrics.linkClick("test-pilot")}
               target="_blank"
               rel="noopener noreferrer"
+              style={{ color: highlightColor }}
             >
               Firefox Test Pilot
             </a>{" "}
@@ -43,7 +43,7 @@ export const AppHeader = ({ hasExtension, appVersion = null }) => {
           rel="noopener noreferrer"
         >
           <span>Feedback</span>
-          <ReactSVG style={{ fill: "#fff" }} path={iconFeedback} />
+          <ReactSVG svgStyle={{ fill: "#fff" }} path={iconFeedback} />
         </a>
       )}
     </div>

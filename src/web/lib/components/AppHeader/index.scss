@@ -1,9 +1,8 @@
 @import '../../common.scss';
 
 .app-header {
-  align-items: left;
+  align-items: center;
   display: flex;
-  flex-direction: column;
   height: 120px;
   margin-bottom: 40px;
   padding-top: 40px;
@@ -16,28 +15,28 @@
     background-image: url(../../../../images/logo.svg);
     background-position: center center;
     background-repeat: no-repeat;
-    height: 44px;
-    width: 44px;
-    margin-right: 7px;
+    background-size: 48px auto;
+    height: 48px;
+    margin-right: 10px;
+    width: 48px;
   }
 
   h1 {
-    color: #3e3d40;
     font-size: 24px;
+    font-weight: 300;
     letter-spacing: -.2px;
     margin: 0;
     text-align: left;
   }
 
   h3 {
-    color: #3e3d40;
-    font-size: 11px;
+    font-size: 12px;
+    font-weight: normal;
     letter-spacing: 0;
     margin: 0;
     text-align: left;
 
     a {
-      color: #00001c;
       line-height: 13px;
       text-decoration: none;
     }
@@ -69,8 +68,8 @@
       transition: transform 200ms, width 200ms;
     }
 
-    // TODO: we may need to revisit this if/when we l10n
-    &:hover {
+    &:hover,
+    &:focus {
       width: 100px;
     }
 

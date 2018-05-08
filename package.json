@@ -1,7 +1,7 @@
 {
   "name": "firefoxcolor",
   "description": "Theming experiment for Firefox Quantum and beyond.",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "author": "Les Orchard <me@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"
@@ -11,7 +11,12 @@
   "homepage": "https://mozilla.github.io/FirefoxColor/",
   "main": "src/web/index.js",
   "config": {
-    "GA_TRACKING_ID": "UA-114768519-1"
+    "development": {
+      "GA_TRACKING_ID": "UA-114768519-1"
+    },
+    "production": {
+      "GA_TRACKING_ID": "UA-77033033-10"
+    }
   },
   "scripts": {
     "start": "npm-run-all --parallel server watch:extension watch:lint watch:validate",
@@ -38,7 +43,7 @@
     "lint:css": "stylelint 'src/**/*.scss'",
     "lint:js": "eslint --color .",
     "validate": "npm-run-all validate:*",
-    "validate:extension": "addons-linter build/extension",
+    "validate:extension": "addons-linter build/extension --self-hosted",
     "validate:themes": "node ./bin/validate-themes.js",
     "test": "npm run --parallel lint validate",
     "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/mozilla/FirefoxColor.git\"",
@@ -70,7 +75,7 @@
     "css-loader": "^0.28.7",
     "eslint": "^4.11.0",
     "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-mozilla": "^0.10.0",
+    "eslint-plugin-mozilla": "^0.11.0",
     "eslint-plugin-no-unsanitized": "^3.0.0",
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -80,10 +85,10 @@
     "image-webpack-loader": "^4.1.0",
     "node-sass": "^4.6.1",
     "npm-run-all": "^4.1.2",
-    "onchange": "^3.2.1",
+    "onchange": "^4.0.0",
     "rimraf": "^2.6.2",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.20.2",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
     "stylelint": "^9.1.1",
     "stylelint-config-standard": "^18.1.0",
     "svg-url-loader": "^2.3.0",
@@ -105,12 +110,13 @@
     "react-dom": "^16.1.0",
     "react-onclickoutside": "^6.7.1",
     "react-redux": "^5.0.6",
-    "react-svg": "^2.1.22",
+    "react-svg": "^3.0.0",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
     "redux-devtools-extension": "^2.13.2",
     "redux-undo": "^1.0.0-beta9-9-7",
-    "testpilot-ga": "^0.3.0"
+    "testpilot-ga": "^0.3.0",
+    "tinycolor2": "^1.4.1"
   },
   "extensionManifest": {
     "name": "Firefox Color",
@@ -151,7 +157,8 @@
     "applications": {
       "gecko": {
         "id": "FirefoxColor@mozilla.com",
-        "strict_min_version": "57.0a1"
+        "strict_min_version": "57.0a1",
+        "update_url": "https://testpilot.firefox.com/files/FirefoxColor@mozilla.com/updates.json"
       }
     }
   }

@@ -1,6 +1,6 @@
-import { actions, themesEqual } from "../../lib/store";
+import { actions } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
-import { normalizeTheme } from "../../lib/themes";
+import { normalizeTheme, themesEqual } from "../../lib/themes";
 
 const log = makeLog("web.storage");
 
@@ -16,6 +16,8 @@ const themeKeyFromStorage = storageKey =>
 const generateThemeKey = () =>
   `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
+let currentSavedTheme;
+
 function putTheme(key, theme) {
   let isThemeDuplicate = checkDuplicateTheme(theme);
   if (!isThemeDuplicate) {
@@ -28,6 +30,7 @@ function putTheme(key, theme) {
         modified: Date.now()
       })
     );
+    currentSavedTheme = theme;
     notifySelfForStorage(storageKey);
   }
 }
@@ -95,6 +98,7 @@ function init(store) {
       log("storage event", e);
       if (isThemeStorageKey(e.key)) {
         updateSavedThemesInStore();
+        store.dispatch(actions.ui.setCurrentSavedTheme({ currentSavedTheme }));
       }
     }
   );

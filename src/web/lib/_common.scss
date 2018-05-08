@@ -19,12 +19,18 @@ $grid: 4px;
   color: var(--grey-90);
   background: rgba(12, 12, 13, .1);
 
-  &:hover {
+  &:hover:not(:disabled),
+  &:focus:not(:disabled) {
     background: rgba(12, 12, 13, .2);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     background: rgba(12, 12, 13, .3);
+  }
+
+  &:disabled {
+    color: var(--grey-40);
+    cursor: default;
   }
 }
 
@@ -32,7 +38,8 @@ $grid: 4px;
   color: var(--white);
   background: var(--green-60);
 
-  &:hover {
+  &:hover,
+  &:focus {
     background: var(--green-70);
   }
 
@@ -45,7 +52,8 @@ $grid: 4px;
   color: var(--white);
   background: var(--blue-50);
 
-  &:hover {
+  &:hover,
+  &:focus {
     background: var(--blue-60);
   }
 

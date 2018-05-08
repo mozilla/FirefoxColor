@@ -2,6 +2,7 @@ import { createStore, combineReducers } from "redux";
 import { createActions, handleActions } from "redux-actions";
 import undoable, { ActionCreators, ActionTypes } from "redux-undo";
 import {
+  themesEqual,
   normalizeTheme,
   normalizeThemeColor,
   normalizeThemeColors
@@ -25,7 +26,9 @@ export const actions = {
     "CLEAR_PENDING_THEME",
     "SET_LOADER_DELAY_EXPIRED",
     "SET_SAVED_THEMES",
-    "SET_SAVED_THEMES_PAGE"
+    "SET_SAVED_THEMES_PAGE",
+    "SET_CURRENT_SAVED_THEME",
+    "SET_DISPLAY_LEGAL_MODAL"
   ),
   theme: {
     ...createActions({}, "SET_THEME", "SET_COLOR", "SET_BACKGROUND"),
@@ -36,15 +39,11 @@ export const actions = {
   }
 };
 
-export const themesEqual = (themeA, themeB) =>
-  // HACK: "deep equal" via stringify
-  // http://www.mattzeunert.com/2016/01/28/javascript-deep-equal.html
-  JSON.stringify(themeA) === JSON.stringify(themeB);
-
 export const selectors = {
   hasExtension: state => state.ui.hasExtension,
   loaderDelayExpired: state => state.ui.loaderDelayExpired,
   selectedColor: state => state.ui.selectedColor,
+  displayLegalModal: state => state.ui.displayLegalModal,
   shouldOfferPendingTheme: state =>
     !state.ui.userHasEdited &&
     state.ui.pendingTheme !== null &&
@@ -55,12 +54,20 @@ export const selectors = {
   hasSavedThemes: state => Object.keys(state.ui.savedThemes).length > 0,
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
-  themeCanRedo: state => state.theme.future.length > 0
+  themeCanRedo: state => state.theme.future.length > 0,
+  userHasEdited: state => state.ui.userHasEdited,
+  modifiedSinceSave: state =>
+    state.ui.userHasEdited &&
+    !themesEqual(state.ui.currentSavedTheme, state.theme.present)
 };
 
 export const reducers = {
   ui: handleActions(
     {
+      SET_DISPLAY_LEGAL_MODAL: (state, { payload: { display } }) => ({
+        ...state,
+        displayLegalModal: display
+      }),
       SET_PENDING_THEME: (state, { payload: { theme } }) => ({
         ...state,
         pendingTheme: normalizeTheme(theme)
@@ -82,6 +89,10 @@ export const reducers = {
       ) => ({
         ...state,
         savedThemesPage
+      }),
+      SET_CURRENT_SAVED_THEME: (state, { payload: { currentSavedTheme } }) => ({
+        ...state,
+        currentSavedTheme
       }),
       SET_SELECTED_COLOR: (state, { payload: { name } }) => ({
         ...state,
@@ -107,9 +118,11 @@ export const reducers = {
       pendingTheme: null,
       savedThemes: {},
       savedThemesPage: 0,
+      currentSavedTheme: null,
       selectedColor: null,
       hasExtension: false,
-      loaderDelayExpired: false
+      loaderDelayExpired: false,
+      displayLegalModal: false
     }
   ),
   theme: undoable(
@@ -120,12 +133,9 @@ export const reducers = {
           ...state,
           colors: normalizeThemeColors(colors)
         }),
-        SET_COLOR: (state, { payload: { name, h, s, l, a } }) => ({
+        SET_COLOR: (state, { payload: { name, color } }) => ({
           ...state,
-          colors: {
-            ...state.colors,
-            [name]: normalizeThemeColor({ h, s, l, a })
-          }
+          colors: { ...state.colors, [name]: normalizeThemeColor(color) }
         }),
         SET_BACKGROUND: (state, { payload: { url } }) => ({
           ...state,

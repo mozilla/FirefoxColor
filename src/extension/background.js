@@ -21,7 +21,7 @@ const init = () => {
       if (siteTab) {
         browser.tabs.update(siteTab.id, { active: true });
       } else {
-        browser.tabs.create({ url: siteUrl });
+        browser.tabs.create({ url: `${siteUrl}?fromAddon=true` });
       }
     });
   });

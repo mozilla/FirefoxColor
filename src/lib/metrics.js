@@ -7,6 +7,11 @@ import { DEBUG, makeLog } from "./utils";
 import { selectors } from "./store";
 import { colorsWithAlpha } from "./constants";
 
+const { NODE_ENV } = process.env;
+const config =
+  packageMeta.config[NODE_ENV === "production" ? "production" : "development"];
+const { GA_TRACKING_ID } = config;
+
 const log = makeLog("metrics");
 
 let analytics = null;
@@ -31,13 +36,14 @@ let cd3; // did the user receive a theme as a query parameter. One of true or
 // false
 let cd4; // engaged with any theme-change event. One of true or false based on
 // whether user has fired any theme-change during their visit.
-let cd5; // hsla (csv) of the toolbar
-let cd6; // hsl (csv) of the toolbar_text
-let cd7; // hsl (csv) of the accentcolor
-let cd8; // hsl (csv) of the textcolor
-let cd9; // hsla (csv) of the toolbar_field
-let cd10; // hsl (csv) of the toolbar_field_text
+let cd5; // rgba (csv) of the toolbar
+let cd6; // rgb (csv) of the toolbar_text
+let cd7; // rgb (csv) of the accentcolor
+let cd8; // rgb (csv) of the textcolor
+let cd9; // rgba (csv) of the toolbar_field
+let cd10; // rgb (csv) of the toolbar_field_text
 let cd11; // unique integer id of the background pattern selected
+let cd12; // rgb (csv) of the `tab_line`
 
 const COLORS_TO_DIMENSIONS = {
   toolbar: "cd5",
@@ -45,11 +51,12 @@ const COLORS_TO_DIMENSIONS = {
   accentcolor: "cd7",
   textcolor: "cd8",
   toolbar_field: "cd9",
-  toolbar_field_text: "cd10"
+  toolbar_field_text: "cd10",
+  tab_line: "cd12"
 };
 
-const hslaToCSV = (name, { h, s, l, a }) =>
-  `${h},${s},${l}${colorsWithAlpha.includes(name) ? `,${a}` : ""}`;
+const rgbaToCSV = (name, { r, g, b, a }) =>
+  `${r},${g},${b}${colorsWithAlpha.includes(name) ? `,${a}` : ""}`;
 
 const Metrics = {
   init(appContext = "web") {
@@ -59,7 +66,7 @@ const Metrics = {
       an: packageMeta.extensionManifest.name,
       av: packageMeta.version,
       ds: appContext,
-      tid: packageMeta.config.GA_TRACKING_ID,
+      tid: GA_TRACKING_ID,
       // TODO: add some env vars or use window.location to determine local / dev / stage / prod?
       cd19: DEBUG ? "dev" : "production"
     });
@@ -75,9 +82,13 @@ const Metrics = {
   },
 
   sendEvent(...params) {
-    if (analytics) {
-      analytics.sendEvent(...params);
+    if (!analytics) {
+      return;
     }
+    analytics
+      .sendEvent(...params)
+      .then(response => log("sendEvent (success)", params, response))
+      .catch(err => log("sendEvent (ERROR)", params, err));
   },
 
   storeMiddleware() {
@@ -117,9 +128,9 @@ const Metrics = {
       ? images.additional_backgrounds[0]
       : "";
     return Object.entries(colors).reduce(
-      (acc, [name, hsla]) => ({
+      (acc, [name, rgba]) => ({
         ...acc,
-        [COLORS_TO_DIMENSIONS[name]]: hslaToCSV(name, hsla)
+        [COLORS_TO_DIMENSIONS[name]]: rgbaToCSV(name, rgba)
       }),
       { cd11: bgImage }
     );
@@ -128,7 +139,7 @@ const Metrics = {
   setTheme(theme) {
     const themeDimensions = this.themeToDimensions(theme);
     log("update theme", themeDimensions);
-    ({ cd5, cd6, cd7, cd8, cd9, cd10, cd11 } = themeDimensions);
+    ({ cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12 } = themeDimensions);
   },
 
   installStart() {
@@ -152,7 +163,8 @@ const Metrics = {
       cd8,
       cd9,
       cd10,
-      cd11
+      cd11,
+      cd12
     });
   },
 
@@ -173,11 +185,11 @@ const Metrics = {
     });
   },
 
-  themeChangeFull(themeId) {
+  themeChangeFull(themeTitle) {
     cm1++;
     this.setThemeChanged(true);
     this.sendEvent("theme-change", "select-full", {
-      el: themeId,
+      el: themeTitle,
       cm1,
       cm2,
       cm3,
@@ -230,14 +242,17 @@ const Metrics = {
       cd8,
       cd9,
       cd10,
-      cd11
+      cd11,
+      cd12
     });
   },
 
   linkClick(el) {
     // if el === download-firefox, add the following dimensions to this event
     const downloadFirefoxDimensions =
-      el !== "download-firefox" ? {} : { cd5, cd6, cd7, cd8, cd9, cd10, cd11 };
+      el !== "download-firefox"
+        ? {}
+        : { cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12 };
     this.sendEvent("link-engagement", "click", {
       el,
       cm1,
@@ -273,7 +288,8 @@ const Metrics = {
       cd8,
       cd9,
       cd10,
-      cd11
+      cd11,
+      cd12
     });
   }
 };

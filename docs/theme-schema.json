@@ -1,58 +1,58 @@
 {
     "definitions": {
-        "h": {
+        "r": {
             "type": "integer",
-            "maximum": 360,
+            "maximum": 255,
             "minimum": 0
         },
-        "s": {
+        "g": {
             "type": "integer",
-            "maximum": 100,
+            "maximum": 255,
             "minimum": 0
         },
-        "l": {
+        "b": {
             "type": "integer",
-            "maximum": 100,
+            "maximum": 255,
             "minimum": 0
         },
         "a": {
             "type": "number",
-            "maximum": 100,
-            "minimum": 0
+            "maximum": 1.0,
+            "minimum": 0.0
         },
-        "hsl": {
+        "rgb": {
             "type": "object",
             "properties": {
-                "h": {
-                    "$ref": "#/definitions/h"
+                "r": {
+                    "$ref": "#/definitions/r"
                 },
-                "s": {
-                    "$ref": "#/definitions/s"
+                "g": {
+                    "$ref": "#/definitions/g"
                 },
-                "l": {
-                    "$ref": "#/definitions/l"
+                "b": {
+                    "$ref": "#/definitions/b"
                 }
             },
-            "required": ["h", "s", "l"],
+            "required": ["r", "g", "b"],
             "additionalProperties": false
         },
-        "hsla": {
+        "rgba": {
             "type": "object",
             "properties": {
-                "h": {
-                    "$ref": "#/definitions/h"
+                "r": {
+                    "$ref": "#/definitions/r"
                 },
-                "s": {
-                    "$ref": "#/definitions/s"
+                "g": {
+                    "$ref": "#/definitions/g"
                 },
-                "l": {
-                    "$ref": "#/definitions/l"
+                "b": {
+                    "$ref": "#/definitions/b"
                 },
                 "a": {
                     "$ref": "#/definitions/a"
                 }
             },
-            "required": ["h", "s", "l", "a"],
+            "required": ["r", "g", "b", "a"],
             "additionalProperties": false
         }
     },
@@ -65,25 +65,25 @@
             "type": "object",
             "properties": {
                 "accentcolor": {
-                    "$ref": "#/definitions/hsl"
+                    "$ref": "#/definitions/rgb"
                 },
                 "textcolor": {
-                    "$ref": "#/definitions/hsl"
+                    "$ref": "#/definitions/rgb"
                 },
                 "toolbar": {
-                    "$ref": "#/definitions/hsla"
+                    "$ref": "#/definitions/rgba"
                 },
                 "toolbar_field": {
-                    "$ref": "#/definitions/hsla"
+                    "$ref": "#/definitions/rgba"
                 },
                 "toolbar_field_text": {
-                    "$ref": "#/definitions/hsl"
+                    "$ref": "#/definitions/rgb"
                 },
                 "toolbar_text": {
-                    "$ref": "#/definitions/hsl"
+                    "$ref": "#/definitions/rgb"
                 },
                 "tab_line": {
-                    "$ref": "#/definitions/hsl"
+                    "$ref": "#/definitions/rgb"
                 }
             },
             "required": ["toolbar", "toolbar_text", "accentcolor", "textcolor", "toolbar_field", "toolbar_field_text", "tab_line"],

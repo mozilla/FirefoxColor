@@ -14,6 +14,7 @@ class ThemeColorsEditor extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleColorChange = this.handleColorChange.bind(this);
   }
 
   handleClick(ev, name) {
@@ -36,8 +37,13 @@ class ThemeColorsEditor extends React.Component {
   handleKeyPress(event) {
     const { selectedColor, setSelectedColor } = this.props;
     if (event.keyCode === ESC && selectedColor !== null) {
-        setSelectedColor({ name: null });
+      setSelectedColor({ name: null });
     }
+  }
+
+  handleColorChange(name, color) {
+    this.props.setColor({ name, color: color.rgb });
+    Metrics.themeChangeColor(name);
   }
 
   componentDidMount() {
@@ -51,13 +57,20 @@ class ThemeColorsEditor extends React.Component {
   render() {
     const {
       theme: { colors },
-      selectedColor,
-      setColor
+      selectedColor
     } = this.props;
 
     // Select only the color properties from the theme.
-    const colorKeys = Object.keys(colors)
-      .filter(name => name in colorLabels);
+    const colorKeys = Object.keys(colors).filter(name => name in colorLabels);
+
+    // Dedupe colors for swatch presets
+    const uniqueColorArray = [
+      ...new Set(
+        colorKeys.map(name => {
+          return colorToCSS(colors[name]);
+        })
+      )
+    ];
 
     return (
       <div className="theme-colors-editor">
@@ -67,23 +80,27 @@ class ThemeColorsEditor extends React.Component {
             return [
               <li
                 key={`dt-${idx}`}
-                className={classnames(name, "color", { selected: selectedColor === name })}
+                className={classnames(name, "color", {
+                  selected: selectedColor === name
+                })}
                 onClick={ev => this.handleClick(ev, name)}
               >
-                <span className="color__swatch" style={{ backgroundColor: colorToCSS(color) }} title={colorLabels[name]} />
-                <span className="color__label" title={colorLabels[name]} >{colorLabels[name]}</span>
+                <span
+                  className="color__swatch"
+                  style={{ backgroundColor: colorToCSS(color) }}
+                  title={colorLabels[name]}
+                />
+                <span className="color__label" title={colorLabels[name]}>
+                  {colorLabels[name]}
+                </span>
                 <span className="color__picker">
                   <SketchPicker
-                    color={{ h: color.h, s: color.s, l: color.l, a: color.a * 0.01 }}
+                    color={color}
                     disableAlpha={!colorsWithAlpha.includes(name)}
-                    onChangeComplete={({ hsl: { h, s, l, a } }) => {
-                      const newColor = { name, h, s: s * 100, l: l * 100};
-                      if (colorsWithAlpha.includes(name)) {
-                        newColor.a = a * 100;
-                      }
-                      setColor(newColor);
-                      Metrics.themeChangeColor(name);
-                    }}
+                    onChangeComplete={color =>
+                      this.handleColorChange(name, color)
+                    }
+                    presetColors={uniqueColorArray}
                   />
                 </span>
               </li>

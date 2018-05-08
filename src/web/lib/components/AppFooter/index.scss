@@ -25,14 +25,16 @@
 
 .app-footer__legal-link {
   color: var(--grey-90);
+  cursor: pointer;
   margin-right: 2vw;
   opacity: .9;
   text-decoration: none;
   white-space: nowrap;
-}
 
-.app-footer__legal-link:hover {
-  opacity: 1;
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
 }
 
 .app-footer__legal-link:visited {
