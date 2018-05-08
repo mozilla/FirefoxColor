@@ -43,7 +43,7 @@
     "lint:css": "stylelint 'src/**/*.scss'",
     "lint:js": "eslint --color .",
     "validate": "npm-run-all validate:*",
-    "validate:extension": "addons-linter build/extension",
+    "validate:extension": "addons-linter build/extension --self-hosted",
     "validate:themes": "node ./bin/validate-themes.js",
     "test": "npm run --parallel lint validate",
     "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/mozilla/FirefoxColor.git\"",
@@ -157,7 +157,8 @@
     "applications": {
       "gecko": {
         "id": "FirefoxColor@mozilla.com",
-        "strict_min_version": "57.0a1"
+        "strict_min_version": "57.0a1",
+        "update_url": "https://testpilot.firefox.com/files/FirefoxColor@mozilla.com/updates.json"
       }
     }
   }
