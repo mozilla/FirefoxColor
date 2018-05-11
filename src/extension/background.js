@@ -94,6 +94,12 @@ const applyTheme = ({ theme }) => {
     newTheme.colors[key] = colorToCSS(theme.colors[key]);
   });
 
+  // TODO: we will need to actually create this field in
+  // theme manifests as part of #93.
+  if (!theme.colors.hasOwnProperty("tab_loading")) {
+    newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
+  }
+
   browser.theme.update(newTheme);
 };
 
