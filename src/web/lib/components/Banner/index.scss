@@ -1,36 +1,123 @@
 @import '../../common.scss';
 
-$banner-height: 71px;
+.banner {
+  height: 320px;
+}
+
+.banner--ff-ad {
+  height: 460px;
+}
 
 .banner__content {
   align-items: center;
-  background: var(--white);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .05), 0 0 10px rgba(0, 0, 0, .05);
+  animation: fade-in 500ms forwards;
+  animation-delay: 250ms;
   display: flex;
-  height: $banner-height;
+  flex-direction: column;
+  height: 100%;
   justify-content: center;
-  left: 0;
-  position: fixed;
-  right: 0;
+  opacity: 0;
   width: 100%;
   z-index: 999;
 
-  .banner__bottom & {
-    bottom: 0;
+  h2 {
+    align-items: center;
+    display: flex;
+    font-size: 32px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 32px;
+    margin: 32px 0 42px;
+    text-align: center;
+    width: 100%;
+
+    .banner--ff-ad & {
+      font-size: 46px;
+      font-weight: 300;
+      margin: 40px 0 0;
+    }
   }
 
-  span {
-    font-weight: 600;
-    font-size: 20px;
-    padding: 0 10px;
+  h3 {
+    font-size: 16px;
+    font-weight: normal;
+    margin: 16px 0 50px;
+  }
+
+  p {
+    align-items: center;
+    color: var(--grey-50);
+    display: flex;
+    font-size: 12px;
+    line-height: 12px;
+    margin: 12px 0 0;
   }
 
   .banner__button {
     @include buttonPrimary;
-    @include button(48px, 18px, 24px);
+    @include button(64px, 24px, 32px);
+
+    .banner--ff-ad & {
+      border-radius: 3px;
+    }
   }
 }
 
-.banner__spacer {
-  height: $banner-height;
+.banner__logo {
+  background-image: url('./firefox.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: auto 72px;
+  height: 72px;
+  margin: 0 auto;
+  width: 72px;
+
+  .banner--tall & {
+    background-size: auto 96px;
+    height: 96px;
+    width: 96px;
+  }
+}
+
+.banner__marker {
+  background-image: url('./marker.svg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 32px 18px;
+  height: 18px;
+  margin: 0 2px;
+  position: relative;
+  top: 2px;
+  width: 32px;
+}
+
+@media (max-height: 720px), (max-width: 640px) {
+  .banner--ff-ad {
+    height: 240px;
+
+    .banner__content {
+      h2 {
+        font-size: 32px;
+        line-height: 32px;
+        margin: 0;
+      }
+
+      h3 {
+        margin: 8px 0 24px;
+      }
+
+      .banner__button {
+        background-image: url('./firefox.svg');
+        background-position: 12px center;
+        background-repeat: no-repeat;
+        background-size: auto 44px;
+        margin: 0 auto;
+        padding-left: 64px;
+      }
+    }
+  }
+
+  .banner__logo {
+    display: none;
+  }
 }
