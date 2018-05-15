@@ -34,7 +34,9 @@ export default class ThemeUrl extends React.Component {
   }
 
   updateThemeUrl(theme) {
-    if (!theme) { return; }
+    if (!theme) {
+      return;
+    }
 
     const { urlEncodeTheme } = this.props;
     urlEncodeTheme(theme).then(themeUrl => {
@@ -43,19 +45,22 @@ export default class ThemeUrl extends React.Component {
   }
 
   render() {
-    const {
-      copied,
-      themeUrl
-    } = this.state;
+    const { copied, themeUrl } = this.state;
 
     return (
       <form className="theme-url" onSubmit={e => e.preventDefault()}>
-        <label htmlFor="themeUrl"><h2>Share your theme</h2></label>
+        <label htmlFor="themeUrl">
+          <h2>Share your theme</h2>
+          <p>Copy and paste this URL to to share your creation.</p>
+        </label>
         <input type="text" id="themeUrl" value={themeUrl} />
-        <input type="submit" className="clipboardButton"
+        <input
+          type="submit"
+          className="clipboardButton"
           data-clipboard-target="#themeUrl"
           value={copied ? "Copied!" : "Copy"}
-          title={copied ? "Copied!" : "Copy"} />
+          title={copied ? "Copied!" : "Copy"}
+        />
       </form>
     );
   }

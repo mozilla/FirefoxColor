@@ -9,8 +9,9 @@
 
   button {
     @include button;
-    @include buttonSecondary;
+    @include buttonDefault;
 
     height: 40px;
+    width: 100%;
   }
 }

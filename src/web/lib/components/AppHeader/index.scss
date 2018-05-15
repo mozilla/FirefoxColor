@@ -2,28 +2,34 @@
 
 .app-header {
   align-items: center;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: var(--small-unit-box-shadow);
   display: flex;
-  height: 120px;
-  margin-bottom: 40px;
-  padding-top: 40px;
+  margin-bottom: 100px;
+  padding: 12px 15px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
 
   .app-header__content {
+    align-items: center;
     display: flex;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .app-header__icon {
     background-image: url(../../../../images/logo.svg);
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 48px auto;
-    height: 48px;
+    background-size: 32px auto;
+    height: 32px;
     margin-right: 10px;
-    width: 48px;
+    width: 32px;
   }
 
   h1 {
-    font-size: 24px;
-    font-weight: 300;
+    font-size: 18px;
     letter-spacing: -.2px;
     margin: 0;
     text-align: left;
@@ -55,22 +61,18 @@
     overflow: hidden;
     padding: 0 5px 0 7px;
     position: absolute;
-    right: 0;
+    right: 15px;
     text-decoration: none;
     transition: size 125ms, width 200ms;
     user-select: none;
     white-space: nowrap;
-    width: 28px;
+    width: 100px;
+    top: 15px;
 
     span {
       color: var(--white);
       transform-origin: right center;
       transition: transform 200ms, width 200ms;
-    }
-
-    &:hover,
-    &:focus {
-      width: 100px;
     }
 
     > div {

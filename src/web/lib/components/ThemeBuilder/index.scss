@@ -1,0 +1,28 @@
+@import '../../common.scss';
+
+.theme-share-save {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 1fr 340px;
+  min-height: 250px;
+  padding: 45px 40px;
+}
+
+.theme-share-save > * {
+  border: 1px solid var(--grey-20);
+  border-radius: 3px;
+  box-shadow: 0;
+  padding: 20px;
+  background: var(--grey-10);
+}
+
+@media (max-width: 880px) {
+  .theme-share-save {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-share-save > * {
+    margin: 0;
+  }
+}
+

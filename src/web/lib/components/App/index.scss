@@ -1,12 +1,12 @@
 .app {
-  margin: 0 auto;
-  min-height: 100vh;
-  position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 640px;
-  max-width: 1200px;
   justify-content: flex-start;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-height: 100vh;
+  min-width: 640px;
+  position: relative;
 }
 
 .app__content {
@@ -16,21 +16,6 @@
   margin: 0 auto;
   opacity: 0;
   position: relative;
-  z-index: 1;
   width: 90%;
-
-  .app__controls {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: 1fr 200px;
-    padding: 40px;
-  }
-}
-
-@media (max-width: 720px) {
-  .app__content {
-    .app__controls {
-      grid-template-columns: 1fr;
-    }
-  }
+  z-index: 1;
 }
