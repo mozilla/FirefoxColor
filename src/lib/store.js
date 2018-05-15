@@ -22,6 +22,7 @@ export const actions = {
     {},
     "SET_SELECTED_COLOR",
     "SET_HAS_EXTENSION",
+    "SET_FIRST_RUN",
     "SET_PENDING_THEME",
     "CLEAR_PENDING_THEME",
     "SET_LOADER_DELAY_EXPIRED",
@@ -41,10 +42,12 @@ export const actions = {
 
 export const selectors = {
   hasExtension: state => state.ui.hasExtension,
+  firstRun: state => state.ui.firstRun,
   loaderDelayExpired: state => state.ui.loaderDelayExpired,
   selectedColor: state => state.ui.selectedColor,
   displayLegalModal: state => state.ui.displayLegalModal,
   shouldOfferPendingTheme: state =>
+    !state.ui.firstRun &&
     !state.ui.userHasEdited &&
     state.ui.pendingTheme !== null &&
     !themesEqual(state.ui.pendingTheme, state.theme.present),
@@ -101,6 +104,10 @@ export const reducers = {
       SET_HAS_EXTENSION: (state, { payload: { hasExtension } }) => ({
         ...state,
         hasExtension
+      }),
+      SET_FIRST_RUN: (state, { payload: firstRun }) => ({
+        ...state,
+        firstRun
       }),
       SET_LOADER_DELAY_EXPIRED: (state, { payload: loaderDelayExpired }) => ({
         ...state,

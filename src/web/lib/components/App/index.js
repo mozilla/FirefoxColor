@@ -55,6 +55,7 @@ export const AppComponent = ({
   themeCanUndo,
   themeCanRedo,
   hasExtension,
+  firstRun,
   loaderDelayExpired,
   selectedColor,
   setColor,
@@ -115,6 +116,7 @@ export const AppComponent = ({
                   urlEncodeTheme,
                   userHasEdited,
                   hasExtension,
+                  firstRun,
                   isFirefox,
                   addonUrl
                 }}
