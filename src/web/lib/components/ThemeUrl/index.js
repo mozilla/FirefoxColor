@@ -51,7 +51,7 @@ export default class ThemeUrl extends React.Component {
       <form className="theme-url" onSubmit={e => e.preventDefault()}>
         <label htmlFor="themeUrl">
           <h2>Share your theme</h2>
-          <p>Copy and paste this URL to to share your creation.</p>
+          <p>Copy and paste this URL to share your creation.</p>
         </label>
         <input type="text" id="themeUrl" value={themeUrl} />
         <input
