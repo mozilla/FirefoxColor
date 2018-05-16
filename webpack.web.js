@@ -32,6 +32,8 @@ module.exports = merge(common.webpackConfig, {
       template: "./src/web/index.html.ejs",
       filename: "index.html",
       chunks: ["index"],
+      ogImage: `${common.siteUrl}images/color-fb.jpg`,
+      twitterImage: `${common.siteUrl}images/color-twitter.jpg`,
       title: packageMeta.title,
       description: packageMeta.description,
       homepage: packageMeta.homepage
