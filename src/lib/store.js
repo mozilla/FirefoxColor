@@ -150,7 +150,13 @@ export const reducers = {
         })
       },
       normalizeTheme()
-    )
+    ), {
+      // Only track explicit user edits in undo/redo history, theme changes
+      // from add-on and ?theme are applied but skip the buffer
+      syncFilter: true,
+      filter: (action, currentState, previousHistory) =>
+        action.meta && action.meta.userEdit
+    }
   )
 };
 

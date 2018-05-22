@@ -92,7 +92,10 @@ Metrics.init();
 window.addEventListener("popstate", ({ state: { theme } }) =>
   store.dispatch({
     ...actions.theme.setTheme({ theme }),
-    meta: { skipHistory: true }
+    meta: {
+      skipHistory: true,
+      userEdit: true
+    }
   })
 );
 
