@@ -24,7 +24,8 @@ const defaultEnv = {
   NODE_ENV: nodeEnv,
   ADDON_URL: "addon.xpi",
   SITE_URL: siteUrl,
-  DOWNLOAD_FIREFOX_UTM_SOURCE: downloadFirefoxUtmSource
+  DOWNLOAD_FIREFOX_UTM_SOURCE: downloadFirefoxUtmSource,
+  LOADER_DELAY_PERIOD: "2000"
 };
 
 const processEnv = {};
