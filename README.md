@@ -38,6 +38,18 @@ port 8080. You can change the port that Firefox Color uses for local development
 This example switches to port 9090, but you can supply a different port as
 needed.
 
+## Environment variables
+
+There are a few environment variables used in building the site and extension
+that are handy to know about:
+
+- `PORT` - (default: `8080`) Port at which the webpack dev server will start up
+- `NODE_ENV` - (default: `production`) setting to `development` will enable some features for development work 
+- `SITE_URL` - (default: `http://localhost:8080`) the URL where the web app is hosted
+- `SITE_ID` - (default: empty string) the ID of the site for the extension - e.g. "", "local", "stage", "dev"
+- `DOWNLOAD_FIREFOX_UTM_SOURCE` - host name used in metrics when the button to download Firefox is clicked
+- `LOADER_DELAY_PERIOD` - (default: `2000`) delay in ms used for web site loader, can be set to `0` during development to make the site appear faster but with visual glitches
+
 ## Build & Release
 
 Deploying a development release consists of pushing to the `development` branch
@@ -63,19 +75,6 @@ test runs.
 
 [ghtoken]: https://github.com/settings/tokens
 [sign]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#web-ext_sign
-
-## TODO
-
-- [ ] Links to docs and calls-to-action to learn & make more complex themes
-
-- [ ] Make editor local only to extension? Only show preview on web?
-
-- [ ] Social sharing buttons
-
-- [ ] Pre-made curated themes (via link?)
-
-- [ ] Tweak build & release for prod where add-on & site will be at different
-  URLs and neither on github
 
 ## Notes
 
