@@ -2,15 +2,10 @@ import React from "react";
 import ReactSVG from "react-svg";
 import classnames from "classnames";
 
-import { colorToCSS, bgImages } from "../../../../lib/themes";
+import { colorToCSS } from "../../../../lib/themes";
+import { buttonImages, bgImages } from "../../../../lib/assets";
 
 import "./index.scss";
-
-const buttonImages = require.context(
-  "../../../../images/",
-  false,
-  /.*-16\.svg/
-);
 
 export const BrowserPreview = ({
   size,

@@ -2,7 +2,8 @@ import React from "react";
 import classnames from "classnames";
 import onClickOutside from "react-onclickoutside";
 
-import { colorToCSS, bgImages } from "../../../../lib/themes";
+import { colorToCSS } from "../../../../lib/themes";
+import { bgImages } from "../../../../lib/assets";
 import Metrics from "../../../../lib/metrics";
 import { ESC } from "../../../../lib/constants";
 import "./index.scss";
