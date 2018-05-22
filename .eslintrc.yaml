@@ -45,3 +45,11 @@ overrides:
       import/unambiguous: off
     env:
       node: true
+  -
+    files:
+      - 'src/lib/test-setup.js'
+      - 'src/**/*-test.js'
+    rules:
+      import/unambiguous: off
+    env:
+      mocha: true

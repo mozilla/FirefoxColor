@@ -3,8 +3,8 @@ import {
   normalizeTheme,
   normalizeThemeBackground,
   colorToCSS,
-  bgImages
 } from "../lib/themes";
+import { bgImages } from "../lib/assets";
 
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE =

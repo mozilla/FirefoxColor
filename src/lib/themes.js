@@ -1,17 +1,6 @@
 import tinycolor from "tinycolor2";
 import { colorsWithAlpha } from "./constants";
-
-const presetThemesContext = require.context(
-  "../preset-themes/",
-  false,
-  /.*\.json/
-);
-
-export const bgImages = require.context(
-  "../images/patterns/",
-  false,
-  /bg-.*\.svg/
-);
+import { presetThemesContext, bgImages } from "./assets";
 
 const defaultTheme = presetThemesContext("./default.json");
 

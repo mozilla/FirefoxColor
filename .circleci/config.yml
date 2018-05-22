@@ -1,0 +1,53 @@
+version: 2
+jobs:
+
+  build_and_test:
+    docker:
+      - image: circleci/node:8.11.2@sha256:495a13db597b5306f05ae728489fedb9faa4defbac24ca0e00e8cc1eca95396d
+    working_directory: ~/FirefoxColor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: sudo npm install -g npm@latest
+      - run: sudo npm install -g greenkeeper-lockfile@1
+      - run: greenkeeper-lockfile-update
+      - run: npm ci
+      - run: greenkeeper-lockfile-upload
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run validate
+      - run: npm run test
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./*
+
+  deploy_development:
+    docker:
+      - image: circleci/node:8.11.2@sha256:495a13db597b5306f05ae728489fedb9faa4defbac24ca0e00e8cc1eca95396d
+    working_directory: ~/FirefoxColor
+    steps:
+      - attach_workspace:
+          at: .
+      - run: git config --global user.email "lorchard@mozilla.com"
+      - run: git config --global user.name "Les Orchard"
+      - run: npm run release:dev
+
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - build_and_test
+      - deploy_development:
+          requires:
+            - build_and_test
+          filters:
+            branches:
+              only: development
