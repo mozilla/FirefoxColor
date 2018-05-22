@@ -16,20 +16,22 @@ const siteUrl = process.env.SITE_URL;
 
 const init = () => {
   browser.browserAction.onClicked.addListener(() => {
-    browser.tabs.query({ currentWindow: true }).then(tabs => {
-      const siteTab = tabs.find(tab => tab.url.includes(siteUrl));
-      if (siteTab) {
-        browser.tabs.update(siteTab.id, { active: true });
-      } else {
-        browser.tabs.create({ url: `${siteUrl}?fromAddon=true` });
-      }
-    });
+    queryAndFocusTab("fromAddon=true");
   });
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
     port.postMessage({ type: "hello" });
   });
-  fetchTheme().then(applyTheme);
+  fetchFirstRunDone().then(({ firstRunDone }) => {
+    log("firstRunDone", firstRunDone);
+    if (firstRunDone) {
+      fetchTheme().then(applyTheme);
+    } else {
+      log("Opening first run tab");
+      queryAndFocusTab("firstRun=true", true);
+      setFirstRunDone();
+    }
+  });
 };
 
 const messageListener = port => message => {
@@ -54,6 +56,28 @@ const messageListener = port => message => {
       log("unexpected message", message);
   }
 };
+
+const queryAndFocusTab = (params, reload = false) => {
+  browser.tabs.query({ currentWindow: true }).then(tabs => {
+    const siteTab = tabs.find(tab => tab.url.includes(siteUrl));
+    if (siteTab) {
+      if (reload) {
+        browser.tabs.update(siteTab.id, {
+          active: true,
+          url: `${siteTab.url}${siteTab.url.includes("?") ? "&" : "?"}${params}`
+        });
+      } else {
+        browser.tabs.update(siteTab.id, { active: true });
+      }
+    } else {
+      browser.tabs.create({ url: `${siteUrl}?${params}` });
+    }
+  });
+};
+
+const fetchFirstRunDone = () => browser.storage.local.get("firstRunDone");
+
+const setFirstRunDone = () => browser.storage.local.set({ firstRunDone: true });
 
 const fetchTheme = () => browser.storage.local.get("theme");
 

@@ -10,11 +10,9 @@
 }
 
 .app__content {
-  animation: fade-in forwards 250ms ease-in;
   display: grid;
   grid-gap: 20px;
   margin: 0 auto;
-  opacity: 0;
   position: relative;
   width: 90%;
   z-index: 1;

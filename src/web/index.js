@@ -31,7 +31,8 @@ const addonUrl = process.env.ADDON_URL;
 
 // Period after which app loading indicator will disappear if add-on not found
 // If dev show right away to make debugging faster
-const LOADER_DELAY_PERIOD = process.env.NODE_ENV === "development" ? 0 : 2000;
+const LOADER_DELAY_PERIOD =
+  process.env.NODE_ENV === "development" ? 0 : 2000;
 const PING_PERIOD = 1000;
 const MAX_OUTSTANDING_PINGS = 3;
 let outstandingPings = 0;
@@ -135,20 +136,24 @@ setInterval(() => {
 
 const userAgent = navigator.userAgent.toLowerCase();
 const isMobile = userAgent.includes("mobi") || userAgent.includes("tablet");
-const isFirefox = userAgent.includes("firefox/") && !userAgent.includes("fxios");
-const loaderQuote = loaderQuotes[Math.floor(Math.random() * loaderQuotes.length)];
+const isFirefox =
+  userAgent.includes("firefox/") && !userAgent.includes("fxios");
+const loaderQuote =
+  loaderQuotes[Math.floor(Math.random() * loaderQuotes.length)];
 
 render(
   <Provider store={store}>
-    <App {...{
-      addonUrl,
-      urlEncodeTheme,
-      clipboard,
-      storage,
-      isMobile,
-      isFirefox,
-      loaderQuote
-    }} />
+    <App
+      {...{
+        addonUrl,
+        urlEncodeTheme,
+        clipboard,
+        storage,
+        isMobile,
+        isFirefox,
+        loaderQuote
+      }}
+    />
   </Provider>,
   document.getElementById("root")
 );
@@ -211,6 +216,9 @@ const params = queryString.parse(window.location.search);
 if (params.fromAddon) {
   Metrics.setWasAddonClick(true);
 }
+if (params.firstRun) {
+  store.dispatch(actions.ui.setFirstRun(true));
+}
 if (!params.theme) {
   // Fire off a message to request current theme from the add-on.
   postMessage("fetchTheme");
@@ -233,7 +241,11 @@ if (!params.theme) {
       // Set the pending theme - only matters if add-on is installed
       store.dispatch(actions.ui.setPendingTheme({ theme }));
       // Fire off a message to request current theme from the add-on.
-      postMessage("fetchTheme");
+      if (!params.firstRun) {
+        postMessage("fetchTheme");
+      } else {
+        postMessage("setTheme", { theme });
+      }
     })
     // If the theme decoding fails, just ignore it.
     .catch(() => postMessage("fetchTheme"));

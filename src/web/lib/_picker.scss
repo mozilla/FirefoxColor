@@ -16,7 +16,7 @@
   position: absolute;
   text-shadow: 0 0 $grid * 2 #fff;
   transition: box-shadow 100ms, left 500ms, right 500ms, top 500ms;
-  will-change: left, top, box-shadow, right;
+  will-change: transform;
 
   &::after {
     content: "";
