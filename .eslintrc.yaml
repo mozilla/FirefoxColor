@@ -52,4 +52,5 @@ overrides:
     rules:
       import/unambiguous: off
     env:
+      node: true
       mocha: true

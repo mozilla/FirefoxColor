@@ -14,8 +14,12 @@ export const makeTinycolor = colorIn => {
   if ("s" in color) {
     color.s = Math.floor(color.s) / 100.0;
   }
-  if ("a" in color && color.a > 1.0) {
-    color.a = Math.floor(color.a) / 100.0;
+  if ("a" in color) {
+    // HACK: normalize alpha value to two decimal places - LOL JS FP WTF
+    if (color.a > 1.0) {
+      color.a = Math.floor(color.a) / 100.0;
+    }
+    color.a = Math.ceil(color.a * 100) / 100.0;
   }
   return tinycolor(color);
 };
