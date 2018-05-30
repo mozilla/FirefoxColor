@@ -15,6 +15,7 @@ import SharedThemeDialog from "../SharedThemeDialog";
 import TermsPrivacyModal from "../TermsPrivacyModal";
 import ThemeBuilder from "../ThemeBuilder";
 import ThemeLogger from "../ThemeLogger";
+import Onboarding from "../Onboarding";
 
 import "./index.scss";
 
@@ -147,6 +148,7 @@ export const AppComponent = ({
                 setDisplayLegalModal
               }}
             />
+            {firstRun && <Onboarding />}
             <ThemeLogger {...{ theme }} debug={DEBUG} />
           </div>
         </Fragment>
