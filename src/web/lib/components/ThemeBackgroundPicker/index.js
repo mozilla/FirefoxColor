@@ -41,7 +41,8 @@ class ThemeBackgroundPicker extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
-  handleClick() {
+  handleClick(e) {
+    if (e.target.classList.contains("theme-background-picker__backgrounds")) return;
     this.setState({ selected: !this.state.selected });
   }
 
@@ -63,7 +64,6 @@ class ThemeBackgroundPicker extends React.Component {
     document.removeEventListener("keydown", this.handleKeyPress);
   }
 
-
   render() {
     const { theme, setBackground } = this.props;
     const { selected } = this.state;
@@ -84,7 +84,9 @@ class ThemeBackgroundPicker extends React.Component {
             backgroundImage: backgroundSwatch
           }}
         />
-        <span className="theme-background-picker__text" title="Theme Texture">Theme Texture</span>
+        <span className="theme-background-picker__text" title="Theme Texture">
+          Theme Texture
+        </span>
         <div className="theme-background-picker__backgrounds">
           <div className="theme-background-picker__backgrounds-inner">
             {bgImages.keys().map((src, backgroundId) => (
