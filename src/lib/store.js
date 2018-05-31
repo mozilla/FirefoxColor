@@ -115,6 +115,8 @@ export const reducers = {
       }),
       SET_THEME: (state, { meta }) => ({
         ...state,
+        // flush pending themes on save so that saved themes don't trigger modal
+        pendingTheme: null,
         userHasEdited: meta && meta.userEdit ? true : state.userHasEdited
       }),
       SET_COLOR: state => ({ ...state, userHasEdited: true }),
@@ -150,7 +152,8 @@ export const reducers = {
         })
       },
       normalizeTheme()
-    ), {
+    ),
+    {
       // Only track explicit user edits in undo/redo history, theme changes
       // from add-on and ?theme are applied but skip the buffer
       syncFilter: true,

@@ -21,7 +21,7 @@ export const SavedThemeSelector = ({
       themes={sortedSavedThemes}
       className="saved-theme-selector"
       previewClassName="saved-theme-preview"
-      onClick={theme => setTheme({ theme })}
+      onClick={theme => setTheme({ theme, userEdit: false })}
       onDelete={key => deleteTheme(key)}
       perPage={12}
       currentPage={savedThemesPage}
