@@ -41,6 +41,10 @@ const commonBabelOptions = {
 
 const webpackConfig = {
   devtool: "source-map",
+  watchOptions: {
+    aggregateTimeout: 500,
+    poll: 1000
+  },
   resolve: {
     extensions: [".js", ".jsx"]
   },
