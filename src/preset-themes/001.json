@@ -13,9 +13,9 @@
       "b": 239
     },
     "accentcolor": {
-      "r": 43,
-      "g": 206,
-      "b": 227
+      "r": 115,
+      "g": 214,
+      "b": 228
     },
     "textcolor": {
       "r": 84,
@@ -40,8 +40,6 @@
     }
   },
   "images": {
-    "additional_backgrounds": [
-      "./bg-024.svg"
-    ]
+    "additional_backgrounds": ["./bg-024.svg"]
   }
 }
