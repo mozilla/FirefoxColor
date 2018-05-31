@@ -1,13 +1,79 @@
 import tinycolor from "tinycolor2";
-import { colorsWithAlpha } from "./constants";
+import { colorsWithAlpha, alphaEqualityTolerance } from "./constants";
 import { presetThemesContext, bgImages } from "./assets";
 
 const defaultTheme = presetThemesContext("./default.json");
 
-export const themesEqual = (themeA, themeB) =>
-  // HACK: "deep equal" via stringify
-  // http://www.mattzeunert.com/2016/01/28/javascript-deep-equal.html
-  JSON.stringify(themeA) === JSON.stringify(themeB);
+export const themesEqual = (themeA, themeB) => {
+  if (!!themeA !== !!themeB) {
+    return false;
+  }
+
+  const hasImagesA =
+    "images" in themeA && "additional_backgrounds" in themeA.images;
+  const hasImagesB =
+    "images" in themeB && "additional_backgrounds" in themeB.images;
+  if (hasImagesA !== hasImagesB) {
+    return false;
+  }
+  if (hasImagesA && hasImagesB) {
+    // HACK: We only allow one image at this point, so be lazy:
+    if (
+      themeA.images.additional_backgrounds[0] !==
+      themeB.images.additional_backgrounds[0]
+    ) {
+      return false;
+    }
+  }
+
+  // TODO: Skipping title equality, because user themes don't have titles yet.
+
+  const hasColorsA = "colors" in themeA;
+  const hasColorsB = "colors" in themeB;
+  if (hasColorsA !== hasColorsB) {
+    return false;
+  }
+  if (!hasColorsA && !hasColorsB) {
+    // HACK: Not having colors is invalid, but let's call them equal anyway.
+    return true;
+  }
+
+  const colorNames = Object.keys(defaultTheme.colors);
+
+  for (let name of colorNames) {
+    const inA = name in themeA.colors;
+    const inB = name in themeB.colors;
+    if (inA !== inB) {
+      return false;
+    }
+    if (!inA && !inB) {
+      continue;
+    }
+
+    const colorA = themeA.colors[name];
+    const colorB = themeB.colors[name];
+    for (let channel of ["r", "g", "b"]) {
+      if (colorA[channel] !== colorB[channel]) {
+        return false;
+      }
+    }
+
+    const alphaInA = "a" in colorA;
+    const alphaInB = "a" in colorB;
+    if (alphaInA !== alphaInB) {
+      return false;
+    }
+    if (
+      alphaInA &&
+      alphaInB &&
+      Math.abs(colorA.a - colorB.a) > alphaEqualityTolerance
+    ) {
+      return false;
+    }
+  }
+
+  return true;
+};
 
 export const makeTinycolor = colorIn => {
   const color = { ...colorIn };

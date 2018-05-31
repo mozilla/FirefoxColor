@@ -18,6 +18,8 @@ export const colorLabels = {
 
 export const colorsWithAlpha = ["toolbar", "toolbar_field"];
 
+export const alphaEqualityTolerance = 0.02;
+
 export const ESC = 27;
 
 export const loaderQuotes = [
