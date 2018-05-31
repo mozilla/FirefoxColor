@@ -8,19 +8,19 @@
       "a": 1
     },
     "toolbar_text": {
-      "r": 255,
-      "g": 138,
-      "b": 163
+      "r": 248,
+      "g": 112,
+      "b": 140
     },
     "accentcolor": {
-      "r": 206,
-      "g": 216,
-      "b": 222
+      "r": 142,
+      "g": 179,
+      "b": 201
     },
     "textcolor": {
       "r": 255,
-      "g": 138,
-      "b": 163
+      "g": 255,
+      "b": 255
     },
     "toolbar_field": {
       "r": 255,
@@ -34,12 +34,14 @@
       "b": 204
     },
     "tab_line": {
-      "r": 255,
-      "g": 138,
-      "b": 163
+      "r": 248,
+      "g": 112,
+      "b": 140
     }
   },
   "images": {
-    "additional_backgrounds": []
+    "additional_backgrounds": [
+      "./bg-009.svg"
+    ]
   }
 }

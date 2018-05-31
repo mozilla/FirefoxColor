@@ -2,9 +2,9 @@
   "title": "010",
   "colors": {
     "toolbar": {
-      "r": 255,
+      "r": 245,
       "g": 255,
-      "b": 255,
+      "b": 252,
       "a": 1
     },
     "toolbar_text": {
@@ -13,9 +13,9 @@
       "b": 0
     },
     "accentcolor": {
-      "r": 255,
-      "g": 255,
-      "b": 255
+      "r": 215,
+      "g": 234,
+      "b": 234
     },
     "textcolor": {
       "r": 0,
@@ -34,12 +34,14 @@
       "b": 0
     },
     "tab_line": {
-      "r": 43,
-      "g": 243,
-      "b": 199
+      "r": 0,
+      "g": 255,
+      "b": 200
     }
   },
   "images": {
-    "additional_backgrounds": []
+    "additional_backgrounds": [
+      "./bg-045.svg"
+    ]
   }
 }
