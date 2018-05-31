@@ -6,7 +6,6 @@ import UndoRedoButtons from "../UndoRedoButtons";
 import ThemeUrl from "../ThemeUrl";
 import ThemeSaveButton from "../ThemeSaveButton";
 import Banner from "../Banner";
-import Onboarding from "../Onboarding";
 
 import "./index.scss";
 
@@ -27,7 +26,6 @@ export const ThemeBuilder = ({
   urlEncodeTheme,
   userHasEdited,
   hasExtension,
-  firstRun,
   isFirefox,
   addonUrl
 }) => (
@@ -56,7 +54,6 @@ export const ThemeBuilder = ({
         }}
       />
     )}
-    {firstRun && hasExtension && <Onboarding />}
     {hasExtension && (
       <div className="theme-share-save">
         <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
