@@ -88,6 +88,10 @@ const store = createAppStore(
 
 storage.init(store);
 Metrics.init();
+Metrics.onChange(params => {
+  log("Sending setMetrics");
+  postMessage("setMetrics", { params });
+});
 
 window.addEventListener("popstate", ({ state: { theme } }) =>
   store.dispatch({
@@ -105,6 +109,9 @@ window.addEventListener("message", ({ source, data: message }) => {
     message &&
     message.channel === `${CHANNEL_NAME}-web`
   ) {
+    if (message.type === "hello") {
+      postMessage("setMetrics", { params: Metrics.getParameters() });
+    }
     if (message.type === "hello" || message.type === "pong") {
       outstandingPings = 0;
       const hasExtension = selectors.hasExtension(store.getState());

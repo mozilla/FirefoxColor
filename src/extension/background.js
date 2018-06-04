@@ -2,9 +2,10 @@ import { makeLog } from "../lib/utils";
 import {
   normalizeTheme,
   normalizeThemeBackground,
-  colorToCSS,
+  colorToCSS
 } from "../lib/themes";
 import { bgImages } from "../lib/assets";
+import Metrics from "../lib/metrics";
 
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE =
@@ -14,14 +15,50 @@ const log = makeLog("background");
 
 const siteUrl = process.env.SITE_URL;
 
+const siteTabMetrics = {};
+
 const init = () => {
+  Metrics.init("addon");
+
   browser.browserAction.onClicked.addListener(() => {
     queryAndFocusTab("fromAddon=true");
   });
+
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
     port.postMessage({ type: "hello" });
   });
+
+  browser.tabs.query({}).then(tabs => {
+    tabs.filter(tab => tab.url.includes(siteUrl)).forEach(tab => {
+      if (!siteTabMetrics[tab.id]) {
+        siteTabMetrics[tab.id] = {};
+      }
+    });
+  });
+
+  browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (tab.url.includes(siteUrl)) {
+      if (!siteTabMetrics[tab.id]) {
+        siteTabMetrics[tab.id] = {};
+      }
+    } else if (siteTabMetrics[tab.id]) {
+      finishVisit(tab.id);
+      delete siteTabMetrics[tab.id];
+    }
+  });
+
+  browser.tabs.onRemoved.addListener(tabId => {
+    if (siteTabMetrics[tabId]) {
+      finishVisit(tabId);
+      delete siteTabMetrics[tabId];
+    }
+  });
+
+  browser.windows.onCreated.addListener(() => {
+    fetchTheme().then(applyTheme);
+  });
+
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
     if (firstRunDone) {
@@ -34,7 +71,14 @@ const init = () => {
   });
 };
 
+const finishVisit = tabId => {
+  log("finishVisit", tabId, siteTabMetrics[tabId]);
+  Metrics.applyParameters(siteTabMetrics[tabId]);
+  Metrics.finishVisit();
+};
+
 const messageListener = port => message => {
+  const tabId = port.sender.tab.id;
   let theme;
   switch (message.type) {
     case "fetchTheme":
@@ -48,6 +92,10 @@ const messageListener = port => message => {
       log("setTheme", theme);
       storeTheme({ theme });
       applyTheme({ theme });
+      break;
+    case "setMetrics":
+      siteTabMetrics[tabId] = message.params;
+      log("setMetrics for tab", tabId);
       break;
     case "ping":
       port.postMessage({ type: "pong" });
@@ -126,9 +174,5 @@ const applyTheme = ({ theme }) => {
 
   browser.theme.update(newTheme);
 };
-
-browser.windows.onCreated.addListener(() => {
-  fetchTheme().then(applyTheme);
-});
 
 init();
