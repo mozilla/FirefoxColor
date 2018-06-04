@@ -58,6 +58,8 @@ const COLORS_TO_DIMENSIONS = {
 const rgbaToCSV = (name, { r, g, b, a }) =>
   `${r},${g},${b}${colorsWithAlpha.includes(name) ? `,${a}` : ""}`;
 
+let listeners = [];
+
 const Metrics = {
   init(appContext = "web") {
     /* eslint-disable prefer-destructuring */
@@ -109,18 +111,22 @@ const Metrics = {
 
   setHasAddon(value) {
     cd1 = value;
+    Metrics.notifyChange();
   },
 
   setWasAddonClick(value) {
     cd2 = value;
+    Metrics.notifyChange();
   },
 
   setReceivedTheme(value) {
     cd3 = value;
+    Metrics.notifyChange();
   },
 
   setThemeChanged(value) {
     cd4 = value;
+    Metrics.notifyChange();
   },
 
   themeToDimensions({ colors, images }) {
@@ -140,6 +146,7 @@ const Metrics = {
     const themeDimensions = this.themeToDimensions(theme);
     log("update theme", themeDimensions);
     ({ cd5, cd6, cd7, cd8, cd9, cd10, cd11, cd12 } = themeDimensions);
+    Metrics.notifyChange();
   },
 
   installStart() {
@@ -196,6 +203,7 @@ const Metrics = {
       cd1,
       cd2
     });
+    Metrics.notifyChange();
   },
 
   themeChangeBackground(backgroundId) {
@@ -211,6 +219,7 @@ const Metrics = {
       cd3,
       cd11
     });
+    Metrics.notifyChange();
   },
 
   themeChangeColor(colorName) {
@@ -225,6 +234,7 @@ const Metrics = {
       cd2,
       cd3
     });
+    Metrics.notifyChange();
   },
 
   shareClick() {
@@ -291,6 +301,56 @@ const Metrics = {
       cd11,
       cd12
     });
+  },
+
+  onChange(listener) {
+    listeners.push(listener);
+  },
+
+  notifyChange() {
+    log("notifyChange");
+    listeners.forEach(listener => listener(Metrics.getParameters()));
+  },
+
+  getParameters() {
+    return {
+      cm1,
+      cm2,
+      cm3,
+      cd1,
+      cd2,
+      cd3,
+      cd4,
+      cd5,
+      cd6,
+      cd7,
+      cd8,
+      cd9,
+      cd10,
+      cd11,
+      cd12
+    };
+  },
+
+  applyParameters(params) {
+    log("applyParameters");
+    ({
+      cm1,
+      cm2,
+      cm3,
+      cd1,
+      cd2,
+      cd3,
+      cd4,
+      cd5,
+      cd6,
+      cd7,
+      cd8,
+      cd9,
+      cd10,
+      cd11,
+      cd12
+    } = params);
   }
 };
 
