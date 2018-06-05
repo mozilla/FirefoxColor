@@ -36,7 +36,7 @@ module.exports = merge(common.webpackConfig, {
       twitterImage: `${common.siteUrl}images/color-twitter.jpg`,
       title: packageMeta.title,
       description: packageMeta.description,
-      homepage: packageMeta.homepage
+      homepage: common.siteUrl
     }),
     new CopyWebpackPlugin([
       { from: "./src/images", to: "images" },
