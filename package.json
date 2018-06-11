@@ -95,7 +95,7 @@
     "require-context": "^1.1.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
-    "sinon": "^5.0.7",
+    "sinon": "^6.0.0",
     "style-loader": "^0.21.0",
     "stylelint": "^9.1.1",
     "stylelint-config-standard": "^18.1.0",
