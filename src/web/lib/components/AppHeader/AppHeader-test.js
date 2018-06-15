@@ -1,32 +1,44 @@
+import React from "react";
 import { expect } from "chai";
-import { spy } from "sinon";
-import { mount, shallow } from "enzyme";
+import { stub, spy } from "sinon";
+import { mount, shallow, configure} from "enzyme";
+import Adapter from 'enzyme-adapter-react-16';
 
 import { AppHeader } from "./index";
+import Metrics from "../../../../lib/metrics";
 
-require("babel-register")({
-  presets: [
-    ["env", { targets: ["last 2 versions"], modules: "commonjs" }],
-    "react"
-  ],
-  plugins: ["transform-object-rest-spread"]
-});
+configure({ adapter: new Adapter() });
 
 describe('AppHeader', () => {
-    beforeEach(() => {
-        target = {
-            href: "https://testpilot.firefox.com"
+    const props= { 
+            "theme": { "colors": {
+                "tab_line": {}
+            }},
+            hasExtension: () => {} 
         };
-        wrapper = mount( < AppHeader / > );
+
+    after( function () {
+        Metrics.linkClick.restore();
     });
-    it("should show a link to app-header icon", () => {
-        expect(wrapper.find("a.app-header__icon_click")).to.have.property("length", 1);
+
+    it('enzyme renders without exploding',() => {
+        expect(shallow( < AppHeader {...props} />).length).to.equal(1);
     });
-    it("should link to /", () => {
-        wrapper.find('a.app-header__icon_click').simulate('click')
-        expect(wrapper.find("a.app-header__icon_click")).to.have.property("href", target.href);
+
+    it('should link to Firefox Test Pilot',() => {
+        const wrapper = shallow( < AppHeader {...props} />);
+        expect(wrapper.find('a').at(0).prop('href')).to.equal('https://testpilot.firefox.com');
     });
-    it("should show a link to app-header survey", () => {
-        expect(wrapper.find("a.app-header__survey")).to.have.property("length", 1);
+
+    it('should link to Survey Url',() => {
+        const wrapper = shallow( < AppHeader {...props} />);
+        expect(wrapper.find('a').at(1)).to.have.property('length', 1);
+    });
+
+    it('should call LinkClick function', () => {
+        const wrapper = shallow( < AppHeader {...props} />);
+        spy(Metrics, 'linkClick');
+        wrapper.find('a').at(0).simulate('click');
+        expect(Metrics.linkClick.callCount).to.equal(1);
     });
 });

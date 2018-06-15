@@ -9,6 +9,9 @@ require("babel-register")({
   plugins: ["transform-object-rest-spread"]
 });
 
+require.extensions['.svg'] = () => null;
+require.extensions['.scss'] = () => null;
+
 const mockRequire = require("mock-require");
 
 // Quick & dirty simulation of Webpack's require.context()
