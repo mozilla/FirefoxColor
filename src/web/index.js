@@ -117,6 +117,7 @@ window.addEventListener("message", ({ source, data: message }) => {
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
+        Metrics.setHasAddon(true);
         Metrics.installSuccess();
         postMessage("setTheme", { theme: selectors.theme(store.getState()) });
       }
@@ -139,6 +140,7 @@ setInterval(() => {
     outstandingPings++;
     if (outstandingPings >= MAX_OUTSTANDING_PINGS) {
       store.dispatch(actions.ui.setHasExtension({ hasExtension: false }));
+      Metrics.setHasAddon(false);
     }
   }
 }, PING_PERIOD);
