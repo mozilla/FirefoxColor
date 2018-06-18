@@ -2,6 +2,7 @@ import React from "react";
 import BrowserPreview from "../BrowserPreview";
 import ThemeColorsEditor from "../ThemeColorsEditor";
 import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
+import ThemeCustomBackgroundPicker from "../ThemeCustomBackgroundPicker";
 import UndoRedoButtons from "../UndoRedoButtons";
 import ThemeUrl from "../ThemeUrl";
 import ThemeSaveButton from "../ThemeSaveButton";
@@ -16,6 +17,8 @@ export const ThemeBuilder = ({
   savedThemes,
   selectedColor,
   setBackground,
+  setCustomBackground,
+  clearCustomBackground,
   setColor,
   setSelectedColor,
   storage,
@@ -39,7 +42,7 @@ export const ThemeBuilder = ({
           setSelectedColor
         }}
       />
-      <ThemeBackgroundPicker {...{ theme, setBackground }} />
+      <ThemeBackgroundPicker {...{ theme, setBackground, clearCustomBackground }} />
       {(themeCanUndo || themeCanRedo) && (
         <UndoRedoButtons {...{ undo, redo, themeCanUndo, themeCanRedo }} />
       )}
@@ -67,6 +70,7 @@ export const ThemeBuilder = ({
             modifiedSinceSave
           }}
         />
+        <ThemeCustomBackgroundPicker {...{ theme, setCustomBackground }} />
       </div>
     )}
   </BrowserPreview>

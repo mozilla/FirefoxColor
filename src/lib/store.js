@@ -13,6 +13,7 @@ export const themeChangeActions = [
   "SET_THEME",
   "SET_COLOR",
   "SET_BACKGROUND",
+  "SET_CUSTOM_BACKGROUND",
   ActionTypes.UNDO,
   ActionTypes.REDO
 ];
@@ -32,7 +33,14 @@ export const actions = {
     "SET_DISPLAY_LEGAL_MODAL"
   ),
   theme: {
-    ...createActions({}, "SET_THEME", "SET_COLOR", "SET_BACKGROUND"),
+    ...createActions(
+      {},
+      "SET_THEME",
+      "SET_COLOR",
+      "SET_BACKGROUND",
+      "SET_CUSTOM_BACKGROUND",
+      "CLEAR_CUSTOM_BACKGROUND"
+    ),
     // HACK: Seems like redux-undo doesn't have sub-tree specific undo/redo
     // actions - but let's fake it for now.
     undo: ActionCreators.undo,
@@ -58,6 +66,7 @@ export const selectors = {
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
+  themeHasCustomBackground: state => !!state.theme.present.customBackground,
   userHasEdited: state => state.ui.userHasEdited,
   modifiedSinceSave: state =>
     state.ui.userHasEdited &&
@@ -118,7 +127,9 @@ export const reducers = {
         userHasEdited: meta && meta.userEdit ? true : state.userHasEdited
       }),
       SET_COLOR: state => ({ ...state, userHasEdited: true }),
-      SET_BACKGROUND: state => ({ ...state, userHasEdited: true })
+      SET_BACKGROUND: state => ({ ...state, userHasEdited: true }),
+      SET_CUSTOM_BACKGROUND: state => ({ ...state, userHasEdited: true }),
+      CLEAR_CUSTOM_BACKGROUND: state => ({ ...state, userHasEdited: true })
     },
     {
       userHasEdited: false,
@@ -147,10 +158,19 @@ export const reducers = {
         SET_BACKGROUND: (state, { payload: { url } }) => ({
           ...state,
           images: { ...state.images, additional_backgrounds: [url] }
+        }),
+        SET_CUSTOM_BACKGROUND: (state, { payload: { url } }) => ({
+          ...state,
+          images: { ...state.images, custom_background: url }
+        }),
+        CLEAR_CUSTOM_BACKGROUND: (state) => ({
+          ...state,
+          images: { ...state.images, custom_background: null }
         })
       },
       normalizeTheme()
-    ), {
+    ),
+    {
       // Only track explicit user edits in undo/redo history, theme changes
       // from add-on and ?theme are applied but skip the buffer
       syncFilter: true,

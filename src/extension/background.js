@@ -145,13 +145,20 @@ const applyTheme = ({ theme }) => {
     colors: {}
   };
 
-  const background = normalizeThemeBackground(
-    theme.images.additional_backgrounds[0]
-  );
-  if (background) {
+  if (theme.images.custom_background) {
+    // HACK: apply the custom background if available
     newTheme.images = {
-      additional_backgrounds: [bgImages(background)]
+      additional_backgrounds: [ theme.images.custom_background ]
     };
+  } else {
+    const background = normalizeThemeBackground(
+      theme.images.additional_backgrounds[0]
+    );
+    if (background) {
+      newTheme.images = {
+        additional_backgrounds: [bgImages(background)]
+      };
+    }
   }
 
   // the headerURL is required in < 60,

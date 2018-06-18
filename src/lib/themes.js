@@ -122,6 +122,9 @@ export const normalizeTheme = (data = {}) => {
     title: data.title
   };
   const images = data.images ? data.images : {};
+  if (images.custom_background) {
+    theme.images.custom_background = images.custom_background;
+  }
   if (images.headerURL) {
     const background = normalizeThemeBackground(images.headerURL);
     if (background) {
