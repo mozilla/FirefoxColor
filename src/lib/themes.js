@@ -1,6 +1,9 @@
 import tinycolor from "tinycolor2";
 import { colorsWithAlpha, alphaEqualityTolerance } from "./constants";
 import { presetThemesContext, bgImages } from "./assets";
+import { makeLog } from "./utils";
+
+const log = makeLog("themes");
 
 const defaultTheme = presetThemesContext("./default.json");
 
@@ -113,7 +116,13 @@ export const normalizeThemeColors = (colors = {}) => {
 };
 
 // Utility to ensure normal properties and values in app theme state
-export const normalizeTheme = (data = {}) => {
+export const normalizeTheme = (data = {}, options = {}) => {
+  const {
+    omitCustomBackground = false
+  } = options;
+
+  log("normalizeTheme omitCustomBackground", omitCustomBackground);
+
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),
     images: {
@@ -122,7 +131,7 @@ export const normalizeTheme = (data = {}) => {
     title: data.title
   };
   const images = data.images ? data.images : {};
-  if (images.custom_background) {
+  if (!omitCustomBackground && images.custom_background) {
     theme.images.custom_background = images.custom_background;
   }
   if (images.headerURL) {

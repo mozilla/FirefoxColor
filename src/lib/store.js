@@ -14,6 +14,7 @@ export const themeChangeActions = [
   "SET_COLOR",
   "SET_BACKGROUND",
   "SET_CUSTOM_BACKGROUND",
+  "CLEAR_CUSTOM_BACKGROUND",
   ActionTypes.UNDO,
   ActionTypes.REDO
 ];
@@ -66,7 +67,7 @@ export const selectors = {
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
-  themeHasCustomBackground: state => !!state.theme.present.customBackground,
+  themeHasCustomBackground: state => !!state.theme.present.images.custom_background,
   userHasEdited: state => state.ui.userHasEdited,
   modifiedSinceSave: state =>
     state.ui.userHasEdited &&

@@ -5,6 +5,7 @@ const log = makeLog("ThemeCustomBackgroundPicker");
 
 export const ThemeCustomBackgroundPicker = ({
   theme,
+  themeHasCustomBackground,
   setCustomBackground,
   clearCustomBackground
 }) => (
@@ -17,12 +18,17 @@ export const ThemeCustomBackgroundPicker = ({
       id="customBackground"
       onChange={ev => handleFileChoice(ev, setCustomBackground)}
     />
-    <input
-      type="button"
-      id="clearBackground"
-      value="Clear Background"
-      onClick={ev => clearCustomBackground()}
-    />
+    {themeHasCustomBackground && (
+      <input
+        type="button"
+        id="clearBackground"
+        defaultValue="Clear Background"
+        onClick={ev => {
+          clearCustomBackground();
+          ev.preventDefault();
+        }}
+      />
+    )}
   </form>
 );
 

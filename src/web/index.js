@@ -10,6 +10,7 @@ import Clipboard from "clipboard";
 
 import { makeLog } from "../lib/utils";
 import { CHANNEL_NAME, loaderQuotes } from "../lib/constants";
+import { normalizeTheme } from "../lib/themes";
 import {
   createAppStore,
   actions,
@@ -39,10 +40,12 @@ let outstandingPings = 0;
 const jsonCodec = JsonUrl("lzma");
 
 const urlEncodeTheme = theme =>
-  jsonCodec.compress(theme).then(value => {
-    const { protocol, host, pathname } = window.location;
-    return `${protocol}//${host}${pathname}?theme=${value}`;
-  });
+  jsonCodec
+    .compress(normalizeTheme(theme, { omitCustomBackground: true }))
+    .then(value => {
+      const { protocol, host, pathname } = window.location;
+      return `${protocol}//${host}${pathname}?theme=${value}`;
+    });
 
 const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
 

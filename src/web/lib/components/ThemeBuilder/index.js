@@ -19,6 +19,7 @@ export const ThemeBuilder = ({
   setBackground,
   setCustomBackground,
   clearCustomBackground,
+  themeHasCustomBackground,
   setColor,
   setSelectedColor,
   storage,
@@ -42,7 +43,9 @@ export const ThemeBuilder = ({
           setSelectedColor
         }}
       />
-      <ThemeBackgroundPicker {...{ theme, setBackground, clearCustomBackground }} />
+      <ThemeBackgroundPicker
+        {...{ theme, setBackground, clearCustomBackground }}
+      />
       {(themeCanUndo || themeCanRedo) && (
         <UndoRedoButtons {...{ undo, redo, themeCanUndo, themeCanRedo }} />
       )}
@@ -59,7 +62,9 @@ export const ThemeBuilder = ({
     )}
     {hasExtension && (
       <div className="theme-share-save">
-        <ThemeUrl {...{ theme, urlEncodeTheme, clipboard }} />
+        <ThemeUrl
+          {...{ theme, themeHasCustomBackground, urlEncodeTheme, clipboard }}
+        />
         <ThemeSaveButton
           {...{
             theme,
@@ -70,7 +75,9 @@ export const ThemeBuilder = ({
             modifiedSinceSave
           }}
         />
-        <ThemeCustomBackgroundPicker {...{ theme, setCustomBackground }} />
+        <ThemeCustomBackgroundPicker
+          {...{ theme, themeHasCustomBackground, setCustomBackground, clearCustomBackground }}
+        />
       </div>
     )}
   </BrowserPreview>
