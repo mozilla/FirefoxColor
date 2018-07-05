@@ -8,7 +8,7 @@
   ],
   "private": true,
   "title": "Firefox Color",
-  "homepage": "https://mozilla.github.io/FirefoxColor/",
+  "homepage": "https://color.firefox.com",
   "main": "src/web/index.js",
   "config": {
     "development": {
