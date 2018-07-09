@@ -46,9 +46,9 @@ export default class ThemeUrl extends React.Component {
 
   render() {
     const { copied, themeUrl } = this.state;
-    const { themeHasCustomBackground } = this.props;
+    const { themeHasCustomBackgrounds } = this.props;
 
-    if (themeHasCustomBackground) {
+    if (themeHasCustomBackgrounds) {
       return (
         <div className="theme-url theme-url-disabled">
           <h2>Share your theme</h2>

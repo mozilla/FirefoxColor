@@ -26,6 +26,8 @@ import "./index.scss";
 
 const log = makeLog("web");
 
+log("startup");
+
 const clipboard = new Clipboard(".clipboardButton");
 
 const addonUrl = process.env.ADDON_URL;

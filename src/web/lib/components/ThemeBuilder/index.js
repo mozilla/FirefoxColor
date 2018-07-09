@@ -19,7 +19,8 @@ export const ThemeBuilder = ({
   setBackground,
   setCustomBackground,
   clearCustomBackground,
-  themeHasCustomBackground,
+  themeCustomBackgrounds,
+  themeHasCustomBackgrounds,
   setColor,
   setSelectedColor,
   storage,
@@ -63,7 +64,7 @@ export const ThemeBuilder = ({
     {hasExtension && (
       <div className="theme-share-save">
         <ThemeUrl
-          {...{ theme, themeHasCustomBackground, urlEncodeTheme, clipboard }}
+          {...{ theme, themeHasCustomBackgrounds, urlEncodeTheme, clipboard }}
         />
         <ThemeSaveButton
           {...{
@@ -76,7 +77,13 @@ export const ThemeBuilder = ({
           }}
         />
         <ThemeCustomBackgroundPicker
-          {...{ theme, themeHasCustomBackground, setCustomBackground, clearCustomBackground }}
+          {...{
+            theme,
+            themeCustomBackgrounds,
+            themeHasCustomBackgrounds,
+            setCustomBackground,
+            clearCustomBackground
+          }}
         />
       </div>
     )}

@@ -145,11 +145,19 @@ const applyTheme = ({ theme }) => {
     colors: {}
   };
 
-  if (theme.images.custom_background) {
+  if (theme.images.custom_backgrounds) {
     // HACK: apply the custom background if available
     newTheme.images = {
-      additional_backgrounds: [ theme.images.custom_background ]
+      additional_backgrounds: theme.images.custom_backgrounds,
     };
+    newTheme.properties = {
+      additional_backgrounds_alignment: [],
+      additional_backgrounds_tiling: []
+    };
+    for (let idx = 0; idx < theme.images.custom_backgrounds.length; idx++) {
+      newTheme.properties.additional_backgrounds_alignment[idx] = "left top";
+      newTheme.properties.additional_backgrounds_tiling[idx] = "no-repeat";
+    }
   } else {
     const background = normalizeThemeBackground(
       theme.images.additional_backgrounds[0]

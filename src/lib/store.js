@@ -67,7 +67,12 @@ export const selectors = {
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
-  themeHasCustomBackground: state => !!state.theme.present.images.custom_background,
+  themeCustomBackgrounds: state =>
+    state.theme.present.images.custom_backgrounds || [],
+  themeHasCustomBackgrounds: state => {
+    const backgrounds = selectors.themeCustomBackgrounds(state);
+    return !!backgrounds && backgrounds.length > 0;
+  },
   userHasEdited: state => state.ui.userHasEdited,
   modifiedSinceSave: state =>
     state.ui.userHasEdited &&
@@ -160,13 +165,20 @@ export const reducers = {
           ...state,
           images: { ...state.images, additional_backgrounds: [url] }
         }),
-        SET_CUSTOM_BACKGROUND: (state, { payload: { url } }) => ({
+        SET_CUSTOM_BACKGROUND: (state, { payload: { url, index } }) => {
+          const custom_backgrounds = [...(state.images.custom_backgrounds || [])];
+          custom_backgrounds[index] = url;
+          return {
+            ...state,
+            images: {
+              ...state.images,
+              custom_backgrounds
+            }
+          };
+        },
+        CLEAR_CUSTOM_BACKGROUND: state => ({
           ...state,
-          images: { ...state.images, custom_background: url }
-        }),
-        CLEAR_CUSTOM_BACKGROUND: (state) => ({
-          ...state,
-          images: { ...state.images, custom_background: null }
+          images: { ...state.images, custom_backgrounds: [] }
         })
       },
       normalizeTheme()
