@@ -165,9 +165,18 @@ export const reducers = {
           ...state,
           images: { ...state.images, additional_backgrounds: [url] }
         }),
-        SET_CUSTOM_BACKGROUND: (state, { payload: { url, index } }) => {
-          const custom_backgrounds = [...(state.images.custom_backgrounds || [])];
-          custom_backgrounds[index] = url;
+        SET_CUSTOM_BACKGROUND: (
+          state,
+          { payload: { index, url, tiling, alignment } }
+        ) => {
+          const custom_backgrounds = [
+            ...(state.images.custom_backgrounds || [])
+          ];
+          custom_backgrounds[index] = {
+            url,
+            tiling,
+            alignment
+          };
           return {
             ...state,
             images: {

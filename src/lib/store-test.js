@@ -11,8 +11,16 @@ describe("lib/store", () => {
   describe("custom backgrounds", () => {
 
     it("should support setting custom background images by index", () => {
-      const url0 = "data:example0";
-      const url1 = "data:example1";
+      const background0 = {
+        url: "data:example0",
+        alignment: "bottom",
+        tiling: "no-repeat"
+      };
+      const background1 = {
+        url: "data:example1",
+        alignment: "center",
+        tiling: "repeat"
+      };
 
       expect(selectors.themeHasCustomBackgrounds(store.getState())).to.be.false;
 
@@ -21,21 +29,19 @@ describe("lib/store", () => {
       backgrounds = selectors.themeCustomBackgrounds(store.getState());
       expect(backgrounds).to.have.lengthOf(0);
 
-      store.dispatch(actions.theme.setCustomBackground({ index: 0, url: url0 }));
+      store.dispatch(actions.theme.setCustomBackground({ index: 0, ...background0 }));
 
       backgrounds = selectors.themeCustomBackgrounds(store.getState());
       expect(backgrounds).to.have.lengthOf(1);
-      expect(backgrounds[0]).to.equal(url0);
+      expect(backgrounds[0]).to.deep.include(background0);
 
       expect(selectors.themeHasCustomBackgrounds(store.getState())).to.be.true;
 
-      store.dispatch(actions.theme.setCustomBackground({ index: 1, url: url1 }));
+      store.dispatch(actions.theme.setCustomBackground({ index: 1, ...background1 }));
 
       backgrounds = selectors.themeCustomBackgrounds(store.getState());
       expect(backgrounds).to.have.lengthOf(2);
-      expect(backgrounds[1]).to.equal(url1);
-
-      expect(backgrounds).to.deep.equal([ url0, url1 ]);
+      expect(backgrounds[1]).to.deep.include(background1);
 
       store.dispatch(actions.theme.clearCustomBackground());
 

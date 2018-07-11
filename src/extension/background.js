@@ -138,34 +138,40 @@ const applyTheme = ({ theme }) => {
   }
 
   const newTheme = {
-    properties: {
-      additional_backgrounds_alignment: ["top"],
-      additional_backgrounds_tiling: ["repeat"]
-    },
+    images: {},
+    properties: {},
     colors: {}
   };
 
-  if (theme.images.custom_backgrounds) {
-    // HACK: apply the custom background if available
-    newTheme.images = {
-      additional_backgrounds: theme.images.custom_backgrounds,
-    };
-    newTheme.properties = {
-      additional_backgrounds_alignment: [],
-      additional_backgrounds_tiling: []
-    };
-    for (let idx = 0; idx < theme.images.custom_backgrounds.length; idx++) {
-      newTheme.properties.additional_backgrounds_alignment[idx] = "left top";
-      newTheme.properties.additional_backgrounds_tiling[idx] = "no-repeat";
-    }
+  const custom_backgrounds = theme.images.custom_backgrounds || [];
+  if (custom_backgrounds.length > 0) {
+    const additional_backgrounds = [];
+    const additional_backgrounds_alignment = [];
+    const additional_backgrounds_tiling = [];
+
+    log("CUSTOM BACKGROUNDS", custom_backgrounds);
+    
+    custom_backgrounds.forEach(({ url, alignment, tiling }) => {
+      additional_backgrounds.push(url);
+      additional_backgrounds_alignment.push(alignment || "left top");
+      additional_backgrounds_tiling.push(tiling || "no-repeat");
+    });
+    
+    newTheme.images.additional_backgrounds = additional_backgrounds;
+    Object.assign(newTheme.properties, {
+      additional_backgrounds_alignment,
+      additional_backgrounds_tiling
+    });
   } else {
     const background = normalizeThemeBackground(
       theme.images.additional_backgrounds[0]
     );
     if (background) {
-      newTheme.images = {
-        additional_backgrounds: [bgImages(background)]
-      };
+      newTheme.images.additional_backgrounds = [ bgImages(background) ];
+      Object.assign(newTheme.properties, {
+        additional_backgrounds_alignment: ["top"],
+        additional_backgrounds_tiling: ["repeat"]
+      });
     }
   }
 

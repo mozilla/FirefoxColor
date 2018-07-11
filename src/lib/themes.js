@@ -126,18 +126,21 @@ export const normalizeTheme = (data = {}, options = {}) => {
     title: data.title
   };
   const images = data.images ? data.images : {};
+
   if (!omitCustomBackground && images.custom_backgrounds) {
     if (!Array.isArray(theme.images.custom_backgrounds)) {
       theme.images.custom_backgrounds = [];
     }
     theme.images.custom_backgrounds = images.custom_backgrounds || [];
   }
+
   if (images.headerURL) {
     const background = normalizeThemeBackground(images.headerURL);
     if (background) {
       theme.images.additional_backgrounds = [background];
     }
   }
+
   if (images.additional_backgrounds) {
     const background = normalizeThemeBackground(
       images.additional_backgrounds[0]
@@ -146,6 +149,7 @@ export const normalizeTheme = (data = {}, options = {}) => {
       theme.images.additional_backgrounds = [background];
     }
   }
+
   return theme;
 };
 
