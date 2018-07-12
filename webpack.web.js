@@ -17,6 +17,7 @@ module.exports = merge(common.webpackConfig, {
   },
   devServer: {
     contentBase: path.join(__dirname, "build/web"),
+    host: common.siteHost,
     port: common.sitePort
   },
   output: {

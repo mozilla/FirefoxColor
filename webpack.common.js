@@ -14,8 +14,9 @@ const extractCSS = new ExtractTextPlugin({
 const UNOFFICIAL_SITE_IDS = ["local", "github"];
 
 const nodeEnv = process.env.NODE_ENV || "production";
+const siteHost = process.env.HOST || "localhost";
 const sitePort = process.env.PORT || "8080";
-const siteUrl = process.env.SITE_URL || `http://localhost:${sitePort}/`;
+const siteUrl = process.env.SITE_URL || `http://${siteHost}:${sitePort}/`;
 const siteId = process.env.SITE_ID || "";
 const downloadFirefoxUtmSource =
   process.env.DOWNLOAD_FIREFOX_UTM_SOURCE || new url.URL(siteUrl).hostname;
@@ -125,6 +126,7 @@ const webpackConfig = {
 
 module.exports = {
   UNOFFICIAL_SITE_IDS,
+  siteHost,
   sitePort,
   siteUrl,
   siteId,
