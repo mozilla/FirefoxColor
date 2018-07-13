@@ -1,0 +1,103 @@
+@import "../../common.scss";
+
+.browser-tabs {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.browser-tabs__inner {
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.browser-tabs__tab {
+  -moz-user-select: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+}
+
+.browser-tabs__tab-inner {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.browser-tabs__tab-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: transform 75ms, opacity 200ms;
+  transform-origin: center top;
+  transition-timing-function: cubic-bezier(.17, .67, .83, .67);
+}
+
+.browser-tabs--large {
+  height: 54px;
+
+  > .browser-tabs__inner {
+    grid-template-columns: repeat(3, minmax(180px, 240px));
+    grid-template-rows: 54px;
+    padding: 0 $grid * 16;
+  }
+
+  .browser-tabs__title {
+    border-radius: 5px;
+    height: $grid * 2.5;
+    width: $grid * 32;
+  }
+}
+
+.browser-tabs--medium {
+  height: $grid * 10;
+  padding: 0 $grid * 9;
+  border-radius: 4px 4px 0 0;
+
+  > .browser-tabs__inner {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: $grid * 10;
+  }
+
+  .browser-tabs__tab {
+    align-items: center;
+  }
+
+  .browser-tabs__title {
+    border-radius: 4px;
+    height: $grid * 2;
+    width: $grid * 20;
+  }
+}
+
+.browser-tabs--small {
+  height: $grid * 5;
+  padding: 0 $grid * 4;
+
+  > .browser-tabs__inner {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: $grid * 5;
+  }
+
+  .browser-tabs__tab {
+    align-items: center;
+  }
+
+  .browser-tabs__title {
+    margin-top: 1px;
+    border-radius: 2px;
+    height: $grid;
+    width: $grid * 8;
+  }
+}

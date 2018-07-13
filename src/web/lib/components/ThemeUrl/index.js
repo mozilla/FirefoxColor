@@ -1,10 +1,13 @@
 import React from "react";
+import classnames from "classnames";
+import onClickOutside from "react-onclickoutside";
+
 import Metrics from "../../../../lib/metrics";
 import { themesEqual } from "../../../../lib/themes";
 
 import "./index.scss";
 
-export default class ThemeUrl extends React.Component {
+class ThemeUrl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,6 +36,11 @@ export default class ThemeUrl extends React.Component {
     }
   }
 
+  handleClickOutside(evt) {
+    if (evt.target.classList.contains("Share")) return;
+    this.props.setDisplayShareModal({ display: false });
+  }
+
   handleCopied() {
     this.setState({ copied: true });
   }
@@ -50,12 +58,11 @@ export default class ThemeUrl extends React.Component {
 
   render() {
     const { copied, themeUrl } = this.state;
-    const { themeHasCustomBackgrounds } = this.props;
+    const { themeHasCustomBackgrounds, hasExtension } = this.props;
 
     if (themeHasCustomBackgrounds) {
       return (
-        <div className="theme-url theme-url-disabled">
-          <h2>Share your theme</h2>
+        <div className={classnames("theme-url theme-url-disabled", {extension: hasExtension})}>
           <p>
             This theme cannot be shared via URL because it has a custom
             background image.
@@ -65,9 +72,8 @@ export default class ThemeUrl extends React.Component {
     }
 
     return (
-      <form className="theme-url" onSubmit={e => e.preventDefault()}>
+      <form className={classnames("theme-url", { extension: hasExtension })} onSubmit={e => e.preventDefault()}>
         <label htmlFor="themeUrl">
-          <h2>Share your theme</h2>
           <p>Copy and paste this URL to share your creation.</p>
         </label>
         <input type="text" id="themeUrl" readOnly={true} value={themeUrl} />
@@ -82,3 +88,5 @@ export default class ThemeUrl extends React.Component {
     );
   }
 }
+
+export default onClickOutside(ThemeUrl);

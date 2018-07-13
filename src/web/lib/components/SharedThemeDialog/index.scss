@@ -1,4 +1,4 @@
-@import '../../common.scss';
+@import "../../common.scss";
 
 .shared-theme-dialog-wrapper {
   align-items: center;
@@ -33,7 +33,6 @@
 
     .preview {
       display: flex;
-      align-items: flex-end;
       justify-content: center;
       background-image: url(./stars-bg.svg);
       background-repeat: no-repeat;
@@ -45,7 +44,7 @@
       width: calc(100% - 42px);
     }
 
-    .doll {
+    .browser {
       width: 80%;
     }
 

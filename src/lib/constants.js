@@ -6,12 +6,14 @@ export const DOWNLOAD_FIREFOX_URL = `https://www.mozilla.org/firefox/new/?utm_ca
 
 export const CUSTOM_BACKGROUND_MAXIMUM_SIZE = 1000000;
 
+// Note: SVGs cannot be passed as base64.
+// Bugzilla bug passed here https://bugzilla.mozilla.org/show_bug.cgi?id=1491790
 export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
   "image/jpeg",
   "image/png",
   "image/gif",
-  "image/bmp",
-  "image/svg+xml"
+  "image/bmp"
+  // "image/svg+xml"
 ];
 
 export const surveyUrl = "https://qsurvey.mozilla.com/s3/color";

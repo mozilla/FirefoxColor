@@ -5,8 +5,6 @@ import PaginatedThemeSelector from "../PaginatedThemeSelector";
 import { presetThemes } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
 
-import "./index.scss";
-
 export const PresetThemeSelector = ({
   setTheme,
   presetThemesPage,
@@ -16,6 +14,7 @@ export const PresetThemeSelector = ({
     item.idx,
     { theme: item }
   ]);
+
   return (
     <PaginatedThemeSelector
       title="Preset themes"
@@ -26,7 +25,7 @@ export const PresetThemeSelector = ({
         setTheme({ theme });
         Metrics.themeChangeFull(theme.title);
       }}
-      perPage={8}
+      perPage={9}
       currentPage={presetThemesPage}
       setCurrentPage={setPresetThemesPage}
     />

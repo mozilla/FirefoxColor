@@ -1,0 +1,145 @@
+@import "../../common.scss";
+
+.browser-tools {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+
+  .browser-tools__inner {
+    align-items: center;
+    display: flex;
+  }
+
+  .browser-tools__field {
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+
+    .browser-tools__button {
+      padding: 0;
+    }
+  }
+
+  .browser-tools__field-text {
+    flex: 1;
+  }
+
+  .browser-tools__button {
+    align-items: center;
+    display: flex;
+    flex-grow: 0;
+    margin: 0;
+
+    > div > div {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .browser-tools__button-inner {
+    border-radius: 50%;
+  }
+}
+
+.browser-tools--large {
+  > .browser-tools__inner {
+    height: $grid * 15;
+    padding: 0 $grid * 2.5;
+  }
+
+  .browser-tools__field {
+    border-radius: 3px;
+    font-size: $grid * 5;
+    height: $grid * 9;
+    margin: 0 $grid * 2.5;
+
+    .browser-tools__field-text {
+      border-radius: 5px;
+      height: 10px;
+      margin: 0 0 0 $grid * 10;
+    }
+
+    .browser-tools__button {
+      flex: 0 0 18px;
+      height: 18px;
+      margin: 16px;
+    }
+
+    .browser-tools__button-inner {
+      flex: 0 0 18px;
+      height: 18px;
+    }
+  }
+
+  .browser-tools__button {
+    padding: $grid * 2;
+  }
+
+  .browser-tools__button-inner {
+    height: 24px;
+    width: 24px;
+  }
+
+  img,
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.browser-tools--medium {
+  .browser-tools__inner {
+    height: $grid * 14;
+    padding: 0 $grid * 2.5;
+  }
+
+  .browser-tools__field {
+    border-radius: $grid;
+    height: $grid * 8;
+    margin: 0 $grid * 2.5;
+
+    .browser-tools__field-text {
+      border-radius: $grid;
+      height: $grid * 2.5;
+      margin: 0 $grid * 18 0 $grid * 5;
+    }
+  }
+
+  .browser-tools__button {
+    padding: 0 $grid * 2.5;
+  }
+
+  .browser-tools__button-inner {
+    height: $grid * 5;
+    width: $grid * 5;
+  }
+}
+
+.browser-tools--small {
+  .browser-tools__inner {
+    height: $grid * 7.5;
+    padding: 0 $grid 0 $grid * .5;
+  }
+
+  .browser-tools__field {
+    border-radius: $grid * .5;
+    height: $grid * 3.5;
+    margin: 0 $grid;
+
+    .browser-tools__field-text {
+      border-radius: $grid * .5;
+      height: $grid;
+      margin: 0 $grid * 7.5 0 $grid * 2;
+    }
+  }
+
+  .browser-tools__button {
+    padding: 0 $grid;
+  }
+
+  .browser-tools__button-inner {
+    height: $grid * 2;
+    width: $grid * 2;
+  }
+}

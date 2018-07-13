@@ -1,6 +1,6 @@
 $grid: 4px;
 
-@mixin button($height: 34px, $font: 18px, $border: 2px) {
+@mixin button($height: 34px, $font: 18px, $border: 2px, $minWidth: 10 * $font) {
   align-items: center;
   border-radius: $border;
   border: none;
@@ -11,22 +11,22 @@ $grid: 4px;
   justify-content: center;
   text-decoration: none;
   transition: background 50ms;
-  min-width: 10 * $font;
+  min-width: $minWidth;
   padding: 0 $font;
   text-align: center;
 }
 
 @mixin buttonSecondary {
   color: var(--grey-90);
-  background: rgba(12, 12, 13, .1);
+  background-color: rgba(12, 12, 13, .1);
 
   &:hover:not(:disabled),
   &:focus:not(:disabled) {
-    background: rgba(12, 12, 13, .2);
+    background-color: rgba(12, 12, 13, .2);
   }
 
   &:active:not(:disabled) {
-    background: rgba(12, 12, 13, .3);
+    background-color: rgba(12, 12, 13, .3);
   }
 
   &:disabled {
@@ -37,16 +37,16 @@ $grid: 4px;
 
 @mixin buttonPrimary {
   color: var(--white);
-  background: var(--green-60);
+  background-color: var(--green-60);
   box-shadow: 0 -3px 0 var(--grey-90-a10) inset;
 
   &:hover,
   &:focus {
-    background: var(--green-70);
+    background-color: var(--green-70);
   }
 
   &:active {
-    background: var(--green-80);
+    background-color: var(--green-80);
   }
 }
 
@@ -56,11 +56,11 @@ $grid: 4px;
 
   &:hover:not(:disabled),
   &:focus:not(:disabled) {
-    background: var(--blue-60);
+    background-color: var(--blue-60);
   }
 
   &:active:not(:disabled) {
-    background: var(--blue-70);
+    background-color: var(--blue-70);
   }
 
   &:disabled {
@@ -72,5 +72,5 @@ $grid: 4px;
 @mixin unit($size: 'large') {
   border-radius: var(--#{$size}-unit-border-radius);
   box-shadow: var(--#{$size}-unit-box-shadow);
-  background: var(--white-a96);
+  background-color: var(--white-a96);
 }

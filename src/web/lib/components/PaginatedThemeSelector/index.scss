@@ -1,14 +1,17 @@
-@import '../../common.scss';
+@import "../../common.scss";
 
 .theme-selector {
-  h2 {
-    grid-column: 1 / -1;
-    margin: 0;
-  }
+  display: grid;
+  grid-gap: $grid * 6;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr) 18px;
+  padding: 0 $grid * 6;
+  width: 100%;
 
   footer.page-selector {
     display: flex;
     grid-column: 1 / -1;
+    grid-row: 4 / 5;
     justify-content: center;
     margin: 0;
 
@@ -24,6 +27,7 @@
       position: relative;
       white-space: nowrap;
       width: 18px;
+      z-index: 2;
     }
 
     button.page {
@@ -74,13 +78,6 @@
       background-image: url(./arrow_right.svg);
     }
   }
-
-  @include unit;
-
-  display: grid;
-  grid-gap: $grid * 8;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  padding: $grid * 6;
 }
 
 .theme-selector-preview {
@@ -88,6 +85,7 @@
   cursor: pointer;
   position: relative;
   transition: box-shadow 100ms;
+  display: flex;
 
   &:hover {
     box-shadow: 0 0 0 3px var(--blue-40);
@@ -100,7 +98,11 @@
 
   button {
     align-items: center;
-    background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .95));
+    background:
+      linear-gradient(
+        rgba(255, 255, 255, .9),
+        rgba(255, 255, 255, .95)
+      );
     border-radius: 50%;
     border: 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, .1);
@@ -115,11 +117,10 @@
     transition: opacity 125ms, box-shadow 125ms;
     visibility: hidden;
     width: 36px;
-    z-index: 1;
+    z-index: 2;
 
     &:hover {
       box-shadow: 0 0 0 3px var(--blue-40);
     }
   }
 }
-

@@ -1,6 +1,6 @@
 import React from "react";
 import Metrics from "../../../../lib/metrics";
-import BrowserPreview from "../BrowserPreview";
+import Browser from "../Browser";
 import "./index.scss";
 
 export const SharedThemeDialog = ({
@@ -26,7 +26,7 @@ export const SharedThemeDialog = ({
     <div className="shared-theme-dialog-wrapper" onClick={onClickBackdrop}>
       <div className="shared-theme-dialog">
         <div className="preview">
-          <BrowserPreview {...{ size: "medium", theme: pendingTheme }} />
+          <Browser {...{ size: "medium", theme: pendingTheme }} />
         </div>
         <div className="options">
           <p>Do you want to apply this custom theme?</p>

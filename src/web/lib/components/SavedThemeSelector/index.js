@@ -2,13 +2,12 @@ import React from "react";
 
 import PaginatedThemeSelector from "../PaginatedThemeSelector";
 
-import "./index.scss";
-
 export const SavedThemeSelector = ({
   setTheme,
   savedThemes,
   savedThemesPage,
   setSavedThemesPage,
+  themeCustomImages,
   storage
 }) => {
   const { themeStorage } = storage;
@@ -24,9 +23,10 @@ export const SavedThemeSelector = ({
       previewClassName="saved-theme-preview"
       onClick={theme => setTheme({ theme })}
       onDelete={key => themeStorage.delete(key)}
-      perPage={12}
+      perPage={9}
       currentPage={savedThemesPage}
       setCurrentPage={setSavedThemesPage}
+      images={themeCustomImages}
     />
   );
 };

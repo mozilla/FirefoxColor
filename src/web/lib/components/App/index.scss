@@ -1,19 +1,29 @@
 .app {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin: 0 auto;
-  max-width: 1200px;
+  display: grid;
+  grid-gap: 32px;
+  grid-template-rows: 64px 1fr 72px;
   min-height: 100vh;
-  min-width: 640px;
-  position: relative;
+  width: 100%;
 }
 
-.app__content {
+.app__main {
   display: grid;
-  grid-gap: 20px;
+  grid-template-columns: 20px minmax(600px, 1080px) 20px;
+  grid-template-rows: 1fr;
   margin: 0 auto;
   position: relative;
-  width: 90%;
-  z-index: 1;
+
+  > .browser {
+    grid-column: 2 / 3;
+    min-height: 600px;
+  }
+
+  .app__firefox {
+    background-color: var(--grey-10);
+    background-image: url(./flat-firefox.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 164px 164px;
+    flex: 1;
+  }
 }

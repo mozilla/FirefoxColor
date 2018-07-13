@@ -1,13 +1,12 @@
 import React from "react";
 import classNames from "classnames";
-import BrowserPreview from "../BrowserPreview";
+import Browser from "../Browser";
 
 import "./index.scss";
 
 import iconClose from "./close.svg";
 
 export const PaginatedThemeSelector = ({
-  title,
   themes,
   className,
   previewClassName,
@@ -15,7 +14,8 @@ export const PaginatedThemeSelector = ({
   onDelete = null,
   perPage = 12,
   currentPage = 1,
-  setCurrentPage
+  setCurrentPage,
+  images = []
 }) => {
   const itemCount = themes.length;
   const pageCount = Math.ceil(itemCount / perPage);
@@ -28,30 +28,35 @@ export const PaginatedThemeSelector = ({
 
   return (
     <div className={classNames("theme-selector", className)}>
-      <h2>{title}</h2>
-      {page.map(([key, { theme }]) => (
-        <div
-          key={key}
-          className={classNames("theme-selector-preview", previewClassName)}
-        >
-          {onDelete && (
-            <button
-              className="delete-theme"
-              onClick={() => onDelete(key)}
-              title="Delete"
-            >
-              <img src={iconClose} />
-            </button>
-          )}
-          <BrowserPreview
-            {...{
-              size: "small",
-              theme,
-              onClick: () => onClick(theme)
-            }}
-          />
-        </div>
-      ))}
+      {page.map(([key, { theme }]) => {
+        const customImages = (theme.images.custom_backgrounds || []).map(
+          item => images[item.name]
+        );
+        return (
+          <div
+            key={key}
+            className={classNames("theme-selector-preview", previewClassName)}
+          >
+            {onDelete && (
+              <button
+                className="delete-theme"
+                onClick={() => onDelete(key)}
+                title="Delete"
+              >
+                <img src={iconClose} />
+              </button>
+            )}
+            <Browser
+              {...{
+                size: "small",
+                theme,
+                customImages,
+                onClick: () => onClick(theme)
+              }}
+            />
+          </div>
+        );
+      })}
       {pageCount > 1 && (
         <footer className="page-selector">
           <button

@@ -1,28 +1,99 @@
-@import '../../common.scss';
+@import "../../common.scss";
 
-.theme-share-save {
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 1fr 340px;
-  min-height: 250px;
-  padding: 45px 40px;
-}
+.theme-builder {
+  -moz-user-select: none;
+  border-top: 1px solid var(--grey-90-a20);
+  user-select: none;
+  width: 100%;
 
-.theme-share-save > * {
-  border: 1px solid var(--grey-20);
-  border-radius: 3px;
-  box-shadow: 0;
-  padding: 20px;
-  background: var(--grey-10);
-}
-
-@media (max-width: 880px) {
-  .theme-share-save {
-    grid-template-columns: 1fr;
+  .theme-builder__tabs-wrapper {
+    background: var(--grey-20);
+    border-bottom: 1px solid var(--grey-90-a10);
+    display: flex;
+    height: 48px;
+    width: 100%;
   }
 
-  .theme-share-save > * {
+  .theme-builder__tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
+    justify-content: center;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+  }
+
+  .theme-builder__tabs li {
+    align-items: center;
+    display: flex;
+    height: 48px;
+    justify-content: center;
     margin: 0;
+    padding: 0;
+    position: relative;
+    text-align: center;
+
+    &::after {
+      background: var(--grey-90-a10);
+      content: "";
+      height: 2px;
+      position: absolute;
+      top: 0;
+      transform-origin: center top;
+      transform: scaleX(0);
+      transition: transform 150ms ease-out;
+      width: 100%;
+    }
+
+    &:hover:not(.theme-builder__selected) {
+      background: var(--grey-90-a05);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    &:active:not(.theme-builder__selected) {
+      background: var(--grey-90-a10);
+    }
+  }
+
+  li.theme-builder__selected {
+    background: var(--white-100);
+    border-left: 1px solid var(--grey-30);
+    border-right: 1px solid var(--grey-30);
+    color: var(--blue-60);
+
+    &::after {
+      background: var(--blue-40);
+      transform: scaleX(1);
+    }
+  }
+
+  li:first-child.theme-builder__selected {
+    border-left: 0;
+  }
+
+  li:last-child.theme-builder__selected {
+    border-right: 0;
+  }
+
+  .theme-builder__content {
+    background: var(--white-100);
+    margin: 0 auto;
+    height: 320px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
+@media (max-width: 940px) {
+  .theme-builder__tabs {
+    li {
+      font-size: 14px;
+    }
+  }
+}

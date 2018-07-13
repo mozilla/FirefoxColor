@@ -34,7 +34,9 @@ export const actions = {
     "SET_SAVED_THEMES_PAGE",
     "SET_CURRENT_SAVED_THEME",
     "SET_PRESET_THEMES_PAGE",
-    "SET_DISPLAY_LEGAL_MODAL"
+    "SET_DISPLAY_LEGAL_MODAL",
+    "SET_DISPLAY_SHARE_MODAL",
+    "SET_THEME_BUILDER_PANEL"
   ),
   theme: {
     ...createActions(
@@ -66,10 +68,12 @@ export const actions = {
 
 export const selectors = {
   hasExtension: state => state.ui.hasExtension,
+  themeBuilderPanel: state => state.ui.themeBuilderPanel,
   firstRun: state => state.ui.firstRun,
   loaderDelayExpired: state => state.ui.loaderDelayExpired,
   selectedColor: state => state.ui.selectedColor,
   displayLegalModal: state => state.ui.displayLegalModal,
+  displayShareModal: state => state.ui.displayShareModal,
   shouldOfferPendingTheme: state =>
     !state.ui.firstRun &&
     !state.ui.userHasEdited &&
@@ -105,6 +109,10 @@ export const reducers = {
         ...state,
         displayLegalModal: display
       }),
+      SET_DISPLAY_SHARE_MODAL: (state, { payload: { display } }) => ({
+        ...state,
+        displayShareModal: display
+      }),
       SET_PENDING_THEME: (state, { payload: { theme } }) => ({
         ...state,
         pendingTheme: normalizeTheme(theme)
@@ -120,6 +128,12 @@ export const reducers = {
           {}
         )
       }),
+      SET_THEME_BUILDER_PANEL: (state, { payload }) => {
+        return {
+          ...state,
+          themeBuilderPanel: payload
+        };
+      },
       SET_SAVED_THEMES_PAGE: (
         state,
         { payload: { page: savedThemesPage } }
@@ -173,7 +187,9 @@ export const reducers = {
       selectedColor: null,
       hasExtension: false,
       loaderDelayExpired: false,
-      displayLegalModal: false
+      displayLegalModal: false,
+      displayShareModal: false,
+      themeBuilderPanel: 1
     }
   ),
   images: handleActions(

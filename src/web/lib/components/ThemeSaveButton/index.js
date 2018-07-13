@@ -1,27 +1,31 @@
 import React from "react";
-
-import "./index.scss";
+import classnames from "classnames";
 
 export const ThemeSaveButton = ({
+  children,
+  name,
   theme,
   storage,
   userHasEdited,
-  modifiedSinceSave
+  modifiedSinceSave,
+  setThemeBuilderPanel
 }) => {
   const { themeStorage } = storage;
-  const saveTheme = () => themeStorage.put(themeStorage.generateKey(), theme);
+  const saveTheme = () => {
+    themeStorage.put(themeStorage.generateKey(), theme);
+    setThemeBuilderPanel(3);
+  };
   return (
-    <div className="theme-save-button">
-      <h2>Save your theme</h2>
-      <p>Copy your theme to get back to it later.</p>
-      <button
-        onClick={saveTheme}
-        title={!userHasEdited || modifiedSinceSave ? "Save" : "Saved!"}
-        disabled={!modifiedSinceSave}
-      >
-        {!userHasEdited || modifiedSinceSave ? "Save" : "Saved!"}
-      </button>
-    </div>
+    <button
+      className={classnames(name, {
+        disabled: !modifiedSinceSave
+      })}
+      onClick={saveTheme}
+      title={!userHasEdited || modifiedSinceSave ? "Save" : "Saved!"}
+    >
+      {children}
+      <span>{!userHasEdited || modifiedSinceSave ? "Save" : "Saved!"}</span>
+    </button>
   );
 };
 
