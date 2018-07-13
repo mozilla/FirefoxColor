@@ -7,7 +7,6 @@ import "./index.scss";
 import iconClose from "./close.svg";
 
 export const PaginatedThemeSelector = ({
-  title,
   themes,
   className,
   previewClassName,
@@ -28,7 +27,6 @@ export const PaginatedThemeSelector = ({
 
   return (
     <div className={classNames("theme-selector", className)}>
-      <h2>{title}</h2>
       {page.map(([key, { theme }]) => (
         <div
           key={key}

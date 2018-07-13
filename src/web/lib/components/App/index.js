@@ -3,20 +3,17 @@ import { connect } from "react-redux";
 import { hot } from "react-hot-loader";
 
 import { actions, selectors } from "../../../../lib/store";
-import { DEBUG } from "../../../../lib/utils";
 
 import AppBackground from "../AppBackground";
 import AppFooter from "../AppFooter";
 import AppHeader from "../AppHeader";
 import AppLoadingIndicator from "../AppLoadingIndicator";
 import Mobile from "../Mobile";
-import PresetThemeSelector from "../PresetThemeSelector";
-import SavedThemeSelector from "../SavedThemeSelector";
 import SharedThemeDialog from "../SharedThemeDialog";
 import TermsPrivacyModal from "../TermsPrivacyModal";
-import ThemeBuilder from "../ThemeBuilder";
-import ThemeLogger from "../ThemeLogger";
+import MainThemePreview from "../MainThemePreview";
 import Onboarding from "../Onboarding";
+import ThemeBuilder from "../ThemeBuilder";
 
 import "./index.scss";
 
@@ -56,6 +53,7 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.ui.setPresetThemesPage({ page })),
     setDisplayLegalModal: args =>
       dispatch(actions.ui.setDisplayLegalModal(args)),
+    setThemeBuilderPanel: args => dispatch(actions.ui.setThemeBuilderPanel(args)),
     undo: () => dispatch(actions.theme.undo()),
     redo: () => dispatch(actions.theme.redo())
   };
@@ -66,9 +64,7 @@ export const AppComponent = props => {
     isMobile,
     loaderDelayExpired,
     hasExtension,
-    hasSavedThemes,
     shouldOfferPendingTheme,
-    storage,
     firstRun
   } = props;
   return (
@@ -84,21 +80,12 @@ export const AppComponent = props => {
                 shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
               <AppBackground {...props} />
               <main className="app__content">
+                <MainThemePreview {...props} />
                 <ThemeBuilder {...props} />
-                {hasSavedThemes && (
-                  <SavedThemeSelector
-                    {...{
-                      ...props,
-                      deleteTheme: storage.deleteTheme
-                    }}
-                  />
-                )}
-                <PresetThemeSelector {...props} />
               </main>
               <AppFooter {...props} />
               <TermsPrivacyModal {...props} />
               {firstRun && <Onboarding />}
-              <ThemeLogger {...props} debug={DEBUG} />
             </div>
           </Fragment>
         )}
@@ -109,3 +96,4 @@ export const AppComponent = props => {
 export default hot(module)(
   connect(mapStateToProps, mapDispatchToProps)(AppComponent)
 );
+

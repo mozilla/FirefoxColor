@@ -16,6 +16,7 @@ export const PresetThemeSelector = ({
     item.idx,
     { theme: item }
   ]);
+  console.log(setPresetThemesPage); //eslint-disable-line
   return (
     <PaginatedThemeSelector
       title="Preset themes"
@@ -26,7 +27,7 @@ export const PresetThemeSelector = ({
         setTheme({ theme });
         Metrics.themeChangeFull(theme.title);
       }}
-      perPage={8}
+      perPage={12}
       currentPage={presetThemesPage}
       setCurrentPage={setPresetThemesPage}
     />

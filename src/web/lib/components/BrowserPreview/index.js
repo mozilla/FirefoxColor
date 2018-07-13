@@ -11,6 +11,7 @@ export const BrowserPreview = ({
   size,
   theme,
   selectedTab = 0,
+  selectedColor,
   children = null,
   onClick: onClickDoll = null
 }) => {
@@ -67,7 +68,13 @@ export const BrowserPreview = ({
     ? `url(${bgImages(headerBackground)})`
     : "";
   return (
-    <div className={`doll doll--${size}`} onClick={clickDoll}>
+    <div className={classnames(
+      "doll",
+      `doll--${size}`
+    )} onClick={clickDoll}>
+      {selectedColor && size === "large" &&
+        <div className={`doll__highlight ${selectedColor}`} />
+      }
       <ul
         className="doll__tabbar"
         style={{

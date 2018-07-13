@@ -1,11 +1,6 @@
 @import '../../common.scss';
 
 .theme-selector {
-  h2 {
-    grid-column: 1 / -1;
-    margin: 0;
-  }
-
   footer.page-selector {
     display: flex;
     grid-column: 1 / -1;
@@ -74,8 +69,6 @@
       background-image: url(./arrow_right.svg);
     }
   }
-
-  @include unit;
 
   display: grid;
   grid-gap: $grid * 8;

@@ -65,8 +65,11 @@
 .doll--large {
   @include unit('large');
 
+  display: grid;
+  grid-template-rows: $grid * 20 $grid * 19 1fr;
+  height: 100%;
+
   > .doll__tabbar {
-    flex: 0 0 $grid * 20;
     padding: 0 $grid * 12.5;
 
     li {
@@ -84,10 +87,9 @@
 
   > .doll__toolbar-wrapper {
     background-position-y: -80px;
-    flex: 0 0 $grid * 19;
 
     .doll__toolbar {
-      height: 96px;
+      height: $grid * 19;
       padding: 0 $grid * 2.5 0 $grid * 6.5;
     }
 
@@ -247,4 +249,27 @@
       border-radius: 50%;
     }
   }
+}
+
+.doll--accentcolor {
+  position: relative;
+
+  .doll__tabbar::after {
+    border-radius: 4px;
+    border: 4px dashed var(--red-50);
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    content: '';
+    top: -4px;
+    left: -4px;
+  }
+}
+
+.doll__highlight {
+  border: 4px dashed red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: top 100ms, left 100ms, width 100ms, height 100ms;
 }

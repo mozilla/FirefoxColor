@@ -1,28 +1,86 @@
 @import '../../common.scss';
 
-.theme-share-save {
-  display: grid;
-  grid-gap: 20px;
-  grid-template-columns: 1fr 340px;
-  min-height: 250px;
-  padding: 45px 40px;
-}
+.theme-builder {
+  background: rgba(255, 255, 255, .98);
+  border-top: 1px solid var(--grey-90-a20);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  width: 100%;
+  -moz-user-select: none;
+  box-shadow: var(--small-unit-box-shadow);
 
-.theme-share-save > * {
-  border: 1px solid var(--grey-20);
-  border-radius: 3px;
-  box-shadow: 0;
-  padding: 20px;
-  background: var(--grey-10);
-}
-
-@media (max-width: 880px) {
-  .theme-share-save {
-    grid-template-columns: 1fr;
+  .theme-builder__tabs-wrapper {
+    width: 100%;
+    border-bottom: 1px solid var(--grey-90-a10);
+    background: var(--grey-20);
+    height: 48px;
   }
 
-  .theme-share-save > * {
+  .theme-builder__tabs {
+    display: flex;
+    list-style: none;
+    margin: 0 auto;
+    max-width: 1202px;
+    padding: 0;
+    width: 90%;
+  }
+
+  .theme-builder__tabs li {
+    align-items: center;
+    display: flex;
+    flex: 0 0 200px;
+    height: 48px;
+    justify-content: center;
     margin: 0;
+    padding: 0;
+    position: relative;
+    text-align: center;
+
+    &::after {
+      background: var(--grey-90-a10);
+      content: '';
+      height: 2px;
+      position: absolute;
+      top: 0;
+      transform-origin: center top;
+      transform: scaleX(0);
+      transition: transform 150ms ease-out;
+      width: 100%;
+    }
+
+    &:hover:not(.theme-builder__selected) {
+      background: var(--grey-90-a05);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+
+    &:active:not(.theme-builder__selected) {
+      background: var(--grey-90-a10);
+    }
+  }
+
+  li.theme-builder__selected {
+    background: var(--white-100);
+    border-left: 1px solid var(--grey-30);
+    border-right: 1px solid var(--grey-30);
+    color: var(--blue-60);
+
+    &::after {
+      background: var(--blue-40);
+      transform: scaleX(1);
+    }
+  }
+
+  .theme-builder__content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 360px;
+    padding: $grid * 6 0;
+    position: relative;
   }
 }
-

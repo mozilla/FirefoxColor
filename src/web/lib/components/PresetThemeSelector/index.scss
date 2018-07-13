@@ -1,17 +1,9 @@
 @import '../../common.scss';
 
 .preset-theme-selector {
-  h2 {
-    grid-column: 1 / -1;
-    margin: 0;
-  }
-
-  @include unit;
-
   display: grid;
   grid-gap: $grid * 8;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  padding: $grid * 6;
 }
 
 .preset-theme-preview {

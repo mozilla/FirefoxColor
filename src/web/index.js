@@ -31,7 +31,7 @@ const addonUrl = process.env.ADDON_URL;
 
 // Period after which app loading indicator will disappear if add-on not found
 // Default (2000) found in webpack.common.js
-const LOADER_DELAY_PERIOD = process.env.LOADER_DELAY_PERIOD;
+const LOADER_DELAY_PERIOD = 0;
 const PING_PERIOD = 1000;
 const MAX_OUTSTANDING_PINGS = 3;
 let outstandingPings = 0;

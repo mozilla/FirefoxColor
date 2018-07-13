@@ -1,37 +1,127 @@
 import React from "react";
-import BrowserPreview from "../BrowserPreview";
-import ThemeColorsEditor from "../ThemeColorsEditor";
+import { DEBUG } from "../../../../lib/utils";
+
+import ThemeLogger from "../ThemeLogger";
+import PresetThemeSelector from "../PresetThemeSelector";
+import SavedThemeSelector from "../SavedThemeSelector";
 import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
-import UndoRedoButtons from "../UndoRedoButtons";
-import ThemeUrl from "../ThemeUrl";
-import ThemeSaveButton from "../ThemeSaveButton";
-import Banner from "../Banner";
+import ThemeColorsEditor from "../ThemeColorsEditor";
 
 import "./index.scss";
 
-export const ThemeBuilder = props => {
-  const {
-    hasExtension, themeCanUndo, themeCanRedo
-  } = props;
+export const ThemeBuilder = ({
+  theme,
+  setTheme,
+  savedThemes,
+  savedThemesPage,
+  setSavedThemesPage,
+  hasSavedThemes,
+  storage,
+  themeBuilderPanel,
+  setThemeBuilderPanel,
+  setBackground,
+  selectedColor,
+  setColor,
+  setSelectedColor,
+  presetThemesPage,
+  setPresetThemesPage
+}) => {
+  const menuItems = [
+    {
+      name: "Preset themes",
+      id: "preset-themes"
+    },
+    {
+      name: "Colors",
+      id: "colors"
+    },
+    {
+      name: "Images & textures",
+      id: "images-and-textures"
+    }
+  ];
+
+  if (hasSavedThemes) {
+    menuItems.push({
+      name: `Saved themes (${Object.keys(savedThemes).length})`,
+      id: "saved-themes"
+    });
+  }
+
+  if (DEBUG) {
+    menuItems.push({
+      name: "Raw Theme Data",
+      id: "debugger"
+    });
+  }
+
+  const renderThemingSection = selected => {
+    switch (selected) {
+      case "preset-themes":
+        return (
+          <PresetThemeSelector
+            {...{
+              setTheme,
+              presetThemesPage,
+              setPresetThemesPage
+            }}
+          />
+        );
+      case "colors":
+        return (
+          <ThemeColorsEditor
+            {...{
+              theme,
+              selectedColor,
+              setColor,
+              setSelectedColor
+            }}
+          />
+        );
+      case "images-and-textures":
+        return <ThemeBackgroundPicker {...{ theme, setBackground }} />;
+      case "saved-themes":
+        return (
+          <SavedThemeSelector
+            {...{
+              setTheme,
+              savedThemes,
+              savedThemesPage,
+              setSavedThemesPage,
+              deleteTheme: storage.deleteTheme
+            }}
+          />
+        );
+      case "debugger":
+        return <ThemeLogger {...{ theme }} />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <BrowserPreview {...{...props, size: "large" }}>
-      <div className="app__theme-element-pickers">
-        <ThemeColorsEditor {...props} />
-        <ThemeBackgroundPicker {...props} />
-        {(themeCanUndo || themeCanRedo) && (
-          <UndoRedoButtons {...props} />
-        )}
+    <div className="theme-builder">
+      <div className="theme-builder__tabs-wrapper">
+        <ul className="theme-builder__tabs">
+          {menuItems.map((item, index) => {
+            const isSelected =
+              themeBuilderPanel === index ? "theme-builder__selected" : "";
+            return (
+              <li
+                key={index}
+                className={isSelected}
+                onClick={() => setThemeBuilderPanel(index)}
+              >
+                {item.name}
+              </li>
+            );
+          })}
+        </ul>
       </div>
-      {!hasExtension && (
-        <Banner {...props} />
-      )}
-      {hasExtension && (
-        <div className="theme-share-save">
-          <ThemeUrl {...props} />
-          <ThemeSaveButton {...props} />
-        </div>
-      )}
-    </BrowserPreview>
+      <div className="theme-builder__content">
+        {renderThemingSection(menuItems[themeBuilderPanel].id)}
+      </div>
+    </div>
   );
 };
 

@@ -1,54 +1,17 @@
 @import '../../common.scss';
 
 .theme-logger {
-  align-items: flex-end;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  right: 0;
-  z-index: 999999999;
+  height: 100%;
+  overflow: auto;
+  background: #000;
 
-  .theme-logger__toggle {
-    @include button(24px, 10px, 0);
-    @include buttonDefault;
-
-    left: 50px;
-    min-width: 40px;
-    opacity: 0;
-    padding: 0 5px;
-    position: relative;
-    transition: left 100ms, opacity 100ms;
-    width: 72px;
-
-    &:hover {
-      left: 0;
-      opacity: 1;
-    }
-  }
-
-  .show + .theme-logger__toggle {
-    left: 0;
-    opacity: 1;
-  }
-
-  &.debug {
-    .theme-logger__toggle {
-      left: 0;
-      opacity: 1;
-    }
-  }
-
-  .theme-logger__display {
-    background: #fffb;
-    display: none;
+  pre {
+    color: lime;
     font-family: monospace;
-    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 20px;
     padding: 10px;
-    width: 300px;
-
-    &.show {
-      display: block;
-    }
+    user-select: auto;
   }
 }

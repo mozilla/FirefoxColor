@@ -1,19 +1,12 @@
 .app {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  margin: 0 auto;
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  height: 100vh;
   max-width: 1200px;
-  min-height: 100vh;
-  min-width: 640px;
-  position: relative;
+  width: 90vw;
+  margin: 0 auto;
 }
 
 .app__content {
-  display: grid;
-  grid-gap: 20px;
-  margin: 0 auto;
-  position: relative;
-  width: 90%;
-  z-index: 1;
+  grid-row: 2 / 3;
 }
