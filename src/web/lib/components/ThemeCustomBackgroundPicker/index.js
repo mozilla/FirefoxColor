@@ -64,43 +64,41 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
         <input type="file" id="customBackground" onChange={handleFileChoice} />
 
-        <select id="alignment" value={alignment} onChange={handleAlignmentChange}>
-          <option value="none">none</option>
-          <option value="bottom">bottom</option>
-          <option value="center">center</option>
-          <option value="left">left</option>
-          <option value="right">right</option>
-          <option value="top">top</option>
-          <option value="center bottom">center bottom</option>
-          <option value="center center">center center</option>
-          <option value="center top">center top</option>
-          <option value="left bottom">left bottom</option>
-          <option value="left center">left center</option>
-          <option value="left top">left top</option>
-          <option value="right bottom">right bottom</option>
-          <option value="right center">right center</option>
-          <option value="right top">right top</option>
-        </select>
-
-        <select id="tiling" value={tiling} onChange={handleTilingChange}>
-          <option value="none">none</option>
-          <option value="no-repeat">no-repeat</option>
-          <option value="repeat">repeat</option>
-          <option value="repeat-x">repeat-x</option>
-          <option value="repeat-y">repeat-y</option>
-        </select>
-
-        {themeHasCustomBackgrounds && (
+        {themeHasCustomBackgrounds && <div>
           <input
             type="button"
             id="clearBackground"
             defaultValue="Clear Background"
             onClick={ev => {
-              clearCustomBackground();
+              clearCustomBackground({ index });
               ev.preventDefault();
             }}
           />
-        )}
+          <select id="alignment" value={alignment} onChange={handleAlignmentChange}>
+            <option value="">none</option>
+            <option value="bottom">bottom</option>
+            <option value="center">center</option>
+            <option value="left">left</option>
+            <option value="right">right</option>
+            <option value="top">top</option>
+            <option value="center bottom">center bottom</option>
+            <option value="center center">center center</option>
+            <option value="center top">center top</option>
+            <option value="left bottom">left bottom</option>
+            <option value="left center">left center</option>
+            <option value="left top">left top</option>
+            <option value="right bottom">right bottom</option>
+            <option value="right center">right center</option>
+            <option value="right top">right top</option>
+          </select>
+          <select id="tiling" value={tiling} onChange={handleTilingChange}>
+            <option value="">none</option>
+            <option value="no-repeat">no-repeat</option>
+            <option value="repeat">repeat</option>
+            <option value="repeat-x">repeat-x</option>
+            <option value="repeat-y">repeat-y</option>
+          </select>
+        </div>}
       </div>
     );
   }

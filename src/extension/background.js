@@ -150,13 +150,13 @@ const applyTheme = ({ theme }) => {
     const additional_backgrounds_tiling = [];
 
     log("CUSTOM BACKGROUNDS", custom_backgrounds);
-    
+
     custom_backgrounds.forEach(({ url, alignment, tiling }) => {
       additional_backgrounds.push(url);
       additional_backgrounds_alignment.push(alignment || "left top");
       additional_backgrounds_tiling.push(tiling || "no-repeat");
     });
-    
+
     newTheme.images.additional_backgrounds = additional_backgrounds;
     Object.assign(newTheme.properties, {
       additional_backgrounds_alignment,

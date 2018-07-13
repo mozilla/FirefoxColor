@@ -19,6 +19,7 @@ export const ThemeBuilder = ({
   setBackground,
   setCustomBackground,
   clearCustomBackground,
+  clearAllCustomBackgrounds,
   themeCustomBackgrounds,
   themeHasCustomBackgrounds,
   setColor,
@@ -45,7 +46,7 @@ export const ThemeBuilder = ({
         }}
       />
       <ThemeBackgroundPicker
-        {...{ theme, setBackground, clearCustomBackground }}
+        {...{ theme, setBackground, clearCustomBackground, clearAllCustomBackgrounds }}
       />
       {(themeCanUndo || themeCanRedo) && (
         <UndoRedoButtons {...{ undo, redo, themeCanUndo, themeCanRedo }} />

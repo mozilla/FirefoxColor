@@ -39,8 +39,12 @@ const mapDispatchToProps = dispatch => ({
     ...actions.theme.setCustomBackground(args),
     meta: { userEdit: true }
   }),
-  clearCustomBackground: () => dispatch({
-    ...actions.theme.clearCustomBackground(),
+  clearCustomBackground: args => dispatch({
+    ...actions.theme.clearCustomBackground(args),
+    meta: { userEdit: true }
+  }),
+  clearAllCustomBackgrounds: () => dispatch({
+    ...actions.theme.clearAllCustomBackgrounds(),
     meta: { userEdit: true }
   }),
   setColor: args => dispatch({
@@ -89,6 +93,7 @@ export const AppComponent = ({
   setBackground,
   setCustomBackground,
   clearCustomBackground,
+  clearAllCustomBackgrounds,
   setDisplayLegalModal,
   displayLegalModal,
   undo,
@@ -128,6 +133,7 @@ export const AppComponent = ({
                   setBackground,
                   setCustomBackground,
                   clearCustomBackground,
+                  clearAllCustomBackgrounds,
                   setColor,
                   setSelectedColor,
                   storage,

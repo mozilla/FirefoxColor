@@ -15,6 +15,7 @@ export const themeChangeActions = [
   "SET_BACKGROUND",
   "SET_CUSTOM_BACKGROUND",
   "CLEAR_CUSTOM_BACKGROUND",
+  "CLEAR_ALL_CUSTOM_BACKGROUNDS",
   ActionTypes.UNDO,
   ActionTypes.REDO
 ];
@@ -40,7 +41,8 @@ export const actions = {
       "SET_COLOR",
       "SET_BACKGROUND",
       "SET_CUSTOM_BACKGROUND",
-      "CLEAR_CUSTOM_BACKGROUND"
+      "CLEAR_CUSTOM_BACKGROUND",
+      "CLEAR_ALL_CUSTOM_BACKGROUNDS"
     ),
     // HACK: Seems like redux-undo doesn't have sub-tree specific undo/redo
     // actions - but let's fake it for now.
@@ -135,7 +137,8 @@ export const reducers = {
       SET_COLOR: state => ({ ...state, userHasEdited: true }),
       SET_BACKGROUND: state => ({ ...state, userHasEdited: true }),
       SET_CUSTOM_BACKGROUND: state => ({ ...state, userHasEdited: true }),
-      CLEAR_CUSTOM_BACKGROUND: state => ({ ...state, userHasEdited: true })
+      CLEAR_CUSTOM_BACKGROUND: state => ({ ...state, userHasEdited: true }),
+      CLEAR_ALL_CUSTOM_BACKGROUNDS: state => ({ ...state, userHasEdited: true })
     },
     {
       userHasEdited: false,
@@ -185,7 +188,17 @@ export const reducers = {
             }
           };
         },
-        CLEAR_CUSTOM_BACKGROUND: state => ({
+        CLEAR_CUSTOM_BACKGROUND: (state, { payload: { index } }) => {
+          const custom_backgrounds = [
+            ...(state.images.custom_backgrounds || [])
+          ];
+          custom_backgrounds.splice(index, 1);
+          return {
+            ...state,
+            images: { ...state.images, custom_backgrounds }
+          };
+        },
+        CLEAR_ALL_CUSTOM_BACKGROUNDS: state => ({
           ...state,
           images: { ...state.images, custom_backgrounds: [] }
         })

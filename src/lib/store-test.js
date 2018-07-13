@@ -9,6 +9,7 @@ describe("lib/store", () => {
   });
 
   describe("custom backgrounds", () => {
+    let backgrounds;
 
     it("should support setting custom background images by index", () => {
       const background0 = {
@@ -23,8 +24,6 @@ describe("lib/store", () => {
       };
 
       expect(selectors.themeHasCustomBackgrounds(store.getState())).to.be.false;
-
-      let backgrounds;
 
       backgrounds = selectors.themeCustomBackgrounds(store.getState());
       expect(backgrounds).to.have.lengthOf(0);
@@ -43,11 +42,42 @@ describe("lib/store", () => {
       expect(backgrounds).to.have.lengthOf(2);
       expect(backgrounds[1]).to.deep.include(background1);
 
-      store.dispatch(actions.theme.clearCustomBackground());
+      store.dispatch(actions.theme.clearAllCustomBackgrounds());
 
       expect(selectors.themeHasCustomBackgrounds(store.getState())).to.be.false;
       backgrounds = selectors.themeCustomBackgrounds(store.getState());
       expect(backgrounds).to.deep.equal([ ]);
+    });
+
+    it("should support clearing custom background by index", () => {
+
+      const background0 = {
+        url: "data:example0",
+        alignment: "bottom",
+        tiling: "no-repeat"
+      };
+      const background1 = {
+        url: "data:example1",
+        alignment: "center",
+        tiling: "repeat"
+      };
+
+      store.dispatch(actions.theme.setCustomBackground({ index: 0, ...background0 }));
+      store.dispatch(actions.theme.setCustomBackground({ index: 1, ...background1 }));
+
+      backgrounds = selectors.themeCustomBackgrounds(store.getState());
+      expect(backgrounds).to.have.lengthOf(2);
+      expect(backgrounds[0]).to.deep.include(background0);
+      expect(backgrounds[1]).to.deep.include(background1);
+
+      store.dispatch(actions.theme.clearCustomBackground({ index: 0 }));
+
+      backgrounds = selectors.themeCustomBackgrounds(store.getState());
+      expect(backgrounds).to.have.lengthOf(1);
+      expect(backgrounds[0]).to.deep.include(background1);
+
+      store.dispatch(actions.theme.clearCustomBackground({ index: 0 }));
+
     });
   });
 });
