@@ -31,26 +31,36 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setBackground: args => dispatch({
-    ...actions.theme.setBackground(args),
-    meta: { userEdit: true }
-  }),
-  setCustomBackground: args => dispatch({
-    ...actions.theme.setCustomBackground(args),
-    meta: { userEdit: true }
-  }),
-  clearCustomBackground: args => dispatch({
-    ...actions.theme.clearCustomBackground(args),
-    meta: { userEdit: true }
-  }),
-  clearAllCustomBackgrounds: () => dispatch({
-    ...actions.theme.clearAllCustomBackgrounds(),
-    meta: { userEdit: true }
-  }),
-  setColor: args => dispatch({
-    ...actions.theme.setColor(args),
-    meta: { userEdit: true }
-  }),
+  setBackground: args =>
+    dispatch({
+      ...actions.theme.setBackground(args),
+      meta: { userEdit: true }
+    }),
+  setCustomBackground: args =>
+    dispatch({
+      ...actions.theme.setCustomBackground(args),
+      meta: { userEdit: true }
+    }),
+  clearCustomBackground: args =>
+    dispatch({
+      ...actions.theme.clearCustomBackground(args),
+      meta: { userEdit: true }
+    }),
+  clearAllCustomBackgrounds: () =>
+    dispatch({
+      ...actions.theme.clearAllCustomBackgrounds(),
+      meta: { userEdit: true }
+    }),
+  moveCustomBackground: args =>
+    dispatch({
+      ...actions.theme.moveCustomBackground(args),
+      meta: { userEdit: true }
+    }),
+  setColor: args =>
+    dispatch({
+      ...actions.theme.setColor(args),
+      meta: { userEdit: true }
+    }),
   setTheme: args =>
     dispatch({
       ...actions.theme.setTheme(args),
@@ -64,120 +74,50 @@ const mapDispatchToProps = dispatch => ({
   redo: () => dispatch(actions.theme.redo())
 });
 
-export const AppComponent = ({
-  loaderQuote,
-  isFirefox,
-  isMobile,
-  addonUrl,
-  urlEncodeTheme,
-  clipboard,
-  theme,
-  themeCanUndo,
-  themeCanRedo,
-  themeCustomBackgrounds,
-  themeHasCustomBackgrounds,
-  hasExtension,
-  firstRun,
-  loaderDelayExpired,
-  selectedColor,
-  setColor,
-  pendingTheme,
-  savedThemes,
-  savedThemesPage,
-  setSavedThemesPage,
-  hasSavedThemes,
-  shouldOfferPendingTheme,
-  clearPendingTheme,
-  setTheme,
-  setSelectedColor,
-  setBackground,
-  setCustomBackground,
-  clearCustomBackground,
-  clearAllCustomBackgrounds,
-  setDisplayLegalModal,
-  displayLegalModal,
-  undo,
-  redo,
-  storage,
-  userHasEdited,
-  modifiedSinceSave
-}) => (
-  <Fragment>
-    {isMobile && <Mobile />}
-    {!isMobile &&
-      !loaderDelayExpired && <AppLoadingIndicator {...{ loaderQuote }} />}
-    {!isMobile &&
-      loaderDelayExpired && (
-        <Fragment>
-          <AppHeader {...{ hasExtension, theme }} />
-          <div className="app">
-            {hasExtension &&
-              shouldOfferPendingTheme && (
-                <SharedThemeDialog
-                  {...{
-                    pendingTheme,
-                    setTheme,
-                    clearPendingTheme
-                  }}
-                />
-              )}
-            <AppBackground {...{ theme }} />
-            <main className="app__content">
-              <ThemeBuilder
-                {...{
-                  clipboard,
-                  modifiedSinceSave,
-                  redo,
-                  savedThemes,
-                  selectedColor,
-                  setBackground,
-                  setCustomBackground,
-                  clearCustomBackground,
-                  clearAllCustomBackgrounds,
-                  setColor,
-                  setSelectedColor,
-                  storage,
-                  theme,
-                  themeCanRedo,
-                  themeCanUndo,
-                  themeCustomBackgrounds,
-                  themeHasCustomBackgrounds,
-                  undo,
-                  urlEncodeTheme,
-                  userHasEdited,
-                  hasExtension,
-                  firstRun,
-                  isFirefox,
-                  addonUrl
-                }}
-              />
-              {hasSavedThemes && (
-                <SavedThemeSelector
-                  {...{
-                    setTheme,
-                    savedThemes,
-                    savedThemesPage,
-                    setSavedThemesPage,
-                    deleteTheme: storage.deleteTheme
-                  }}
-                />
-              )}
-              <PresetThemeSelector {...{ setTheme }} />
-            </main>
-            <AppFooter {...{ hasExtension, setDisplayLegalModal }} />
-            <TermsPrivacyModal
-              {...{
-                displayLegalModal,
-                setDisplayLegalModal
-              }}
-            />
-            {firstRun && <Onboarding />}
-            <ThemeLogger {...{ theme }} debug={DEBUG} />
-          </div>
-        </Fragment>
-      )}
-  </Fragment>
-);
+export const AppComponent = props => {
+  const {
+    isMobile,
+    loaderDelayExpired,
+    hasExtension,
+    hasSavedThemes,
+    shouldOfferPendingTheme,
+    storage,
+    firstRun
+  } = props;
+  return (
+    <Fragment>
+      {isMobile && <Mobile />}
+      {!isMobile && !loaderDelayExpired && <AppLoadingIndicator {...props} />}
+      {!isMobile &&
+        loaderDelayExpired && (
+          <Fragment>
+            <AppHeader {...props} />
+            <div className="app">
+              {hasExtension &&
+                shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
+              <AppBackground {...props} />
+              <main className="app__content">
+                <ThemeBuilder {...props} />
+                {hasSavedThemes && (
+                  <SavedThemeSelector
+                    {...{
+                      ...props,
+                      deleteTheme: storage.deleteTheme
+                    }}
+                  />
+                )}
+                <PresetThemeSelector {...props} />
+              </main>
+              <AppFooter {...props} />
+              <TermsPrivacyModal {...props} />
+              {firstRun && <Onboarding />}
+              <ThemeLogger {...props} debug={DEBUG} />
+            </div>
+          </Fragment>
+        )}
+    </Fragment>
+  );
+};
 
 export default hot(module)(connect(
   mapStateToProps,

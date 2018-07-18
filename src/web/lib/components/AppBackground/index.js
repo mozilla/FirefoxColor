@@ -13,14 +13,15 @@ export const AppBackground = ({ theme }) => {
     Object.keys(theme.colors).forEach(key => {
       colors[key] = colorToCSS(theme.colors[key]);
     });
-    style.background =
-      `linear-gradient(150deg, ${colors.toolbar} 22.5%, ${colors.accentcolor} 68.1%)`;
+    style.background = `linear-gradient(150deg, ${colors.toolbar} 22.5%, ${
+      colors.accentcolor
+    } 68.1%)`;
   }
 
   return (
     <div className="app-background" style={style}>
-      <div className="app-background__texture-1"/>
-      <div className="app-background__texture-2"/>
+      <div className="app-background__texture-1" />
+      <div className="app-background__texture-2" />
     </div>
   );
 };

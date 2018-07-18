@@ -114,9 +114,7 @@ export const normalizeThemeColors = (colors = {}) => {
 
 // Utility to ensure normal properties and values in app theme state
 export const normalizeTheme = (data = {}, options = {}) => {
-  const {
-    omitCustomBackground = false
-  } = options;
+  const { omitCustomBackground = false } = options;
 
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),

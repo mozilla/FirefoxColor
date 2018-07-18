@@ -4,12 +4,7 @@ import classnames from "classnames";
 
 import "./index.scss";
 
-const PANEL_COLORS = [
-  "#0a84ff",
-  "#b5007f",
-  "#8000d7",
-  "#d76e00",
-  "#0a84ff"];
+const PANEL_COLORS = ["#0a84ff", "#b5007f", "#8000d7", "#d76e00", "#0a84ff"];
 
 const PANEL_STRINGS = [
   "Welcome to Firefox Color!",
@@ -74,7 +69,8 @@ export default class Onboarding extends React.Component {
           <div className="onboarding__content">
             <div
               className="onboarding__icon"
-              style={{backgroundPositionX: index * PANEL_SPRITE_OFFSET }}/>
+              style={{ backgroundPositionX: index * PANEL_SPRITE_OFFSET }}
+            />
             {PANEL_STRINGS[index]}
           </div>
           <span>{this.renderButton(index)}</span>

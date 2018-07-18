@@ -10,8 +10,4 @@ export const bgImages = require.context(
   /bg-.*\.svg/
 );
 
-export const buttonImages = require.context(
-  "../images/",
-  false,
-  /.*-16\.svg/
-);
+export const buttonImages = require.context("../images/", false, /.*-16\.svg/);

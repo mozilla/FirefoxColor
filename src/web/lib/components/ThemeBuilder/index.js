@@ -10,85 +10,31 @@ import Banner from "../Banner";
 
 import "./index.scss";
 
-export const ThemeBuilder = ({
-  clipboard,
-  modifiedSinceSave,
-  redo,
-  savedThemes,
-  selectedColor,
-  setBackground,
-  setCustomBackground,
-  clearCustomBackground,
-  clearAllCustomBackgrounds,
-  themeCustomBackgrounds,
-  themeHasCustomBackgrounds,
-  setColor,
-  setSelectedColor,
-  storage,
-  theme,
-  themeCanRedo,
-  themeCanUndo,
-  undo,
-  urlEncodeTheme,
-  userHasEdited,
-  hasExtension,
-  isFirefox,
-  addonUrl
-}) => (
-  <BrowserPreview {...{ theme, size: "large" }}>
-    <div className="app__theme-element-pickers">
-      <ThemeColorsEditor
-        {...{
-          theme,
-          selectedColor,
-          setColor,
-          setSelectedColor
-        }}
-      />
-      <ThemeBackgroundPicker
-        {...{ theme, setBackground, clearCustomBackground, clearAllCustomBackgrounds }}
-      />
-      {(themeCanUndo || themeCanRedo) && (
-        <UndoRedoButtons {...{ undo, redo, themeCanUndo, themeCanRedo }} />
-      )}
-    </div>
-    {!hasExtension && (
-      <Banner
-        {...{
-          isFirefox,
-          addonUrl,
-          selectedColor,
-          setSelectedColor
-        }}
-      />
-    )}
-    {hasExtension && (
-      <div className="theme-share-save">
-        <ThemeUrl
-          {...{ theme, themeHasCustomBackgrounds, urlEncodeTheme, clipboard }}
-        />
-        <ThemeSaveButton
-          {...{
-            theme,
-            savedThemes,
-            generateThemeKey: storage.generateThemeKey,
-            putTheme: storage.putTheme,
-            userHasEdited,
-            modifiedSinceSave
-          }}
-        />
-        <ThemeCustomBackgroundPicker
-          {...{
-            theme,
-            themeCustomBackgrounds,
-            themeHasCustomBackgrounds,
-            setCustomBackground,
-            clearCustomBackground
-          }}
-        />
+export const ThemeBuilder = props => {
+  const {
+    hasExtension, themeCanUndo, themeCanRedo
+  } = props;
+  return (
+    <BrowserPreview {...{...props, size: "large" }}>
+      <div className="app__theme-element-pickers">
+        <ThemeColorsEditor {...props} />
+        <ThemeBackgroundPicker {...props} />
+        {(themeCanUndo || themeCanRedo) && (
+          <UndoRedoButtons {...props} />
+        )}
       </div>
-    )}
-  </BrowserPreview>
-);
+      {!hasExtension && (
+        <Banner {...props} />
+      )}
+      {hasExtension && (
+        <div className="theme-share-save">
+          <ThemeUrl {...props} />
+          <ThemeSaveButton {...props} />
+          <ThemeCustomBackgroundPicker {...props} />
+        </div>
+      )}
+    </BrowserPreview>
+  );
+};
 
 export default ThemeBuilder;

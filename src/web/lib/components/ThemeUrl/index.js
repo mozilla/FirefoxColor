@@ -52,7 +52,10 @@ export default class ThemeUrl extends React.Component {
       return (
         <div className="theme-url theme-url-disabled">
           <h2>Share your theme</h2>
-          <p>This theme cannot be shared via URL because it has a custom background image.</p>
+          <p>
+            This theme cannot be shared via URL because it has a custom
+            background image.
+          </p>
         </div>
       );
     }

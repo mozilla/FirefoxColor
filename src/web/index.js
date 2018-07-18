@@ -70,10 +70,14 @@ const updateHistoryMiddleware = ({ getState }) => next => action => {
   const returnValue = next(action);
   const meta = action.meta || {};
   if (!meta.skipHistory && themeChangeActions.includes(action.type)) {
-    const theme = selectors.theme(getState());
-    urlEncodeTheme(theme).then(url =>
-      window.history.pushState({ theme }, "", url)
-    );
+    const state = getState();
+    const hasCustomBackgrounds = selectors.themeHasCustomBackgrounds(state);
+    if (!hasCustomBackgrounds) {
+      const theme = selectors.theme(state);
+      urlEncodeTheme(theme).then(url =>
+        window.history.pushState({ theme }, "", url)
+      );
+    }
   }
   return returnValue;
 };

@@ -4,11 +4,14 @@ import "./index.scss";
 
 export const ThemeSaveButton = ({
   theme,
-  generateThemeKey,
+  storage,
   putTheme,
   userHasEdited,
   modifiedSinceSave
 }) => {
+  const {
+    generateThemeKey
+  } = storage;
   const saveTheme = () => putTheme(generateThemeKey(), theme);
 
   return (

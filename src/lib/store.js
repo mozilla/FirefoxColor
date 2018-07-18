@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from "redux";
-import { createActions, handleActions } from "redux-actions";
+import { createActions, handleActions, combineActions } from "redux-actions";
 import undoable, { ActionCreators, ActionTypes } from "redux-undo";
 import {
   themesEqual,
@@ -16,6 +16,7 @@ export const themeChangeActions = [
   "SET_CUSTOM_BACKGROUND",
   "CLEAR_CUSTOM_BACKGROUND",
   "CLEAR_ALL_CUSTOM_BACKGROUNDS",
+  "MOVE_CUSTOM_BACKGROUND",
   ActionTypes.UNDO,
   ActionTypes.REDO
 ];
@@ -42,7 +43,8 @@ export const actions = {
       "SET_BACKGROUND",
       "SET_CUSTOM_BACKGROUND",
       "CLEAR_CUSTOM_BACKGROUND",
-      "CLEAR_ALL_CUSTOM_BACKGROUNDS"
+      "CLEAR_ALL_CUSTOM_BACKGROUNDS",
+      "MOVE_CUSTOM_BACKGROUND"
     ),
     // HACK: Seems like redux-undo doesn't have sub-tree specific undo/redo
     // actions - but let's fake it for now.
@@ -134,11 +136,10 @@ export const reducers = {
         ...state,
         userHasEdited: meta && meta.userEdit ? true : state.userHasEdited
       }),
-      SET_COLOR: state => ({ ...state, userHasEdited: true }),
-      SET_BACKGROUND: state => ({ ...state, userHasEdited: true }),
-      SET_CUSTOM_BACKGROUND: state => ({ ...state, userHasEdited: true }),
-      CLEAR_CUSTOM_BACKGROUND: state => ({ ...state, userHasEdited: true }),
-      CLEAR_ALL_CUSTOM_BACKGROUNDS: state => ({ ...state, userHasEdited: true })
+      [combineActions(...themeChangeActions)]: state => ({
+        ...state,
+        userHasEdited: true
+      })
     },
     {
       userHasEdited: false,
@@ -201,7 +202,30 @@ export const reducers = {
         CLEAR_ALL_CUSTOM_BACKGROUNDS: state => ({
           ...state,
           images: { ...state.images, custom_backgrounds: [] }
-        })
+        }),
+        MOVE_CUSTOM_BACKGROUND: (
+          state,
+          { payload: { newIndex, oldIndex } }
+        ) => {
+          // see: https://medium.com/kevin-salters-blog/reordering-a-javascript-array-based-on-a-drag-and-drop-interface-e3ca39ca25c
+          const originalArray = state.images.custom_backgrounds;
+          const movedItem = originalArray.find(
+            (item, index) => index === oldIndex
+          );
+          const remainingItems = originalArray.filter(
+            (item, index) => index !== oldIndex
+          );
+          const reorderedItems = [
+            ...remainingItems.slice(0, newIndex),
+            movedItem,
+            ...remainingItems.slice(newIndex)
+          ];
+          const newState = {
+            ...state,
+            images: { ...state.images, custom_backgrounds: reorderedItems }
+          };
+          return newState;
+        }
       },
       normalizeTheme()
     ),

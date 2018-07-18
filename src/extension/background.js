@@ -167,7 +167,7 @@ const applyTheme = ({ theme }) => {
       theme.images.additional_backgrounds[0]
     );
     if (background) {
-      newTheme.images.additional_backgrounds = [ bgImages(background) ];
+      newTheme.images.additional_backgrounds = [bgImages(background)];
       Object.assign(newTheme.properties, {
         additional_backgrounds_alignment: ["top"],
         additional_backgrounds_tiling: ["repeat"]

@@ -20,9 +20,11 @@ export default class ThemeLogger extends React.Component {
     const { theme, debug } = this.props;
     const loggerButtonText = isExpanded ? "Hide Logger" : "Show Logger";
     return (
-      <div className={classNames("theme-logger", {debug})}>
-        <pre className={classNames("theme-logger__display", {"show": isExpanded})}>
-        { JSON.stringify(theme, null, 2) }
+      <div className={classNames("theme-logger", { debug })}>
+        <pre
+          className={classNames("theme-logger__display", { show: isExpanded })}
+        >
+          {JSON.stringify(theme, null, 2)}
         </pre>
         <button
           className="theme-logger__toggle"
