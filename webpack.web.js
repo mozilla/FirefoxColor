@@ -1,4 +1,5 @@
 /* eslint import/no-extraneous-dependencies: off */
+const webpack = require("webpack");
 
 const path = require("path");
 const merge = require("webpack-merge");
@@ -16,6 +17,7 @@ module.exports = merge(common.webpackConfig, {
     index: "./src/web/index"
   },
   devServer: {
+    hot: true,
     contentBase: path.join(__dirname, "build/web"),
     host: common.siteHost,
     port: common.sitePort
@@ -25,6 +27,7 @@ module.exports = merge(common.webpackConfig, {
     filename: "[name].js"
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new GenerateAssetWebpackPlugin({
       filename: "__version__",
       fn: buildVersionJSON

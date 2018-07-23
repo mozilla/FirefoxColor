@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
+import { hot } from "react-hot-loader";
 
 import { actions, selectors } from "../../../../lib/store";
 import { DEBUG } from "../../../../lib/utils";
@@ -156,4 +157,7 @@ export const AppComponent = ({
   </Fragment>
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export default hot(module)(connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppComponent));
