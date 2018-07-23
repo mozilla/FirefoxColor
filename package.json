@@ -19,11 +19,13 @@
     }
   },
   "scripts": {
-    "start": "npm-run-all --parallel server watch:extension watch:lint watch:validate watch:test",
-    "server": "cross-env NODE_ENV=development SITE_ID=local webpack-dev-server --config webpack.web.js",
+    "start": "cross-env NODE_ENV=development SITE_ID=local SITE_HOST=localhost npm run start:common",
+    "start:common": "npm-run-all --parallel server watch:extension watch:lint watch:validate watch:test",
+    "start:ec2": "cross-env HOST=$(curl -s http://169.254.169.254/latest/meta-data/public-hostname) NODE_ENV=development SITE_ID=remote npm run start:common",
+    "server": "webpack-dev-server --config webpack.web.js",
     "watch": "npm-run-all --parallel watch:*",
-    "watch:web": "cross-env NODE_ENV=development SITE_ID=local webpack --watch --progress --colors --config webpack.web.js",
-    "watch:extension": "cross-env NODE_ENV=development SITE_ID=local webpack --watch --progress --colors --config webpack.extension.js",
+    "watch:web": "webpack --watch --progress --colors --config webpack.web.js",
+    "watch:extension": "webpack --watch --progress --colors --config webpack.extension.js",
     "watch:lint": "npm-run-all --parallel watch:lint:*",
     "watch:lint:js": "onchange -p -v \"src/**/*.js\" -- npm run lint:js",
     "watch:lint:css": "onchange -p -v \"src/**/*.scss\" -- npm run lint:css",
