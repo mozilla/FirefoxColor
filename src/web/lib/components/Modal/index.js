@@ -10,7 +10,7 @@ export const Modal = ({ toggleModal, displayModal, children }) => {
     toggleModal({ display: false });
   };
   return (
-    <div className={classNames("modal", {"modal--display": displayModal})} onClick={handleToggle}>
+    <div className={classNames("modal", {"modal--display": displayModal})}>
       <div className="modal__content">
         <button className="modal__toggle" title="close" onClick={handleToggle}>
           <img src={iconClose} alt="close icon" />
