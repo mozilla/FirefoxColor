@@ -13,8 +13,6 @@ const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
 class ThemeColorsEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleColorChange = this.handleColorChange.bind(this);
   }
 
   handleClick(ev, name) {
@@ -34,14 +32,14 @@ class ThemeColorsEditor extends React.Component {
     }
   }
 
-  handleKeyPress(event) {
+  handleKeyPress = (event) => {
     const { selectedColor, setSelectedColor } = this.props;
     if (event.keyCode === ESC && selectedColor !== null) {
       setSelectedColor({ name: null });
     }
   }
 
-  handleColorChange(name, color) {
+  handleColorChange = (name, color) => {
     this.props.setColor({ name, color: color.rgb });
     Metrics.themeChangeColor(name);
   }

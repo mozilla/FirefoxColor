@@ -68,8 +68,10 @@
   "devDependencies": {
     "addons-linter": "^1.1.0",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.2",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-node8": "^1.2.0",
@@ -79,6 +81,7 @@
     "cross-env": "^5.1.3",
     "css-loader": "^1.0.0",
     "eslint": "^5.0.0",
+    "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-mozilla": "^0.14.0",
     "eslint-plugin-no-unsanitized": "^3.0.0",
