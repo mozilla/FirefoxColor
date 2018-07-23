@@ -10,20 +10,20 @@ import Clipboard from "clipboard";
 
 import { makeLog } from "../lib/utils";
 import { CHANNEL_NAME, loaderQuotes } from "../lib/constants";
-import {
-  createAppStore,
-  actions,
-  selectors,
-  themeChangeActions
-} from "../lib/store";
+import { normalizeTheme } from "../lib/themes";
+import { createAppStore, actions, selectors } from "../lib/store";
 import Metrics from "../lib/metrics";
 
-import App from "./lib/components/App";
+import setupMiddleware from "./lib/middleware";
 import storage from "./lib/storage";
+
+import App from "./lib/components/App";
 
 import "./index.scss";
 
 const log = makeLog("web");
+
+log("startup");
 
 const clipboard = new Clipboard(".clipboardButton");
 
@@ -33,16 +33,20 @@ const addonUrl = process.env.ADDON_URL;
 // Default (2000) found in webpack.common.js
 const LOADER_DELAY_PERIOD = process.env.LOADER_DELAY_PERIOD;
 const PING_PERIOD = 1000;
-const MAX_OUTSTANDING_PINGS = 3;
+const MAX_OUTSTANDING_PINGS = 7;
 let outstandingPings = 0;
 
 const jsonCodec = JsonUrl("lzma");
 
-const urlEncodeTheme = theme =>
-  jsonCodec.compress(theme).then(value => {
-    const { protocol, host, pathname } = window.location;
-    return `${protocol}//${host}${pathname}?theme=${value}`;
-  });
+const urlEncodeTheme = ({ hasCustomBackgrounds = false, theme }) => {
+  const { protocol, host, pathname } = window.location;
+  const baseUrl = `${protocol}//${host}${pathname}`;
+  return hasCustomBackgrounds
+    ? Promise.resolve(baseUrl)
+    : jsonCodec
+        .compress(normalizeTheme(theme))
+        .then(value => `${baseUrl}?theme=${value}`);
+};
 
 const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
 
@@ -52,35 +56,13 @@ const postMessage = (type, data = {}) =>
     "*"
   );
 
-const updateExtensionThemeMiddleware = ({ getState }) => next => action => {
-  const returnValue = next(action);
-  const meta = action.meta || {};
-  if (!meta.skipAddon && themeChangeActions.includes(action.type)) {
-    postMessage("setTheme", { theme: selectors.theme(getState()) });
-  }
-  return returnValue;
-};
-
-const updateHistoryMiddleware = ({ getState }) => next => action => {
-  const returnValue = next(action);
-  const meta = action.meta || {};
-  if (!meta.skipHistory && themeChangeActions.includes(action.type)) {
-    const theme = selectors.theme(getState());
-    urlEncodeTheme(theme).then(url =>
-      window.history.pushState({ theme }, "", url)
-    );
-  }
-  return returnValue;
-};
-
 const composeEnhancers = composeWithDevTools({});
 
 const store = createAppStore(
   {},
   composeEnhancers(
     applyMiddleware(
-      updateExtensionThemeMiddleware,
-      updateHistoryMiddleware,
+      ...setupMiddleware({ postMessage, urlEncodeTheme, storage }),
       Metrics.storeMiddleware()
     )
   )
@@ -119,7 +101,11 @@ window.addEventListener("message", ({ source, data: message }) => {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
         Metrics.setHasAddon(true);
         Metrics.installSuccess();
-        postMessage("setTheme", { theme: selectors.theme(store.getState()) });
+        const state = store.getState();
+        postMessage("addImages", {
+          images: selectors.themeCustomImages(state)
+        });
+        postMessage("setTheme", { theme: selectors.theme(state) });
       }
     }
     if (message.type === "fetchedTheme") {
