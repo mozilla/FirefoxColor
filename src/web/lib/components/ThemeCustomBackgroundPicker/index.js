@@ -18,17 +18,10 @@ export const ThemeCustomBackgroundPicker = props => (
 class ThemeCustomBackgroundSelector extends React.Component {
   constructor(props) {
     super(props);
-    const { index } = props;
     this.state = {
       customBackgroundTooLarge: false,
       customBackgroundWrongType: false
     };
-    this.handleClearBackground = this.handleClearBackground.bind(this);
-    this.handleFileChoice = this.handleFileChoice.bind(this);
-    this.handleAlignmentChange = this.handleAlignmentChange.bind(this);
-    this.handleTilingChange = this.handleTilingChange.bind(this);
-    this.handleMoveUp = () => this.handleMove(index - 1);
-    this.handleMoveDown = () => this.handleMove(index + 1);
   }
 
   render() {
@@ -111,34 +104,38 @@ class ThemeCustomBackgroundSelector extends React.Component {
     );
   }
 
-  handleClearBackground(ev) {
+  handleClearBackground = (ev) => {
     const { index, clearCustomBackground } = this.props;
     clearCustomBackground({ index });
     ev.preventDefault();
   }
 
-  handleMove(newIndex) {
+  handleMove = (newIndex) => {
     const { index: oldIndex, moveCustomBackground, themeCustomBackgrounds } = this.props;
     if (newIndex < 0) { return; }
     if (newIndex > themeCustomBackgrounds.length) { return; }
     moveCustomBackground({ oldIndex, newIndex });
   }
 
-  handleAlignmentChange(ev) {
+  handleMoveUp = () => this.handleMove(this.props.index - 1)
+
+  handleMoveDown = () => this.handleMove(this.props.index + 1)
+
+  handleAlignmentChange = (ev) => {
     const { index, themeCustomBackgrounds, setCustomBackground } = this.props;
     const { url, tiling } = themeCustomBackgrounds[index] || {};
     const alignment = ev.target.value;
     setCustomBackground({ index, url, tiling, alignment });
   }
 
-  handleTilingChange(ev) {
+  handleTilingChange = (ev) => {
     const { index, themeCustomBackgrounds, setCustomBackground } = this.props;
     const { url, alignment } = themeCustomBackgrounds[index] || {};
     const tiling = ev.target.value;
     setCustomBackground({ index, url, tiling, alignment });
   }
 
-  handleFileChoice(ev) {
+  handleFileChoice = (ev) => {
     const { index, themeCustomBackgrounds, setCustomBackground } = this.props;
     const { tiling, alignment } = themeCustomBackgrounds[index] || {};
 
