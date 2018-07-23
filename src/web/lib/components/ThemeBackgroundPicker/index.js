@@ -38,11 +38,11 @@ class ThemeBackgroundPicker extends React.Component {
     this.state = {
       selected: false
     };
-    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
-  handleClick(e) {
-    if (e.target.classList.contains("theme-background-picker__backgrounds")) return;
+  handleClick = (e) => {
+    if (e.target.classList.contains("theme-background-picker__backgrounds"))
+      return;
     this.setState({ selected: !this.state.selected });
   }
 
@@ -50,7 +50,7 @@ class ThemeBackgroundPicker extends React.Component {
     this.setState({ selected: false });
   }
 
-  handleKeyPress(event) {
+  handleKeyPress = (event) => {
     if (event.keyCode === ESC) {
       this.setState({ selected: false });
     }
@@ -74,7 +74,7 @@ class ThemeBackgroundPicker extends React.Component {
     return (
       <div
         className={classnames("theme-background-picker", { selected })}
-        onClick={this.handleClick.bind(this)}
+        onClick={this.handleClick}
       >
         <span
           className="theme-background-picker__swatch"
