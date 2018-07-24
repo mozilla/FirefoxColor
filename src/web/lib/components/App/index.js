@@ -38,11 +38,10 @@ const mapDispatchToProps = dispatch => ({
     ...actions.theme.setColor(args),
     meta: { userEdit: true }
   }),
-  setTheme: args =>
-    dispatch({
-      ...actions.theme.setTheme(args),
-      meta: { userEdit: true }
-    }),
+  setTheme: args => dispatch({
+    ...actions.theme.setTheme(args),
+    meta: { userEdit: args.hasOwnProperty("userEdit") ? args.userEdit : true }
+  }),
   clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
   setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
   setSavedThemesPage: page => dispatch(actions.ui.setSavedThemesPage({ page })),
