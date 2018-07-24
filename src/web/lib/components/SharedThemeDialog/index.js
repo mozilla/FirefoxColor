@@ -3,7 +3,11 @@ import Metrics from "../../../../lib/metrics";
 import BrowserPreview from "../BrowserPreview";
 import "./index.scss";
 
-export const SharedThemeDialog = ({ pendingTheme, setTheme, clearPendingTheme }) => {
+export const SharedThemeDialog = ({
+  pendingTheme,
+  setTheme,
+  clearPendingTheme
+}) => {
   const onApply = () => {
     Metrics.receiveTheme("apply", pendingTheme);
     setTheme({ theme: pendingTheme });
@@ -27,8 +31,12 @@ export const SharedThemeDialog = ({ pendingTheme, setTheme, clearPendingTheme })
         <div className="options">
           <p>Do you want to apply this custom theme?</p>
           <div className="buttons">
-            <button className="skip" onClick={onSkip}>Nope</button>
-            <button className="apply" onClick={onApply}>Yep</button>
+            <button className="skip" onClick={onSkip}>
+              Nope
+            </button>
+            <button className="apply" onClick={onApply}>
+              Yep
+            </button>
           </div>
         </div>
       </div>

@@ -37,7 +37,7 @@ function putTheme(key, theme) {
 
 function checkDuplicateTheme(theme) {
   const themesList = listThemes();
-  return Object.keys(themesList).some((key) => {
+  return Object.keys(themesList).some(key => {
     return themesEqual(theme, themesList[key].theme);
   });
 }
@@ -92,16 +92,13 @@ function init(store) {
 
   updateSavedThemesInStore();
 
-  window.addEventListener(
-    "storage",
-    e => {
-      log("storage event", e);
-      if (isThemeStorageKey(e.key)) {
-        updateSavedThemesInStore();
-        store.dispatch(actions.ui.setCurrentSavedTheme({ currentSavedTheme }));
-      }
+  window.addEventListener("storage", e => {
+    log("storage event", e);
+    if (isThemeStorageKey(e.key)) {
+      updateSavedThemesInStore();
+      store.dispatch(actions.ui.setCurrentSavedTheme({ currentSavedTheme }));
     }
-  );
+  });
 }
 
 export default {

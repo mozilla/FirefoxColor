@@ -32,17 +32,17 @@ class ThemeColorsEditor extends React.Component {
     }
   }
 
-  handleKeyPress = (event) => {
+  handleKeyPress = event => {
     const { selectedColor, setSelectedColor } = this.props;
     if (event.keyCode === ESC && selectedColor !== null) {
       setSelectedColor({ name: null });
     }
-  }
+  };
 
   handleColorChange = (name, color) => {
     this.props.setColor({ name, color: color.rgb });
     Metrics.themeChangeColor(name);
-  }
+  };
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);

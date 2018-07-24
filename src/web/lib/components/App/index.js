@@ -31,14 +31,16 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  setBackground: args => dispatch({
-    ...actions.theme.setBackground(args),
-    meta: { userEdit: true }
-  }),
-  setColor: args => dispatch({
-    ...actions.theme.setColor(args),
-    meta: { userEdit: true }
-  }),
+  setBackground: args =>
+    dispatch({
+      ...actions.theme.setBackground(args),
+      meta: { userEdit: true }
+    }),
+  setColor: args =>
+    dispatch({
+      ...actions.theme.setColor(args),
+      meta: { userEdit: true }
+    }),
   setTheme: args =>
     dispatch({
       ...actions.theme.setTheme(args),
@@ -157,7 +159,9 @@ export const AppComponent = ({
   </Fragment>
 );
 
-export default hot(module)(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppComponent));
+export default hot(module)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AppComponent)
+);

@@ -32,12 +32,8 @@ describe("lib/themes", () => {
     const subject = themes.themesEqual;
 
     it("should reject when one theme is null", () => {
-      expect(
-        subject(
-          { colors: { toolbar: { r: 255, g: 255, b: 255 } } },
-          null
-        )
-      ).to.be.false;
+      expect(subject({ colors: { toolbar: { r: 255, g: 255, b: 255 } } }, null))
+        .to.be.false;
     });
 
     it("should reject difference in color properties", () => {
@@ -90,17 +86,10 @@ describe("lib/themes", () => {
         )
       ).to.be.false;
       expect(
-        subject(
-          { images: { additional_backgrounds: ["foo"] } },
-          { images: { } }
-        )
+        subject({ images: { additional_backgrounds: ["foo"] } }, { images: {} })
       ).to.be.false;
-      expect(
-        subject(
-          { images: { additional_backgrounds: ["foo"] } },
-          { }
-        )
-      ).to.be.false;
+      expect(subject({ images: { additional_backgrounds: ["foo"] } }, {})).to.be
+        .false;
     });
 
     it("should be a little fuzzy on alpha channel equality because JS math is hard", () => {

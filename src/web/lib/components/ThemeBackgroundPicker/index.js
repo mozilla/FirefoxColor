@@ -40,21 +40,21 @@ class ThemeBackgroundPicker extends React.Component {
     };
   }
 
-  handleClick = (e) => {
+  handleClick = e => {
     if (e.target.classList.contains("theme-background-picker__backgrounds"))
       return;
     this.setState({ selected: !this.state.selected });
-  }
+  };
 
   handleClickOutside() {
     this.setState({ selected: false });
   }
 
-  handleKeyPress = (event) => {
+  handleKeyPress = event => {
     if (event.keyCode === ESC) {
       this.setState({ selected: false });
     }
-  }
+  };
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
