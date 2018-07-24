@@ -11,7 +11,7 @@ export const Modal = ({ toggleModal, displayModal, children }) => {
   };
   return (
     <div className={classNames("modal", {"modal--display": displayModal})} onClick={handleToggle}>
-      <div className="modal__content">
+      <div className="modal__content" onClick={event => event.stopPropagation()}>
         <button className="modal__toggle" title="close" onClick={handleToggle}>
           <img src={iconClose} alt="close icon" />
         </button>
