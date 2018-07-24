@@ -11,8 +11,8 @@ export default class ThemeLogger extends React.Component {
     };
   }
 
-  toggleLogger() {
-    this.setState({isExpanded: !this.state.isExpanded});
+  toggleLogger = () => {
+    this.setState({ isExpanded: !this.state.isExpanded });
   }
 
   render() {
@@ -24,8 +24,12 @@ export default class ThemeLogger extends React.Component {
         <pre className={classNames("theme-logger__display", {"show": isExpanded})}>
         { JSON.stringify(theme, null, 2) }
         </pre>
-        <button className="theme-logger__toggle" onClick={this.toggleLogger.bind(this)} tabIndex="-1">
-          { loggerButtonText }
+        <button
+          className="theme-logger__toggle"
+          onClick={this.toggleLogger}
+          tabIndex="-1"
+        >
+          {loggerButtonText}
         </button>
       </div>
     );
