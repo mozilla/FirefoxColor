@@ -35,6 +35,7 @@ overrides:
     globals:
       process: true
       require: true
+      module: true
   -
     files: ['src/extension/**/*.js']
     env:
