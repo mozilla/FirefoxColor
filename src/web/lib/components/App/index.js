@@ -30,138 +30,80 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  setBackground: args =>
-    dispatch({
-      ...actions.theme.setBackground(args),
-      meta: { userEdit: true }
+const mapDispatchToProps = dispatch => {
+  const themeUserEditDispatchers = [
+    "setBackground",
+    "setColor",
+    "setTheme"
+  ].reduce(
+    (acc, name) => ({
+      ...acc,
+      [name]: args =>
+        dispatch({
+          ...actions.theme[name](args),
+          meta: { userEdit: true }
+        })
     }),
-  setColor: args =>
-    dispatch({
-      ...actions.theme.setColor(args),
-      meta: { userEdit: true }
-    }),
-  setTheme: args =>
-    dispatch({
-      ...actions.theme.setTheme(args),
-      meta: { userEdit: true }
-    }),
-  clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
-  setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
-  setSavedThemesPage: page => dispatch(actions.ui.setSavedThemesPage({ page })),
-  setDisplayLegalModal: args => dispatch(actions.ui.setDisplayLegalModal(args)),
-  undo: () => dispatch(actions.theme.undo()),
-  redo: () => dispatch(actions.theme.redo())
-});
+    {}
+  );
+  return {
+    ...themeUserEditDispatchers,
+    clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
+    setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
+    setSavedThemesPage: page =>
+      dispatch(actions.ui.setSavedThemesPage({ page })),
+    setDisplayLegalModal: args =>
+      dispatch(actions.ui.setDisplayLegalModal(args)),
+    undo: () => dispatch(actions.theme.undo()),
+    redo: () => dispatch(actions.theme.redo())
+  };
+};
 
-export const AppComponent = ({
-  loaderQuote,
-  isFirefox,
-  isMobile,
-  addonUrl,
-  urlEncodeTheme,
-  clipboard,
-  theme,
-  themeCanUndo,
-  themeCanRedo,
-  hasExtension,
-  firstRun,
-  loaderDelayExpired,
-  selectedColor,
-  setColor,
-  pendingTheme,
-  savedThemes,
-  savedThemesPage,
-  setSavedThemesPage,
-  hasSavedThemes,
-  shouldOfferPendingTheme,
-  clearPendingTheme,
-  setTheme,
-  setSelectedColor,
-  setBackground,
-  setDisplayLegalModal,
-  displayLegalModal,
-  undo,
-  redo,
-  storage,
-  userHasEdited,
-  modifiedSinceSave
-}) => (
-  <Fragment>
-    {isMobile && <Mobile />}
-    {!isMobile &&
-      !loaderDelayExpired && <AppLoadingIndicator {...{ loaderQuote }} />}
-    {!isMobile &&
-      loaderDelayExpired && (
-        <Fragment>
-          <AppHeader {...{ hasExtension, theme }} />
-          <div className="app">
-            {hasExtension &&
-              shouldOfferPendingTheme && (
-                <SharedThemeDialog
-                  {...{
-                    pendingTheme,
-                    setTheme,
-                    clearPendingTheme
-                  }}
-                />
-              )}
-            <AppBackground {...{ theme }} />
-            <main className="app__content">
-              <ThemeBuilder
-                {...{
-                  clipboard,
-                  modifiedSinceSave,
-                  redo,
-                  savedThemes,
-                  selectedColor,
-                  setBackground,
-                  setColor,
-                  setSelectedColor,
-                  storage,
-                  theme,
-                  themeCanRedo,
-                  themeCanUndo,
-                  undo,
-                  urlEncodeTheme,
-                  userHasEdited,
-                  hasExtension,
-                  firstRun,
-                  isFirefox,
-                  addonUrl
-                }}
-              />
-              {hasSavedThemes && (
-                <SavedThemeSelector
-                  {...{
-                    setTheme,
-                    savedThemes,
-                    savedThemesPage,
-                    setSavedThemesPage,
-                    deleteTheme: storage.deleteTheme
-                  }}
-                />
-              )}
-              <PresetThemeSelector {...{ setTheme }} />
-            </main>
-            <AppFooter {...{ hasExtension, setDisplayLegalModal }} />
-            <TermsPrivacyModal
-              {...{
-                displayLegalModal,
-                setDisplayLegalModal
-              }}
-            />
-            {firstRun && <Onboarding />}
-            <ThemeLogger {...{ theme }} debug={DEBUG} />
-          </div>
-        </Fragment>
-      )}
-  </Fragment>
-);
+export const AppComponent = props => {
+  const {
+    isMobile,
+    loaderDelayExpired,
+    hasExtension,
+    hasSavedThemes,
+    shouldOfferPendingTheme,
+    storage,
+    firstRun
+  } = props;
+  return (
+    <Fragment>
+      {isMobile && <Mobile />}
+      {!isMobile && !loaderDelayExpired && <AppLoadingIndicator {...props} />}
+      {!isMobile &&
+        loaderDelayExpired && (
+          <Fragment>
+            <AppHeader {...props} />
+            <div className="app">
+              {hasExtension &&
+                shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
+              <AppBackground {...props} />
+              <main className="app__content">
+                <ThemeBuilder {...props} />
+                {hasSavedThemes && (
+                  <SavedThemeSelector
+                    {...{
+                      ...props,
+                      deleteTheme: storage.deleteTheme
+                    }}
+                  />
+                )}
+                <PresetThemeSelector {...props} />
+              </main>
+              <AppFooter {...props} />
+              <TermsPrivacyModal {...props} />
+              {firstRun && <Onboarding />}
+              <ThemeLogger {...props} debug={DEBUG} />
+            </div>
+          </Fragment>
+        )}
+    </Fragment>
+  );
+};
 
 export default hot(module)(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(AppComponent)
+  connect(mapStateToProps, mapDispatchToProps)(AppComponent)
 );
