@@ -39,18 +39,20 @@ export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
         >
           About Test Pilot
         </a>
-        <span
+        <a
           className="app-footer__legal-link"
+		  href="#"
           onClick={() => toggleModal("Privacy")}
         >
           Privacy
-        </span>
-        <span
+        </a>
+        <a
           className="app-footer__legal-link"
+		  href="#"
           onClick={() => toggleModal("Terms")}
         >
           Terms
-        </span>
+        </a>
         <a
           className="app-footer__legal-link"
           onClick={() => Metrics.linkClick("cookies")}
