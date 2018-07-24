@@ -27,11 +27,7 @@ export const BrowserPreview = ({
     colors[key] = colorToCSS(theme.colors[key]);
   });
 
-  const Button = ({
-    name,
-    asset = false,
-    colorName = "toolbar_text"
-  }) => (
+  const Button = ({ name, asset = false, colorName = "toolbar_text" }) => (
     <span className="doll__button">
       {asset && (
         <ReactSVG
@@ -67,9 +63,7 @@ export const BrowserPreview = ({
   );
 
   const headerBackground = theme.images.additional_backgrounds[0];
-  const headerBackgroundImage = bgImages
-    .keys()
-    .includes(headerBackground)
+  const headerBackgroundImage = bgImages.keys().includes(headerBackground)
     ? `url(${bgImages(headerBackground)})`
     : "";
   return (
@@ -112,10 +106,7 @@ export const BrowserPreview = ({
               }}
             />
             {size === "large" && (
-              <Button
-                name="bookmark"
-                colorName="toolbar_field_text"
-              />
+              <Button name="bookmark" colorName="toolbar_field_text" />
             )}
           </span>
           <Button name="menu" asset={size === "large"} />

@@ -138,20 +138,41 @@ const applyTheme = ({ theme }) => {
   }
 
   const newTheme = {
-    properties: {
-      additional_backgrounds_alignment: ["top"],
-      additional_backgrounds_tiling: ["repeat"]
-    },
+    images: {},
+    properties: {},
     colors: {}
   };
 
-  const background = normalizeThemeBackground(
-    theme.images.additional_backgrounds[0]
-  );
-  if (background) {
-    newTheme.images = {
-      additional_backgrounds: [bgImages(background)]
-    };
+  const custom_backgrounds = theme.images.custom_backgrounds || [];
+  if (custom_backgrounds.length > 0) {
+    const additional_backgrounds = [];
+    const additional_backgrounds_alignment = [];
+    const additional_backgrounds_tiling = [];
+
+    log("CUSTOM BACKGROUNDS", custom_backgrounds);
+
+    custom_backgrounds.forEach(({ url, alignment, tiling }) => {
+      additional_backgrounds.push(url);
+      additional_backgrounds_alignment.push(alignment || "left top");
+      additional_backgrounds_tiling.push(tiling || "no-repeat");
+    });
+
+    newTheme.images.additional_backgrounds = additional_backgrounds;
+    Object.assign(newTheme.properties, {
+      additional_backgrounds_alignment,
+      additional_backgrounds_tiling
+    });
+  } else {
+    const background = normalizeThemeBackground(
+      theme.images.additional_backgrounds[0]
+    );
+    if (background) {
+      newTheme.images.additional_backgrounds = [bgImages(background)];
+      Object.assign(newTheme.properties, {
+        additional_backgrounds_alignment: ["top"],
+        additional_backgrounds_tiling: ["repeat"]
+      });
+    }
   }
 
   // the headerURL is required in < 60,

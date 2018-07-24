@@ -10,6 +10,7 @@ import Clipboard from "clipboard";
 
 import { makeLog } from "../lib/utils";
 import { CHANNEL_NAME, loaderQuotes } from "../lib/constants";
+import { normalizeTheme } from "../lib/themes";
 import {
   createAppStore,
   actions,
@@ -25,6 +26,8 @@ import "./index.scss";
 
 const log = makeLog("web");
 
+log("startup");
+
 const clipboard = new Clipboard(".clipboardButton");
 
 const addonUrl = process.env.ADDON_URL;
@@ -39,10 +42,12 @@ let outstandingPings = 0;
 const jsonCodec = JsonUrl("lzma");
 
 const urlEncodeTheme = theme =>
-  jsonCodec.compress(theme).then(value => {
-    const { protocol, host, pathname } = window.location;
-    return `${protocol}//${host}${pathname}?theme=${value}`;
-  });
+  jsonCodec
+    .compress(normalizeTheme(theme, { omitCustomBackground: true }))
+    .then(value => {
+      const { protocol, host, pathname } = window.location;
+      return `${protocol}//${host}${pathname}?theme=${value}`;
+    });
 
 const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
 
@@ -65,10 +70,14 @@ const updateHistoryMiddleware = ({ getState }) => next => action => {
   const returnValue = next(action);
   const meta = action.meta || {};
   if (!meta.skipHistory && themeChangeActions.includes(action.type)) {
-    const theme = selectors.theme(getState());
-    urlEncodeTheme(theme).then(url =>
-      window.history.pushState({ theme }, "", url)
-    );
+    const state = getState();
+    const hasCustomBackgrounds = selectors.themeHasCustomBackgrounds(state);
+    if (!hasCustomBackgrounds) {
+      const theme = selectors.theme(state);
+      urlEncodeTheme(theme).then(url =>
+        window.history.pushState({ theme }, "", url)
+      );
+    }
   }
   return returnValue;
 };

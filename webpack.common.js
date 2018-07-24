@@ -37,7 +37,10 @@ Object.keys(defaultEnv).forEach(key => {
 const commonBabelOptions = {
   cacheDirectory: true,
   presets: [["env", { targets: ["last 2 versions"], modules: false }], "react"],
-  plugins: ["transform-object-rest-spread"]
+  plugins: [
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ]
 };
 
 const webpackConfig = {
