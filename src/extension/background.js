@@ -23,7 +23,7 @@ const init = () => {
   Metrics.init("addon");
 
   browser.browserAction.onClicked.addListener(() => {
-    if(!isTabOpen) {
+    if (!isTabOpen) {
       queryAndFocusTab("fromAddon=true");
       isTabOpen = true;
     }
