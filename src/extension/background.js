@@ -17,11 +17,16 @@ const siteUrl = process.env.SITE_URL;
 
 const siteTabMetrics = {};
 
+let isTabOpen = false;
+
 const init = () => {
   Metrics.init("addon");
 
   browser.browserAction.onClicked.addListener(() => {
-    queryAndFocusTab("fromAddon=true");
+    if(!isTabOpen) {
+      queryAndFocusTab("fromAddon=true");
+      isTabOpen = true;
+    }
   });
 
   browser.runtime.onConnect.addListener(port => {
@@ -53,6 +58,7 @@ const init = () => {
       finishVisit(tabId);
       delete siteTabMetrics[tabId];
     }
+    isTabOpen = false;
   });
 
   browser.windows.onCreated.addListener(() => {
