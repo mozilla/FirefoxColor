@@ -108,7 +108,7 @@
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "sinon": "^6.0.0",
-    "style-loader": "^0.21.0",
+    "style-loader": "^0.22.0",
     "stylelint": "^9.1.1",
     "stylelint-config-standard": "^18.1.0",
     "svg-url-loader": "^2.3.0",
