@@ -1,32 +1,36 @@
 import React from "react";
 
-import BrowserPreview from "../BrowserPreview";
+import PaginatedThemeSelector from "../PaginatedThemeSelector";
 
 import { presetThemes } from "../../../../lib/themes";
 import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
-export const PresetThemeSelector = ({ setTheme }) => (
-  <div className="preset-theme-selector">
-    <h2>Preset themes</h2>
-    {presetThemes.map((theme, themeId) => {
-      return (
-        <div key={themeId} className="preset-theme-preview">
-          <BrowserPreview
-            {...{
-              size: "small",
-              theme,
-              onClick: () => {
-                setTheme({ theme });
-                Metrics.themeChangeFull(theme.title);
-              }
-            }}
-          />
-        </div>
-      );
-    })}
-  </div>
-);
+export const PresetThemeSelector = ({
+  setTheme,
+  presetThemesPage,
+  setPresetThemesPage
+}) => {
+  const sortedPresetThemes = presetThemes.map(item => [
+    item.idx,
+    { theme: item }
+  ]);
+  return (
+    <PaginatedThemeSelector
+      title="Preset themes"
+      themes={sortedPresetThemes}
+      className="preset-theme-selector"
+      previewClassName="preset-theme-preview"
+      onClick={theme => {
+        setTheme({ theme });
+        Metrics.themeChangeFull(theme.title);
+      }}
+      perPage={8}
+      currentPage={presetThemesPage}
+      setCurrentPage={setPresetThemesPage}
+    />
+  );
+};
 
 export default PresetThemeSelector;

@@ -29,6 +29,7 @@ export const actions = {
     "SET_SAVED_THEMES",
     "SET_SAVED_THEMES_PAGE",
     "SET_CURRENT_SAVED_THEME",
+    "SET_PRESET_THEMES_PAGE",
     "SET_DISPLAY_LEGAL_MODAL"
   ),
   theme: {
@@ -59,6 +60,7 @@ export const selectors = {
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
   userHasEdited: state => state.ui.userHasEdited,
+  presetThemesPage: state => state.ui.presetThemesPage,
   modifiedSinceSave: state =>
     state.ui.userHasEdited &&
     !themesEqual(state.ui.currentSavedTheme, state.theme.present)
@@ -93,6 +95,10 @@ export const reducers = {
         ...state,
         savedThemesPage
       }),
+      SET_PRESET_THEMES_PAGE: (state, { payload: { page: presetThemesPage } }) => ({
+        ...state,
+        presetThemesPage
+      }),
       SET_CURRENT_SAVED_THEME: (state, { payload: { currentSavedTheme } }) => ({
         ...state,
         currentSavedTheme
@@ -125,6 +131,7 @@ export const reducers = {
       pendingTheme: null,
       savedThemes: {},
       savedThemesPage: 0,
+      presetThemesPage: 0,
       currentSavedTheme: null,
       selectedColor: null,
       hasExtension: false,
