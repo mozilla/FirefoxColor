@@ -1,6 +1,7 @@
 import tinycolor from "tinycolor2";
 import { colorsWithAlpha, alphaEqualityTolerance } from "./constants";
 import { presetThemesContext, bgImages } from "./assets";
+import { shuffle } from "./utils";
 
 const defaultTheme = presetThemesContext("./default.json");
 
@@ -139,11 +140,10 @@ export const normalizeTheme = (data = {}) => {
   return theme;
 };
 
-export const presetThemes = presetThemesContext
+export const presetThemes = shuffle(presetThemesContext
   .keys()
   .map((filename, idx) => ({
     idx,
     filename,
     ...normalizeTheme(presetThemesContext(filename))
-  }))
-  .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
+  })));
