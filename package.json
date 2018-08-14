@@ -86,7 +86,7 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.0.0",
     "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-mozilla": "^0.15.0",
     "eslint-plugin-no-unsanitized": "^3.0.0",
     "eslint-plugin-react": "^7.4.0",
