@@ -34,6 +34,7 @@ rules:
   no-use-before-define: off
   object-curly-newline: off
   react/prop-types: off
+  mozilla/no-define-cc-etc: off
 
 overrides:
   -
