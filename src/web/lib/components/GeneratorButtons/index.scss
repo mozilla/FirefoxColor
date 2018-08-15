@@ -1,0 +1,15 @@
+@import '../../common.scss';
+
+.generator-buttons {
+  h2 {
+    margin-top: 0;
+  }
+
+  .generator-buttons__button {
+    @include button;
+    @include buttonDefault;
+
+    margin: 0 0 20px 0;
+    width: 100%;
+  }
+}
