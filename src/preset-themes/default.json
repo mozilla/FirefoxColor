@@ -1,47 +1,164 @@
 {
   "title": "default",
   "colors": {
-    "toolbar": {
-      "r": 225,
-      "g": 234,
-      "b": 239,
-      "a": 1
-    },
-    "toolbar_text": {
-      "r": 248,
-      "g": 112,
-      "b": 140
-    },
     "accentcolor": {
-      "r": 142,
-      "g": 179,
-      "b": 201
+      "r": 100,
+      "g": 170,
+      "b": 210
     },
-    "textcolor": {
-      "r": 255,
-      "g": 255,
-      "b": 255
+    "button_background_active": {
+      "r": 192,
+      "g": 212,
+      "b": 224
     },
-    "toolbar_field": {
-      "r": 255,
-      "g": 255,
-      "b": 255,
+    "button_background_hover": {
+      "r": 203,
+      "g": 227,
+      "b": 239
+    },
+    "icons_attention": {
+      "r": 24,
+      "g": 80,
+      "b": 111
+    },
+    "icons": {
+      "r": 19,
+      "g": 210,
+      "b": 57
+    },
+    "ntp_background": {
+      "r": 107,
+      "g": 38,
+      "b": 113,
       "a": 1
     },
-    "toolbar_field_text": {
-      "r": 123,
-      "g": 127,
-      "b": 204
+    "ntp_text": {
+      "r": 241,
+      "g": 10,
+      "b": 244,
+      "a": 1
+    },
+    "popup_border": {
+      "r": 210,
+      "g": 19,
+      "b": 19
+    },
+    "popup_highlight_text": {
+      "r": 19,
+      "g": 210,
+      "b": 57
+    },
+    "popup_highlight": {
+      "r": 107,
+      "g": 38,
+      "b": 113
+    },
+    "popup_text": {
+      "r": 246,
+      "g": 246,
+      "b": 0
+    },
+    "popup": {
+      "r": 4,
+      "g": 4,
+      "b": 4
+    },
+    "tab_background_separator": {
+      "r": 241,
+      "g": 10,
+      "b": 244
     },
     "tab_line": {
-      "r": 248,
-      "g": 112,
-      "b": 140
+      "r": 210,
+      "g": 19,
+      "b": 19
+    },
+    "tab_loading": {
+      "r": 4,
+      "g": 4,
+      "b": 4,
+      "a": 1
+    },
+    "tab_selected": {
+      "r": 19,
+      "g": 210,
+      "b": 57
+    },
+    "tab_text": {
+      "r": 153,
+      "g": 19,
+      "b": 210
+    },
+    "textcolor": {
+      "r": 210,
+      "g": 19,
+      "b": 19
+    },
+    "toolbar_bottom_separator": {
+      "r": 210,
+      "g": 19,
+      "b": 19
+    },
+    "toolbar_field_border_focus": {
+      "r": 19,
+      "g": 210,
+      "b": 57
+    },
+    "toolbar_field_border": {
+      "r": 4,
+      "g": 4,
+      "b": 4
+    },
+    "toolbar_field_separator": {
+      "r": 153,
+      "g": 19,
+      "b": 210
+    },
+    "toolbar_field_text_focus": {
+      "r": 0,
+      "g": 163,
+      "b": 255
+    },
+    "toolbar_field_text": {
+      "r": 255,
+      "g": 255,
+      "b": 31
+    },
+    "toolbar_field": {
+      "r": 174,
+      "g": 100,
+      "b": 154,
+      "a": 1
+    },
+    "toolbar_field_focus": {
+      "r": 241,
+      "g": 10,
+      "b": 244
+    },
+    "toolbar_text": {
+      "r": 153,
+      "g": 19,
+      "b": 210
+    },
+    "toolbar_top_separator": {
+      "r": 107,
+      "g": 38,
+      "b": 113
+    },
+    "toolbar_vertical_separator": {
+      "r": 4,
+      "g": 4,
+      "b": 4,
+      "a": 1
+    },
+    "toolbar": {
+      "r": 255,
+      "g": 255,
+      "b": 31,
+      "a": 1
     }
   },
   "images": {
-    "additional_backgrounds": [
-      "./bg-009.svg"
-    ]
+    "additional_backgrounds": []
   }
 }

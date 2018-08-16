@@ -6,6 +6,11 @@ import PresetThemeSelector from "../PresetThemeSelector";
 import SavedThemeSelector from "../SavedThemeSelector";
 import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
 import ThemeColorsEditor from "../ThemeColorsEditor";
+import { SketchPicker } from "react-color";
+import {
+  // generateComplementaryTheme,
+  distributePalette
+} from "../../../../lib/generators";
 
 import "./index.scss";
 
@@ -32,8 +37,12 @@ export const ThemeBuilder = ({
       id: "preset-themes"
     },
     {
-      name: "Colors",
-      id: "colors"
+      name: "Generator",
+      id: "generator"
+    },
+    {
+      name: "Advanced",
+      id: "advanced"
     },
     {
       name: "Images & textures",
@@ -55,6 +64,15 @@ export const ThemeBuilder = ({
     });
   }
 
+  // const handleColorChange = color => {
+  //   setTheme({ theme: generateComplementaryTheme(color) });
+  // };
+
+  const handleDistributeColorChange = (name, color) => {
+    const nextTheme = distributePalette(theme, name, color);
+    setTheme({ theme: nextTheme });
+  };
+
   const renderThemingSection = selected => {
     switch (selected) {
       case "preset-themes":
@@ -67,7 +85,36 @@ export const ThemeBuilder = ({
             }}
           />
         );
-      case "colors":
+      case "generator":
+        return (
+          <div className="generator">
+            <h3>Base Color</h3>
+            <SketchPicker
+              disableAlpha={true}
+              color={theme.colors.toolbar}
+              onChangeComplete={color =>
+                handleDistributeColorChange("base", color.rgb)
+              }
+            />
+            <h3>Accent Color</h3>
+            <SketchPicker
+              disableAlpha={true}
+              color={theme.colors.accentcolor}
+              onChangeComplete={color =>
+                handleDistributeColorChange("accent", color.rgb)
+              }
+            />
+            <h3>Complement Color</h3>
+            <SketchPicker
+              disableAlpha={true}
+              color={theme.colors.icons}
+              onChangeComplete={color =>
+                handleDistributeColorChange("complement", color.rgb)
+              }
+            />
+          </div>
+        );
+      case "advanced":
         return (
           <ThemeColorsEditor
             {...{

@@ -4,17 +4,19 @@
 .colors {
   display: grid;
   grid-auto-rows: 32px;
-  grid-gap: 20px;
-  grid-template-columns: repeat(2, 285px);
+  grid-gap: 10px 20px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(7, 32px);
   list-style-type: none;
   margin: 0;
   padding: 0;
   position: relative;
+  grid-auto-flow: column;
 
   .color {
     align-items: center;
     display: flex;
-    padding: 0 16px;
+    padding: 0 4px;
     position: relative;
 
     &:hover {
@@ -32,6 +34,7 @@
 
   .color__label {
     flex: 1;
+    font-size: 12px;
   }
 
   .color__swatch {

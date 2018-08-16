@@ -84,3 +84,15 @@
     position: relative;
   }
 }
+
+.generator {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 18px 300px;
+  grid-auto-flow: column;
+  grid-gap: 10px 20px;
+
+  h3 {
+    margin: 0;
+  }
+}

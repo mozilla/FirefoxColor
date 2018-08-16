@@ -11,7 +11,7 @@ export const ThemeSaveButton = ({
   setThemeBuilderPanel
 }) => {
   const saveTheme = () => {
-    setThemeBuilderPanel(3);
+    setThemeBuilderPanel(4);
     putTheme(generateThemeKey(), theme);
   };
 
