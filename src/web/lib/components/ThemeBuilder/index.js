@@ -6,12 +6,14 @@ import UndoRedoButtons from "../UndoRedoButtons";
 import ThemeUrl from "../ThemeUrl";
 import ThemeSaveButton from "../ThemeSaveButton";
 import Banner from "../Banner";
+import GeneratorButtons from "../GeneratorButtons";
+
 
 import "./index.scss";
 
 export const ThemeBuilder = props => {
   const {
-    hasExtension, themeCanUndo, themeCanRedo
+    hasExtension, themeCanUndo, themeCanRedo, theme, setTheme
   } = props;
   return (
     <BrowserPreview {...{...props, size: "large" }}>
@@ -29,6 +31,7 @@ export const ThemeBuilder = props => {
         <div className="theme-share-save">
           <ThemeUrl {...props} />
           <ThemeSaveButton {...props} />
+          <GeneratorButtons {...{ theme, setTheme }} />
         </div>
       )}
     </BrowserPreview>
