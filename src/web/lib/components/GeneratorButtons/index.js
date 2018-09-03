@@ -17,10 +17,10 @@ export const GeneratorButtons = ({ setTheme, theme }) => {
   return (
     <div className="generator-buttons">
       <h2>Generate a theme</h2>
-      <button className="generator-buttons__button" title="generate complementary theme" onClick={handleComplementClick}>
+      <button className="generator-buttons__button" title="Generate complementary theme" onClick={handleComplementClick}>
         Complementary
       </button>
-      <button className="generator-buttons__button" title="generate random theme" onClick={handleRandomClick}>
+      <button className="generator-buttons__button" title="Generate random theme" onClick={handleRandomClick}>
         Random
       </button>
     </div>
