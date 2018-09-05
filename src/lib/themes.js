@@ -26,6 +26,26 @@ export const themesEqual = (themeA, themeB) => {
     }
   }
 
+  const hasCustomImagesA =
+    "images" in themeA && "custom_backgrounds" in themeA.images;
+  const hasCustomImagesB =
+    "images" in themeB && "custom_backgrounds" in themeB.images;
+  if (hasCustomImagesA !== hasCustomImagesB) {
+    return false;
+  }
+  if (hasCustomImagesA && hasCustomImagesB) {
+    const imagesA = themeA.images.custom_backgrounds;
+    const imagesB = themeB.images.custom_backgrounds;
+    if (imagesA.length !== imagesB.length) {
+      return false;
+    }
+    for (let idx = 0; idx < imagesA.length; idx++) {
+      if (imagesA[idx] !== imagesB[idx]) {
+        return false;
+      }
+    }
+  }
+
   // TODO: Skipping title equality, because user themes don't have titles yet.
 
   const hasColorsA = "colors" in themeA;
@@ -122,12 +142,21 @@ export const normalizeTheme = (data = {}) => {
     title: data.title
   };
   const images = data.images ? data.images : {};
+
+  if (images.custom_backgrounds) {
+    if (!Array.isArray(theme.images.custom_backgrounds)) {
+      theme.images.custom_backgrounds = [];
+    }
+    theme.images.custom_backgrounds = images.custom_backgrounds || [];
+  }
+
   if (images.headerURL) {
     const background = normalizeThemeBackground(images.headerURL);
     if (background) {
       theme.images.additional_backgrounds = [background];
     }
   }
+
   if (images.additional_backgrounds) {
     const background = normalizeThemeBackground(
       images.additional_backgrounds[0]
@@ -136,6 +165,7 @@ export const normalizeTheme = (data = {}) => {
       theme.images.additional_backgrounds = [background];
     }
   }
+
   return theme;
 };
 

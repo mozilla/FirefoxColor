@@ -1,5 +1,5 @@
 import { createStore, combineReducers } from "redux";
-import { createActions, handleActions } from "redux-actions";
+import { createActions, handleActions, combineActions } from "redux-actions";
 import undoable, { ActionCreators, ActionTypes } from "redux-undo";
 import {
   themesEqual,
@@ -13,6 +13,10 @@ export const themeChangeActions = [
   "SET_THEME",
   "SET_COLOR",
   "SET_BACKGROUND",
+  "ADD_CUSTOM_BACKGROUND",
+  "UPDATE_CUSTOM_BACKGROUND",
+  "CLEAR_CUSTOM_BACKGROUND",
+  "MOVE_CUSTOM_BACKGROUND",
   ActionTypes.UNDO,
   ActionTypes.REDO
 ];
@@ -33,11 +37,30 @@ export const actions = {
     "SET_DISPLAY_LEGAL_MODAL"
   ),
   theme: {
-    ...createActions({}, "SET_THEME", "SET_COLOR", "SET_BACKGROUND"),
+    ...createActions(
+      {},
+      "SET_THEME",
+      "SET_COLOR",
+      "SET_BACKGROUND",
+      "ADD_CUSTOM_BACKGROUND",
+      "UPDATE_CUSTOM_BACKGROUND",
+      "CLEAR_CUSTOM_BACKGROUND",
+      "MOVE_CUSTOM_BACKGROUND"
+    ),
     // HACK: Seems like redux-undo doesn't have sub-tree specific undo/redo
     // actions - but let's fake it for now.
     undo: ActionCreators.undo,
     redo: ActionCreators.redo
+  },
+  images: {
+    ...createActions(
+      {},
+      "LOAD_IMAGES",
+      "LOAD_IMAGE",
+      "ADD_IMAGE",
+      "UPDATE_IMAGE",
+      "DELETE_IMAGES"
+    )
   }
 };
 
@@ -59,6 +82,13 @@ export const selectors = {
   theme: state => state.theme.present,
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
+  themeCustomImages: state => state.images.images,
+  themeCustomBackgrounds: state =>
+    state.theme.present.images.custom_backgrounds || [],
+  themeHasCustomBackgrounds: state => {
+    const backgrounds = selectors.themeCustomBackgrounds(state);
+    return !!backgrounds && backgrounds.length > 0;
+  },
   userHasEdited: state => state.ui.userHasEdited,
   presetThemesPage: state => state.ui.presetThemesPage,
   modifiedSinceSave: state =>
@@ -95,7 +125,10 @@ export const reducers = {
         ...state,
         savedThemesPage
       }),
-      SET_PRESET_THEMES_PAGE: (state, { payload: { page: presetThemesPage } }) => ({
+      SET_PRESET_THEMES_PAGE: (
+        state,
+        { payload: { page: presetThemesPage } }
+      ) => ({
         ...state,
         presetThemesPage
       }),
@@ -123,8 +156,10 @@ export const reducers = {
         ...state,
         userHasEdited: meta && meta.userEdit ? true : state.userHasEdited
       }),
-      SET_COLOR: state => ({ ...state, userHasEdited: true }),
-      SET_BACKGROUND: state => ({ ...state, userHasEdited: true })
+      [combineActions(...themeChangeActions)]: state => ({
+        ...state,
+        userHasEdited: true
+      })
     },
     {
       userHasEdited: false,
@@ -137,6 +172,42 @@ export const reducers = {
       hasExtension: false,
       loaderDelayExpired: false,
       displayLegalModal: false
+    }
+  ),
+  images: handleActions(
+    {
+      ADD_IMAGE: (
+        state,
+        { payload: { name, importing = true, size, image, type } }
+      ) => ({
+        ...state,
+        images: {
+          ...state.images,
+          [name]: { name, importing, size, image, type }
+        }
+      }),
+      DELETE_IMAGES: (state, { payload: names = [] }) => {
+        const images = { ...state.images };
+        names.forEach(name => delete images[name]);
+        return { ...state, images };
+      },
+      LOAD_IMAGES: (state, { payload: images = {} }) => ({ ...state, images }),
+      // LOAD_IMAGE differs from UPDATE_IMAGE in that the middleware does not
+      // trigger add-on updates - mostly used for local updates to the web app
+      // due to localStorage events keeping multiple tabs in sync.
+      [combineActions("LOAD_IMAGE", "UPDATE_IMAGE")]: (
+        state,
+        { payload: update = {} }
+      ) => ({
+        ...state,
+        images: {
+          ...state.images,
+          [update.name]: { ...state.images[update.name], ...update }
+        }
+      })
+    },
+    {
+      images: {}
     }
   ),
   theme: undoable(
@@ -154,7 +225,72 @@ export const reducers = {
         SET_BACKGROUND: (state, { payload: { url } }) => ({
           ...state,
           images: { ...state.images, additional_backgrounds: [url] }
-        })
+        }),
+        ADD_CUSTOM_BACKGROUND: (
+          state,
+          { payload: { name, tiling, alignment } }
+        ) => ({
+          ...state,
+          images: {
+            ...state.images,
+            custom_backgrounds: [
+              { name, tiling, alignment },
+              ...(state.images.custom_backgrounds || [])
+            ]
+          }
+        }),
+        UPDATE_CUSTOM_BACKGROUND: (
+          state,
+          { payload: { index, ...update } }
+        ) => {
+          const custom_backgrounds = [
+            ...(state.images.custom_backgrounds || [])
+          ];
+          custom_backgrounds[index] = {
+            ...custom_backgrounds[index],
+            ...update
+          };
+          return {
+            ...state,
+            images: {
+              ...state.images,
+              custom_backgrounds
+            }
+          };
+        },
+        CLEAR_CUSTOM_BACKGROUND: (state, { payload: { index } }) => {
+          const custom_backgrounds = [
+            ...(state.images.custom_backgrounds || [])
+          ];
+          custom_backgrounds.splice(index, 1);
+          return {
+            ...state,
+            images: { ...state.images, custom_backgrounds }
+          };
+        },
+        MOVE_CUSTOM_BACKGROUND: (
+          state,
+          { payload: { newIndex, oldIndex } }
+        ) => {
+          // see: https://medium.com/kevin-salters-blog/reordering-a-javascript-array-based-on-a-drag-and-drop-interface-e3ca39ca25c
+          const originalArray = state.images.custom_backgrounds;
+          const movedItem = originalArray.find(
+            (item, index) => index === oldIndex
+          );
+          const remainingItems = originalArray.filter(
+            (item, index) => index !== oldIndex
+          );
+          const reorderedItems = [
+            ...remainingItems.slice(0, newIndex),
+            movedItem,
+            ...remainingItems.slice(newIndex)
+          ];
+          const newState = {
+            ...state,
+            images: { ...state.images, custom_backgrounds: reorderedItems }
+          };
+          return newState;
+        }
       },
       normalizeTheme()
     ),

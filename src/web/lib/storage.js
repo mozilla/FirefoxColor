@@ -4,75 +4,91 @@ import { normalizeTheme, themesEqual } from "../../lib/themes";
 
 const log = makeLog("web.storage");
 
-const THEME_STORAGE_PREFIX = "THEME-";
-
-const themeStorageKey = key => `${THEME_STORAGE_PREFIX}${key}`;
-
-const isThemeStorageKey = key => key.indexOf(THEME_STORAGE_PREFIX) === 0;
-
-const themeKeyFromStorage = storageKey =>
-  storageKey.substr(THEME_STORAGE_PREFIX.length);
-
-const generateThemeKey = () =>
-  `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
 let currentSavedTheme;
 
-function putTheme(key, theme) {
-  let isThemeDuplicate = checkDuplicateTheme(theme);
-  if (!isThemeDuplicate) {
-    log("putTheme", key, theme);
-    const storageKey = themeStorageKey(key);
-    localStorage.setItem(
-      storageKey,
-      JSON.stringify({
-        theme,
-        modified: Date.now()
-      })
-    );
-    currentSavedTheme = theme;
-    notifySelfForStorage(storageKey);
+class Storage {
+  constructor({
+    prefix,
+    contentName = "data",
+    normalize,
+    afterPut,
+    checkDuplicate
+  }) {
+    this.prefix = prefix;
+    this.contentName = contentName;
+    this.normalize = normalize || (data => data);
+    this.checkDuplicate = checkDuplicate || (() => false);
+    this.afterPut = afterPut || (() => {});
   }
-}
 
-function checkDuplicateTheme(theme) {
-  const themesList = listThemes();
-  return Object.keys(themesList).some(key => {
-    return themesEqual(theme, themesList[key].theme);
-  });
-}
+  storageKey = str => `${this.prefix}${str}`;
+  isKey = str => str.indexOf(this.prefix) === 0;
+  keyFromStorage = str => str.substr(this.prefix.length);
+  generateKey = () => `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-function deleteTheme(key) {
-  log("deleteTheme", key);
-  const storageKey = themeStorageKey(key);
-  localStorage.removeItem(storageKey);
-  notifySelfForStorage(storageKey);
-}
-
-function getTheme(key) {
-  try {
-    const value = JSON.parse(localStorage.getItem(themeStorageKey(key)));
-    value.theme = normalizeTheme(value.theme);
-    return value;
-  } catch (e) {
-    return null;
-  }
-}
-
-function listThemes() {
-  const themes = {};
-  for (let idx = 0; idx < localStorage.length; idx++) {
-    const storageKey = localStorage.key(idx);
-    if (isThemeStorageKey(storageKey)) {
-      const themeKey = themeKeyFromStorage(storageKey);
-      const theme = getTheme(themeKey);
-      if (theme !== null) {
-        themes[themeKey] = theme;
-      }
+  put(key, data) {
+    let isDuplicate = this.checkDuplicate(data);
+    if (!isDuplicate) {
+      const storageKey = this.storageKey(key);
+      log("put", storageKey, data);
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ [this.contentName]: data, modified: Date.now() })
+      );
+      this.afterPut(data);
+      notifySelfForStorage(storageKey);
     }
   }
-  return themes;
+
+  delete(key) {
+    const storageKey = this.storageKey(key);
+    log("delete", storageKey);
+    localStorage.removeItem(storageKey);
+    notifySelfForStorage(storageKey);
+  }
+
+  get(key) {
+    try {
+      const value = JSON.parse(localStorage.getItem(this.storageKey(key)));
+      value[this.contentName] = this.normalize(value[this.contentName]);
+      return value;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  list() {
+    const items = {};
+    for (let idx = 0; idx < localStorage.length; idx++) {
+      const storageKey = localStorage.key(idx);
+      if (this.isKey(storageKey)) {
+        const itemKey = this.keyFromStorage(storageKey);
+        const item = this.get(itemKey);
+        if (item !== null) {
+          items[itemKey] = item;
+        }
+      }
+    }
+    return items;
+  }
 }
+
+const themeStorage = new Storage({
+  prefix: "THEME-",
+  contentName: "theme",
+  normalize: normalizeTheme,
+  checkDuplicate: theme => {
+    const items = themeStorage.list();
+    return Object.keys(items).some(key => {
+      return themesEqual(theme, items[key].theme);
+    });
+  },
+  afterPut: data => (currentSavedTheme = data)
+});
+
+const imageStorage = new Storage({
+  prefix: "IMAGE-"
+});
 
 // HACK: Storage events are dispatched to all windows *except* the one that
 // made the change. This utility sends a storage event to the current window.
@@ -85,16 +101,35 @@ function notifySelfForStorage(storageKey) {
 
 function init(store) {
   const updateSavedThemesInStore = () => {
-    const savedThemes = listThemes();
+    const savedThemes = themeStorage.list();
     log("updateSavedThemesInStore", savedThemes);
     store.dispatch(actions.ui.setSavedThemes({ savedThemes }));
   };
 
+  const loadAllImagesIntoStore = () => {
+    const items = Object.values(imageStorage.list()).reduce(
+      (acc, { data: item }) => ({ ...acc, [item.name]: item }),
+      {}
+    );
+    log("loadAllImagesIntoStore", items);
+    store.dispatch(actions.images.loadImages(items));
+  };
+
+  const loadOneImageIntoStore = (key, newValue) => {
+    const image = JSON.parse(newValue).data;
+    log("loadOneImageIntoStore", key, image, newValue);
+    store.dispatch(actions.images.loadImage(image));
+  };
+
+  loadAllImagesIntoStore();
   updateSavedThemesInStore();
 
   window.addEventListener("storage", e => {
     log("storage event", e);
-    if (isThemeStorageKey(e.key)) {
+    if (imageStorage.isKey(e.key) && e.newValue) {
+      loadOneImageIntoStore(e.key, e.newValue);
+    }
+    if (themeStorage.isKey(e.key)) {
       updateSavedThemesInStore();
       store.dispatch(actions.ui.setCurrentSavedTheme({ currentSavedTheme }));
     }
@@ -103,9 +138,6 @@ function init(store) {
 
 export default {
   init,
-  generateThemeKey,
-  putTheme,
-  deleteTheme,
-  getTheme,
-  listThemes
+  themeStorage,
+  imageStorage
 };

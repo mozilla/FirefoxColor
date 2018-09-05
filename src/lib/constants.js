@@ -4,6 +4,16 @@ export const DOWNLOAD_FIREFOX_URL = `https://www.mozilla.org/firefox/new/?utm_ca
   process.env.DOWNLOAD_FIREFOX_UTM_SOURCE
 }`;
 
+export const CUSTOM_BACKGROUND_MAXIMUM_SIZE = 1000000;
+
+export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/bmp",
+  "image/svg+xml"
+];
+
 export const surveyUrl = "https://qsurvey.mozilla.com/s3/color";
 
 export const colorLabels = {

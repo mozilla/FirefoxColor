@@ -80,7 +80,10 @@ const webpackConfig = {
       {
         test: /\.scss$/,
         use: extractCSS.extract({
-          use: [{ loader: "css-loader" }, { loader: "sass-loader" }],
+          use: [
+            { loader: "css-loader" },
+            { loader: "sass-loader" }
+          ],
           fallback: "style-loader"
         })
       },

@@ -17,6 +17,8 @@ const siteUrl = process.env.SITE_URL;
 
 const siteTabMetrics = {};
 
+let customBackgrounds = {};
+
 const init = () => {
   Metrics.init("addon");
 
@@ -62,7 +64,12 @@ const init = () => {
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
     if (firstRunDone) {
-      fetchTheme().then(applyTheme);
+      fetchImages()
+        .then(({ images }) => {
+          customBackgrounds = images || {};
+          return fetchTheme();
+        })
+        .then(applyTheme);
     } else {
       log("Opening first run tab");
       queryAndFocusTab("firstRun=true", true);
@@ -78,30 +85,54 @@ const finishVisit = tabId => {
 };
 
 const messageListener = port => message => {
-  const tabId = port.sender.tab.id;
-  let theme;
-  switch (message.type) {
-    case "fetchTheme":
-      log("fetchTheme");
-      fetchTheme().then(({ theme: currentTheme }) =>
-        port.postMessage({ type: "fetchedTheme", theme: currentTheme })
-      );
-      break;
-    case "setTheme":
-      theme = normalizeTheme(message.theme);
-      log("setTheme", theme);
-      storeTheme({ theme });
-      applyTheme({ theme });
-      break;
-    case "setMetrics":
-      siteTabMetrics[tabId] = message.params;
-      log("setMetrics for tab", tabId);
-      break;
-    case "ping":
-      port.postMessage({ type: "pong" });
-      break;
-    default:
-      log("unexpected message", message);
+  const { type } = message;
+  messageHandlers[type in messageHandlers ? type : "default"](message, port);
+};
+
+const messageHandlers = {
+  fetchTheme: (message, port) => {
+    log("fetchTheme");
+    fetchTheme().then(({ theme: currentTheme }) =>
+      port.postMessage({ type: "fetchedTheme", theme: currentTheme })
+    );
+  },
+  setTheme: message => {
+    const theme = normalizeTheme(message.theme);
+    log("setTheme", theme);
+    storeTheme({ theme });
+    applyTheme({ theme });
+  },
+  setMetrics: (message, port) => {
+    const tabId = port.sender.tab.id;
+    siteTabMetrics[tabId] = message.params;
+    log("setMetrics for tab", tabId);
+  },
+  ping: (message, port) => {
+    port.postMessage({ type: "pong" });
+  },
+  addImage: ({ image }) => {
+    log("addImage", image, customBackgrounds);
+    customBackgrounds[image.name] = image;
+    storeImages({ images: customBackgrounds });
+  },
+  addImages: ({ images = {} }) => {
+    log("addImages", images, customBackgrounds);
+    Object.assign(customBackgrounds, images);
+    storeImages({ images: customBackgrounds });
+  },
+  updateImage: ({ image }) => {
+    log("updateImage", image, customBackgrounds);
+    const orig = customBackgrounds[image.name];
+    customBackgrounds[image.name] = { ...orig, ...image };
+    storeImages({ images: customBackgrounds });
+  },
+  deleteImages: ({ images }) => {
+    log("deleteImages", images, customBackgrounds);
+    images.forEach(name => delete customBackgrounds[name]);
+    storeImages({ images: customBackgrounds });
+  },
+  default: message => {
+    log("unexpected message", message);
   }
 };
 
@@ -131,6 +162,10 @@ const fetchTheme = () => browser.storage.local.get("theme");
 
 const storeTheme = ({ theme }) => browser.storage.local.set({ theme });
 
+const fetchImages = () => browser.storage.local.get("images");
+
+const storeImages = ({ images }) => browser.storage.local.set({ images });
+
 const applyTheme = ({ theme }) => {
   log("applyTheme", theme);
   if (!theme) {
@@ -138,20 +173,43 @@ const applyTheme = ({ theme }) => {
   }
 
   const newTheme = {
-    properties: {
-      additional_backgrounds_alignment: ["top"],
-      additional_backgrounds_tiling: ["repeat"]
-    },
+    images: {},
+    properties: {},
     colors: {}
   };
 
-  const background = normalizeThemeBackground(
-    theme.images.additional_backgrounds[0]
-  );
-  if (background) {
-    newTheme.images = {
-      additional_backgrounds: [bgImages(background)]
-    };
+  const custom_backgrounds = theme.images.custom_backgrounds || [];
+  if (custom_backgrounds.length > 0) {
+    const additional_backgrounds = [];
+    const additional_backgrounds_alignment = [];
+    const additional_backgrounds_tiling = [];
+
+    custom_backgrounds.forEach(({ name, alignment, tiling }) => {
+      const background = customBackgrounds[name];
+      if (!background || !background.image) {
+        return;
+      }
+      additional_backgrounds.push(background.image);
+      additional_backgrounds_alignment.push(alignment || "left top");
+      additional_backgrounds_tiling.push(tiling || "no-repeat");
+    });
+
+    newTheme.images.additional_backgrounds = additional_backgrounds;
+    Object.assign(newTheme.properties, {
+      additional_backgrounds_alignment,
+      additional_backgrounds_tiling
+    });
+  } else {
+    const background = normalizeThemeBackground(
+      theme.images.additional_backgrounds[0]
+    );
+    if (background) {
+      newTheme.images.additional_backgrounds = [bgImages(background)];
+      Object.assign(newTheme.properties, {
+        additional_backgrounds_alignment: ["top"],
+        additional_backgrounds_tiling: ["repeat"]
+      });
+    }
   }
 
   // the headerURL is required in < 60,

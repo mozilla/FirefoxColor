@@ -72,6 +72,33 @@ describe("lib/themes", () => {
       ).to.be.false;
     });
 
+    it("should reject difference in custom backgrounds", () => {
+      expect(
+        subject(
+          { images: { custom_backgrounds: ["foo", "baz"] } },
+          { images: { custom_backgrounds: ["foo", "baz"] } }
+        )
+      ).to.be.true;
+      expect(
+        subject(
+          { colors: { toolbar: { r: 255, g: 255, b: 255 } } },
+          { images: { custom_backgrounds: ["baz", "foo"] } }
+        )
+      ).to.be.false;
+      expect(
+        subject(
+          { images: { custom_backgrounds: ["foo", "baz"] } },
+          { images: { custom_backgrounds: ["baz", "foo"] } }
+        )
+      ).to.be.false;
+      expect(
+        subject(
+          { images: { custom_backgrounds: ["foo", "baz"] } },
+          { images: { custom_backgrounds: ["bar", "baz", "quux"] } }
+        )
+      ).to.be.false;
+    });
+
     it("should reject difference in images", () => {
       expect(
         subject(

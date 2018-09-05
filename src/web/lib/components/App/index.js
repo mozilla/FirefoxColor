@@ -34,7 +34,11 @@ const mapDispatchToProps = dispatch => {
   const themeUserEditDispatchers = [
     "setBackground",
     "setColor",
-    "setTheme"
+    "setTheme",
+    "addCustomBackground",
+    "updateCustomBackground",
+    "clearCustomBackground",
+    "moveCustomBackground"
   ].reduce(
     (acc, name) => ({
       ...acc,
@@ -46,8 +50,12 @@ const mapDispatchToProps = dispatch => {
     }),
     {}
   );
+
   return {
     ...themeUserEditDispatchers,
+    addImage: args => dispatch(actions.images.addImage(args)),
+    updateImage: args => dispatch(actions.images.updateImage(args)),
+    deleteImage: args => dispatch(actions.images.deleteImage(args)),
     clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
     setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
     setSavedThemesPage: page =>
@@ -68,7 +76,6 @@ export const AppComponent = props => {
     hasExtension,
     hasSavedThemes,
     shouldOfferPendingTheme,
-    storage,
     firstRun
   } = props;
   return (
@@ -85,14 +92,7 @@ export const AppComponent = props => {
               <AppBackground {...props} />
               <main className="app__content">
                 <ThemeBuilder {...props} />
-                {hasSavedThemes && (
-                  <SavedThemeSelector
-                    {...{
-                      ...props,
-                      deleteTheme: storage.deleteTheme
-                    }}
-                  />
-                )}
+                {hasSavedThemes && <SavedThemeSelector {...props} />}
                 <PresetThemeSelector {...props} />
               </main>
               <AppFooter {...props} />
@@ -107,5 +107,8 @@ export const AppComponent = props => {
 };
 
 export default hot(module)(
-  connect(mapStateToProps, mapDispatchToProps)(AppComponent)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(AppComponent)
 );

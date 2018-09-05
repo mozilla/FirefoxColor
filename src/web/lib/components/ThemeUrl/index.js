@@ -46,6 +46,19 @@ export default class ThemeUrl extends React.Component {
 
   render() {
     const { copied, themeUrl } = this.state;
+    const { themeHasCustomBackgrounds } = this.props;
+
+    if (themeHasCustomBackgrounds) {
+      return (
+        <div className="theme-url theme-url-disabled">
+          <h2>Share your theme</h2>
+          <p>
+            This theme cannot be shared via URL because it has a custom
+            background image.
+          </p>
+        </div>
+      );
+    }
 
     return (
       <form className="theme-url" onSubmit={e => e.preventDefault()}>
@@ -53,7 +66,7 @@ export default class ThemeUrl extends React.Component {
           <h2>Share your theme</h2>
           <p>Copy and paste this URL to share your creation.</p>
         </label>
-        <input type="text" id="themeUrl" value={themeUrl} />
+        <input type="text" id="themeUrl" readOnly={true} value={themeUrl} />
         <input
           type="submit"
           className="clipboardButton"

@@ -9,8 +9,9 @@ export const SavedThemeSelector = ({
   savedThemes,
   savedThemesPage,
   setSavedThemesPage,
-  deleteTheme
+  storage
 }) => {
+  const { themeStorage } = storage;
   const sortedSavedThemes = Object.entries(savedThemes).sort(
     ([, aData], [, bData]) => bData.modified - aData.modified
   );
@@ -22,7 +23,7 @@ export const SavedThemeSelector = ({
       className="saved-theme-selector"
       previewClassName="saved-theme-preview"
       onClick={theme => setTheme({ theme })}
-      onDelete={key => deleteTheme(key)}
+      onDelete={key => themeStorage.delete(key)}
       perPage={12}
       currentPage={savedThemesPage}
       setCurrentPage={setSavedThemesPage}
