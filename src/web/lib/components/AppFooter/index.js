@@ -23,7 +23,7 @@ export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
           href="https://www.mozilla.org"
           aria-label="Mozilla logo"
         >
-          <ReactSVG path={iconMoz} className="app-footer__legal-logo" />
+          <ReactSVG src={iconMoz} className="app-footer__legal-logo" />
         </a>
         <a
           className="app-footer__legal-link"
@@ -78,7 +78,7 @@ export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
           aria-label="@FxTestPilot Twitter"
           title="Twitter"
         >
-          <ReactSVG path={iconTwitter} svgClassName="app-footer__social-logo" />
+          <ReactSVG src={iconTwitter} svgClassName="app-footer__social-logo" />
         </a>
         <a
           className="app-footer__social-link"
@@ -87,7 +87,7 @@ export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
           aria-label="Firefox Color GitHub"
           title="GitHub"
         >
-          <ReactSVG path={iconGH} svgClassName="app-footer__social-logo" />
+          <ReactSVG src={iconGH} svgClassName="app-footer__social-logo" />
         </a>
       </nav>
     </footer>

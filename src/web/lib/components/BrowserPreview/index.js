@@ -32,7 +32,7 @@ export const BrowserPreview = ({
       {asset && (
         <ReactSVG
           svgStyle={{ fill: colors[colorName] }}
-          path={buttonImages(`./${name}-16.svg`)}
+          src={buttonImages(`./${name}-16.svg`)}
         />
       )}
       {!asset && (
