@@ -68,20 +68,34 @@ export default function({
       const rv = next(action);
       purgeImages(getState, dispatch);
       return rv;
-    },
-    [actions.ui.setSavedThemes]: (getState, dispatch, next, action) => {
-      // Watch for changes in saved themes to purge orphaned images
-      const rv = next(action);
-      purgeImages(getState, dispatch);
-      return rv;
     }
   };
 
   const purgeImages = (getState, dispatch) => {
     const state = getState();
+
+    const imageNames = backgrounds =>
+      backgrounds.map(background => background.name);
+
+    // Start from the set of images used in the current theme.
     const usedImages = new Set(
-      selectors.themeCustomBackgrounds(state).map(background => background.name)
+      imageNames(selectors.themeCustomBackgrounds(state))
     );
+
+    // Scan through undo/redo stack for images still in use.
+    [selectors.themePast(state), selectors.themeFuture(state)].forEach(
+      themes => {
+        themes
+          .filter(theme => theme.images && theme.images.custom_backgrounds)
+          .forEach(theme => {
+            imageNames(theme.images.custom_backgrounds).forEach(name =>
+              usedImages.add(name)
+            );
+          });
+      }
+    );
+
+    // Scan through saved themes for images still in use.
     const savedThemes = Object.values(selectors.savedThemes(state) || {});
     savedThemes
       .filter(({ theme }) => theme.images && theme.images.custom_backgrounds)
@@ -90,9 +104,12 @@ export default function({
           usedImages.add(background.name)
         );
       });
+
+    // Finally, come up with the list of images not used anywhere.
     const toDelete = Object.keys(selectors.themeCustomImages(state)).filter(
       name => !usedImages.has(name)
     );
+
     dispatch(actions.images.deleteImages(toDelete));
   };
 
