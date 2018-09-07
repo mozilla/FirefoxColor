@@ -1,5 +1,6 @@
 import React from "react";
 import Metrics from "../../../../lib/metrics";
+import { themesEqual } from "../../../../lib/themes";
 
 import "./index.scss";
 
@@ -25,8 +26,11 @@ export default class ThemeUrl extends React.Component {
     this.props.clipboard.off("success", this.handleCopied);
   }
 
-  componentWillReceiveProps({ theme }) {
-    this.updateThemeUrl(theme);
+  componentDidUpdate(prev) {
+    const { theme } = this.props;
+    if (!themesEqual(prev.theme, theme)) {
+      this.updateThemeUrl(theme);
+    }
   }
 
   handleCopied() {
@@ -39,7 +43,7 @@ export default class ThemeUrl extends React.Component {
     }
 
     const { urlEncodeTheme } = this.props;
-    urlEncodeTheme(theme).then(themeUrl => {
+    urlEncodeTheme({ theme }).then(themeUrl => {
       this.setState({ themeUrl, copied: false });
     });
   }
