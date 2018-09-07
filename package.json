@@ -69,6 +69,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "7.0.0",
     "addons-linter": "1.1.0",
     "babel-core": "6.26.0",
     "babel-eslint": "9.0.0",
