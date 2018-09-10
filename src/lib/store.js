@@ -300,8 +300,13 @@ export const reducers = {
       // Only track explicit user edits in undo/redo history, theme changes
       // from add-on and ?theme are applied but skip the buffer
       syncFilter: true,
-      filter: (action, currentState, previousHistory) =>
-        action.meta && action.meta.userEdit
+      filter: (action, currentState, previousHistory) => {
+        // Issue #227: Skip history for identical themes
+        if (themesEqual(previousHistory.present, currentState)) {
+          return false;
+        }
+        return action.meta && action.meta.userEdit;
+      }
     }
   )
 };
