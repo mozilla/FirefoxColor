@@ -69,10 +69,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "7.0.0",
     "addons-linter": "1.1.0",
     "babel-core": "6.26.0",
     "babel-eslint": "9.0.0",
-    "babel-loader": "7.1.2",
+    "babel-loader": "8.0.0",
     "babel-plugin-add-module-exports": "0.3.1",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
