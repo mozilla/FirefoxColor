@@ -9,6 +9,10 @@ env:
   es6: true
   jquery: true
 
+settings:
+  react:
+    version: "16.5.0"
+
 plugins:
   - babel
 
