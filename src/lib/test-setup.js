@@ -1,12 +1,19 @@
 const fs = require("fs");
 const path = require("path");
 
-require("babel-register")({
+require("@babel/register")({
   presets: [
-    ["env", { targets: ["last 2 versions"], modules: "commonjs" }],
-    "react"
+    [
+      "@babel/preset-env", {
+        targets: ["last 2 versions"]
+      }
+    ],
+    "@babel/preset-react"
   ],
-  plugins: ["transform-object-rest-spread"]
+  plugins: [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
+  ]
 });
 
 require.extensions[".svg"] = () => null;
