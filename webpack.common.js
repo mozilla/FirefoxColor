@@ -4,12 +4,8 @@ const url = require("url");
 
 const webpack = require("webpack");
 
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
-
-const extractCSS = new ExtractTextPlugin({
-  filename: "[name].css"
-});
 
 const UNOFFICIAL_SITE_IDS = ["local", "github"];
 
@@ -20,6 +16,7 @@ const siteUrl = process.env.SITE_URL || `http://${siteHost}:${sitePort}/`;
 const siteId = process.env.SITE_ID || "";
 const downloadFirefoxUtmSource =
   process.env.DOWNLOAD_FIREFOX_UTM_SOURCE || new url.URL(siteUrl).hostname;
+const isDev = nodeEnv === "development";
 
 const defaultEnv = {
   NODE_ENV: nodeEnv,
@@ -36,15 +33,24 @@ Object.keys(defaultEnv).forEach(key => {
 
 const commonBabelOptions = {
   cacheDirectory: true,
-  presets: [["env", { targets: ["last 2 versions"], modules: false }], "react"],
+  presets: [
+    [
+      "@babel/preset-env", {
+        targets: ["last 2 versions"],
+        modules: false
+      }
+    ],
+    "@babel/preset-react"
+  ],
   plugins: [
-    "transform-object-rest-spread",
-    "transform-class-properties"
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
   ]
 };
 
 const webpackConfig = {
   devtool: "source-map",
+  mode: isDev ? "development" : "production",
   watchOptions: {
     aggregateTimeout: 500,
     poll: 1000
@@ -53,7 +59,7 @@ const webpackConfig = {
     extensions: [".js", ".jsx"]
   },
   plugins: [
-    extractCSS,
+    new MiniCssExtractPlugin(),
     new WriteFilePlugin(),
     new webpack.DefinePlugin({ "process.env": processEnv })
   ],
@@ -79,20 +85,18 @@ const webpackConfig = {
       },
       {
         test: /\.scss$/,
-        use: extractCSS.extract({
-          use: [
-            { loader: "css-loader" },
-            { loader: "sass-loader" }
-          ],
-          fallback: "style-loader"
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
       },
       {
         test: /\.css$/,
-        use: extractCSS.extract({
-          use: [{ loader: "css-loader" }],
-          fallback: "style-loader"
-        })
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader"
+        ]
       },
       {
         test: /\.(ttf|woff|eot)$/i,
