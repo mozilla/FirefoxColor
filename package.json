@@ -129,7 +129,7 @@
     "fira": "github:mozilla/fira#4.202",
     "json-url": "2.3.4",
     "query-string": "6.1.0",
-    "react": "16.5.0",
+    "react": "16.5.1",
     "react-color": "2.14.1",
     "react-dom": "16.5.0",
     "react-onclickoutside": "6.7.1",
