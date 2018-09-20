@@ -30,9 +30,12 @@ const BrowserChrome = ({
             key={index}
             style={{
               backgroundImage: `url(${image.image})`,
+              backgroundRepeat: `${image.tiling}`,
+              backgroundPosition: `${image.alignment}`,
               position: "absolute",
               height: "100%",
               width: "100%",
+              backgroundSize: "50% auto",
               zIndex: 4 - index
             }}
           />
