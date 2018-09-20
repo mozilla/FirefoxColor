@@ -105,6 +105,7 @@ window.addEventListener("message", ({ source, data: message }) => {
         postMessage("addImages", {
           images: selectors.themeCustomImages(state)
         });
+        postMessage("getStaticThemes");
         postMessage("setTheme", { theme: selectors.theme(state) });
       }
     }
@@ -113,6 +114,9 @@ window.addEventListener("message", ({ source, data: message }) => {
         ...actions.theme.setTheme({ theme: message.theme }),
         meta: { fromAddon: true }
       });
+    }
+    if (message.type === "updateStaticThemes") {
+      store.dispatch(actions.statics.setStaticThemesList(message.staticThemes));
     }
   }
 });

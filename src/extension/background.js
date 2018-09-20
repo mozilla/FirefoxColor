@@ -19,8 +19,34 @@ const siteTabMetrics = {};
 
 let customBackgrounds = {};
 
+const staticThemes = [];
+
 const init = () => {
   Metrics.init("addon");
+
+  browser.management.getAll().then(extensions => {
+    for (let extension of extensions) {
+      if (extension.type !== "theme") {
+        continue;
+      }
+      staticThemes.push(extension.id);
+    }
+  });
+
+  browser.management.onInstalled.addListener(extension => {
+    if (extension.type === "theme") {
+      staticThemes.push(extension.id);
+    }
+  });
+
+  browser.management.onUninstalled.addListener(extension => {
+    if (extension.type === "theme") {
+      const index = staticThemes.indexOf(extension.id);
+      if (index > -1) {
+        staticThemes.splice(index, 1);
+      }
+    }
+  });
 
   browser.browserAction.onClicked.addListener(() => {
     queryAndFocusTab("fromAddon=true");
@@ -133,6 +159,9 @@ const messageHandlers = {
   },
   default: message => {
     log("unexpected message", message);
+  },
+  getStaticThemes: (message, port) => {
+    port.postMessage({ type: "updateStaticThemes", staticThemes });
   }
 };
 

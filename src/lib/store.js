@@ -36,7 +36,7 @@ export const actions = {
     "SET_PRESET_THEMES_PAGE",
     "SET_DISPLAY_LEGAL_MODAL",
     "SET_DISPLAY_SHARE_MODAL",
-    "SET_THEME_BUILDER_PANEL"
+    "SET_THEME_BUILDER_PANEL",
   ),
   theme: {
     ...createActions(
@@ -63,10 +63,17 @@ export const actions = {
       "UPDATE_IMAGE",
       "DELETE_IMAGES"
     )
+  },
+  statics: {
+    ...createActions(
+      {},
+      "SET_STATIC_THEMES_LIST"
+    )
   }
 };
 
 export const selectors = {
+  staticThemesList: state => state.statics.staticThemesList,
   hasExtension: state => state.ui.hasExtension,
   themeBuilderPanel: state => state.ui.themeBuilderPanel,
   firstRun: state => state.ui.firstRun,
@@ -189,7 +196,7 @@ export const reducers = {
       loaderDelayExpired: false,
       displayLegalModal: false,
       displayShareModal: false,
-      themeBuilderPanel: 1
+      themeBuilderPanel: 1,
     }
   ),
   images: handleActions(
@@ -323,6 +330,19 @@ export const reducers = {
         }
         return action.meta && action.meta.userEdit;
       }
+    }
+  ),
+  statics: handleActions(
+    {
+      SET_STATIC_THEMES_LIST: (state, { payload }) => {
+        return ({
+          ...state,
+          staticThemesList: payload
+        });
+      }
+    },
+    {
+      staticThemesList: []
     }
   )
 };
