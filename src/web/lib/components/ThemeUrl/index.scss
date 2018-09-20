@@ -1,9 +1,49 @@
-@import '../../common.scss';
+@import "../../common.scss";
 
 .theme-url {
-  flex: 1;
+  background: var(--white-100);
+  box-shadow: 0 0 0 1px var(--grey-90-a10), 0 10px 20px var(--grey-90-a20);
   display: flex;
   flex-wrap: wrap;
+  flex: 1;
+  padding: 10px;
+  position: absolute;
+  top: 60px;
+  right: 8px;
+  width: 280px;
+
+  &.disabled {
+    display: none;
+  }
+
+  &.extension {
+    right: 118px;
+  }
+
+  &::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+    position: absolute;
+    top: -8px;
+    right: 32px;
+  }
+
+  &::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid var(--grey-90-a10);
+    position: absolute;
+    top: -9px;
+    right: 30px;
+    z-index: -10;
+  }
 
   h2 {
     margin-top: 0;
@@ -12,6 +52,8 @@
 
   p {
     cursor: text;
+    font-size: 14px;
+    line-height: 1.5rem;
   }
 
   label {
@@ -21,8 +63,8 @@
   input[type="text"] {
     border-radius: 3px 0 0 3px;
     border: 1px solid var(--grey-30);
-    font-size: 16px;
-    height: $grid * 10;
+    font-size: 12px;
+    height: $grid * 8;
     flex: 1;
     padding: 0 10px;
   }
@@ -32,9 +74,9 @@
 
     border-radius: 0 3px 3px 0;
     border: 0;
-    flex: 0 0 90px;
-    font-size: 16px;
-    height: 40px;
+    flex: 0 0 72px;
+    font-size: 12px;
+    height: 32px;
     cursor: pointer;
   }
 }

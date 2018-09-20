@@ -6,7 +6,6 @@ import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
 import Metrics from "../../../../lib/metrics";
 import { ESC } from "../../../../lib/constants";
-import "./index.scss";
 
 const Background = ({
   src,
@@ -72,23 +71,25 @@ class ThemeBackgroundPicker extends React.Component {
     const background = theme.images.additional_backgrounds[0];
     const backgroundSwatch = background ? `url(${bgImages(background)})` : "";
     return (
-      <div
-        className={classnames("theme-background-picker", { selected })}
+      <li
+        className={classnames("theme-unit", "theme-unit--background", {
+          selected
+        })}
         onClick={this.handleClick}
       >
+        <span className="theme-unit__label" title="Theme Texture">
+          Theme Texture
+        </span>
         <span
-          className="theme-background-picker__swatch"
+          className="theme-unit__swatch"
           title="Theme Texture"
           style={{
             backgroundColor: accentcolor,
             backgroundImage: backgroundSwatch
           }}
         />
-        <span className="theme-background-picker__text" title="Theme Texture">
-          Theme Texture
-        </span>
-        <div className="theme-background-picker__backgrounds">
-          <div className="theme-background-picker__backgrounds-inner">
+        <div className="theme-unit__picker">
+          <div className="theme-unit__picker-inner">
             {bgImages.keys().map((src, backgroundId) => (
               <Background
                 key={backgroundId}
@@ -103,7 +104,7 @@ class ThemeBackgroundPicker extends React.Component {
             ))}
           </div>
         </div>
-      </div>
+      </li>
     );
   }
 }

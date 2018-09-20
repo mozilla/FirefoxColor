@@ -72,39 +72,48 @@ class ThemeColorsEditor extends React.Component {
 
     return (
       <div className="theme-colors-editor">
-        <ul className="colors">
+        <ul className="theme-colors-editor__list">
           {colorKeys.map((name, idx) => {
             const color = colors[name];
             return [
               <li
                 key={`dt-${idx}`}
-                className={classnames(name, "color", {
+                className={classnames(name, "theme-unit", "theme-unit--color", {
                   selected: selectedColor === name
                 })}
                 onClick={ev => this.handleClick(ev, name)}
               >
                 <span
-                  className="color__swatch"
+                  className="theme-unit__swatch"
                   style={{ backgroundColor: colorToCSS(color) }}
                   title={colorLabels[name]}
                 />
-                <span className="color__label" title={colorLabels[name]}>
+                <span className="theme-unit__label" title={colorLabels[name]}>
                   {colorLabels[name]}
-                </span>
-                <span className="color__picker">
-                  <SketchPicker
-                    color={color}
-                    disableAlpha={!colorsWithAlpha.includes(name)}
-                    onChangeComplete={color =>
-                      this.handleColorChange(name, color)
-                    }
-                    presetColors={uniqueColorArray}
-                  />
                 </span>
               </li>
             ];
           })}
         </ul>
+        <div className="theme-colors-editor__picker">
+          {selectedColor && (
+            <SketchPicker
+              color={colors[selectedColor]}
+              width="270px"
+              disableAlpha={!colorsWithAlpha.includes(selectedColor)}
+              onChangeComplete={nextColor =>
+                this.handleColorChange(selectedColor, nextColor)
+              }
+              presetColors={uniqueColorArray}
+            />
+          )}
+          {!selectedColor && (
+            <div className="theme-colors-editor__prompt">
+              <div className="theme-colors-editor__prompt-arrow" />
+              <p>Pick a color to start customizing Firefox.</p>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

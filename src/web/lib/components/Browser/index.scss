@@ -1,0 +1,36 @@
+@import "../../common.scss";
+
+.browser {
+  background: var(--white-100);
+  position: relative;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.browser--large {
+  @include unit("large");
+
+  .browser__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    justify-content: space-between;
+    z-index: 0;
+  }
+}
+
+.browser--medium {
+  @include unit("medium");
+}
+
+.browser--small {
+  @include unit("small");
+
+  .browser__content {
+    padding: $grid * 1.5;
+    flex: 1;
+  }
+}

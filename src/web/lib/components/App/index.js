@@ -3,20 +3,18 @@ import { connect } from "react-redux";
 import { hot } from "react-hot-loader";
 
 import { actions, selectors } from "../../../../lib/store";
-import { DEBUG } from "../../../../lib/utils";
 
 import AppBackground from "../AppBackground";
 import AppFooter from "../AppFooter";
 import AppHeader from "../AppHeader";
 import AppLoadingIndicator from "../AppLoadingIndicator";
 import Mobile from "../Mobile";
-import PresetThemeSelector from "../PresetThemeSelector";
-import SavedThemeSelector from "../SavedThemeSelector";
 import SharedThemeDialog from "../SharedThemeDialog";
 import TermsPrivacyModal from "../TermsPrivacyModal";
-import ThemeBuilder from "../ThemeBuilder";
-import ThemeLogger from "../ThemeLogger";
 import Onboarding from "../Onboarding";
+import Banner from "../Banner";
+import ThemeBuilder from "../ThemeBuilder";
+import Browser from "../Browser";
 
 import "./index.scss";
 
@@ -64,6 +62,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(actions.ui.setPresetThemesPage({ page })),
     setDisplayLegalModal: args =>
       dispatch(actions.ui.setDisplayLegalModal(args)),
+    setDisplayShareModal: args =>
+      dispatch(actions.ui.setDisplayShareModal(args)),
+    setThemeBuilderPanel: args =>
+      dispatch(actions.ui.setThemeBuilderPanel(args)),
     undo: () => dispatch(actions.theme.undo()),
     redo: () => dispatch(actions.theme.redo())
   };
@@ -74,10 +76,20 @@ export const AppComponent = props => {
     isMobile,
     loaderDelayExpired,
     hasExtension,
-    hasSavedThemes,
     shouldOfferPendingTheme,
-    firstRun
+    firstRun,
+    isFirefox,
+    addonUrl,
+    setSelectedColor,
+    selectedColor,
+    theme,
+    themeCustomImages
   } = props;
+
+  const customImages = (theme.images.custom_backgrounds || []).map(
+    item => themeCustomImages[item.name]
+  );
+
   return (
     <Fragment>
       {isMobile && <Mobile />}
@@ -85,20 +97,35 @@ export const AppComponent = props => {
       {!isMobile &&
         loaderDelayExpired && (
           <Fragment>
-            <AppHeader {...props} />
             <div className="app">
+              <AppBackground {...props} />
               {hasExtension &&
                 shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
-              <AppBackground {...props} />
-              <main className="app__content">
-                <ThemeBuilder {...props} />
-                {hasSavedThemes && <SavedThemeSelector {...props} />}
-                <PresetThemeSelector {...props} />
+              <AppHeader {...props} />
+              <main className="app__main">
+                <Browser
+                  {...{ theme, customImages, selectedColor }}
+                  size="large"
+                >
+                  <Fragment>
+                    {!hasExtension && (
+                      <Banner
+                        {...{
+                          isFirefox,
+                          addonUrl,
+                          selectedColor,
+                          setSelectedColor
+                        }}
+                      />
+                    )}
+                    {hasExtension && <div className="app__firefox" />}
+                    <ThemeBuilder {...props} />
+                  </Fragment>
+                </Browser>
               </main>
               <AppFooter {...props} />
               <TermsPrivacyModal {...props} />
               {firstRun && <Onboarding />}
-              <ThemeLogger {...props} debug={DEBUG} />
             </div>
           </Fragment>
         )}

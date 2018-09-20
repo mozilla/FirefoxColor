@@ -27,7 +27,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
   handleImageAdd = ({ name }) => {
     this.props.addCustomBackground({
       name,
-      tiling: "no-repeat",
+      tiling: "repeat",
       alignment: "left top"
     });
   };
@@ -40,14 +40,20 @@ export class ThemeCustomBackgroundPicker extends React.Component {
 
     // Copy default behavior: https://github.com/clauderic/react-sortable-hoc/blob/master/src/SortableContainer/index.js#L51
     // Cancel sorting if the event target is an `input`, `textarea`, `select` or `option`
-    const disabledElements = ["input", "textarea", "select", "option", "button"];
+    const disabledElements = [
+      "input",
+      "textarea",
+      "select",
+      "option",
+      "button"
+    ];
 
     if (disabledElements.includes(e.target.tagName.toLowerCase())) {
       return true; // Return true to cancel sorting
     }
 
     return false;
-  }
+  };
 
   // HACK: Prevent default on drag to stop text highlighting
   // https://github.com/clauderic/react-sortable-hoc/issues/253#issuecomment-350223723
@@ -63,16 +69,12 @@ export class ThemeCustomBackgroundPicker extends React.Component {
     const { addImage, updateImage } = this.props;
     return (
       <form className="custom-background" onSubmit={e => e.preventDefault()}>
-        <label htmlFor="customBackground">
-          <h2>Custom background image</h2>
-        </label>
-
         <ImageImporter
           {...{ addImage, updateImage, onImport: this.handleImageAdd }}
         >
           {({ importing, errors, ImportButton }) => (
             <div className="add-image">
-              <ImportButton label="Upload image" />
+              <ImportButton label="Add your own" />
               {importing && (
                 <img className="status-icon importing" src={iconLoading} />
               )}
@@ -233,7 +235,6 @@ class ThemeCustomBackgroundSelector extends React.Component {
                   </ul>
                 </Modal>
               )}
-
               {image && (
                 <div className="image-preview">
                   <img src={image.image} height="34" />

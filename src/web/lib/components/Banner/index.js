@@ -6,15 +6,10 @@ import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
-export const Banner = ({ isFirefox, addonUrl, setSelectedColor }) => {
-  const handleClick = () => {
-    setSelectedColor({ name: "accentcolor" });
-  };
-
+export const Banner = ({ isFirefox, addonUrl }) => {
   return (
     <div className={classnames("banner", { "banner--ff-ad": !isFirefox })}>
       <div className="banner__content">
-        <div className="banner__logo" />
         {isFirefox && (
           <Fragment>
             <h2>Build Beautiful Firefox Themes</h2>
@@ -36,12 +31,6 @@ export const Banner = ({ isFirefox, addonUrl, setSelectedColor }) => {
             </a>
           </Fragment>
         )}
-        <p>
-          ...or click any marker above (<span
-            className="banner__marker"
-            onClick={handleClick}
-          />) to see how it works.
-        </p>
       </div>
     </div>
   );

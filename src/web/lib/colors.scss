@@ -1,3 +1,9 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* Photon Colors CSS Variables v3.3.0 */
+
 :root {
   --magenta-50: #ff1ad9;
   --magenta-60: #ed00b5;
@@ -5,6 +11,8 @@
   --magenta-80: #7d004f;
   --magenta-90: #440027;
 
+  --purple-30: #c069ff;
+  --purple-40: #ad3bff;
   --purple-50: #9400ff;
   --purple-60: #8000d7;
   --purple-70: #6200a4;
@@ -50,6 +58,11 @@
   --orange-90: #3e1300;
 
   --grey-10: #f9f9fa;
+  --grey-10-a10: rgba(249, 249, 250, .1);
+  --grey-10-a20: rgba(249, 249, 250, .2);
+  --grey-10-a40: rgba(249, 249, 250, .4);
+  --grey-10-a60: rgba(249, 249, 250, .6);
+  --grey-10-a80: rgba(249, 249, 250, .8);
   --grey-20: #ededf0;
   --grey-30: #d7d7db;
   --grey-40: #b1b1b3;
@@ -72,5 +85,6 @@
   --ink-70: #363959;
   --ink-80: #202340;
   --ink-90: #0f1126;
+
   --white-100: #fff;
 }

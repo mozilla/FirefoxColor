@@ -1,9 +1,17 @@
+@import "../../common.scss";
+
 .custom-background {
-  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
 }
 
 .backgroundList {
   list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .inputfile {
@@ -47,10 +55,15 @@
   align-items: center;
   justify-content: space-between;
 
+  &:last-child {
+    border-bottom: 0;
+  }
+
   .drag-handle {
     display: block;
     height: 16px;
     margin-right: 23px;
+    opacity: .5;
     width: 16px;
     background: url(./icon_drag.svg) no-repeat 0 0 / 16px 16px;
 
@@ -70,11 +83,10 @@
   }
 
   .image-preview {
-    width: 280px;
+    align-items: center;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex: 1;
     overflow: hidden;
 
     img {
@@ -84,13 +96,13 @@
 
     .name {
       text-overflow: ellipsis;
-      margin: 0 1em;
+      margin: 0;
     }
   }
 
   .align-group {
     padding-right: 10px;
-    margin-right: 10px;
+    margin: 0 0 0 10px;
     border-right: 1px solid rgba(12, 12, 13, .1);
     display: flex;
     flex-direction: row;
@@ -112,9 +124,14 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin: 0 0 0 2px;
+
+      &:hover {
+        background: var(--grey-90-a10);
+      }
 
       &.selected {
-        background: rgba(12, 12, 13, .2);
+        background: var(--grey-90-a20);
       }
 
       //&.align-button-horizontal-left img {
@@ -152,6 +169,7 @@
     line-height: 22px;
     padding: 4px;
     width: 190px;
+    margin: 0 10px 0;
   }
 
   .clear {
@@ -166,4 +184,3 @@
   z-index: 9999;
   box-shadow: 2px 2px #ddd;
 }
-
