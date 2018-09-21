@@ -9,13 +9,14 @@
 
 .theme-colors-editor__list {
   display: grid;
-  grid-auto-rows: auto-fit;
+  grid-template-rows: repeat(5, 44px);
   grid-gap: $grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   margin: 0;
   padding: $grid * 4;
   position: relative;
-  flex: 0 0 320px;
+  flex: 1 1 640px;
+  grid-auto-flow: column;
 
   .theme-unit {
     align-items: center;

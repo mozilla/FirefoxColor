@@ -1,5 +1,5 @@
 import tinycolor from "tinycolor2";
-import { colorsWithAlpha, alphaEqualityTolerance } from "./constants";
+import { colorsWithAlpha, alphaEqualityTolerance, fallbackColors } from "./constants";
 import { presetThemesContext, bgImages } from "./assets";
 
 const defaultTheme = presetThemesContext("./default.json");
@@ -123,7 +123,8 @@ export const normalizeThemeColors = (colors = {}) => {
   const out = {};
   const { colors: defaultColors } = defaultTheme;
   Object.keys(defaultColors).forEach(name => {
-    const color = normalizeThemeColor(colors[name], defaultColors[name]);
+    const matchedColor = colors[name] || colors[fallbackColors[name]];
+    const color = normalizeThemeColor(matchedColor, defaultColors[name]);
     if (!colorsWithAlpha.includes(name)) {
       delete color.a;
     }

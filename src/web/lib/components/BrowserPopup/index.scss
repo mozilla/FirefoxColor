@@ -1,0 +1,70 @@
+@import "../../common.scss";
+
+.browser-popup {
+  position: absolute;
+  z-index: 11;
+
+  .browser-popup__caret-shadow {
+    transform: rotate(45deg);
+    position: absolute;
+    z-index: -1;
+    background: var(--grey-90-a20);
+  }
+
+  .browser-popup__caret {
+    transform: rotate(45deg);
+    position: absolute;
+    z-index: 1;
+  }
+
+  .browser-popup__inner {
+    position: relative;
+    margin: 0;
+    list-style: none;
+  }
+
+  &.browser-popup--large {
+    top: 106px;
+    right: -8px;
+
+    .browser-popup__inner {
+      @include unit("medium");
+      border-radius: 6px;
+      width: 240px;
+      padding: 24px 18px;
+
+      li {
+        margin: 16px 0;
+
+        &:first-child {
+          width: 90%;
+          margin-top: 0;
+        }
+
+        &:last-child {
+          width: 95%;
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .browser-popup__caret-shadow {
+      width: 22px;
+      height: 22px;
+      right: 26px;
+      top: -5px;
+    }
+
+    .browser-popup__caret {
+      width: 20px;
+      height: 20px;
+      right: 27px;
+      top: -5px;
+    }
+
+    .browser-popup__item {
+      height: 10px;
+      border-radius: 5px;
+    }
+  }
+}

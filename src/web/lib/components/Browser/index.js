@@ -2,6 +2,7 @@ import React from "react";
 import BrowserChrome from "../BrowserChrome";
 import BrowserTabs from "../BrowserTabs";
 import BrowserTools from "../BrowserTools";
+import BrowserPopup from "../BrowserPopup";
 
 import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
@@ -64,6 +65,7 @@ const Browser = ({
           }}
         />
         <BrowserTools {...{ colors, size, selectSettings, selectedColor }} />
+        <BrowserPopup {...{ colors, size, selectSettings, selectedColor }} />
       </BrowserChrome>
       <div className="browser__content">{children}</div>
     </div>
