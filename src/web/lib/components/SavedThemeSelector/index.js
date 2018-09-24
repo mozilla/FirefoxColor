@@ -23,7 +23,7 @@ export const SavedThemeSelector = ({
       previewClassName="saved-theme-preview"
       onClick={theme => setTheme({ theme })}
       onDelete={key => themeStorage.delete(key)}
-      perPage={9}
+      perPage={6}
       currentPage={savedThemesPage}
       setCurrentPage={setSavedThemesPage}
       images={themeCustomImages}

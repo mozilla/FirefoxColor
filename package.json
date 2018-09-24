@@ -1,7 +1,7 @@
 {
   "name": "firefoxcolor",
   "description": "Theming experiment for Firefox Quantum and beyond.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Les Orchard <me@lmorchard.com>",
   "contributors": [
     "John Gruen <john.gruen@gmail.com>"

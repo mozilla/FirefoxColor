@@ -34,14 +34,22 @@
       "b": 255
     },
     "tab_line": {
-      "r": 156,
+      "r": 153,
+      "g": 51,
+      "b": 255
+    },
+    "popup": {
+      "r": 234,
+      "g": 235,
+      "b": 246
+    },
+    "popup_text": {
+      "r": 153,
       "g": 51,
       "b": 255
     }
   },
   "images": {
-    "additional_backgrounds": [
-      "./bg-012.svg"
-    ]
+    "additional_backgrounds": ["./bg-012.svg"]
   }
 }

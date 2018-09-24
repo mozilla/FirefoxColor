@@ -189,7 +189,7 @@ export const reducers = {
       loaderDelayExpired: false,
       displayLegalModal: false,
       displayShareModal: false,
-      themeBuilderPanel: 1
+      themeBuilderPanel: 0
     }
   ),
   images: handleActions(
@@ -238,7 +238,7 @@ export const reducers = {
         }),
         SET_COLOR: (state, { payload: { name, color } }) => ({
           ...state,
-          colors: { ...state.colors, [name]: normalizeThemeColor(color) }
+          colors: { ...state.colors, [name]: normalizeThemeColor(name, color) }
         }),
         SET_BACKGROUND: (state, { payload: { url } }) => ({
           ...state,

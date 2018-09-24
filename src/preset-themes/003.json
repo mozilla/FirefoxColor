@@ -1,5 +1,4 @@
 {
-  "title": "003",
   "colors": {
     "toolbar": {
       "r": 58,
@@ -29,19 +28,30 @@
       "a": 1
     },
     "toolbar_field_text": {
-      "r": 123,
-      "g": 127,
-      "b": 204
+      "r": 90,
+      "g": 93,
+      "b": 154
     },
     "tab_line": {
       "r": 218,
       "g": 135,
       "b": 124
+    },
+    "popup": {
+      "r": 255,
+      "g": 255,
+      "b": 255
+    },
+    "popup_text": {
+      "r": 90,
+      "g": 93,
+      "b": 154
     }
   },
   "images": {
     "additional_backgrounds": [
       "./bg-036.svg"
     ]
-  }
+  },
+  "title": "003"
 }

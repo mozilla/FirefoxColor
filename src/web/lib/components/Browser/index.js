@@ -16,7 +16,8 @@ const Browser = ({
   size = "small",
   selectedColor = null,
   children = null,
-  onClick: onClickBrowser = null
+  onClick: onClickBrowser = null,
+  showPopup = true
 }) => {
   const clickBrowser = e => {
     if (onClickBrowser) {
@@ -56,16 +57,28 @@ const Browser = ({
           themeHasCustomBackgrounds
         }}
       >
-        <BrowserTabs
-          {...{
-            colors,
-            size,
-            selectSettings,
-            selectedColor
+        <div
+          style={{
+            transition: selectSettings.transition,
+            outline:
+              selectedColor === "accentcolor"
+                ? selectSettings.active
+                : selectSettings.inactive
           }}
-        />
-        <BrowserTools {...{ colors, size, selectSettings, selectedColor }} />
-        <BrowserPopup {...{ colors, size, selectSettings, selectedColor }} />
+        >
+          <BrowserTabs
+            {...{
+              colors,
+              size,
+              selectSettings,
+              selectedColor
+            }}
+          />
+          <BrowserTools {...{ colors, size, selectSettings, selectedColor }} />
+        </div>
+        {showPopup && (
+          <BrowserPopup {...{ colors, size, selectSettings, selectedColor }} />
+        )}
       </BrowserChrome>
       <div className="browser__content">{children}</div>
     </div>

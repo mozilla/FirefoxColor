@@ -13,11 +13,12 @@
   @include unit("large");
 
   .browser__content {
+    background-color: var(--grey-10);
     display: flex;
     flex-direction: column;
     height: 100%;
-    position: relative;
     justify-content: space-between;
+    position: relative;
     z-index: 0;
   }
 }
@@ -29,8 +30,11 @@
 .browser--small {
   @include unit("small");
 
+  border: 1px solid var(--grey-20);
+
   .browser__content {
     padding: $grid * 1.5;
-    flex: 1;
+    flex: 0 0 50px;
+    border-top: 1px solid var(--grey-20);
   }
 }
