@@ -230,6 +230,14 @@ const applyTheme = ({ theme }) => {
     newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
   }
 
+  if (!theme.colors.hasOwnProperty("popup")) {
+    newTheme.colors.popup = colorToCSS(theme.colors.accentcolor);
+  }
+
+  if (!theme.colors.hasOwnProperty("popup_text")) {
+    newTheme.colors.popup_text = colorToCSS(theme.colors.toolbar_text);
+  }
+
   browser.theme.update(newTheme);
 };
 

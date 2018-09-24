@@ -8,16 +8,14 @@ import {
 } from "react-sortable-hoc";
 import {
   CUSTOM_BACKGROUND_MAXIMUM_SIZE,
-  CUSTOM_BACKGROUND_ALLOWED_TYPES
+  CUSTOM_BACKGROUND_ALLOWED_TYPES,
+  CUSTOM_BACKGROUND_MAXIMUM_LENGTH
 } from "../../../../lib/constants";
 
 import "./index.scss";
 
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
-
-import iconLoading from "./icon_loading.svg";
-import iconInfo from "../../../../images/info-16.svg";
 
 export class ThemeCustomBackgroundPicker extends React.Component {
   constructor(props) {
@@ -66,25 +64,40 @@ export class ThemeCustomBackgroundPicker extends React.Component {
   };
 
   render() {
-    const { addImage, updateImage } = this.props;
+    const {
+      addImage,
+      updateImage,
+      themeHasCustomBackgrounds,
+      themeCustomBackgrounds
+    } = this.props;
+    const label = themeHasCustomBackgrounds
+      ? "Add another"
+      : "...Or add your own";
+    const isPrimary = themeHasCustomBackgrounds;
     return (
       <form className="custom-background" onSubmit={e => e.preventDefault()}>
+        <BackgroundList
+          {...this.props}
+          helperClass="dragHelper"
+          useDragHandle={true}
+          shouldCancelStart={this.handleShouldCancelStart}
+          onSortStart={this.handleSortStart}
+          onSortEnd={this.handleSortEnd}
+        />
         <ImageImporter
           {...{ addImage, updateImage, onImport: this.handleImageAdd }}
         >
           {({ importing, errors, ImportButton }) => (
             <div className="add-image">
-              <ImportButton label="Add your own" />
+              {themeCustomBackgrounds.length <
+                CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
+                  <ImportButton {...{ label, isPrimary }} />
+              )}
               {importing && (
-                <img className="status-icon importing" src={iconLoading} />
+                <div className="status-message importing">Processing...</div>
               )}
               {errors && (
                 <React.Fragment>
-                  <img
-                    className="status-icon errors"
-                    src={iconInfo}
-                    title={JSON.stringify(errors)}
-                  />
                   <Modal>
                     <ul className="errors">
                       {errors.tooLarge && (
@@ -100,15 +113,9 @@ export class ThemeCustomBackgroundPicker extends React.Component {
             </div>
           )}
         </ImageImporter>
-
-        <BackgroundList
-          {...this.props}
-          helperClass="dragHelper"
-          useDragHandle={true}
-          shouldCancelStart={this.handleShouldCancelStart}
-          onSortStart={this.handleSortStart}
-          onSortEnd={this.handleSortEnd}
-        />
+        <p className="privacy-note">
+          Up to 1 MB. JPG, PNG or BMP. <br/> Images never leave your computer.
+        </p>
       </form>
     );
   }
@@ -192,6 +199,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
       const newAlignmentState = { [alignmentKey]: alignment };
       return (
         <button
+          title={`Align ${alignment}`}
           onClick={() => this.setAlignmentState(newAlignmentState)}
           className={classNames(
             { selected: alignmentState[alignmentKey] === alignment },
@@ -237,7 +245,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
               )}
               {image && (
                 <div className="image-preview">
-                  <img src={image.image} height="34" />
+                  <img src={image.image} alt={image.name} />
                   <span className="name">{image.name}</span>
                 </div>
               )}
@@ -270,9 +278,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              <button className="clear" onClick={handleClearBackground}>
-                &#x2716;
-              </button>
+              <button className="clear" onClick={handleClearBackground} />
             </li>
           );
         }}
@@ -335,7 +341,7 @@ class ImageImporter extends React.Component {
     return this.props.children({
       importing,
       errors: !error ? false : { tooLarge, wrongType },
-      ImportButton: ({ label }) => (
+      ImportButton: ({ label, isPrimary = false }) => (
         <React.Fragment>
           <input
             className="inputfile"
@@ -344,7 +350,8 @@ class ImageImporter extends React.Component {
             onChange={handleFileChoice}
           />
           <button
-            className="import-image"
+            title={label}
+            className={classNames("import-image", { default: isPrimary })}
             onClick={() => this.fileInputEl.click()}
           >
             {label}

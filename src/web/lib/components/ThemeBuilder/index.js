@@ -6,17 +6,15 @@ import PresetThemeSelector from "../PresetThemeSelector";
 import SavedThemeSelector from "../SavedThemeSelector";
 import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
 import ThemeColorsEditor from "../ThemeColorsEditor";
-import ThemeCustomBackgroundPicker from "../ThemeCustomBackgroundPicker";
 
 import "./index.scss";
 
-export const ThemeBuilderTwo = props => {
+export const ThemeBuilder = props => {
   const {
     theme,
     savedThemes,
     hasSavedThemes,
     themeBuilderPanel,
-    setBackground,
     selectedColor,
     setColor,
     setSelectedColor,
@@ -57,8 +55,6 @@ export const ThemeBuilderTwo = props => {
     });
   }
 
-  const hasCustom = theme.images.custom_backgrounds || [];
-
   const renderThemingSection = selected => {
     switch (selected) {
       case "preset-themes":
@@ -76,12 +72,7 @@ export const ThemeBuilderTwo = props => {
         );
       case "backgrounds":
         return (
-          <React.Fragment>
-            {!hasCustom.length && (
-              <ThemeBackgroundPicker {...{ theme, setBackground }} />
-            )}
-            <ThemeCustomBackgroundPicker {...props} />
-          </React.Fragment>
+          <ThemeBackgroundPicker {...props} />
         );
       case "saved-themes":
         return (
@@ -129,4 +120,4 @@ export const ThemeBuilderTwo = props => {
   );
 };
 
-export default ThemeBuilderTwo;
+export default ThemeBuilder;

@@ -5,10 +5,17 @@ const themes = require("./themes");
 describe("lib/themes", () => {
   describe("normalizeThemeColor", () => {
     const subject = themes.normalizeThemeColor;
-    it("should properly handle alpha channel in colors", () => {
+    it("should properly handle alpha channel in colors with alpha", () => {
       const input = { r: 255, g: 255, b: 255, a: 0.5299999713897705 };
       const expected = { r: 255, g: 255, b: 255, a: 0.53 };
-      const result = subject(input);
+      const result = subject("toolbar", input);
+      expect(result).to.deep.equal(expected);
+    });
+
+    it("should properly remove alpha channel in colors without alpha", () => {
+      const input = { r: 255, g: 255, b: 255, a: 0.5299999713897705 };
+      const expected = { r: 255, g: 255, b: 255};
+      const result = subject("tab_line", input);
       expect(result).to.deep.equal(expected);
     });
   });

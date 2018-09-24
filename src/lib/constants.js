@@ -4,14 +4,17 @@ export const DOWNLOAD_FIREFOX_URL = `https://www.mozilla.org/firefox/new/?utm_ca
   process.env.DOWNLOAD_FIREFOX_UTM_SOURCE
 }`;
 
+export const CUSTOM_BACKGROUND_MAXIMUM_LENGTH = 3;
+
 export const CUSTOM_BACKGROUND_MAXIMUM_SIZE = 1000000;
 
 // Note: SVGs cannot be passed as base64.
 // Bugzilla bug passed here https://bugzilla.mozilla.org/show_bug.cgi?id=1491790
+// gifs also seem to break the background
 export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
   "image/jpeg",
   "image/png",
-  "image/gif",
+  // "image/gif",
   "image/bmp"
   // "image/svg+xml"
 ];
@@ -25,7 +28,14 @@ export const colorLabels = {
   textcolor: "Background Tab Text Color",
   toolbar_field: "Search Bar Color",
   toolbar_field_text: "Search Text",
-  tab_line: "Tab Highlight Color"
+  tab_line: "Tab Highlight Color",
+  popup: "Popup Background",
+  popup_text: "Popup Text"
+};
+
+export const fallbackColors = {
+  popup: "toolbar",
+  popup_text: "textcolor"
 };
 
 export const colorsWithAlpha = ["toolbar", "toolbar_field"];

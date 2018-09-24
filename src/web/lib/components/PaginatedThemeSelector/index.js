@@ -12,7 +12,7 @@ export const PaginatedThemeSelector = ({
   previewClassName,
   onClick,
   onDelete = null,
-  perPage = 12,
+  perPage = 9,
   currentPage = 1,
   setCurrentPage,
   images = []
@@ -30,7 +30,11 @@ export const PaginatedThemeSelector = ({
     <div className={classNames("theme-selector", className)}>
       {page.map(([key, { theme }]) => {
         const customImages = (theme.images.custom_backgrounds || []).map(
-          item => images[item.name]
+          item => {
+            const customImage = {...item};
+            customImage.image = images[item.name].image;
+            return customImage;
+          }
         );
         return (
           <div

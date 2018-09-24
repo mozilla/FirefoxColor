@@ -2,6 +2,7 @@ import React from "react";
 import BrowserChrome from "../BrowserChrome";
 import BrowserTabs from "../BrowserTabs";
 import BrowserTools from "../BrowserTools";
+import BrowserPopup from "../BrowserPopup";
 
 import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
@@ -10,11 +11,13 @@ import "./index.scss";
 
 const Browser = ({
   theme,
+  themeHasCustomBackgrounds = null,
   customImages = [],
   size = "small",
   selectedColor = null,
   children = null,
-  onClick: onClickBrowser = null
+  onClick: onClickBrowser = null,
+  showPopup = true
 }) => {
   const clickBrowser = e => {
     if (onClickBrowser) {
@@ -50,18 +53,32 @@ const Browser = ({
           headerBackgroundImage,
           customImages,
           selectedColor,
-          selectSettings
+          selectSettings,
+          themeHasCustomBackgrounds
         }}
       >
-        <BrowserTabs
-          {...{
-            colors,
-            size,
-            selectSettings,
-            selectedColor
+        <div
+          style={{
+            transition: selectSettings.transition,
+            outline:
+              selectedColor === "accentcolor"
+                ? selectSettings.active
+                : selectSettings.inactive
           }}
-        />
-        <BrowserTools {...{ colors, size, selectSettings, selectedColor }} />
+        >
+          <BrowserTabs
+            {...{
+              colors,
+              size,
+              selectSettings,
+              selectedColor
+            }}
+          />
+          <BrowserTools {...{ colors, size, selectSettings, selectedColor }} />
+        </div>
+        {showPopup && (
+          <BrowserPopup {...{ colors, size, selectSettings, selectedColor }} />
+        )}
       </BrowserChrome>
       <div className="browser__content">{children}</div>
     </div>

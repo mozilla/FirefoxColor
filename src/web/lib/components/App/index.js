@@ -83,11 +83,16 @@ export const AppComponent = props => {
     setSelectedColor,
     selectedColor,
     theme,
-    themeCustomImages
+    themeCustomImages,
+    themeHasCustomBackgrounds
   } = props;
 
   const customImages = (theme.images.custom_backgrounds || []).map(
-    item => themeCustomImages[item.name]
+    item => {
+      const customImage = { ...item };
+      customImage.image = themeCustomImages[item.name].image;
+      return customImage;
+    }
   );
 
   return (
@@ -104,8 +109,8 @@ export const AppComponent = props => {
               <AppHeader {...props} />
               <main className="app__main">
                 <Browser
-                  {...{ theme, customImages, selectedColor }}
-                  size="large"
+                  {...{ theme, themeHasCustomBackgrounds, customImages, selectedColor }}
+                  size="large" showPopup={hasExtension}
                 >
                   <Fragment>
                     {!hasExtension && (

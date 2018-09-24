@@ -8,19 +8,15 @@ const BrowserChrome = ({
   customImages,
   children,
   selectSettings,
+  themeHasCustomBackgrounds,
   selectedColor = false
 }) => {
   return (
     <div
       className="browser-chrome"
       style={{
-        backgroundImage: headerBackgroundImage,
-        backgroundColor: colors.accentcolor,
-        transition: selectSettings.transition,
-        outline:
-          selectedColor === "accentcolor"
-            ? selectSettings.active
-            : selectSettings.inactive
+        backgroundImage: !themeHasCustomBackgrounds ? headerBackgroundImage : null,
+        backgroundColor: colors.accentcolor
       }}
     >
       {customImages.map((image, index) => {
@@ -30,9 +26,12 @@ const BrowserChrome = ({
             key={index}
             style={{
               backgroundImage: `url(${image.image})`,
+              backgroundRepeat: `${image.tiling}`,
+              backgroundPosition: `${image.alignment}`,
               position: "absolute",
               height: "100%",
               width: "100%",
+              backgroundSize: "50% auto",
               zIndex: 4 - index
             }}
           />
