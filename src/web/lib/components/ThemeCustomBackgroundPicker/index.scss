@@ -3,13 +3,15 @@
 .custom-background {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   flex: 1;
 }
 
 .backgroundList {
   list-style-type: none;
-  margin: 0;
+  margin: 0 0 20px;
   padding: 0;
   width: 100%;
 }
@@ -23,17 +25,39 @@
   z-index: -1;
 }
 
+.privacy-note {
+  padding: 0 36px;
+  font-size: 12px;
+  color: var(--grey-90-a50);
+  text-align: center;
+}
+
 .import-image {
-  padding: 8px;
-  cursor: pointer;
-  white-space: nowrap;
-  background: rgba(12, 12, 13, .1);
-  border: none;
-  border-radius: 2px;
-  min-width: 8em;
+  @include button(34px, 16px);
+  @include buttonSecondary;
+
+  &.default {
+    @include buttonDefault;
+
+    height: 40px;
+    font-size: 18px;
+  }
 }
 
 .add-image {
+  .status-message {
+    align-items: center;
+    background: var(--grey-90-a50);
+    bottom: 0;
+    color: var(--white-100);
+    display: flex;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
   img.status-icon {
     height: 16px;
     margin: 0 23px;
@@ -46,17 +70,23 @@
 }
 
 .customBackgroundItem {
-  border-bottom: 1px rgba(12, 12, 13, .1) solid;
   width: 100%;
   height: 72px;
-  padding: 20px 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 16px;
+  transition: box-shadow 200ms;
 
-  &:last-child {
-    border-bottom: 0;
+  &:nth-child(odd) {
+    background-color: var(--grey-90-a05);
+  }
+
+  .import-image {
+    padding: 0;
+    font-size: 14px;
+    min-width: 132px;
   }
 
   .drag-handle {
@@ -86,17 +116,23 @@
     align-items: center;
     display: flex;
     flex-direction: row;
-    flex: 1;
-    overflow: hidden;
+    flex: 1 1 352px;
+    height: 100%;
 
     img {
-      height: 34px;
+      max-width: 100px;
+      height: auto;
       margin-right: 1em;
+      max-height: 70px;
     }
 
     .name {
       text-overflow: ellipsis;
       margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 150px;
+      flex: 0 1 150px;
     }
   }
 
@@ -167,20 +203,42 @@
     font-size: 16px;
     letter-spacing: 0;
     line-height: 22px;
-    padding: 4px;
-    width: 190px;
+    padding: 4px 20px 4px 4px;
+    width: 170px;
+    height: 35px;
     margin: 0 10px 0;
+    -moz-appearance: none;
+    background-image: url("./arrow-down.svg");
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    background-position: right 6px center;
   }
 
   .clear {
-    cursor: pointer;
-    border: none;
-    background: none;
-    content: "\2716";
+    background-color: transparent;
+    background-image: url(./close.svg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 0;
+    flex: 0 0 34px;
+    height: 34px;
+    margin: 0 0 0 8px;
+    border-radius: 3px;
   }
 }
 
 .dragHelper {
+  @include unit("medium");
+
   z-index: 9999;
-  box-shadow: 2px 2px #ddd;
+}
+
+@media (max-width: 940px) {
+  .image-preview {
+    flex: 1 1 200px;
+
+    .name {
+      display: none;
+    }
+  }
 }

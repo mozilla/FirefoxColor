@@ -8,13 +8,14 @@ const BrowserChrome = ({
   customImages,
   children,
   selectSettings,
+  themeHasCustomBackgrounds,
   selectedColor = false
 }) => {
   return (
     <div
       className="browser-chrome"
       style={{
-        backgroundImage: headerBackgroundImage,
+        backgroundImage: !themeHasCustomBackgrounds ? headerBackgroundImage : null,
         backgroundColor: colors.accentcolor,
         transition: selectSettings.transition,
         outline:

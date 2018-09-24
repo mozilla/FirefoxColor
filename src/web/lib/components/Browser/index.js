@@ -10,6 +10,7 @@ import "./index.scss";
 
 const Browser = ({
   theme,
+  themeHasCustomBackgrounds = null,
   customImages = [],
   size = "small",
   selectedColor = null,
@@ -50,7 +51,8 @@ const Browser = ({
           headerBackgroundImage,
           customImages,
           selectedColor,
-          selectSettings
+          selectSettings,
+          themeHasCustomBackgrounds
         }}
       >
         <BrowserTabs
