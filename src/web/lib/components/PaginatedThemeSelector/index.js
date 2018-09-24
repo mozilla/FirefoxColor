@@ -12,7 +12,7 @@ export const PaginatedThemeSelector = ({
   previewClassName,
   onClick,
   onDelete = null,
-  perPage = 12,
+  perPage = 9,
   currentPage = 1,
   setCurrentPage,
   images = []

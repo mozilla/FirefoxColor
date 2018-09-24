@@ -25,7 +25,7 @@ export const PresetThemeSelector = ({
         setTheme({ theme });
         Metrics.themeChangeFull(theme.title);
       }}
-      perPage={6}
+      perPage={9}
       currentPage={presetThemesPage}
       setCurrentPage={setPresetThemesPage}
     />

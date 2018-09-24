@@ -189,7 +189,7 @@ export const reducers = {
       loaderDelayExpired: false,
       displayLegalModal: false,
       displayShareModal: false,
-      themeBuilderPanel: 0
+      themeBuilderPanel: 1
     }
   ),
   images: handleActions(

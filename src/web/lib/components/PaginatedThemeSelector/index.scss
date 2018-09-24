@@ -4,14 +4,14 @@
   display: grid;
   grid-gap: $grid * 6;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr) 18px;
+  grid-template-rows: repeat(3, 1fr) 18px;
   padding: 0 $grid * 6;
   width: 100%;
 
   footer.page-selector {
     display: flex;
     grid-column: 1 / -1;
-    grid-row: 3 / 4;
+    grid-row: 4 / 5;
     justify-content: center;
     margin: 0;
 
