@@ -110,7 +110,7 @@ export const AppComponent = props => {
               <main className="app__main">
                 <Browser
                   {...{ theme, themeHasCustomBackgrounds, customImages, selectedColor }}
-                  size="large"
+                  size="large" showPopup={hasExtension}
                 >
                   <Fragment>
                     {!hasExtension && (

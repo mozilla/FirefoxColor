@@ -34,6 +34,8 @@ export const generateComplementaryTheme = (color = null) => {
   newTheme.colors.toolbar_field = lightColor;
   newTheme.colors.toolbar_field_text = complementColor;
   newTheme.colors.tab_line = complementColor;
+  newTheme.colors.popup = lightColor;
+  newTheme.colors.popup_text = complementColor;
 
   return normalizeTheme(newTheme);
 };

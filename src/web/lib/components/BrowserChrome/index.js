@@ -16,12 +16,7 @@ const BrowserChrome = ({
       className="browser-chrome"
       style={{
         backgroundImage: !themeHasCustomBackgrounds ? headerBackgroundImage : null,
-        backgroundColor: colors.accentcolor,
-        transition: selectSettings.transition,
-        outline:
-          selectedColor === "accentcolor"
-            ? selectSettings.active
-            : selectSettings.inactive
+        backgroundColor: colors.accentcolor
       }}
     >
       {customImages.map((image, index) => {

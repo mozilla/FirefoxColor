@@ -1,5 +1,4 @@
 {
-  "title": "001",
   "colors": {
     "toolbar": {
       "r": 43,
@@ -37,9 +36,20 @@
       "r": 255,
       "g": 66,
       "b": 205
+    },
+    "popup": {
+      "r": 231,
+      "g": 242,
+      "b": 244
+    },
+    "popup_text": {
+      "r": 84,
+      "g": 84,
+      "b": 84
     }
   },
   "images": {
     "additional_backgrounds": ["./bg-024.svg"]
-  }
+  },
+  "title": "001"
 }
