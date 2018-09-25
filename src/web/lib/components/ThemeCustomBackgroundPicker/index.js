@@ -361,6 +361,14 @@ class ImageImporter extends React.Component {
     });
   }
 
+  resetErrorState = cb => {
+    this.setState({
+      error: false,
+      tooLarge: false,
+      wrongType: false
+    }, cb);
+  }
+
   handleFileChoice = ev => {
     const { addImage, updateImage, onImport } = this.props;
 
@@ -371,7 +379,9 @@ class ImageImporter extends React.Component {
       wrongType: !CUSTOM_BACKGROUND_ALLOWED_TYPES.includes(file.type)
     };
     errorState.error = Object.values(errorState).filter(v => v).length > 0;
-    this.setState(errorState);
+    // HACK: Ensure a render with a cleared error state before setting
+    // the new error state, so that a new modal is animated in
+    this.resetErrorState(() => this.setState(errorState));
     if (errorState.error) {
       return;
     }
