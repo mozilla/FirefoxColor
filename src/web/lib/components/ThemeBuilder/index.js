@@ -103,6 +103,7 @@ export const ThemeBuilder = props => {
               themeBuilderPanel === index ? "theme-builder__selected" : "";
             return (
               <li
+                tabIndex="1"
                 key={index}
                 className={isSelected}
                 onClick={() => setThemeBuilderPanel(index)}

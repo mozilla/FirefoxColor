@@ -46,7 +46,8 @@
       width: 100%;
     }
 
-    &:hover:not(.theme-builder__selected) {
+    &:hover:not(.theme-builder__selected),
+    &:focus:not(.theme-builder__selected) {
       background: var(--grey-90-a05);
 
       &::after {
