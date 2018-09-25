@@ -9,6 +9,8 @@ import ThemeColorsEditor from "../ThemeColorsEditor";
 
 import "./index.scss";
 
+const DEFAULT_PANEL_INDEX = 1;
+
 export const ThemeBuilder = props => {
   const {
     theme,
@@ -94,11 +96,20 @@ export const ThemeBuilder = props => {
     }
   };
 
+  // Note: if a user deletes their last saved theme,
+  // active panel needs to fall back to a specific panel.
+  const checkThemeBuilderPanel = () => {
+    if (tabList.length - 1 < themeBuilderPanel) {
+      setThemeBuilderPanel(DEFAULT_PANEL_INDEX);
+    }
+  };
+
   return (
     <div className="theme-builder">
       <div className="theme-builder__tabs-wrapper">
         <ul className="theme-builder__tabs">
-          {tabList.map((item, index) => {
+          { checkThemeBuilderPanel() }
+          { tabList.map((item, index) => {
             const isSelected =
               themeBuilderPanel === index ? "theme-builder__selected" : "";
             return (
