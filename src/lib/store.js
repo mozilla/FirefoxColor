@@ -98,7 +98,7 @@ export const selectors = {
   themeCustomImages: state => state.images.images,
   themeCustomBackgrounds: ({ theme: { present: { images = {} } } }) =>
     images.custom_backgrounds || [],
-  themeHasCustomBackgrounds: state => 
+  themeHasCustomBackgrounds: state =>
     selectors.themeCustomBackgrounds(state).length > 0,
   themeHasAddonId: state => "addonId" in state.theme.present,
   userHasEdited: state => state.ui.userHasEdited,
