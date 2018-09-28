@@ -201,6 +201,20 @@ const applyTheme = ({ theme }) => {
     return;
   }
 
+  if (theme.addonId) {
+    if (!staticThemes.includes(theme.addonId)) {
+      return;
+    }
+    Promise
+      // First disable all known theme add-ons
+      .all(staticThemes.map(id =>
+        browser.management.setEnabled(id, false)))
+      // Then, enable the one that's been selected
+      .then(() =>
+        browser.management.setEnabled(theme.addonId, true));
+    return;
+  }
+
   const newTheme = {
     images: {},
     properties: {},

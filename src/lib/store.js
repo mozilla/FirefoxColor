@@ -96,12 +96,11 @@ export const selectors = {
   themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
   themeCustomImages: state => state.images.images,
-  themeCustomBackgrounds: state =>
-    state.theme.present.images.custom_backgrounds || [],
-  themeHasCustomBackgrounds: state => {
-    const backgrounds = selectors.themeCustomBackgrounds(state);
-    return !!backgrounds && backgrounds.length > 0;
-  },
+  themeCustomBackgrounds: ({ theme: { present: { images = {} } } }) =>
+    images.custom_backgrounds || [],
+  themeHasCustomBackgrounds: state => 
+    selectors.themeCustomBackgrounds(state).length > 0,
+  themeHasAddonId: state => "addonId" in state.theme.present,
   userHasEdited: state => state.ui.userHasEdited,
   presetThemesPage: state => state.ui.presetThemesPage,
   modifiedSinceSave: state =>

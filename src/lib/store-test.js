@@ -102,6 +102,20 @@ describe("lib/store", () => {
     });
   });
 
+  describe("themes via addonId", () => {
+    it("should support setting a theme via addonId", () => {
+      const addonId = "a@b.com";
+
+      expect(selectors.themeHasAddonId(store.getState())).to.be.false;
+      expect(selectors.theme(store.getState()).addonId === addonId).to.be.false;
+
+      store.dispatch(actions.theme.setTheme({ theme: { addonId } }));
+
+      expect(selectors.themeHasAddonId(store.getState())).to.be.true;
+      expect(selectors.theme(store.getState()).addonId === addonId).to.be.true;
+    });
+  });
+
   describe("custom backgrounds", () => {
     let backgrounds;
 

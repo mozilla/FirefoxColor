@@ -13,6 +13,15 @@ export const themesEqual = (themeA, themeB) => {
     return false;
   }
 
+  const hasAddonIdA = "addonId" in themeA;
+  const hasAddonIdB = "addonId" in themeB;
+  if (hasAddonIdA !== hasAddonIdB) {
+    return false;
+  }
+  if (hasAddonIdA && hasAddonIdB) {
+    return themeA.addonId === themeB.addonId;
+  }
+
   const hasImagesA =
     "images" in themeA && "additional_backgrounds" in themeA.images;
   const hasImagesB =
@@ -141,6 +150,11 @@ export const normalizeThemeColors = (colors = {}) => {
 
 // Utility to ensure normal properties and values in app theme state
 export const normalizeTheme = (data = {}) => {
+  if ("addonId" in data) {
+    // Special case: A theme specifying addonId contains nothing else.
+    return { addonId: data.addonId };
+  }
+
   const theme = {
     colors: normalizeThemeColors(data.colors, defaultTheme.colors),
     images: {

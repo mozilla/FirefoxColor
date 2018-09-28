@@ -29,12 +29,15 @@ const Browser = ({
 
   // get all the colors to pass into various browser bits
   const colors = {};
-  Object.keys(theme.colors).forEach(key => {
+  Object.keys(theme.colors || {}).forEach(key => {
     colors[key] = colorToCSS(theme.colors[key]);
   });
 
   // now do the backgrounds
-  const headerBackground = theme.images.additional_backgrounds[0];
+  let headerBackground = "";
+  if (theme.images && theme.images.additional_backgrounds) {
+    headerBackground = theme.images.additional_backgrounds[0];
+  }
   const headerBackgroundImage = bgImages.keys().includes(headerBackground)
     ? `url(${bgImages(headerBackground)})`
     : "";

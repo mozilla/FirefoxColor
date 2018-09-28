@@ -22,6 +22,7 @@ describe("lib/themes", () => {
 
   describe("normalizeTheme", () => {
     const subject = themes.normalizeTheme;
+
     it("should not change preset themes", () => {
       presetThemesContext.keys().forEach(name => {
         // There are some acceptable differences from preset themes
@@ -33,6 +34,17 @@ describe("lib/themes", () => {
         expect(output).to.deep.equal(theme);
       });
     });
+
+    it("should contain only addonId if addonId supplied", () => {
+      const theme = {
+        addonId: "firefox-compact-dark@mozilla.org",
+        images: { additional_backgrounds: [] }
+      };
+      const output = subject(theme);
+      expect(output).to.deep.equal({
+        addonId: "firefox-compact-dark@mozilla.org",
+      });
+    });
   });
 
   describe("themesEqual", () => {
@@ -41,6 +53,21 @@ describe("lib/themes", () => {
     it("should reject when one theme is null", () => {
       expect(subject({ colors: { toolbar: { r: 255, g: 255, b: 255 } } }, null))
         .to.be.false;
+    });
+
+    it("should reject difference in addonId", () => {
+      expect(
+        subject(
+          { addonId: "a@b.org", "ignored": "foo" },
+          { addonId: "a@b.org", "ignored": "bar" }
+        )
+      ).to.be.true;
+      expect(
+        subject(
+          { addonId: "a@b.org", "ignored": "foo"  },
+          { addonId: "c@d.com", "ignored": "bar"  }
+        )
+      ).to.be.false;
     });
 
     it("should reject difference in color properties", () => {

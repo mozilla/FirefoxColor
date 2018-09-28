@@ -129,7 +129,7 @@ const Metrics = {
     Metrics.notifyChange();
   },
 
-  themeToDimensions({ colors, images }) {
+  themeToDimensions({ colors = {}, images = {} }) {
     const bgImage = images.additional_backgrounds
       ? images.additional_backgrounds[0]
       : "";

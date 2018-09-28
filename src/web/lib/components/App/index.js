@@ -33,6 +33,7 @@ const mapDispatchToProps = dispatch => {
     "setBackground",
     "setColor",
     "setTheme",
+    "setThemeAddonId",
     "addCustomBackground",
     "updateCustomBackground",
     "clearCustomBackground",
@@ -87,13 +88,16 @@ export const AppComponent = props => {
     themeHasCustomBackgrounds
   } = props;
 
-  const customImages = (theme.images.custom_backgrounds || []).map(
-    item => {
-      const customImage = { ...item };
-      customImage.image = themeCustomImages[item.name].image;
-      return customImage;
-    }
-  );
+  let customImages = [];
+  if (theme.images && theme.images.custom_backgrounds) {
+    customImages = theme.images.custom_backgrounds.map(
+      item => {
+        const customImage = { ...item };
+        customImage.image = themeCustomImages[item.name].image;
+        return customImage;
+      }
+    );
+  }
 
   return (
     <Fragment>
