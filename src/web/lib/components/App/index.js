@@ -33,7 +33,6 @@ const mapDispatchToProps = dispatch => {
     "setBackground",
     "setColor",
     "setTheme",
-    "setThemeAddonId",
     "addCustomBackground",
     "updateCustomBackground",
     "clearCustomBackground",
