@@ -60,7 +60,7 @@ export const AppHeader = props => {
         onClick={onClickButton}
       >
         <div className="app-header__button-icon">
-          <img src={icon} width="20" height="auto"/>
+          <img src={icon} width="20" height="auto" aria-hidden="true"/>
         </div>
         <span>{text}</span>
       </button>
@@ -97,7 +97,7 @@ export const AppHeader = props => {
 
         <ThemeSaveButton name="app-header__button" {...props}>
           <div className="app-header__button-icon">
-            <img src={iconHeart} width="20" height="auto"/>
+            <img src={iconHeart} width="20" height="auto" aria-hidden="true"/>
           </div>
         </ThemeSaveButton>
 
@@ -124,7 +124,7 @@ export const AppHeader = props => {
             rel="noopener noreferrer"
           >
             <span>Feedback</span>
-            <img src={iconFeedback} />
+            <img src={iconFeedback} aria-hidden="true" />
           </a>
         )}
       </div>
