@@ -74,7 +74,7 @@ export const AppHeader = props => {
         <div className="app-header__icon" />
         <header>
           <h1>Firefox Color</h1>
-          <h3>
+          <h2>
             A{" "}
             <a
               href="https://testpilot.firefox.com"
@@ -85,7 +85,7 @@ export const AppHeader = props => {
               Firefox Test Pilot
             </a>{" "}
             Experiment
-          </h3>
+          </h2>
         </header>
       </div>
       <div className="app-header__controls">
