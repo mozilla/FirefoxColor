@@ -8,7 +8,7 @@
 
   p {
     text-align: center;
-    margin-top: 0;
+    margin-top: 10px;
   }
 
   .theme-pattern-picker__inner {
@@ -19,12 +19,17 @@
     grid-gap: 24px;
     overflow: auto;
     padding: 12px 24px;
+    margin-bottom: 12px;
   }
 
   .theme-pattern-picker__pattern {
     border-radius: 3px;
     overflow: hidden;
     transition: box-shadow 150ms;
+
+    &:hover {
+      box-shadow: 0 0 0 1px var(--white-100), 0 0 0 3px var(--grey-30);
+    }
 
     &.active {
       box-shadow: 0 0 0 1px var(--white-100), 0 0 0 3px var(--blue-40);
