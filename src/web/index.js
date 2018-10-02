@@ -229,6 +229,8 @@ if (!params.theme) {
       store.dispatch({
         ...actions.theme.setTheme({ theme }),
         meta: {
+          // This is an automatic change, not a user edit
+          userEdit: false,
           // Skip updating history for this theme, because it came from the URL
           skipHistory: true,
           // Skip updating the add-on for this theme, because it needs approval
@@ -245,5 +247,8 @@ if (!params.theme) {
       }
     })
     // If the theme decoding fails, just ignore it.
-    .catch(() => postMessage("fetchTheme"));
+    .catch(e => {
+      log("Theme decoding failed", e);
+      postMessage("fetchTheme");
+    });
 }

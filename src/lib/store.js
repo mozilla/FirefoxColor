@@ -75,6 +75,7 @@ export const selectors = {
   displayLegalModal: state => state.ui.displayLegalModal,
   displayShareModal: state => state.ui.displayShareModal,
   shouldOfferPendingTheme: state =>
+    state.ui.hasExtension &&
     !state.ui.firstRun &&
     !state.ui.userHasEdited &&
     state.ui.pendingTheme !== null &&
@@ -168,13 +169,9 @@ export const reducers = {
         ...state,
         loaderDelayExpired
       }),
-      SET_THEME: (state, { meta }) => ({
+      [combineActions(...themeChangeActions)]: (state, { meta = {} }) => ({
         ...state,
-        userHasEdited: meta && meta.userEdit ? true : state.userHasEdited
-      }),
-      [combineActions(...themeChangeActions)]: state => ({
-        ...state,
-        userHasEdited: true
+        userHasEdited: meta.userEdit ? true : state.userHasEdited
       })
     },
     {

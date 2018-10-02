@@ -104,8 +104,7 @@ export const AppComponent = props => {
           <Fragment>
             <div className="app">
               <AppBackground {...props} />
-              {hasExtension &&
-                shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
+              {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
               <AppHeader {...props} />
               <main className="app__main">
                 <Browser
