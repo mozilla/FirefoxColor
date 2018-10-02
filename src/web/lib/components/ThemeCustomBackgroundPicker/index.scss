@@ -224,6 +224,15 @@
     height: 34px;
     margin: 0 0 0 8px;
     border-radius: 3px;
+
+    &:hover,
+    &:focus {
+      background-color: var(--grey-90-a10);
+    }
+
+    &:active {
+      background-color: var(--grey-90-a20);
+    }
   }
 }
 
