@@ -60,7 +60,7 @@ export const AppHeader = props => {
         onClick={onClickButton}
       >
         <div className="app-header__button-icon">
-          <img src={icon} width="20" height="auto"/>
+          <img src={icon} width="20" height="auto" aria-hidden="true"/>
         </div>
         <span>{text}</span>
       </button>
@@ -69,12 +69,12 @@ export const AppHeader = props => {
   );
 
   return (
-    <div className="app-header">
+    <header className="app-header">
       <div className="app-header__content">
         <div className="app-header__icon" />
-        <header>
+        <div>
           <h1>Firefox Color</h1>
-          <h3>
+          <h2>
             A{" "}
             <a
               href="https://testpilot.firefox.com"
@@ -85,8 +85,8 @@ export const AppHeader = props => {
               Firefox Test Pilot
             </a>{" "}
             Experiment
-          </h3>
-        </header>
+          </h2>
+        </div>
       </div>
       <div className="app-header__controls">
         {headerButton(undo, iconUndo, "Undo", themeCanUndo)}
@@ -97,7 +97,7 @@ export const AppHeader = props => {
 
         <ThemeSaveButton name="app-header__button" {...props}>
           <div className="app-header__button-icon">
-            <img src={iconHeart} width="20" height="auto"/>
+            <img src={iconHeart} width="20" height="auto" aria-hidden="true"/>
           </div>
         </ThemeSaveButton>
 
@@ -124,11 +124,11 @@ export const AppHeader = props => {
             rel="noopener noreferrer"
           >
             <span>Feedback</span>
-            <img src={iconFeedback} />
+            <img src={iconFeedback} aria-hidden="true" />
           </a>
         )}
       </div>
-    </div>
+    </header>
   );
 };
 

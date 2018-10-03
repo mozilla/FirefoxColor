@@ -348,6 +348,7 @@ class ImageImporter extends React.Component {
             type="file"
             ref={el => (this.fileInputEl = el)}
             onChange={handleFileChoice}
+            aria-label={label}
           />
           <button
             title={label}

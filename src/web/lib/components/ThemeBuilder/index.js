@@ -104,28 +104,66 @@ export const ThemeBuilder = props => {
     }
   };
 
+  let tabsElement = null;
+
+  const handleKeyUp = e => {
+    const currentTab = document.activeElement;
+    const currentTabIndex = Array.from(tabsElement.children).indexOf(currentTab);
+
+    let nextTab = null;
+
+    switch (e.key) {
+      case "ArrowLeft": {
+        nextTab = tabsElement.children[Math.max(0, currentTabIndex - 1)];
+        break;
+      }
+      case "ArrowRight": {
+        nextTab = tabsElement.children[Math.min(tabList.length - 1, currentTabIndex + 1)];
+        break;
+      }
+      case "Home": {
+        nextTab = tabsElement.children[0];
+        break;
+      }
+      case "End": {
+        nextTab = tabsElement.children[tabList.length - 1];
+        break;
+      }
+    }
+
+    if (nextTab) {
+      currentTab.setAttribute("tabIndex", -1);
+      nextTab.setAttribute("tabIndex", 0);
+      nextTab.focus();
+    }
+  };
+
   return (
     <div className="theme-builder">
       <div className="theme-builder__tabs-wrapper">
-        <ul className="theme-builder__tabs">
+        <div className="theme-builder__tabs" role="tablist" ref={el => (tabsElement = el)} onKeyUp={handleKeyUp}>
           { checkThemeBuilderPanel() }
           { tabList.map((item, index) => {
             const isSelected =
               themeBuilderPanel === index ? "theme-builder__selected" : "";
             return (
-              <li
-                tabIndex="1"
+              <button
+                id={`theme-builder-tab-${item.id}`}
                 key={index}
                 className={isSelected}
+                role="tab"
+                tabIndex={themeBuilderPanel === index ? 0 : -1}
+                aria-selected={themeBuilderPanel === index ? "true" : "false"}
+                aria-controls={themeBuilderPanel === index ? `theme-builder-tab-content-${item.id}` : null}
                 onClick={() => setThemeBuilderPanel(index)}
               >
                 {item.name}
-              </li>
+              </button>
             );
           })}
-        </ul>
+        </div>
       </div>
-      <div className="theme-builder__content">
+      <div id={`theme-builder-tab-content-${tabList[themeBuilderPanel].id}`} aria-labelledby={`theme-builder-tab-${tabList[themeBuilderPanel].id}`} className="theme-builder__content" tabIndex="0">
         {renderThemingSection(tabList[themeBuilderPanel].id)}
       </div>
     </div>
