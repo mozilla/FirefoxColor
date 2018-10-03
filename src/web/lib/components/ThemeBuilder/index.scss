@@ -18,19 +18,17 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20%, 1fr));
     justify-content: center;
-    list-style: none;
-    margin: 0 auto;
-    padding: 0;
     width: 100%;
   }
 
-  .theme-builder__tabs li {
+  .theme-builder__tabs button {
     align-items: center;
     display: flex;
     height: 48px;
     justify-content: center;
     margin: 0;
     padding: 0;
+    border: 0;
     position: relative;
     text-align: center;
 
@@ -60,7 +58,7 @@
     }
   }
 
-  li.theme-builder__selected {
+  button.theme-builder__selected {
     background: var(--white-100);
     border-left: 1px solid var(--grey-30);
     border-right: 1px solid var(--grey-30);
@@ -72,11 +70,11 @@
     }
   }
 
-  li:first-child.theme-builder__selected {
+  div:first-child.theme-builder__selected {
     border-left: 0;
   }
 
-  li:last-child.theme-builder__selected {
+  div:last-child.theme-builder__selected {
     border-right: 0;
   }
 
