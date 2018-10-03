@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 
 import "./index.scss";
 
@@ -7,21 +6,33 @@ import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
 import Metrics from "../../../../lib/metrics";
 
+console.log(bgImages);
+
 const Pattern = ({ src, backgroundId, active, setBackground, accentcolor }) => (
-  <div
-    className={classnames("theme-pattern-picker__pattern", { active })}
-    onClick={() => {
-      setBackground({ url: src });
-      Metrics.themeChangeBackground(backgroundId);
-    }}
-  >
-    <div
-      className="theme-pattern-picker__color"
-      style={{
-        backgroundColor: accentcolor,
-        backgroundImage: `url(${bgImages(src)})`
+  <div>
+    <input
+      id={`theme-pattern-${backgroundId}`}
+      aria-label={`Pattern ${backgroundId}`}
+      checked={active}
+      onChange={(e) => {
+        if (e.target.checked) {
+          setBackground({ url: src });
+          Metrics.themeChangeBackground(backgroundId);
+        }
       }}
-    />
+      type="radio"
+    >
+    </input>
+    <div className="theme-pattern-picker__pattern">
+      <label
+        htmlFor={`theme-pattern-${backgroundId}`}
+        className="theme-pattern-picker__color"
+        style={{
+          backgroundColor: accentcolor,
+          backgroundImage: `url(${bgImages(src)})`
+        }}
+      />
+    </div>
   </div>
 );
 
@@ -53,7 +64,7 @@ class ThemeBackgroundPicker extends React.Component {
     return (
       <div className="theme-pattern-picker">
         <p>Pick a pattern for your theme...</p>
-        <div className="theme-pattern-picker__inner">
+        <div role="radiogroup" className="theme-pattern-picker__inner">
           {bgImages.keys().map((src, backgroundId) => (
             <Pattern
               key={backgroundId}

@@ -11,6 +11,18 @@
     margin-top: 10px;
   }
 
+  /* https://stackoverflow.com/a/19758620 */
+  input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+
   .theme-pattern-picker__inner {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -22,21 +34,28 @@
     margin-bottom: 12px;
   }
 
+  input[type="radio"]:checked + div {
+    box-shadow: 0 0 0 1px var(--white-100), 0 0 0 3px var(--blue-40);
+  }
+
+  input[type="radio"]:focus + div {
+    box-shadow: 0 0 0 1px var(--white-100), 0 0 0 3px var(--grey-30);
+  }
+
   .theme-pattern-picker__pattern {
     border-radius: 3px;
     overflow: hidden;
     transition: box-shadow 150ms;
+    width: 100%;
+    height: 100%;
 
     &:hover {
       box-shadow: 0 0 0 1px var(--white-100), 0 0 0 3px var(--grey-30);
     }
-
-    &.active {
-      box-shadow: 0 0 0 1px var(--white-100), 0 0 0 3px var(--blue-40);
-    }
   }
 
   .theme-pattern-picker__color {
+    display: block;
     width: 100%;
     height: 100%;
   }
