@@ -69,10 +69,10 @@ export const AppHeader = props => {
   );
 
   return (
-    <div className="app-header">
+    <header className="app-header">
       <div className="app-header__content">
         <div className="app-header__icon" />
-        <header>
+        <div>
           <h1>Firefox Color</h1>
           <h2>
             A{" "}
@@ -86,7 +86,7 @@ export const AppHeader = props => {
             </a>{" "}
             Experiment
           </h2>
-        </header>
+        </div>
       </div>
       <div className="app-header__controls">
         {headerButton(undo, iconUndo, "Undo", themeCanUndo)}
@@ -128,7 +128,7 @@ export const AppHeader = props => {
           </a>
         )}
       </div>
-    </div>
+    </header>
   );
 };
 
