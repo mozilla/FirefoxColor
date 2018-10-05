@@ -36,7 +36,10 @@ export const actions = {
     "SET_PRESET_THEMES_PAGE",
     "SET_DISPLAY_LEGAL_MODAL",
     "SET_DISPLAY_SHARE_MODAL",
-    "SET_THEME_BUILDER_PANEL"
+    "SET_THEME_BUILDER_PANEL",
+    "EXPORT_THEME",
+    "SET_EXPORT_THEME_PROGRESS",
+    "CLEAR_EXPORTED_THEME"
   ),
   theme: {
     ...createActions(
@@ -100,7 +103,10 @@ export const selectors = {
   presetThemesPage: state => state.ui.presetThemesPage,
   modifiedSinceSave: state =>
     state.ui.userHasEdited &&
-    !themesEqual(state.ui.currentSavedTheme, state.theme.present)
+    !themesEqual(state.ui.currentSavedTheme, state.theme.present),
+  exportedTheme: state => state.ui.exportedTheme,
+  shouldOfferExportedTheme: state => !!state.ui.exportedTheme,
+  isThemeExportInProgress: state => !!state.ui.exportedThemeProgress
 };
 
 export const reducers = {
@@ -169,6 +175,21 @@ export const reducers = {
         ...state,
         loaderDelayExpired
       }),
+      EXPORT_THEME: (state, { payload: exportedTheme }) => ({
+        ...state,
+        exportedTheme,
+        exportedThemeProgress: false
+      }),
+      SET_EXPORT_THEME_PROGRESS: (state, { payload }) => ({
+        ...state,
+        exportedTheme: null,
+        exportedThemeProgress: payload
+      }),
+      CLEAR_EXPORTED_THEME: state => ({
+        ...state,
+        exportedTheme: null,
+        exportedThemeProgress: false
+      }),
       [combineActions(...themeChangeActions)]: (state, { meta = {} }) => ({
         ...state,
         userHasEdited: meta.userEdit ? true : state.userHasEdited
@@ -186,7 +207,9 @@ export const reducers = {
       loaderDelayExpired: false,
       displayLegalModal: false,
       displayShareModal: false,
-      themeBuilderPanel: 1
+      themeBuilderPanel: 1,
+      exportedTheme: null,
+      exportedThemeProgress: false
     }
   ),
   images: handleActions(

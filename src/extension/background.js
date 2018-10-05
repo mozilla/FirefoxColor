@@ -1,15 +1,7 @@
 import { makeLog } from "../lib/utils";
-import {
-  normalizeTheme,
-  normalizeThemeBackground,
-  colorToCSS
-} from "../lib/themes";
+import { convertToBrowserTheme, normalizeTheme } from "../lib/themes";
 import { bgImages } from "../lib/assets";
 import Metrics from "../lib/metrics";
-
-// Blank 1x1 PNG from http://png-pixel.com/
-const BLANK_IMAGE =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 const log = makeLog("background");
 
@@ -171,74 +163,9 @@ const applyTheme = ({ theme }) => {
   if (!theme) {
     return;
   }
-
-  const newTheme = {
-    images: {},
-    properties: {},
-    colors: {}
-  };
-
-  const custom_backgrounds = theme.images.custom_backgrounds || [];
-  if (custom_backgrounds.length > 0) {
-    const additional_backgrounds = [];
-    const additional_backgrounds_alignment = [];
-    const additional_backgrounds_tiling = [];
-
-    custom_backgrounds.forEach(({ name, alignment, tiling }) => {
-      const background = customBackgrounds[name];
-      if (!background || !background.image) {
-        return;
-      }
-      additional_backgrounds.push(background.image);
-      additional_backgrounds_alignment.push(alignment || "left top");
-      additional_backgrounds_tiling.push(tiling || "no-repeat");
-    });
-
-    newTheme.images.additional_backgrounds = additional_backgrounds;
-    Object.assign(newTheme.properties, {
-      additional_backgrounds_alignment,
-      additional_backgrounds_tiling
-    });
-  } else {
-    const background = normalizeThemeBackground(
-      theme.images.additional_backgrounds[0]
-    );
-    if (background) {
-      newTheme.images.additional_backgrounds = [bgImages(background)];
-      Object.assign(newTheme.properties, {
-        additional_backgrounds_alignment: ["top"],
-        additional_backgrounds_tiling: ["repeat"]
-      });
-    }
-  }
-
-  // the headerURL is required in < 60,
-  // but it creates an ugly text shadow.
-  // So only add it for older FFs only.
-  const fxVersion = navigator.userAgent.toLowerCase().split("firefox/")[1];
-  if (fxVersion < 60) {
-    newTheme.images.headerURL = BLANK_IMAGE;
-  }
-
-  Object.keys(theme.colors).forEach(key => {
-    newTheme.colors[key] = colorToCSS(theme.colors[key]);
-  });
-
-  // TODO: we will need to actually create this field in
-  // theme manifests as part of #93.
-  if (!theme.colors.hasOwnProperty("tab_loading")) {
-    newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
-  }
-
-  if (!theme.colors.hasOwnProperty("popup")) {
-    newTheme.colors.popup = colorToCSS(theme.colors.accentcolor);
-  }
-
-  if (!theme.colors.hasOwnProperty("popup_text")) {
-    newTheme.colors.popup_text = colorToCSS(theme.colors.toolbar_text);
-  }
-
-  browser.theme.update(newTheme);
+  browser.theme.update(
+    convertToBrowserTheme(theme, bgImages, customBackgrounds)
+  );
 };
 
 init();

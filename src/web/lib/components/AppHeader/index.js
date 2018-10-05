@@ -19,6 +19,7 @@ import iconHeart from "./icon_heart.svg";
 import iconRandomize from "./icon_randomize.svg";
 import iconShare from "./icon_share.svg";
 import iconFeedback from "./feedback.svg";
+import iconExport from "./icon_export.svg";
 
 import "./index.scss";
 
@@ -30,6 +31,8 @@ export const AppHeader = props => {
     themeCanUndo,
     themeCanRedo,
     setTheme,
+    setExportThemeProgress,
+    exportTheme,
     displayShareModal,
     setDisplayShareModal
   } = props;
@@ -38,6 +41,15 @@ export const AppHeader = props => {
     Math.random() >= 0.5
       ? setTheme({ theme: generateComplementaryTheme() })
       : setTheme({ theme: generateRandomTheme() });
+  };
+
+  const handleExportClick = () => {
+    setExportThemeProgress(true);
+    // TODO: ask user for exported theme name here?
+    exportTheme({
+      name: "Exported Theme"
+      // TODO: need other manifest properties here? (eg. version, etc)
+    });
   };
 
   const onShareClick = () => {
@@ -60,7 +72,7 @@ export const AppHeader = props => {
         onClick={onClickButton}
       >
         <div className="app-header__button-icon">
-          <img src={icon} width="20" height="auto" aria-hidden="true"/>
+          <img src={icon} width="20" height="auto" aria-hidden="true" />
         </div>
         <span>{text}</span>
       </button>
@@ -97,7 +109,7 @@ export const AppHeader = props => {
 
         <ThemeSaveButton name="app-header__button" {...props}>
           <div className="app-header__button-icon">
-            <img src={iconHeart} width="20" height="auto" aria-hidden="true"/>
+            <img src={iconHeart} width="20" height="auto" aria-hidden="true" />
           </div>
         </ThemeSaveButton>
 
@@ -111,8 +123,7 @@ export const AppHeader = props => {
           </React.Fragment>
         )}
 
-        {/* TODO: add export capability
-          headerButton(() => {}, iconExport, "Export") */}
+        {headerButton(handleExportClick, iconExport, "Export")}
 
         {hasExtension && (
           <a

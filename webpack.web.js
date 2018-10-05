@@ -24,6 +24,7 @@ module.exports = merge(common.webpackConfig, {
   },
   output: {
     path: path.resolve(__dirname, "build/web"),
+    chunkFilename: "[name].chunk.js",
     filename: "[name].js"
   },
   plugins: [

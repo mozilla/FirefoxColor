@@ -25,6 +25,8 @@ root: true
 
 rules:
   strict: 0
+  no-trailing-spaces: off
+  eol-last: off
   arrow-parens: off
   comma-dangle: off
   function-paren-newline: off
