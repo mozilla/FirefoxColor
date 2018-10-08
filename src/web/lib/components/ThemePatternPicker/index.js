@@ -14,15 +14,14 @@ const Pattern = ({ src, backgroundId, active, setBackground, accentcolor }) => (
       id={`theme-pattern-${backgroundId}`}
       aria-label={`Pattern ${backgroundId}`}
       checked={active}
-      onChange={(e) => {
+      onChange={e => {
         if (e.target.checked) {
           setBackground({ url: src });
           Metrics.themeChangeBackground(backgroundId);
         }
       }}
       type="radio"
-    >
-    </input>
+    />
     <div className="theme-pattern-picker__pattern">
       <label
         htmlFor={`theme-pattern-${backgroundId}`}

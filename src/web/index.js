@@ -141,9 +141,10 @@ const isFirefox =
 const loaderQuote =
   loaderQuotes[Math.floor(Math.random() * loaderQuotes.length)];
 
-const performThemeExport = (args) =>
-  import(/* webpackChunkName: "./lib/export" */ "./lib/export")
-    .then(({ default: perform }) => perform({ ...args, store, bgImages }));
+const performThemeExport = args =>
+  import(/* webpackChunkName: "./lib/export" */ "./lib/export").then(
+    ({ default: perform }) => perform({ ...args, store, bgImages })
+  );
 
 render(
   <Provider store={store}>
@@ -156,7 +157,7 @@ render(
         isMobile,
         isFirefox,
         loaderQuote,
-        performThemeExport,
+        performThemeExport
       }}
     />
   </Provider>,

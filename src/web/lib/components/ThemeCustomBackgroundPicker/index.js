@@ -91,7 +91,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
             <div className="add-image">
               {themeCustomBackgrounds.length <
                 CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
-                  <ImportButton {...{ label, isPrimary }} />
+                <ImportButton {...{ label, isPrimary }} />
               )}
               {importing && (
                 <div className="status-message importing">Processing...</div>
@@ -114,7 +114,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
           )}
         </ImageImporter>
         <p className="privacy-note">
-          Up to 1 MB. JPG, PNG or BMP. <br/> Images never leave your computer.
+          Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
         </p>
       </form>
     );
@@ -363,12 +363,15 @@ class ImageImporter extends React.Component {
   }
 
   resetErrorState = cb => {
-    this.setState({
-      error: false,
-      tooLarge: false,
-      wrongType: false
-    }, cb);
-  }
+    this.setState(
+      {
+        error: false,
+        tooLarge: false,
+        wrongType: false
+      },
+      cb
+    );
+  };
 
   handleFileChoice = ev => {
     const { addImage, updateImage, onImport } = this.props;

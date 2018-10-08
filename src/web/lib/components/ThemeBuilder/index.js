@@ -73,9 +73,7 @@ export const ThemeBuilder = props => {
           />
         );
       case "backgrounds":
-        return (
-          <ThemeBackgroundPicker {...props} />
-        );
+        return <ThemeBackgroundPicker {...props} />;
       case "saved-themes":
         return (
           <SavedThemeSelector
@@ -108,7 +106,9 @@ export const ThemeBuilder = props => {
 
   const handleKeyUp = e => {
     const currentTab = document.activeElement;
-    const currentTabIndex = Array.from(tabsElement.children).indexOf(currentTab);
+    const currentTabIndex = Array.from(tabsElement.children).indexOf(
+      currentTab
+    );
 
     let nextTab = null;
 
@@ -118,7 +118,10 @@ export const ThemeBuilder = props => {
         break;
       }
       case "ArrowRight": {
-        nextTab = tabsElement.children[Math.min(tabList.length - 1, currentTabIndex + 1)];
+        nextTab =
+          tabsElement.children[
+            Math.min(tabList.length - 1, currentTabIndex + 1)
+          ];
         break;
       }
       case "Home": {
@@ -141,9 +144,14 @@ export const ThemeBuilder = props => {
   return (
     <div className="theme-builder">
       <div className="theme-builder__tabs-wrapper">
-        <div className="theme-builder__tabs" role="tablist" ref={el => (tabsElement = el)} onKeyUp={handleKeyUp}>
-          { checkThemeBuilderPanel() }
-          { tabList.map((item, index) => {
+        <div
+          className="theme-builder__tabs"
+          role="tablist"
+          ref={el => (tabsElement = el)}
+          onKeyUp={handleKeyUp}
+        >
+          {checkThemeBuilderPanel()}
+          {tabList.map((item, index) => {
             const isSelected =
               themeBuilderPanel === index ? "theme-builder__selected" : "";
             return (
@@ -154,7 +162,11 @@ export const ThemeBuilder = props => {
                 role="tab"
                 tabIndex={themeBuilderPanel === index ? 0 : -1}
                 aria-selected={themeBuilderPanel === index ? "true" : "false"}
-                aria-controls={themeBuilderPanel === index ? `theme-builder-tab-content-${item.id}` : null}
+                aria-controls={
+                  themeBuilderPanel === index
+                    ? `theme-builder-tab-content-${item.id}`
+                    : null
+                }
                 onClick={() => setThemeBuilderPanel(index)}
               >
                 {item.name}
@@ -163,7 +175,12 @@ export const ThemeBuilder = props => {
           })}
         </div>
       </div>
-      <div id={`theme-builder-tab-content-${tabList[themeBuilderPanel].id}`} aria-labelledby={`theme-builder-tab-${tabList[themeBuilderPanel].id}`} className="theme-builder__content" tabIndex="0">
+      <div
+        id={`theme-builder-tab-content-${tabList[themeBuilderPanel].id}`}
+        aria-labelledby={`theme-builder-tab-${tabList[themeBuilderPanel].id}`}
+        className="theme-builder__content"
+        tabIndex="0"
+      >
         {renderThemingSection(tabList[themeBuilderPanel].id)}
       </div>
     </div>

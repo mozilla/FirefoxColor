@@ -24,7 +24,8 @@ export const TermsPrivacyModal = ({
       and{" "}
       <a href="https://www.mozilla.org/about/legal/terms/mozilla/">
         Websites Terms of Use
-      </a>.
+      </a>
+      .
     </p>
   </Modal>
 );

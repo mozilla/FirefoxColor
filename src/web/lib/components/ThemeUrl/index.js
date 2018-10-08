@@ -62,7 +62,11 @@ class ThemeUrl extends React.Component {
 
     if (themeHasCustomBackgrounds) {
       return (
-        <div className={classnames("theme-url theme-url-disabled", {extension: hasExtension})}>
+        <div
+          className={classnames("theme-url theme-url-disabled", {
+            extension: hasExtension
+          })}
+        >
           <p>
             This theme cannot be shared via URL because it has a custom
             background image.
@@ -72,7 +76,10 @@ class ThemeUrl extends React.Component {
     }
 
     return (
-      <form className={classnames("theme-url", { extension: hasExtension })} onSubmit={e => e.preventDefault()}>
+      <form
+        className={classnames("theme-url", { extension: hasExtension })}
+        onSubmit={e => e.preventDefault()}
+      >
         <label htmlFor="themeUrl">
           <p>Copy and paste this URL to share your creation.</p>
         </label>
