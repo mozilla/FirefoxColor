@@ -10,6 +10,7 @@ import AppHeader from "../AppHeader";
 import AppLoadingIndicator from "../AppLoadingIndicator";
 import Mobile from "../Mobile";
 import SharedThemeDialog from "../SharedThemeDialog";
+import ExportThemeDialog from "../ExportThemeDialog";
 import TermsPrivacyModal from "../TermsPrivacyModal";
 import Onboarding from "../Onboarding";
 import Banner from "../Banner";
@@ -28,7 +29,9 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { performThemeExport } = ownProps;
+
   const themeUserEditDispatchers = [
     "setBackground",
     "setColor",
@@ -67,7 +70,12 @@ const mapDispatchToProps = dispatch => {
     setThemeBuilderPanel: args =>
       dispatch(actions.ui.setThemeBuilderPanel(args)),
     undo: () => dispatch(actions.theme.undo()),
-    redo: () => dispatch(actions.theme.redo())
+    redo: () => dispatch(actions.theme.redo()),
+    setExportThemeProgress: progress =>
+      dispatch(actions.ui.setExportThemeProgress(progress)),
+    exportTheme: args =>
+      dispatch(actions.ui.exportTheme(performThemeExport(args))),
+    clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme())
   };
 };
 
@@ -77,6 +85,8 @@ export const AppComponent = props => {
     loaderDelayExpired,
     hasExtension,
     shouldOfferPendingTheme,
+    isThemeExportInProgress,
+    shouldOfferExportedTheme,
     firstRun,
     isFirefox,
     addonUrl,
@@ -87,13 +97,11 @@ export const AppComponent = props => {
     themeHasCustomBackgrounds
   } = props;
 
-  const customImages = (theme.images.custom_backgrounds || []).map(
-    item => {
-      const customImage = { ...item };
-      customImage.image = themeCustomImages[item.name].image;
-      return customImage;
-    }
-  );
+  const customImages = (theme.images.custom_backgrounds || []).map(item => {
+    const customImage = { ...item };
+    customImage.image = themeCustomImages[item.name].image;
+    return customImage;
+  });
 
   return (
     <Fragment>
@@ -108,10 +116,19 @@ export const AppComponent = props => {
               <AppHeader {...props} />
               <main className="app__main">
                 <Browser
-                  {...{ theme, themeHasCustomBackgrounds, customImages, selectedColor }}
-                  size="large" showPopup={hasExtension}
+                  {...{
+                    theme,
+                    themeHasCustomBackgrounds,
+                    customImages,
+                    selectedColor
+                  }}
+                  size="large"
+                  showPopup={hasExtension}
                 >
                   <Fragment>
+                    {(isThemeExportInProgress || shouldOfferExportedTheme) && (
+                      <ExportThemeDialog {...props} />
+                    )}
                     {!hasExtension && (
                       <Banner
                         {...{

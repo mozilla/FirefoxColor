@@ -7,7 +7,8 @@ export const AppLoadingIndicator = ({ loaderQuote }) => {
       <div className="app-loading-indicator__spinner" />
       <q className="app-loading-indicator__quote">{loaderQuote.quote}</q>
       <p className="app-loading-indicator__attribution">
-        &#8211;{loaderQuote.attribution}
+        &#8211;
+        {loaderQuote.attribution}
       </p>
     </div>
   );

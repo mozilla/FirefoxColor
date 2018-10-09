@@ -1,8 +1,9 @@
-/* global JsonUrl */
+/* global JsonUrl, import */
 
 import React from "react";
 import { applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import promiseMiddleware from "redux-promise";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import queryString from "query-string";
@@ -16,6 +17,7 @@ import Metrics from "../lib/metrics";
 
 import setupMiddleware from "./lib/middleware";
 import storage from "./lib/storage";
+import { bgImages } from "../lib/assets";
 
 import App from "./lib/components/App";
 
@@ -62,6 +64,7 @@ const store = createAppStore(
   {},
   composeEnhancers(
     applyMiddleware(
+      promiseMiddleware,
       ...setupMiddleware({ postMessage, urlEncodeTheme, storage }),
       Metrics.storeMiddleware()
     )
@@ -138,6 +141,11 @@ const isFirefox =
 const loaderQuote =
   loaderQuotes[Math.floor(Math.random() * loaderQuotes.length)];
 
+const performThemeExport = args =>
+  import(/* webpackChunkName: "./lib/export" */ "./lib/export").then(
+    ({ default: perform }) => perform({ ...args, store, bgImages })
+  );
+
 render(
   <Provider store={store}>
     <App
@@ -148,7 +156,8 @@ render(
         storage,
         isMobile,
         isFirefox,
-        loaderQuote
+        loaderQuote,
+        performThemeExport
       }}
     />
   </Provider>,

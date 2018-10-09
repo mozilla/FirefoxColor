@@ -31,7 +31,7 @@ export const PaginatedThemeSelector = ({
       {page.map(([key, { theme }]) => {
         const customImages = (theme.images.custom_backgrounds || []).map(
           item => {
-            const customImage = {...item};
+            const customImage = { ...item };
             customImage.image = images[item.name].image;
             return customImage;
           }

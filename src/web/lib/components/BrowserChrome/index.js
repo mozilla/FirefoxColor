@@ -15,7 +15,9 @@ const BrowserChrome = ({
     <div
       className="browser-chrome"
       style={{
-        backgroundImage: !themeHasCustomBackgrounds ? headerBackgroundImage : null,
+        backgroundImage: !themeHasCustomBackgrounds
+          ? headerBackgroundImage
+          : null,
         backgroundColor: colors.accentcolor
       }}
     >
