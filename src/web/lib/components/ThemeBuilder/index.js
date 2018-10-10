@@ -9,8 +9,6 @@ import ThemeColorsEditor from "../ThemeColorsEditor";
 
 import "./index.scss";
 
-const DEFAULT_PANEL_INDEX = 1;
-
 export const ThemeBuilder = props => {
   const {
     theme,
@@ -56,6 +54,13 @@ export const ThemeBuilder = props => {
       id: "debugger"
     });
   }
+  
+  const selectedTabIndex = Math.min(
+    tabList.length - 1,
+    themeBuilderPanel
+  );
+
+  const selectedTabId = tabList[selectedTabIndex].id;
 
   const renderThemingSection = selected => {
     switch (selected) {
@@ -91,14 +96,6 @@ export const ThemeBuilder = props => {
         return <ThemeLogger {...{ theme }} />;
       default:
         return null;
-    }
-  };
-
-  // Note: if a user deletes their last saved theme,
-  // active panel needs to fall back to a specific panel.
-  const checkThemeBuilderPanel = () => {
-    if (tabList.length - 1 < themeBuilderPanel) {
-      setThemeBuilderPanel(DEFAULT_PANEL_INDEX);
     }
   };
 
@@ -150,20 +147,19 @@ export const ThemeBuilder = props => {
           ref={el => (tabsElement = el)}
           onKeyUp={handleKeyUp}
         >
-          {checkThemeBuilderPanel()}
           {tabList.map((item, index) => {
             const isSelected =
-              themeBuilderPanel === index ? "theme-builder__selected" : "";
+              selectedTabIndex === index ? "theme-builder__selected" : "";
             return (
               <button
                 id={`theme-builder-tab-${item.id}`}
                 key={index}
                 className={isSelected}
                 role="tab"
-                tabIndex={themeBuilderPanel === index ? 0 : -1}
-                aria-selected={themeBuilderPanel === index ? "true" : "false"}
+                tabIndex={selectedTabIndex === index ? 0 : -1}
+                aria-selected={selectedTabIndex === index ? "true" : "false"}
                 aria-controls={
-                  themeBuilderPanel === index
+                  selectedTabIndex === index
                     ? `theme-builder-tab-content-${item.id}`
                     : null
                 }
@@ -176,12 +172,12 @@ export const ThemeBuilder = props => {
         </div>
       </div>
       <div
-        id={`theme-builder-tab-content-${tabList[themeBuilderPanel].id}`}
-        aria-labelledby={`theme-builder-tab-${tabList[themeBuilderPanel].id}`}
+        id={`theme-builder-tab-content-${selectedTabId}`}
+        aria-labelledby={`theme-builder-tab-${selectedTabId}`}
         className="theme-builder__content"
         tabIndex="0"
       >
-        {renderThemingSection(tabList[themeBuilderPanel].id)}
+        {renderThemingSection(selectedTabId)}
       </div>
     </div>
   );
