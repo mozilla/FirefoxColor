@@ -185,10 +185,6 @@ export const presetThemes = presetThemesContext
   }))
   .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
 
-// Blank 1x1 PNG from http://png-pixel.com/
-const BLANK_IMAGE =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-
 export const convertToBrowserTheme = (theme, bgImages, customBackgrounds) => {
   const newTheme = {
     images: {},
@@ -229,14 +225,6 @@ export const convertToBrowserTheme = (theme, bgImages, customBackgrounds) => {
       });
     }
   }
-
-  // the headerURL is required in < 60,
-  // but it creates an ugly text shadow.
-  // So only add it for older FFs only.
-  // const fxVersion = navigator.userAgent.toLowerCase().split("firefox/")[1];
-  // if (fxVersion < 60) {
-  newTheme.images.headerURL = BLANK_IMAGE;
-  // }
 
   Object.keys(theme.colors).forEach(key => {
     newTheme.colors[key] = colorToCSS(theme.colors[key]);
