@@ -9,7 +9,8 @@ import {
 import {
   CUSTOM_BACKGROUND_MAXIMUM_SIZE,
   CUSTOM_BACKGROUND_ALLOWED_TYPES,
-  CUSTOM_BACKGROUND_MAXIMUM_LENGTH
+  CUSTOM_BACKGROUND_MAXIMUM_LENGTH,
+  CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
 
 import "./index.scss";
@@ -26,7 +27,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
     this.props.addCustomBackground({
       name,
       tiling: "repeat",
-      alignment: "left top"
+      alignment: CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
     });
   };
 

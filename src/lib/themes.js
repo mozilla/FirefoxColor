@@ -2,7 +2,8 @@ import tinycolor from "tinycolor2";
 import {
   colorsWithAlpha,
   alphaEqualityTolerance,
-  fallbackColors
+  fallbackColors,
+  CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "./constants";
 import { presetThemesContext, bgImages } from "./assets";
 
@@ -208,7 +209,9 @@ export const convertToBrowserTheme = (theme, bgImages, customBackgrounds) => {
         return;
       }
       additional_backgrounds.push(background.image);
-      additional_backgrounds_alignment.push(alignment || "left top");
+      additional_backgrounds_alignment.push(
+        alignment || CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
+      );
       additional_backgrounds_tiling.push(tiling || "no-repeat");
     });
 
