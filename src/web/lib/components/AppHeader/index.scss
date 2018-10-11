@@ -64,7 +64,6 @@
     align-items: center;
     background: transparent;
     border: 0;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     height: 64px;
@@ -85,6 +84,10 @@
       span {
         opacity: .5;
       }
+    }
+
+    &:not(.disabled) {
+      cursor: pointer;
     }
 
     &:not(.disabled):hover {

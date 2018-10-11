@@ -8,6 +8,8 @@ import { presetThemesContext, bgImages } from "./assets";
 
 const defaultTheme = presetThemesContext("./default.json");
 
+const IMAGE_PROPS = ["name", "tiling", "alignment"];
+
 export const themesEqual = (themeA, themeB) => {
   if (!!themeA !== !!themeB) {
     return false;
@@ -44,8 +46,13 @@ export const themesEqual = (themeA, themeB) => {
       return false;
     }
     for (let idx = 0; idx < imagesA.length; idx++) {
-      if (imagesA[idx] !== imagesB[idx]) {
-        return false;
+      for (let propIdx = 0; propIdx < IMAGE_PROPS.length; propIdx++) {
+        if (
+          imagesA[idx][IMAGE_PROPS[propIdx]] !==
+          imagesB[idx][IMAGE_PROPS[propIdx]]
+        ) {
+          return false;
+        }
       }
     }
   }

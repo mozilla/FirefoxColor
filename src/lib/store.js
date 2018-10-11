@@ -102,8 +102,9 @@ export const selectors = {
   userHasEdited: state => state.ui.userHasEdited,
   presetThemesPage: state => state.ui.presetThemesPage,
   modifiedSinceSave: state =>
-    state.ui.userHasEdited &&
-    !themesEqual(state.ui.currentSavedTheme, state.theme.present),
+    Object.values(state.ui.savedThemes).filter(({ theme }) =>
+      themesEqual(theme, state.theme.present)
+    ).length === 0,
   exportedTheme: state => state.ui.exportedTheme,
   shouldOfferExportedTheme: state => !!state.ui.exportedTheme,
   isThemeExportInProgress: state => !!state.ui.exportedThemeProgress
