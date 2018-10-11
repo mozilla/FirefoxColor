@@ -82,26 +82,40 @@ describe("lib/themes", () => {
     it("should reject difference in custom backgrounds", () => {
       expect(
         subject(
-          { images: { custom_backgrounds: ["foo", "baz"] } },
-          { images: { custom_backgrounds: ["foo", "baz"] } }
+          {
+            images: { custom_backgrounds: [{ name: "foo" }, { name: "baz" }] }
+          },
+          { images: { custom_backgrounds: [{ name: "foo" }, { name: "baz" }] } }
         )
       ).to.be.true;
       expect(
         subject(
           { colors: { toolbar: { r: 255, g: 255, b: 255 } } },
-          { images: { custom_backgrounds: ["baz", "foo"] } }
+          { images: { custom_backgrounds: [{ name: "foo" }, { name: "baz" }] } }
         )
       ).to.be.false;
       expect(
         subject(
-          { images: { custom_backgrounds: ["foo", "baz"] } },
-          { images: { custom_backgrounds: ["baz", "foo"] } }
+          {
+            images: { custom_backgrounds: [{ name: "foo" }, { name: "baz" }] }
+          },
+          { images: { custom_backgrounds: [{ name: "baz" }, { name: "foo" }] } }
         )
       ).to.be.false;
       expect(
         subject(
-          { images: { custom_backgrounds: ["foo", "baz"] } },
-          { images: { custom_backgrounds: ["bar", "baz", "quux"] } }
+          {
+            images: { custom_backgrounds: [{ name: "foo" }, { name: "baz" }] }
+          },
+          {
+            images: {
+              custom_backgrounds: [
+                { name: "foo" },
+                { name: "baz" },
+                { name: "quux" }
+              ]
+            }
+          }
         )
       ).to.be.false;
     });

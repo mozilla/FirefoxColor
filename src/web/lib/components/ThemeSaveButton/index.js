@@ -12,6 +12,9 @@ export const ThemeSaveButton = ({
 }) => {
   const { themeStorage } = storage;
   const saveTheme = () => {
+    if (!modifiedSinceSave) {
+      return;
+    }
     themeStorage.put(themeStorage.generateKey(), theme);
     setThemeBuilderPanel(3);
   };
