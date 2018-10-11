@@ -107,6 +107,8 @@ export const AppHeader = props => {
 
         <div className="app-header__spacer" />
 
+        {headerButton(handleExportClick, iconExport, "Export")}
+
         <ThemeSaveButton name="app-header__button" {...props}>
           <div className="app-header__button-icon">
             <img src={iconHeart} width="20" height="auto" aria-hidden="true" />
@@ -122,8 +124,6 @@ export const AppHeader = props => {
             {displayShareModal && <ThemeUrl {...props} />}
           </React.Fragment>
         )}
-
-        {headerButton(handleExportClick, iconExport, "Export")}
 
         {hasExtension && (
           <a
