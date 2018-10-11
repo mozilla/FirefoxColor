@@ -19,6 +19,8 @@ export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
   // "image/svg+xml"
 ];
 
+export const CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT = "right top";
+
 export const surveyUrl = "https://qsurvey.mozilla.com/s3/color";
 
 export const colorLabels = {
