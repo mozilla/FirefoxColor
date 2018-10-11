@@ -158,14 +158,27 @@ const fetchImages = () => browser.storage.local.get("images");
 
 const storeImages = ({ images }) => browser.storage.local.set({ images });
 
+// Blank 1x1 PNG from http://png-pixel.com/
+const BLANK_IMAGE =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+
 const applyTheme = ({ theme }) => {
   log("applyTheme", theme);
   if (!theme) {
     return;
   }
-  browser.theme.update(
-    convertToBrowserTheme(theme, bgImages, customBackgrounds)
-  );
+
+  const newTheme = convertToBrowserTheme(theme, bgImages, customBackgrounds);
+
+  // the headerURL is required in < 60,
+  // but it creates an ugly text shadow.
+  // So only add it for older FFs only.
+  const fxVersion = navigator.userAgent.toLowerCase().split("firefox/")[1];
+  if (fxVersion < 60) {
+    newTheme.images.headerURL = BLANK_IMAGE;
+  }
+
+  browser.theme.update(newTheme);
 };
 
 init();
