@@ -85,7 +85,6 @@ export const AppComponent = props => {
     loaderDelayExpired,
     hasExtension,
     shouldOfferPendingTheme,
-    isThemeExportInProgress,
     shouldOfferExportedTheme,
     firstRun,
     isFirefox,
@@ -113,6 +112,7 @@ export const AppComponent = props => {
             <div className="app">
               <AppBackground {...props} />
               {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
+              {shouldOfferExportedTheme && <ExportThemeDialog {...props} />}
               <AppHeader {...props} />
               <main className="app__main">
                 <Browser
@@ -126,9 +126,6 @@ export const AppComponent = props => {
                   showPopup={hasExtension}
                 >
                   <Fragment>
-                    {(isThemeExportInProgress || shouldOfferExportedTheme) && (
-                      <ExportThemeDialog {...props} />
-                    )}
                     {!hasExtension && (
                       <Banner
                         {...{
