@@ -24,6 +24,12 @@ module.exports = merge(webpackConfig, {
     path: path.resolve(__dirname, "build/extension"),
     filename: "[name].js"
   },
+  optimization: {
+    minimize: false
+  },
+  node: {
+    global: false
+  },
   plugins: [
     new GenerateAssetWebpackPlugin({
       filename: "manifest.json",
