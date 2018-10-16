@@ -59,6 +59,17 @@ const webpackConfig = {
   resolve: {
     extensions: [".js", ".jsx"]
   },
+  optimization: {
+    splitChunks: {
+      automaticNameDelimiter: "/",
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: 0          
+        }
+      }
+    }
+  },
   plugins: [
     new MiniCssExtractPlugin(),
     new WriteFilePlugin(),
