@@ -90,9 +90,9 @@
   @include buttonDefault;
 
   margin: 0 $grid * 2;
-  
+
   &:disabled {
-    opacity: 0.7;
+    opacity: .7;
     cursor: default;
   }
 }
