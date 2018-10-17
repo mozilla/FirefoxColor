@@ -135,15 +135,18 @@ class ExportThemeDialog extends React.Component {
           <>
             <h2>Name your theme</h2>
             <form className="modal__form" onSubmit={this.handleExportClick}>
-              <label>Give your theme a descriptive name.</label>
-              <input
-                value={themeName}
-                onChange={this.handleThemeNameChange}
-                required={true}
-                type="text"
-                maxLength="32"
-                placeholder="Theme name"
-              />
+              <label>
+                Give your theme a descriptive name.
+                <input
+                  id="themeName"
+                  value={themeName}
+                  onChange={this.handleThemeNameChange}
+                  required={true}
+                  type="text"
+                  maxLength="32"
+                  placeholder="Theme name"
+                />
+              </label>
             </form>
             {this.renderNext(this.handleExportClick)}
           </>
