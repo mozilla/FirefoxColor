@@ -31,6 +31,7 @@ export const AppHeader = props => {
     themeCanUndo,
     themeCanRedo,
     setTheme,
+    isThemeExportInProgress,
     setExportThemeProgress,
     exportTheme,
     displayShareModal,
@@ -123,7 +124,7 @@ export const AppHeader = props => {
           </React.Fragment>
         )}
 
-        {headerButton(handleExportClick, iconExport, "Export")}
+        {headerButton(handleExportClick, iconExport, "Export", !isThemeExportInProgress)}
 
         {hasExtension && (
           <a
