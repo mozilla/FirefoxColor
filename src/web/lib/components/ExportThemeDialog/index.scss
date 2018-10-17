@@ -1,0 +1,32 @@
+@import "../../common.scss";
+
+.export-theme-dialog-wrapper {
+  @include dialogWrapper;
+
+  .export-theme-dialog {
+    @include unit;
+    @include dialog;
+
+    height: 155px;
+
+    .options {
+      @include dialogOptions;
+
+      .buttons {
+        @include dialogButtons;
+
+        .button {
+          @include button(34px, 16px);
+          @include buttonDefault;
+
+          margin: 10px;
+        }
+
+        .button.skip {
+          @include button(34px, 16px);
+          @include buttonSecondary;
+        }
+      }
+    }
+  }
+}
