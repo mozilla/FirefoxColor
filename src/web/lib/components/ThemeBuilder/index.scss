@@ -31,6 +31,8 @@
     border: 0;
     position: relative;
     text-align: center;
+    background: transparent;
+    font-size: 16px;
 
     &::after {
       background: var(--grey-90-a10);
@@ -70,11 +72,11 @@
     }
   }
 
-  div:first-child.theme-builder__selected {
+  button:first-child.theme-builder__selected {
     border-left: 0;
   }
 
-  div:last-child.theme-builder__selected {
+  button:last-child.theme-builder__selected {
     border-right: 0;
   }
 
@@ -86,12 +88,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    outline: 0;
   }
 }
 
 @media (max-width: 940px) {
   .theme-builder__tabs {
-    li {
+    button {
       font-size: 14px;
     }
   }

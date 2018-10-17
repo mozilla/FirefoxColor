@@ -54,7 +54,7 @@ export const ThemeBuilder = props => {
       id: "debugger"
     });
   }
-  
+
   const selectedTabIndex = Math.min(
     tabList.length - 1,
     themeBuilderPanel
@@ -156,7 +156,7 @@ export const ThemeBuilder = props => {
                 key={index}
                 className={isSelected}
                 role="tab"
-                tabIndex={selectedTabIndex === index ? 0 : -1}
+                tabIndex={selectedTabIndex === index ? 0 : 1}
                 aria-selected={selectedTabIndex === index ? "true" : "false"}
                 aria-controls={
                   selectedTabIndex === index
