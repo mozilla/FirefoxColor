@@ -73,6 +73,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     redo: () => dispatch(actions.theme.redo()),
     setExportThemeProgress: progress =>
       dispatch(actions.ui.setExportThemeProgress(progress)),
+    showExportThemeDialog: args =>
+      dispatch(actions.ui.showExportThemeDialog(args)),
     exportTheme: args =>
       dispatch(actions.ui.exportTheme(performThemeExport(args))),
     clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme())
@@ -111,7 +113,7 @@ export const AppComponent = props => {
             <div className="app">
               <AppBackground {...props} />
               {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
-              { <ExportThemeDialog {...props} />}
+              {<ExportThemeDialog {...props} />}
               <AppHeader {...props} />
               <main className="app__main">
                 <Browser

@@ -37,6 +37,7 @@ export const actions = {
     "SET_DISPLAY_LEGAL_MODAL",
     "SET_DISPLAY_SHARE_MODAL",
     "SET_THEME_BUILDER_PANEL",
+    "SHOW_EXPORT_THEME_DIALOG",
     "EXPORT_THEME",
     "SET_EXPORT_THEME_PROGRESS",
     "CLEAR_EXPORTED_THEME"
@@ -105,6 +106,7 @@ export const selectors = {
     Object.values(state.ui.savedThemes).filter(({ theme }) =>
       themesEqual(theme, state.theme.present)
     ).length === 0,
+  shouldShowExportThemeDialog: state => !!state.ui.shouldShowExportThemeDialog,
   exportedTheme: state => state.ui.exportedTheme,
   shouldOfferExportedTheme: state => !!state.ui.exportedTheme,
   isThemeExportInProgress: state => !!state.ui.exportedThemeProgress
@@ -176,6 +178,13 @@ export const reducers = {
         ...state,
         loaderDelayExpired
       }),
+      SHOW_EXPORT_THEME_DIALOG: (
+        state,
+        { payload: shouldShowExportThemeDialog = true }
+      ) => ({
+        ...state,
+        shouldShowExportThemeDialog
+      }),
       EXPORT_THEME: (state, { payload: exportedTheme }) => ({
         ...state,
         exportedTheme,
@@ -188,6 +197,7 @@ export const reducers = {
       }),
       CLEAR_EXPORTED_THEME: state => ({
         ...state,
+        shouldShowExportThemeDialog: false,
         exportedTheme: null,
         exportedThemeProgress: false
       }),
@@ -209,6 +219,7 @@ export const reducers = {
       displayLegalModal: false,
       displayShareModal: false,
       themeBuilderPanel: 1,
+      shouldShowExportThemeDialog: false,
       exportedTheme: null,
       exportedThemeProgress: false
     }
