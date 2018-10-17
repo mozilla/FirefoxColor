@@ -124,7 +124,7 @@ export const AppHeader = props => {
           </React.Fragment>
         )}
 
-        {headerButton(handleExportClick, iconExport, "Export", !isThemeExportInProgress)}
+        {hasExtension && headerButton(handleExportClick, iconExport, "Export", !isThemeExportInProgress)}
 
         {hasExtension && (
           <a

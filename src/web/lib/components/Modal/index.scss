@@ -26,14 +26,23 @@
   box-shadow: 0 10px 20px var(--grey-90-a20);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   line-height: 1.5rem;
   min-height: 300px;
-  padding: 4 * $grid;
+  padding: 8 * $grid 10 * $grid;
   position: relative;
   text-align: center;
   width: 500px;
   will-change: transform;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  a:not(.modal__button) {
+    color: var(--blue-50);
+  }
 }
 
 .modal__toggle {
@@ -50,6 +59,37 @@
   right: $grid * 3;
   top: $grid * 3;
   width: 40px;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  input {
+    padding: 8px;
+    border: 1px solid var(--grey-90-a20);
+    width: 320px;
+    border-radius: 3px;
+    font-size: 16px;
+    margin-top: 3 * $grid;
+  }
+
+  &:focus {
+    border: 1px solid var(--blue-50);
+  }
+}
+
+.modal__buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal__button {
+  @include button(40px, 20px, 2px, 150px);
+  @include buttonDefault;
+
+  margin: 0 $grid * 2;
 }
 
 @keyframes translate-in {

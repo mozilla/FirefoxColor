@@ -85,7 +85,6 @@ export const AppComponent = props => {
     loaderDelayExpired,
     hasExtension,
     shouldOfferPendingTheme,
-    shouldOfferExportedTheme,
     firstRun,
     isFirefox,
     addonUrl,
@@ -112,7 +111,7 @@ export const AppComponent = props => {
             <div className="app">
               <AppBackground {...props} />
               {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
-              {shouldOfferExportedTheme && <ExportThemeDialog {...props} />}
+              { <ExportThemeDialog {...props} />}
               <AppHeader {...props} />
               <main className="app__main">
                 <Browser
