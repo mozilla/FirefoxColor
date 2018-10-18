@@ -31,8 +31,8 @@ export const AppHeader = props => {
     themeCanUndo,
     themeCanRedo,
     setTheme,
-    setExportThemeProgress,
-    exportTheme,
+    isThemeExportInProgress,
+    showExportThemeDialog,
     displayShareModal,
     setDisplayShareModal
   } = props;
@@ -44,12 +44,7 @@ export const AppHeader = props => {
   };
 
   const handleExportClick = () => {
-    setExportThemeProgress(true);
-    // TODO: ask user for exported theme name here?
-    exportTheme({
-      name: "Exported Theme"
-      // TODO: need other manifest properties here? (eg. version, etc)
-    });
+    showExportThemeDialog(true);
   };
 
   const onShareClick = () => {
@@ -123,7 +118,13 @@ export const AppHeader = props => {
           </React.Fragment>
         )}
 
-        {headerButton(handleExportClick, iconExport, "Export")}
+        {hasExtension &&
+          headerButton(
+            handleExportClick,
+            iconExport,
+            "Export",
+            !isThemeExportInProgress
+          )}
 
         {hasExtension && (
           <a
