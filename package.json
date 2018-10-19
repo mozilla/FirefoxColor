@@ -83,7 +83,7 @@
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.4",
     "chai": "4.1.2",
-    "copy-webpack-plugin": "4.5.3",
+    "copy-webpack-plugin": "4.5.4",
     "cross-env": "5.2.0",
     "css-loader": "1.0.0",
     "enzyme": "3.6.0",
