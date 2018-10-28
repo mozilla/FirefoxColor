@@ -251,3 +251,23 @@
     }
   }
 }
+
+@media (max-width: 720px) {
+  .customBackgroundItem {
+    .align-group {
+      margin: 0;
+    }
+
+    .image-preview {
+      flex: 0;
+    }
+
+    .tiling {
+      width: 0;
+    }
+
+    .import-image {
+      min-width: 119px;
+    }
+  }
+}
