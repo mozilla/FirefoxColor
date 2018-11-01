@@ -228,6 +228,7 @@
     &:hover,
     &:focus {
       background-color: var(--grey-90-a10);
+      cursor: pointer;
     }
 
     &:active {
@@ -250,9 +251,7 @@
       display: none;
     }
   }
-}
 
-@media (max-width: 720px) {
   .customBackgroundItem {
     .align-group {
       margin: 0;
