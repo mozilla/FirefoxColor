@@ -136,7 +136,7 @@
     "query-string": "6.2.0",
     "react": "16.6.3",
     "react-color": "2.14.1",
-    "react-dom": "16.6.1",
+    "react-dom": "16.6.3",
     "react-onclickoutside": "6.7.1",
     "react-redux": "5.1.1",
     "react-sortable-hoc": "0.8.3",
