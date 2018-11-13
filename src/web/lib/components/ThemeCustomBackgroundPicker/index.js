@@ -279,7 +279,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              <button title={`Close`} className="clear" onClick={handleClearBackground} />
+              <button title={"Delete"} className="clear" onClick={handleClearBackground} />
             </li>
           );
         }}
