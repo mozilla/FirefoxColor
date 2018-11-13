@@ -15,7 +15,7 @@ export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
   "image/jpeg",
   "image/png",
   // "image/gif",
-  "image/bmp"
+  // "image/bmp"
   // "image/svg+xml"
 ];
 
