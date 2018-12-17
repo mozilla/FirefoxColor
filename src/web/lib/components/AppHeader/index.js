@@ -18,7 +18,6 @@ import iconRedo from "./icon_redo.svg";
 import iconHeart from "./icon_heart.svg";
 import iconRandomize from "./icon_randomize.svg";
 import iconShare from "./icon_share.svg";
-import iconFeedback from "./feedback.svg";
 import iconExport from "./icon_export.svg";
 
 import "./index.scss";
@@ -125,20 +124,6 @@ export const AppHeader = props => {
             "Export",
             !isThemeExportInProgress
           )}
-
-        {hasExtension && (
-          <a
-            href={survey}
-            onClick={() => Metrics.linkClick("survey")}
-            title="Feedback"
-            className="app-header__survey"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span>Feedback</span>
-            <img src={iconFeedback} aria-hidden="true" />
-          </a>
-        )}
       </div>
     </header>
   );
