@@ -108,7 +108,7 @@
     "npm-run-all": "4.1.4",
     "onchange": "5.2.0",
     "prettier": "1.15.3",
-    "react-hot-loader": "4.6.0",
+    "react-hot-loader": "4.6.1",
     "react-svg": "7.2.1",
     "require-context": "1.1.0",
     "rimraf": "2.6.2",
