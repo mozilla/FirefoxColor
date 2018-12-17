@@ -7,7 +7,6 @@ import {
 } from "../../../../lib/generators";
 
 import { version } from "../../../../../package.json";
-import { surveyUrl } from "../../../../lib/constants";
 import Metrics from "../../../../lib/metrics";
 
 import ThemeSaveButton from "../ThemeSaveButton";
@@ -35,7 +34,6 @@ export const AppHeader = props => {
     displayShareModal,
     setDisplayShareModal
   } = props;
-  const survey = `${surveyUrl}?ref=app&ver=${version}`;
   const handleRandomClick = () => {
     Math.random() >= 0.5
       ? setTheme({ theme: generateComplementaryTheme() })
