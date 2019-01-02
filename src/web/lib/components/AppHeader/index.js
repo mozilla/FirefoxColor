@@ -6,7 +6,6 @@ import {
   generateRandomTheme
 } from "../../../../lib/generators";
 
-import { version } from "../../../../../package.json";
 import Metrics from "../../../../lib/metrics";
 
 import ThemeSaveButton from "../ThemeSaveButton";
