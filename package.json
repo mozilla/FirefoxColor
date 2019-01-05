@@ -147,7 +147,7 @@
     "redux-devtools-extension": "2.13.7",
     "redux-promise": "0.6.0",
     "redux-undo": "1.0.0-beta9-9-7",
-    "strict-uri-encode": "1.1.0",
+    "strict-uri-encode": "2.0.0",
     "testpilot-ga": "0.3.0",
     "tinycolor2": "1.4.1"
   },
