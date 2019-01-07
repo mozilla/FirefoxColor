@@ -37,11 +37,6 @@ describe("AppHeader", () => {
     ).to.equal("https://testpilot.firefox.com");
   });
 
-  it("should link to Survey Url", () => {
-    const wrapper = shallow(<AppHeader {...props} />);
-    expect(wrapper.find("a").at(1)).to.have.property("length", 1);
-  });
-
   it("should call LinkClick function", () => {
     const wrapper = shallow(<AppHeader {...props} />);
     spy(Metrics, "linkClick");
