@@ -21,8 +21,6 @@ export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
 
 export const CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT = "right top";
 
-export const surveyUrl = "https://qsurvey.mozilla.com/s3/color";
-
 export const colorLabels = {
   toolbar: "Toolbar Color",
   toolbar_text: "Toolbar Icons and Text",
