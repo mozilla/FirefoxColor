@@ -98,29 +98,6 @@
       background: var(--grey-90-a10);
     }
   }
-
-  .app-header__survey {
-    @include buttonDefault;
-
-    align-items: center;
-    border-radius: 2px;
-    cursor: pointer;
-    display: flex;
-    font-size: 14px;
-    height: 28px;
-    justify-content: flex-end;
-    overflow: hidden;
-    padding: 0 5px 0 7px;
-    text-decoration: none;
-    transition: size 125ms, width 200ms;
-    user-select: none;
-    white-space: nowrap;
-    margin-left: 15px;
-
-    img {
-      margin: 0 1px 0 7px;
-    }
-  }
 }
 
 @media (max-width: 720px) {
