@@ -107,7 +107,7 @@
     "nodemon": "1.18.9",
     "npm-run-all": "4.1.4",
     "onchange": "5.2.0",
-    "prettier": "1.16.3",
+    "prettier": "1.16.4",
     "react-hot-loader": "4.6.4",
     "react-svg": "7.2.4",
     "require-context": "1.1.0",
