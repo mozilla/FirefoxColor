@@ -119,7 +119,7 @@
     "stylelint-config-standard": "18.2.0",
     "svg-url-loader": "2.3.2",
     "url-loader": "1.1.2",
-    "web-ext": "2.9.3",
+    "web-ext": "3.0.0",
     "webpack": "4.18.0",
     "webpack-bundle-analyzer": "3.0.4",
     "webpack-cli": "3.2.2",
