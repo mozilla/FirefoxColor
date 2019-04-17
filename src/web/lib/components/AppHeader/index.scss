@@ -12,7 +12,7 @@
   z-index: 2;
 
   .app-header__content {
-    align-items: center;
+    justify-content: center;
     display: flex;
     margin: 0 auto;
     width: 100%;
@@ -29,23 +29,9 @@
   }
 
   h1 {
-    font-size: 18px;
+    font-size: 24px;
     letter-spacing: -.2px;
     margin: 0;
-    text-align: left;
-  }
-
-  h2 {
-    font-size: 12px;
-    font-weight: normal;
-    letter-spacing: 0;
-    margin: 0;
-    text-align: left;
-
-    a {
-      line-height: 13px;
-      text-decoration: none;
-    }
   }
 
   .app-header__controls {

@@ -4,7 +4,6 @@ import "./index.scss";
 
 import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
-import Metrics from "../../../../lib/metrics";
 
 console.log(bgImages);
 
@@ -17,7 +16,6 @@ const Pattern = ({ src, backgroundId, active, setBackground, accentcolor }) => (
       onChange={e => {
         if (e.target.checked) {
           setBackground({ url: src });
-          Metrics.themeChangeBackground(backgroundId);
         }
       }}
       type="radio"

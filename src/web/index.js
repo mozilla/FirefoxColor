@@ -13,7 +13,6 @@ import { makeLog } from "../lib/utils";
 import { CHANNEL_NAME, loaderQuotes } from "../lib/constants";
 import { normalizeTheme } from "../lib/themes";
 import { createAppStore, actions, selectors } from "../lib/store";
-import Metrics from "../lib/metrics";
 
 import setupMiddleware from "./lib/middleware";
 import storage from "./lib/storage";
@@ -65,18 +64,12 @@ const store = createAppStore(
   composeEnhancers(
     applyMiddleware(
       promiseMiddleware,
-      ...setupMiddleware({ postMessage, urlEncodeTheme, storage }),
-      Metrics.storeMiddleware()
+      ...setupMiddleware({ postMessage, urlEncodeTheme, storage })
     )
   )
 );
 
 storage.init(store);
-Metrics.init();
-Metrics.onChange(params => {
-  log("Sending setMetrics");
-  postMessage("setMetrics", { params });
-});
 
 window.addEventListener("popstate", ({ state: { theme } }) =>
   store.dispatch({
@@ -94,16 +87,11 @@ window.addEventListener("message", ({ source, data: message }) => {
     message &&
     message.channel === `${CHANNEL_NAME}-web`
   ) {
-    if (message.type === "hello") {
-      postMessage("setMetrics", { params: Metrics.getParameters() });
-    }
     if (message.type === "hello" || message.type === "pong") {
       outstandingPings = 0;
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
-        Metrics.setHasAddon(true);
-        Metrics.installSuccess();
         const state = store.getState();
         postMessage("addImages", {
           images: selectors.themeCustomImages(state)
@@ -129,7 +117,6 @@ setInterval(() => {
     outstandingPings++;
     if (outstandingPings >= MAX_OUTSTANDING_PINGS) {
       store.dispatch(actions.ui.setHasExtension({ hasExtension: false }));
-      Metrics.setHasAddon(false);
     }
   }
 }, PING_PERIOD);
@@ -219,9 +206,6 @@ function startLoaderDelay() {
  * attention to the logic involved in the shouldOfferPendingTheme selector.
  */
 const params = queryString.parse(window.location.search);
-if (params.fromAddon) {
-  Metrics.setWasAddonClick(true);
-}
 if (params.firstRun) {
   store.dispatch(actions.ui.setFirstRun(true));
 }
