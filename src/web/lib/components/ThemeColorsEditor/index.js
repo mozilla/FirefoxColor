@@ -4,7 +4,6 @@ import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
 import { colorLabels, colorsWithAlpha, ESC } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
-import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
@@ -41,7 +40,6 @@ class ThemeColorsEditor extends React.Component {
 
   handleColorChange = (name, color) => {
     this.props.setColor({ name, color: color.rgb });
-    Metrics.themeChangeColor(name);
   };
 
   componentDidMount() {

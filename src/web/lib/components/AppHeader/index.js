@@ -6,8 +6,6 @@ import {
   generateRandomTheme
 } from "../../../../lib/generators";
 
-import Metrics from "../../../../lib/metrics";
-
 import ThemeSaveButton from "../ThemeSaveButton";
 import ThemeUrl from "../ThemeUrl";
 
@@ -77,18 +75,6 @@ export const AppHeader = props => {
         <div className="app-header__icon" />
         <div>
           <h1>Firefox Color</h1>
-          <h2>
-            A{" "}
-            <a
-              href="https://testpilot.firefox.com"
-              onClick={() => Metrics.linkClick("test-pilot")}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Firefox Test Pilot
-            </a>{" "}
-            Experiment
-          </h2>
         </div>
       </div>
       <div className="app-header__controls">
