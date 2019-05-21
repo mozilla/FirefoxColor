@@ -76,6 +76,14 @@ test runs.
 [ghtoken]: https://github.com/settings/tokens
 [sign]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#web-ext_sign
 
+### Environment list
+
+| Environment | Github Branch                                                           | URL                                     |
+|-------------|-------------------------------------------------------------------------|-----------------------------------------|
+| Development | [development](https://github.com/mozilla/FirefoxColor/tree/development) | https://mozilla.github.io/FirefoxColor/ |
+| Stage       | [stage](https://github.com/mozilla/FirefoxColor/tree/stage)             | https://color.stage.mozaws.net/         |
+| Production  | [production](https://github.com/mozilla/FirefoxColor/tree/production)   | https://color.firefox.com/              |
+
 ## Notes
 
 - Further reading for themes
