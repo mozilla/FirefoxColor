@@ -7,17 +7,17 @@
       "b": 75,
       "a": 0.8
     },
-    "toolbar_text": {
+    "bookmark_text": {
       "r": 27,
       "g": 170,
       "b": 177
     },
-    "accentcolor": {
+    "frame": {
       "r": 22,
       "g": 54,
       "b": 75
     },
-    "textcolor": {
+    "tab_background_text": {
       "r": 148,
       "g": 157,
       "b": 173

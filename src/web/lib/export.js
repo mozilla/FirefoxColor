@@ -24,8 +24,8 @@ export default function performThemeExport({
   if (theme.images) {
     const { images } = theme;
     const { additional_backgrounds } = images;
-    if (images.headerURL) {
-      images.headerURL = addImage(zip, images.headerURL);
+    if (images.theme_frame) {
+      images.theme_frame = addImage(zip, images.theme_frame);
     }
     if (additional_backgrounds) {
       for (let idx = 0; idx < additional_backgrounds.length; idx++) {

@@ -23,9 +23,9 @@ export const CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT = "right top";
 
 export const colorLabels = {
   toolbar: "Toolbar Color",
-  toolbar_text: "Toolbar Icons and Text",
-  accentcolor: "Background Color",
-  textcolor: "Background Tab Text Color",
+  bookmark_text: "Toolbar Icons and Text",
+  frame: "Background Color",
+  tab_background_text: "Background Tab Text Color",
   toolbar_field: "Search Bar Color",
   toolbar_field_text: "Search Text",
   tab_line: "Tab Highlight Color",
@@ -35,7 +35,7 @@ export const colorLabels = {
 
 export const fallbackColors = {
   popup: "toolbar",
-  popup_text: "textcolor"
+  popup_text: "tab_background_text"
 };
 
 export const colorsWithAlpha = ["toolbar", "toolbar_field"];
