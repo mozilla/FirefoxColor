@@ -61,7 +61,7 @@ const Browser = ({
           style={{
             transition: selectSettings.transition,
             outline:
-              selectedColor === "accentcolor"
+              selectedColor === "frame"
                 ? selectSettings.active
                 : selectSettings.inactive
           }}
