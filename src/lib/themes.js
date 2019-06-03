@@ -166,7 +166,7 @@ export const normalizeTheme = (data = {}) => {
   }
 
   if (images.headerURL) {
-  // Fx69 update - deprecate headerURL
+    // Fx69 update - deprecate headerURL
     images.theme_frame = images.headerURL;
     const background = normalizeThemeBackground(images.theme_frame);
     if (background) {
@@ -177,11 +177,11 @@ export const normalizeTheme = (data = {}) => {
   if (theme.colors.accentcolor) {
     theme.colors.frame = theme.colors.accentcolor;
   }
- // Fx69 update - deprecate textcolor
+  // Fx69 update - deprecate textcolor
   if (theme.colors.textcolor) {
-    theme.colors.frame = theme.colors.textcolor;
+    theme.colors.tab_background_text = theme.colors.textcolor;
   }
- // Fx69 update - deprecate toolbar_text
+  // Fx69 update - deprecate toolbar_text
   if (theme.colors.toolbar_text) {
     theme.colors.bookmark_text = theme.colors.toolbar_text;
   }
