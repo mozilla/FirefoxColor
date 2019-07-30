@@ -53,7 +53,7 @@ that are handy to know about:
 ## Build & Release
 
 Deploying a development release consists of pushing to the `development` branch
-on this repo. Production release process is TBD.
+on this repo. Production release consists of pushing to the `production` branch.
 
 The script `npm run release:dev` in `package.json` takes care of the following:
 
