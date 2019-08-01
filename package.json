@@ -132,7 +132,7 @@
     "clipboard": "2.0.4",
     "email-addresses": "3.0.3",
     "fira": "github:mozilla/fira#4.202",
-    "json-url": "2.3.4",
+    "json-url": "2.4.2",
     "jszip": "3.2.0",
     "ps-tree": "1.2.0",
     "query-string": "6.4.0",
