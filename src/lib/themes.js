@@ -149,37 +149,52 @@ export const normalizeThemeColors = (colors = {}) => {
 
 // Utility to ensure normal properties and values in app theme state
 export const normalizeTheme = (data = {}) => {
+  const images = data.images ? data.images : {};
+  const colors = data.colors ? data.colors : {};
+
+  // Replace any deprecated theme property before running
+  // normalizeThemeColors, otherwise the colors not in
+  // the defaultTheme object will be removed and the
+  // accentcolor and textcolor properties set to their
+  // default values.
+
+  // Fx70 update - deprecated headerURL
+  if (images.headerURL) {
+    images.theme_frame = images.headerURL;
+    delete images.headerURL;
+  }
+
+  // Fx70 update - deprecated accentcolor
+  if (colors.accentcolor) {
+    colors.frame = data.colors.accentcolor;
+    delete colors.accentcolor;
+  }
+  // Fx70 update - deprecated textcolor
+  if (colors.textcolor) {
+    colors.tab_background_text = data.colors.textcolor;
+    delete colors.textcolor;
+  }
+
   const theme = {
-    colors: normalizeThemeColors(data.colors, defaultTheme.colors),
+    colors: normalizeThemeColors(colors, defaultTheme.colors),
     images: {
       additional_backgrounds: []
     },
     title: data.title
   };
-  const images = data.images ? data.images : {};
+
+  if (images.theme_frame) {
+    const background = normalizeThemeBackground(images.theme_frame);
+    if (background) {
+      theme.images.additional_backgrounds = [background];
+    }
+  }
 
   if (images.custom_backgrounds) {
     if (!Array.isArray(theme.images.custom_backgrounds)) {
       theme.images.custom_backgrounds = [];
     }
     theme.images.custom_backgrounds = images.custom_backgrounds || [];
-  }
-
-  // Fx70 update - deprecated headerURL
-  if (images.headerURL) {
-    images.theme_frame = images.headerURL;
-    const background = normalizeThemeBackground(images.theme_frame);
-    if (background) {
-      theme.images.additional_backgrounds = [background];
-    }
-  }
-  // Fx70 update - deprecated accentcolor
-  if (theme.colors.accentcolor) {
-    theme.colors.frame = theme.colors.accentcolor;
-  }
-  // Fx70 update - deprecated textcolor
-  if (theme.colors.textcolor) {
-    theme.colors.tab_background_text = theme.colors.textcolor;
   }
 
   if (images.additional_backgrounds) {
@@ -203,12 +218,17 @@ export const presetThemes = presetThemesContext
   }))
   .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
 
-export const convertToBrowserTheme = (theme, bgImages, customBackgrounds) => {
+export const convertToBrowserTheme = (themeData, bgImages, customBackgrounds) => {
   const newTheme = {
     images: {},
     properties: {},
     colors: {}
   };
+
+  // Ensure that the theme data is normalized and any deprecated theme
+  // property has been replaced with a supported one (and/or removed from
+  // the theme object).
+  const theme = normalizeTheme(themeData);
 
   const custom_backgrounds = theme.images.custom_backgrounds || [];
   if (custom_backgrounds.length > 0) {
