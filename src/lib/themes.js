@@ -159,21 +159,22 @@ export const normalizeTheme = (data = {}) => {
   // default values.
 
   // Fx70 update - deprecated headerURL
-  if (images.headerURL) {
+  if (images.headerURL && !images.theme_frame) {
     images.theme_frame = images.headerURL;
-    delete images.headerURL;
   }
+  delete images.headerURL;
 
   // Fx70 update - deprecated accentcolor
-  if (colors.accentcolor) {
-    colors.frame = data.colors.accentcolor;
-    delete colors.accentcolor;
+  if (colors.accentcolor && !colors.frame) {
+    colors.frame = colors.accentcolor;
   }
+  delete colors.accentcolor;
+
   // Fx70 update - deprecated textcolor
-  if (colors.textcolor) {
-    colors.tab_background_text = data.colors.textcolor;
-    delete colors.textcolor;
+  if (colors.textcolor && !colors.tab_background_text) {
+    colors.tab_background_text = colors.textcolor;
   }
+  delete colors.textcolor;
 
   const theme = {
     colors: normalizeThemeColors(colors, defaultTheme.colors),
