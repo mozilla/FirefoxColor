@@ -11,7 +11,7 @@ export const BrowserTools = ({
   selectSettings,
   selectedColor = null
 }) => {
-  const Button = ({ name, asset = false, colorName = "bookmark_text" }) => (
+  const Button = ({ name, asset = false, colorName = "toolbar_text" }) => (
     <span
       className="browser-tools__button"
       style={{

@@ -79,7 +79,7 @@
                 "toolbar_field_text": {
                     "$ref": "#/definitions/rgb"
                 },
-                "bookmark_text": {
+                "toolbar_text": {
                     "$ref": "#/definitions/rgb"
                 },
                 "tab_line": {
@@ -92,7 +92,7 @@
                     "$ref": "#/definitions/rgb"
                 }
             },
-            "required": ["toolbar", "bookmark_text", "frame", "tab_background_text", "toolbar_field", "toolbar_field_text", "tab_line", "popup", "popup_text"],
+            "required": ["toolbar", "toolbar_text", "frame", "tab_background_text", "toolbar_field", "toolbar_field_text", "tab_line", "popup", "popup_text"],
             "additionalProperties": false
         },
         "images": {

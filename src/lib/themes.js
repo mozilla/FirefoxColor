@@ -165,25 +165,21 @@ export const normalizeTheme = (data = {}) => {
     theme.images.custom_backgrounds = images.custom_backgrounds || [];
   }
 
+  // Fx70 update - deprecated headerURL
   if (images.headerURL) {
-  // Fx69 update - deprecate headerURL
     images.theme_frame = images.headerURL;
     const background = normalizeThemeBackground(images.theme_frame);
     if (background) {
       theme.images.additional_backgrounds = [background];
     }
   }
-  // Fx69 update - deprecate accentcolor
+  // Fx70 update - deprecated accentcolor
   if (theme.colors.accentcolor) {
     theme.colors.frame = theme.colors.accentcolor;
   }
- // Fx69 update - deprecate textcolor
+  // Fx70 update - deprecated textcolor
   if (theme.colors.textcolor) {
-    theme.colors.frame = theme.colors.textcolor;
-  }
- // Fx69 update - deprecate toolbar_text
-  if (theme.colors.toolbar_text) {
-    theme.colors.bookmark_text = theme.colors.toolbar_text;
+    theme.colors.tab_background_text = theme.colors.textcolor;
   }
 
   if (images.additional_backgrounds) {
@@ -265,7 +261,7 @@ export const convertToBrowserTheme = (theme, bgImages, customBackgrounds) => {
   }
 
   if (!theme.colors.hasOwnProperty("popup_text")) {
-    newTheme.colors.popup_text = colorToCSS(theme.colors.bookmark_text);
+    newTheme.colors.popup_text = colorToCSS(theme.colors.toolbar_text);
   }
 
   return newTheme;

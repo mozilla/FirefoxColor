@@ -23,7 +23,7 @@ export const CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT = "right top";
 
 export const colorLabels = {
   toolbar: "Toolbar Color",
-  bookmark_text: "Toolbar Icons and Text",
+  toolbar_text: "Toolbar Icons and Text",
   frame: "Background Color",
   tab_background_text: "Background Tab Text Color",
   toolbar_field: "Search Bar Color",

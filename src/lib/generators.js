@@ -28,7 +28,7 @@ export const generateComplementaryTheme = (color = null) => {
   const complementColor = createA11yColor(seed.complement().toRgb(), baseColor);
 
   newTheme.colors.toolbar = baseColor;
-  newTheme.colors.bookmark_text = complementColor;
+  newTheme.colors.toolbar_text = complementColor;
   newTheme.colors.frame = lightColor;
   newTheme.colors.tab_background_text = complementColor;
   newTheme.colors.toolbar_field = lightColor;
