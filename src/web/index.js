@@ -51,11 +51,29 @@ const urlEncodeTheme = ({ hasCustomBackgrounds = false, theme }) => {
 
 const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
 
-const postMessage = (type, data = {}) =>
+const postMessage = (type, data = {}) => {
+  // Add old lwt aliases for compatibility with Firefox Color 2.1.4 and earlier
+  // (new Firefox Color versions will remove these properties before applying it,
+  // while on older version it would make the theme to still look as expected).
+  if (type === "setTheme" & data.theme) {
+    const {theme} = data;
+    if (theme.colors) {
+      if (!theme.colors.accentcolor && theme.colors.frame) {
+        theme.colors.accentcolor = theme.colors.frame;
+      }
+      if (!theme.colors.textcolor && theme.colors.tab_background_text) {
+        theme.colors.textcolor = theme.colors.tab_background_text;
+      }
+    }
+    if (theme.images && !theme.images.headerURL && theme.images.theme_frame) {
+      theme.images.headerURL = theme.images.theme_frame;
+    }
+  }
   window.postMessage(
     { ...data, type, channel: `${CHANNEL_NAME}-extension` },
     "*"
   );
+};
 
 const composeEnhancers = composeWithDevTools({});
 

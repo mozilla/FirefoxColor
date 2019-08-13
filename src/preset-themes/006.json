@@ -12,12 +12,12 @@
       "g": 17,
       "b": 223
     },
-    "accentcolor": {
+    "frame": {
       "r": 255,
       "g": 255,
       "b": 255
     },
-    "textcolor": {
+    "tab_background_text": {
       "r": 185,
       "g": 17,
       "b": 223
