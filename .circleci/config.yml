@@ -5,6 +5,8 @@ jobs:
   build_and_test:
     docker:
       - image: circleci/node:8.11.2@sha256:495a13db597b5306f05ae728489fedb9faa4defbac24ca0e00e8cc1eca95396d
+    environment:
+      ADDON_URL: https://addons.mozilla.org/firefox/downloads/file/1112089/firefox_color-2.1.0-fx.xpi
     working_directory: ~/FirefoxColor
     steps:
       - checkout
