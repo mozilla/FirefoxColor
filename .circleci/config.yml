@@ -90,7 +90,7 @@ workflows:
             - build_and_test
           filters:
             branches:
-              only: staging
+              only: stage
       - deploy_to_aws:
           access-key-id: PROD_ACCESS_KEY_ID
           bucket-name: PROD_BUCKET_NAME
