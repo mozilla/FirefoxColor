@@ -139,8 +139,19 @@ export const normalizeThemeColor = (name, data, defaultColor) => {
 export const normalizeThemeColors = (colors = {}) => {
   const out = {};
   const { colors: defaultColors } = defaultTheme;
+  const resolveColor = (name) => {
+    let color = colors[name];
+    if (color) {
+      return color;
+    }
+    name = fallbackColors[name];
+    if (Array.isArray(name)) {
+      name = name.find(n => colors[n]);
+    }
+    return colors[name];
+  };
   Object.keys(defaultColors).forEach(name => {
-    const matchedColor = colors[name] || colors[fallbackColors[name]];
+    const matchedColor = resolveColor(name);
     const color = normalizeThemeColor(name, matchedColor, defaultColors[name]);
     out[name] = color;
   });
@@ -152,40 +163,17 @@ export const normalizeTheme = (data = {}) => {
   const images = data.images ? data.images : {};
   const colors = data.colors ? data.colors : {};
 
-  // Replace any deprecated theme property before running
-  // normalizeThemeColors, otherwise the colors not in
-  // the defaultTheme object will be removed and the
-  // accentcolor and textcolor properties set to their
-  // default values.
-
-  // Fx70 update - deprecated headerURL
-  if (images.headerURL && !images.theme_frame) {
-    images.theme_frame = images.headerURL;
-  }
-  delete images.headerURL;
-
-  // Fx70 update - deprecated accentcolor
-  if (colors.accentcolor && !colors.frame) {
-    colors.frame = colors.accentcolor;
-  }
-  delete colors.accentcolor;
-
-  // Fx70 update - deprecated textcolor
-  if (colors.textcolor && !colors.tab_background_text) {
-    colors.tab_background_text = colors.textcolor;
-  }
-  delete colors.textcolor;
-
   const theme = {
-    colors: normalizeThemeColors(colors, defaultTheme.colors),
+    colors: normalizeThemeColors(colors),
     images: {
       additional_backgrounds: []
     },
     title: data.title
   };
 
-  if (images.theme_frame) {
-    const background = normalizeThemeBackground(images.theme_frame);
+  let theme_frame = images.theme_frame || images.headerURL;
+  if (theme_frame) {
+    const background = normalizeThemeBackground(theme_frame);
     if (background) {
       theme.images.additional_backgrounds = [background];
     }
@@ -273,17 +261,7 @@ export const convertToBrowserTheme = (themeData, bgImages, customBackgrounds) =>
 
   // TODO: we will need to actually create this field in
   // theme manifests as part of #93.
-  if (!theme.colors.hasOwnProperty("tab_loading")) {
-    newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
-  }
-
-  if (!theme.colors.hasOwnProperty("popup")) {
-    newTheme.colors.popup = colorToCSS(theme.colors.frame);
-  }
-
-  if (!theme.colors.hasOwnProperty("popup_text")) {
-    newTheme.colors.popup_text = colorToCSS(theme.colors.toolbar_text);
-  }
+  newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
 
   return newTheme;
 };
