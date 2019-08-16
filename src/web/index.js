@@ -55,7 +55,9 @@ const postMessage = (type, data = {}) => {
   // Add old lwt aliases for compatibility with Firefox Color 2.1.4 and earlier
   // (new Firefox Color versions will remove these properties before applying it,
   // while on older version it would make the theme to still look as expected).
-  if (type === "setTheme" & data.theme) {
+  if (type === "setTheme" && data.theme) {
+    // Deep-clone to avoid mutating the input parameter.
+    data = JSON.parse(JSON.stringify(data));
     const {theme} = data;
     if (theme.colors) {
       if (!theme.colors.accentcolor && theme.colors.frame) {

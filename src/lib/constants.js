@@ -34,8 +34,14 @@ export const colorLabels = {
 };
 
 export const fallbackColors = {
-  popup: "toolbar",
-  popup_text: "tab_background_text"
+  frame: "accentcolor",
+  // "popup" falls back to "frame" if "popup" is void.
+  // If "frame" is somehow void, then "toolbar" is used instead.
+  // This is for no particular reason, besides backwards-compatibility.
+  // Similarly for "popup_text".
+  popup: ["frame", "toolbar"],
+  popup_text: ["toolbar_text", "tab_background_text", "textcolor"],
+  tab_background_text: "textcolor",
 };
 
 export const colorsWithAlpha = ["toolbar", "toolbar_field"];
