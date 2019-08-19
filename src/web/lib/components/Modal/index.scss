@@ -26,13 +26,13 @@
   box-shadow: 0 10px 20px var(--grey-90-a20);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   line-height: 1.5rem;
-  min-height: 300px;
+  min-height: 200px;
   padding: 8 * $grid 10 * $grid;
   position: relative;
   text-align: center;
-  width: 500px;
+  width: 400px;
   will-change: transform;
 
   h2,

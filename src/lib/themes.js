@@ -139,8 +139,19 @@ export const normalizeThemeColor = (name, data, defaultColor) => {
 export const normalizeThemeColors = (colors = {}) => {
   const out = {};
   const { colors: defaultColors } = defaultTheme;
+  const resolveColor = (name) => {
+    let color = colors[name];
+    if (color) {
+      return color;
+    }
+    name = fallbackColors[name];
+    if (Array.isArray(name)) {
+      name = name.find(n => colors[n]);
+    }
+    return colors[name];
+  };
   Object.keys(defaultColors).forEach(name => {
-    const matchedColor = colors[name] || colors[fallbackColors[name]];
+    const matchedColor = resolveColor(name);
     const color = normalizeThemeColor(name, matchedColor, defaultColors[name]);
     out[name] = color;
   });
@@ -149,27 +160,30 @@ export const normalizeThemeColors = (colors = {}) => {
 
 // Utility to ensure normal properties and values in app theme state
 export const normalizeTheme = (data = {}) => {
+  const images = data.images ? data.images : {};
+  const colors = data.colors ? data.colors : {};
+
   const theme = {
-    colors: normalizeThemeColors(data.colors, defaultTheme.colors),
+    colors: normalizeThemeColors(colors),
     images: {
       additional_backgrounds: []
     },
     title: data.title
   };
-  const images = data.images ? data.images : {};
+
+  let theme_frame = images.theme_frame || images.headerURL;
+  if (theme_frame) {
+    const background = normalizeThemeBackground(theme_frame);
+    if (background) {
+      theme.images.additional_backgrounds = [background];
+    }
+  }
 
   if (images.custom_backgrounds) {
     if (!Array.isArray(theme.images.custom_backgrounds)) {
       theme.images.custom_backgrounds = [];
     }
     theme.images.custom_backgrounds = images.custom_backgrounds || [];
-  }
-
-  if (images.headerURL) {
-    const background = normalizeThemeBackground(images.headerURL);
-    if (background) {
-      theme.images.additional_backgrounds = [background];
-    }
   }
 
   if (images.additional_backgrounds) {
@@ -193,12 +207,17 @@ export const presetThemes = presetThemesContext
   }))
   .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
 
-export const convertToBrowserTheme = (theme, bgImages, customBackgrounds) => {
+export const convertToBrowserTheme = (themeData, bgImages, customBackgrounds) => {
   const newTheme = {
     images: {},
     properties: {},
     colors: {}
   };
+
+  // Ensure that the theme data is normalized and any deprecated theme
+  // property has been replaced with a supported one (and/or removed from
+  // the theme object).
+  const theme = normalizeTheme(themeData);
 
   const custom_backgrounds = theme.images.custom_backgrounds || [];
   if (custom_backgrounds.length > 0) {
@@ -242,17 +261,7 @@ export const convertToBrowserTheme = (theme, bgImages, customBackgrounds) => {
 
   // TODO: we will need to actually create this field in
   // theme manifests as part of #93.
-  if (!theme.colors.hasOwnProperty("tab_loading")) {
-    newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
-  }
-
-  if (!theme.colors.hasOwnProperty("popup")) {
-    newTheme.colors.popup = colorToCSS(theme.colors.accentcolor);
-  }
-
-  if (!theme.colors.hasOwnProperty("popup_text")) {
-    newTheme.colors.popup_text = colorToCSS(theme.colors.toolbar_text);
-  }
+  newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
 
   return newTheme;
 };

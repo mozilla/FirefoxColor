@@ -64,10 +64,10 @@
         "colors": {
             "type": "object",
             "properties": {
-                "accentcolor": {
+                "frame": {
                     "$ref": "#/definitions/rgb"
                 },
-                "textcolor": {
+                "tab_background_text": {
                     "$ref": "#/definitions/rgb"
                 },
                 "toolbar": {
@@ -92,13 +92,13 @@
                     "$ref": "#/definitions/rgb"
                 }
             },
-            "required": ["toolbar", "toolbar_text", "accentcolor", "textcolor", "toolbar_field", "toolbar_field_text", "tab_line", "popup", "popup_text"],
+            "required": ["toolbar", "toolbar_text", "frame", "tab_background_text", "toolbar_field", "toolbar_field_text", "tab_line", "popup", "popup_text"],
             "additionalProperties": false
         },
         "images": {
             "type": "object",
             "properties": {
-                "headerURL": {
+                "theme_frame": {
                     "type": "string"
                 },
                 "additional_backgrounds": {

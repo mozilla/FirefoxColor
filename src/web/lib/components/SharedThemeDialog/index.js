@@ -1,5 +1,4 @@
 import React from "react";
-import Metrics from "../../../../lib/metrics";
 import Browser from "../Browser";
 import "./index.scss";
 
@@ -9,12 +8,10 @@ export const SharedThemeDialog = ({
   clearPendingTheme
 }) => {
   const onApply = () => {
-    Metrics.receiveTheme("apply", pendingTheme);
     setTheme({ theme: pendingTheme });
     clearPendingTheme();
   };
   const onSkip = () => {
-    Metrics.receiveTheme("reject", pendingTheme);
     clearPendingTheme();
   };
   const onClickBackdrop = ev => {

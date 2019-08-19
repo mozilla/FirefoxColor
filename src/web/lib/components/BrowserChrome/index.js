@@ -18,7 +18,7 @@ const BrowserChrome = ({
         backgroundImage: !themeHasCustomBackgrounds
           ? headerBackgroundImage
           : null,
-        backgroundColor: colors.accentcolor
+        backgroundColor: colors.frame
       }}
     >
       {customImages.map((image, index) => {
