@@ -76,6 +76,18 @@ test runs.
 [ghtoken]: https://github.com/settings/tokens
 [sign]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#web-ext_sign
 
+## Build, test and publish add-on
+The script `npm run xpi` in `package.json` generates unsigned xpi files, which
+are added to `build/web` (and published to the root of `SITE_URL` by CircleCI),
+on all branches (development, stage, production). These XPIs can be loaded at
+`about:debugging` for manual testing.
+
+- `firefox-color-stage-unsigned.xpi` - test with Stage (testing only).
+- `firefox-color-unsigned.xpi` - test with Production (release candidate).
+
+After passing QA, the XPI can be published by manually uploading it to AMO.
+Every release requires a version bump, because version numbers cannot be reused.
+
 ### Environment list
 
 | Environment | Github Branch                                                           | URL                                     |

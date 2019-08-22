@@ -21,6 +21,7 @@ jobs:
       - run: greenkeeper-lockfile-upload
       - run: npm run lint
       - run: npm run build
+      - run: npm run xpi
       - run: npm run validate
       - run: npm run test
       - save_cache:
