@@ -1,6 +1,7 @@
 import { actions } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
 import { normalizeTheme, themesEqual } from "../../lib/themes";
+import { localStorageSpace } from "./components/StorageSpaceInformation";
 
 const log = makeLog("web.storage");
 
@@ -106,6 +107,12 @@ function init(store) {
     store.dispatch(actions.ui.setSavedThemes({ savedThemes }));
   };
 
+  const getUsedStorage = () => {
+    const space = localStorageSpace();
+    log("getUsedStorage", space);
+    store.dispatch(actions.ui.setUsedStorage({ space }));
+  };
+
   const loadAllImagesIntoStore = () => {
     const items = Object.values(imageStorage.list()).reduce(
       (acc, { data: item }) => ({ ...acc, [item.name]: item }),
@@ -123,6 +130,7 @@ function init(store) {
 
   loadAllImagesIntoStore();
   updateSavedThemesInStore();
+  getUsedStorage();
 
   window.addEventListener("storage", e => {
     log("storage event", e);
