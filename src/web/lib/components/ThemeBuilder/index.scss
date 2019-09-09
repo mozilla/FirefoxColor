@@ -83,12 +83,13 @@
   .theme-builder__content {
     background: var(--white-100);
     margin: 0 auto;
-    height: 320px;
+    height: 380px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     outline: 0;
+    flex-direction: column;
   }
 }
 

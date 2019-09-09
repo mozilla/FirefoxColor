@@ -12,6 +12,7 @@ import {
   CUSTOM_BACKGROUND_MAXIMUM_LENGTH,
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
+import { STORAGE_ERROR_MESSAGE_DURATION } from "../StorageSpaceInformation";
 
 import "./index.scss";
 
@@ -69,7 +70,8 @@ export class ThemeCustomBackgroundPicker extends React.Component {
       addImage,
       updateImage,
       themeHasCustomBackgrounds,
-      themeCustomBackgrounds
+      themeCustomBackgrounds,
+      storageErrorMessage
     } = this.props;
     const label = themeHasCustomBackgrounds
       ? "Add another"
@@ -85,38 +87,43 @@ export class ThemeCustomBackgroundPicker extends React.Component {
           onSortStart={this.handleSortStart}
           onSortEnd={this.handleSortEnd}
         />
-        <ImageImporter
-          {...{ addImage, updateImage, onImport: this.handleImageAdd }}
-        >
-          {({ importing, errors, ImportButton }) => (
-            <div className="add-image">
-              {themeCustomBackgrounds.length <
-                CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
-                <ImportButton {...{ label, isPrimary }} />
-              )}
-              {importing && (
-                <div className="status-message importing">Processing...</div>
-              )}
-              {errors && (
-                <React.Fragment>
-                  <Modal>
-                    <ul className="errors">
-                      {errors.tooLarge && (
-                        <li>The image is too large. (1MB maximum size)</li>
-                      )}
-                      {errors.wrongType && (
-                        <li>The file is not an accepted image type.</li>
-                      )}
-                    </ul>
-                  </Modal>
-                </React.Fragment>
-              )}
-            </div>
-          )}
-        </ImageImporter>
-        <p className="privacy-note">
-          Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
-        </p>
+        {!storageErrorMessage && (
+          <ImageImporter
+            {...{ addImage, updateImage, onImport: this.handleImageAdd }}
+          >
+            {({ importing, errors, ImportButton }) => (
+              <div className="add-image">
+                {themeCustomBackgrounds.length <
+                  CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
+                  <ImportButton {...{ label, isPrimary }} />
+                )}
+                {importing && (
+                  <div className="status-message importing">Processing...</div>
+                )}
+                {errors && (
+                  <React.Fragment>
+                    <Modal>
+                      <ul className="errors">
+                        {errors.tooLarge && (
+                          <li>The image is too large. (1MB maximum size)</li>
+                        )}
+                        {errors.wrongType && (
+                          <li>The file is not an accepted image type.</li>
+                        )}
+                      </ul>
+                    </Modal>
+                  </React.Fragment>
+                )}
+              </div>
+            )}
+          </ImageImporter>
+        )}
+        {!storageErrorMessage && (
+          <p className="privacy-note">
+            Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your
+            computer.
+          </p>
+        )}
       </form>
     );
   }
@@ -182,12 +189,33 @@ const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
 ));
 
 class ThemeCustomBackgroundSelector extends React.Component {
+  timeout;
+
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    if (this.props.storageErrorMessage) {
+      this.timeout = setTimeout(() => {
+        this.props.setStorageErrorMessage("");
+      }, STORAGE_ERROR_MESSAGE_DURATION);
+      this.handleClearBackground();
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
+
   render() {
-    const { handleClearBackground, handleTilingChange } = this;
+    const {
+      handleClearBackground,
+      handleTilingChange,
+      storageErrorMessage
+    } = this;
     const { addImage, updateImage, image } = this.props;
     const { tiling, alignment = "left top" } = this.props.item;
     const [horizontalAlign, verticalAlign] = alignment.split(" ");
@@ -215,6 +243,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
       );
     };
 
+    if (this.props.storageErrorMessage) {
+      return <div />;
+    }
+
     return (
       <ImageImporter
         {...{ image, addImage, updateImage, onImport: this.handleImageImport }}
@@ -228,7 +260,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
           } else {
             statusIcon = "draggable";
           }
-          return (
+
+          return storageErrorMessage ? (
+            <div />
+          ) : (
             <li className={classNames("customBackgroundItem", { importing })}>
               <DragHandle errors={errors} icon={statusIcon} />
 
@@ -278,8 +313,11 @@ class ThemeCustomBackgroundSelector extends React.Component {
               </select>
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
-
-              <button title={"Delete"} className="clear" onClick={handleClearBackground} />
+              <button
+                title={"Delete"}
+                className="clear"
+                onClick={handleClearBackground}
+              />
             </li>
           );
         }}
@@ -287,7 +325,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     );
   }
 
-  handleClearBackground = () => {
+  handleClearBackground = key => {
     this.props.clearCustomBackground();
   };
 

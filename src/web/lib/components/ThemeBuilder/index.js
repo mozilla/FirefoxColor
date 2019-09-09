@@ -23,7 +23,8 @@ export const ThemeBuilder = props => {
     savedThemesPage,
     setSavedThemesPage,
     storage,
-    themeCustomImages
+    themeCustomImages,
+    setUsedStorage
   } = props;
 
   const tabList = [
@@ -55,10 +56,7 @@ export const ThemeBuilder = props => {
     });
   }
 
-  const selectedTabIndex = Math.min(
-    tabList.length - 1,
-    themeBuilderPanel
-  );
+  const selectedTabIndex = Math.min(tabList.length - 1, themeBuilderPanel);
 
   const selectedTabId = tabList[selectedTabIndex].id;
 
@@ -88,7 +86,8 @@ export const ThemeBuilder = props => {
               savedThemesPage,
               setSavedThemesPage,
               themeCustomImages,
-              storage
+              storage,
+              setUsedStorage
             }}
           />
         );
