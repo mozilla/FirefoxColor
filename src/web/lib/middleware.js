@@ -103,7 +103,7 @@ export default function({
     );
 
     // Scan through undo/redo stack for images still in use.
-    [selectors.themePast(state), selectors.themeFuture(state)].forEach(
+    [(selectors.themePast(state), selectors.themeFuture(state))].forEach(
       themes => {
         themes
           .filter(theme => theme.images && theme.images.custom_backgrounds)
