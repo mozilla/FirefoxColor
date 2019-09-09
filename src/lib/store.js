@@ -40,7 +40,9 @@ export const actions = {
     "SHOW_EXPORT_THEME_DIALOG",
     "EXPORT_THEME",
     "SET_EXPORT_THEME_PROGRESS",
-    "CLEAR_EXPORTED_THEME"
+    "CLEAR_EXPORTED_THEME",
+    "SET_USED_STORAGE",
+    "SET_STORAGE_ERROR_MESSAGE"
   ),
   theme: {
     ...createActions(
@@ -109,12 +111,26 @@ export const selectors = {
   shouldShowExportThemeDialog: state => !!state.ui.shouldShowExportThemeDialog,
   exportedTheme: state => state.ui.exportedTheme,
   shouldOfferExportedTheme: state => !!state.ui.exportedTheme,
-  isThemeExportInProgress: state => !!state.ui.exportedThemeProgress
+  isThemeExportInProgress: state => !!state.ui.exportedThemeProgress,
+  storageErrorMessage: state => state.ui.storageErrorMessage,
+  usedStorage: state => state.ui.usedStorage
 };
 
 export const reducers = {
   ui: handleActions(
     {
+      SET_USED_STORAGE: (state, { payload: { space } }) => {
+        return {
+          ...state,
+          usedStorage: space
+        };
+      },
+      SET_STORAGE_ERROR_MESSAGE: (state, { payload }) => {
+        return {
+          ...state,
+          storageErrorMessage: payload
+        };
+      },
       SET_DISPLAY_LEGAL_MODAL: (state, { payload: { display } }) => ({
         ...state,
         displayLegalModal: display
@@ -221,7 +237,9 @@ export const reducers = {
       themeBuilderPanel: 1,
       shouldShowExportThemeDialog: false,
       exportedTheme: null,
-      exportedThemeProgress: false
+      exportedThemeProgress: false,
+      storageErrorMessage: "",
+      usedStorage: 0
     }
   ),
   images: handleActions(
