@@ -77,7 +77,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(actions.ui.showExportThemeDialog(args)),
     exportTheme: args =>
       dispatch(actions.ui.exportTheme(performThemeExport(args))),
-    clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme())
+    clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme()),
+    setUsedStorage: args => dispatch(actions.ui.setUsedStorage(args)),
+    setStorageErrorMessage: args =>
+      dispatch(actions.ui.setStorageErrorMessage(args))
   };
 };
 
@@ -107,47 +110,46 @@ export const AppComponent = props => {
     <Fragment>
       {isMobile && <Mobile />}
       {!isMobile && !loaderDelayExpired && <AppLoadingIndicator {...props} />}
-      {!isMobile &&
-        loaderDelayExpired && (
-          <Fragment>
-            <div className="app">
-              <AppBackground {...props} />
-              {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
-              {<ExportThemeDialog {...props} />}
-              <AppHeader {...props} />
-              <main className="app__main">
-                <Browser
-                  {...{
-                    theme,
-                    themeHasCustomBackgrounds,
-                    customImages,
-                    selectedColor
-                  }}
-                  size="large"
-                  showPopup={hasExtension}
-                >
-                  <Fragment>
-                    {!hasExtension && (
-                      <Banner
-                        {...{
-                          isFirefox,
-                          addonUrl,
-                          selectedColor,
-                          setSelectedColor
-                        }}
-                      />
-                    )}
-                    {hasExtension && <div className="app__firefox" />}
-                    <ThemeBuilder {...props} />
-                  </Fragment>
-                </Browser>
-              </main>
-              <AppFooter {...props} />
-              <TermsPrivacyModal {...props} />
-              {firstRun && <Onboarding />}
-            </div>
-          </Fragment>
-        )}
+      {!isMobile && loaderDelayExpired && (
+        <Fragment>
+          <div className="app">
+            <AppBackground {...props} />
+            {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
+            {<ExportThemeDialog {...props} />}
+            <AppHeader {...props} />
+            <main className="app__main">
+              <Browser
+                {...{
+                  theme,
+                  themeHasCustomBackgrounds,
+                  customImages,
+                  selectedColor
+                }}
+                size="large"
+                showPopup={hasExtension}
+              >
+                <Fragment>
+                  {!hasExtension && (
+                    <Banner
+                      {...{
+                        isFirefox,
+                        addonUrl,
+                        selectedColor,
+                        setSelectedColor
+                      }}
+                    />
+                  )}
+                  {hasExtension && <div className="app__firefox" />}
+                  <ThemeBuilder {...props} />
+                </Fragment>
+              </Browser>
+            </main>
+            <AppFooter {...props} />
+            <TermsPrivacyModal {...props} />
+            {firstRun && <Onboarding />}
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };
