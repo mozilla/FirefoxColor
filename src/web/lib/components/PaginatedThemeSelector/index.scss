@@ -59,7 +59,7 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: 10px 18px;
-      opacity: 0.7;
+      opacity: .7;
       transition: opacity 125ms;
 
       &:hover {
@@ -68,7 +68,7 @@
 
       &.disabled {
         cursor: auto;
-        opacity: 0.3;
+        opacity: .3;
       }
     }
 
@@ -110,13 +110,14 @@
 
   button {
     align-items: center;
-    background: linear-gradient(
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 0.95)
-    );
+    background:
+      linear-gradient(
+        rgba(255, 255, 255, .9),
+        rgba(255, 255, 255, .95)
+      );
     border-radius: 50%;
     border: 0;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
     cursor: pointer;
     display: flex;
     height: 36px;

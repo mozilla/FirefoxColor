@@ -24,8 +24,8 @@
 }
 
 .inputfile {
-  width: 0.1px;
-  height: 0.1px;
+  width: .1px;
+  height: .1px;
   opacity: 0;
   overflow: hidden;
   position: absolute;
@@ -100,7 +100,7 @@
     display: block;
     height: 16px;
     margin-right: 23px;
-    opacity: 0.5;
+    opacity: .5;
     width: 16px;
     background: url(./icon_drag.svg) no-repeat 0 0 / 16px 16px;
 
@@ -146,7 +146,7 @@
   .align-group {
     padding-right: 10px;
     margin: 0 0 0 10px;
-    border-right: 1px solid rgba(12, 12, 13, 0.1);
+    border-right: 1px solid rgba(12, 12, 13, .1);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -158,7 +158,7 @@
     .align-button {
       display: flex;
       background: transparent;
-      opacity: 0.8;
+      opacity: .8;
       cursor: pointer;
       border: none;
       border-radius: 2px;
@@ -204,7 +204,7 @@
   .tiling {
     background: #fff;
     border-radius: 2px;
-    border: 1px solid rgba(12, 12, 13, 0.1);
+    border: 1px solid rgba(12, 12, 13, .1);
     color: #0c0c0d;
     cursor: pointer;
     font-size: 16px;
