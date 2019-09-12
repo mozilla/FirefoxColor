@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const StorageIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
