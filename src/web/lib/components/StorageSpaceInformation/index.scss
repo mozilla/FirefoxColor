@@ -7,8 +7,20 @@
   line-height: 1.5;
 }
 
+.storage-space-information-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    padding-right: 5px;
+  }
+}
+
 .storage-space-information-warning {
   text-align: center;
+  line-height: 1.2;
+  margin-top: 2px;
 }
 
 .storage-space-information-error {
