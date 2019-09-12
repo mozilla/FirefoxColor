@@ -95,8 +95,8 @@ export class ThemeCustomBackgroundPicker extends React.Component {
               <div className="add-image">
                 {themeCustomBackgrounds.length <
                   CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
-                  <ImportButton {...{ label, isPrimary }} />
-                )}
+                    <ImportButton {...{ label, isPrimary }} />
+                  )}
                 {importing && (
                   <div className="status-message importing">Processing...</div>
                 )}
@@ -120,9 +120,8 @@ export class ThemeCustomBackgroundPicker extends React.Component {
         )}
         {!storageErrorMessage && (
           <p className="privacy-note">
-            Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your
-            computer.
-          </p>
+            Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
+        </p>
         )}
       </form>
     );
@@ -234,7 +233,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
             { selected: alignmentState[alignmentKey] === alignment },
             "align-button",
             `align-button-${
-              isHorizontal ? "horizontal" : "vertical"
+            isHorizontal ? "horizontal" : "vertical"
             }-${alignment}`
           )}
         >
@@ -260,10 +259,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
           } else {
             statusIcon = "draggable";
           }
-
-          return storageErrorMessage ? (
-            <div />
-          ) : (
+          return (
             <li className={classNames("customBackgroundItem", { importing })}>
               <DragHandle errors={errors} icon={statusIcon} />
 
@@ -313,11 +309,8 @@ class ThemeCustomBackgroundSelector extends React.Component {
               </select>
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
-              <button
-                title={"Delete"}
-                className="clear"
-                onClick={handleClearBackground}
-              />
+
+              <button title={"Delete"} className="clear" onClick={handleClearBackground} />
             </li>
           );
         }}
@@ -325,7 +318,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     );
   }
 
-  handleClearBackground = key => {
+  handleClearBackground = () => {
     this.props.clearCustomBackground();
   };
 
@@ -350,7 +343,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     const alignmentState = { horizontalAlign, verticalAlign, ...state };
     const newAlignment = `${alignmentState.horizontalAlign} ${
       alignmentState.verticalAlign
-    }`;
+      }`;
 
     updateCustomBackground({ alignment: newAlignment });
   }
