@@ -242,7 +242,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
       );
     };
 
-    if (this.props.storageErrorMessage) {
+    if (storageErrorMessage) {
       return <div />;
     }
 

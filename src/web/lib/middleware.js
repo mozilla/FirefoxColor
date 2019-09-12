@@ -4,7 +4,7 @@ import {
   STORAGE_ERROR_MESSAGE
 } from "./components/StorageSpaceInformation";
 
-export default function ({
+export default function({
   postMessage,
   urlEncodeTheme,
   storage: { imageStorage }
