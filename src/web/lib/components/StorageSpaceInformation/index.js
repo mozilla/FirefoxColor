@@ -18,12 +18,6 @@ export const localStorageSpace = () => {
     size += key.length + value.length;
   }
 
-  let test1 = size
-    ? parseFloat(((size.length * 16) / (8 * 1024) / 1000).toFixed(3))
-    : 0;
-
-  console.log("REBB test1", test1);
-
   const sizeMB = size / 1000000;
   return parseFloat(sizeMB.toFixed(3));
 };
