@@ -4,7 +4,7 @@ import {
   STORAGE_ERROR_MESSAGE
 } from "./components/StorageSpaceInformation";
 
-export default function({
+export default function ({
   postMessage,
   urlEncodeTheme,
   storage: { imageStorage }
@@ -51,17 +51,17 @@ export default function({
         const { importing, ...importedImage } = image; // eslint-disable-line no-unused-vars
         postMessage("updateImage", { image: importedImage });
         try {
-          imageStorage.put(name, JSON.stringify(importedImage));
+          imageStorage.put(name, importedImage);
+          dispatch(actions.images.updateImage({ name, importing: false }));
           dispatch(
             actions.ui.setUsedStorage({
               space: localStorageSpace()
             })
           );
         } catch (err) {
-          console.error(err);
           dispatch(actions.ui.setStorageErrorMessage(STORAGE_ERROR_MESSAGE));
+          console.error(err);
         }
-        dispatch(actions.images.updateImage({ name, importing: false }));
       }
       return rv;
     },
@@ -70,7 +70,6 @@ export default function({
       const images = action.payload;
       postMessage("deleteImages", { images });
       images.forEach(name => imageStorage.delete(name));
-
       dispatch(
         actions.ui.setUsedStorage({
           space: localStorageSpace()
