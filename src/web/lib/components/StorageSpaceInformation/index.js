@@ -25,8 +25,8 @@ export const localStorageSpace = () => {
 export const StorageSpaceInformationComponent = props => {
   return (
     <div className="storage-space-information">
-      <div className="storage-space-information-content"><span>{props.usedStorage}MB out of 5.242MB</span> <StorageIcon /></div>
-      {props.usedStorage > 4.75 && !props.storageErrorMessage && (
+      <div className="storage-space-information-content"><StorageIcon /><span>{props.usedStorage}MB out of 5.243MB</span></div>
+      {props.usedStorage > 4.5 && !props.storageErrorMessage && (
         <div className="storage-space-information-warning">
           <span>
             You have almost reached your storage limit! <br /> You may need to
