@@ -114,16 +114,6 @@ export default function({
       }
     );
 
-    // Scan through saved themes for images still in use.
-    const savedThemes = Object.values(selectors.savedThemes(state) || {});
-    savedThemes
-      .filter(({ theme }) => theme.images && theme.images.custom_backgrounds)
-      .forEach(({ theme }) => {
-        theme.images.custom_backgrounds.forEach(background =>
-          usedImages.add(background.name)
-        );
-      });
-
     // Finally, come up with the list of images not used anywhere.
     const toDelete = Object.keys(selectors.themeCustomImages(state)).filter(
       name => !usedImages.has(name)

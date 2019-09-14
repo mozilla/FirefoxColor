@@ -102,6 +102,7 @@ export const AppComponent = props => {
 
   const customImages = (theme.images.custom_backgrounds || []).map(item => {
     const customImage = { ...item };
+    if (!themeCustomImages[item.name]) return {};
     customImage.image = themeCustomImages[item.name].image;
     return customImage;
   });
