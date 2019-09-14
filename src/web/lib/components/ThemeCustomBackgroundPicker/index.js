@@ -188,24 +188,16 @@ const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
 ));
 
 class ThemeCustomBackgroundSelector extends React.Component {
-  timeout;
-
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
     if (this.props.storageErrorMessage) {
-      this.timeout = setTimeout(() => {
+      setTimeout(() => {
         this.props.setStorageErrorMessage("");
       }, STORAGE_ERROR_MESSAGE_DURATION);
       this.handleClearBackground();
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.timeout) {
-      clearTimeout(this.timeout);
     }
   }
 
