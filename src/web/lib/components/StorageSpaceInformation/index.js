@@ -7,8 +7,6 @@ import "./index.scss";
 
 export const STORAGE_ERROR_MESSAGE = `<span>Sorry! This cannot be added because you are over your storage limit. <br/>
   Please delete some images or themes to make space.</span>`;
-export const STORAGE_WARNING_MESSAGE =
-  "You have almost reached your storage limit! You may need to delete some saved images/themes to make space.";
 
 export const STORAGE_ERROR_MESSAGE_DURATION = 5000;
 
