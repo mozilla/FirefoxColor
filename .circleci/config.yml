@@ -6,7 +6,7 @@ jobs:
     docker:
       - image: circleci/node:8.11.2@sha256:495a13db597b5306f05ae728489fedb9faa4defbac24ca0e00e8cc1eca95396d
     environment:
-      ADDON_URL: https://addons.mozilla.org/firefox/downloads/latest/firefox-color/firefox-color-latest.xpi
+      ADDON_URL: https://addons.mozilla.org/en-US/firefox/addon/firefox-color/
     working_directory: ~/FirefoxColor
     steps:
       - checkout
