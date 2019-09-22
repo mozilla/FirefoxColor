@@ -27,42 +27,75 @@ export const PaginatedThemeSelector = ({
   const prevDisabled = currentPage <= 0;
   const nextDisabled = currentPage + 1 >= pageCount;
 
+  const pageContent = page.map(([key, { theme }]) => {
+    const customImages = (theme.images.custom_backgrounds || []).map(
+      item => {
+        const customImage = { ...item };
+        customImage.image = images[item.name] && images[item.name].image;
+        return customImage;
+      }
+    );
+    return (
+      <div
+        key={key}
+        className={classNames("theme-selector-preview", previewClassName)}
+      >
+        {onDelete && (
+          <button
+            className="delete-theme"
+            onClick={() => onDelete(key)}
+            title="Delete"
+          >
+            <img src={iconClose} />
+          </button>
+        )}
+        <Browser
+          {...{
+            size: "small",
+            theme,
+            customImages,
+            onClick: () => onClick(theme)
+          }}
+        />
+      </div>
+    );
+  });
+
+  const footerPager = pageCount > 1 && (
+    <div className="page-selector">
+      <button
+        className={classNames("previous", { disabled: prevDisabled })}
+        disabled={prevDisabled}
+        onClick={
+          prevDisabled ? () => { } : () => setCurrentPage(currentPage - 1)
+        }
+        title="Previous"
+      />
+      {[...Array(pageCount)].map((_, idx) => (
+        <button
+          key={idx}
+          className={classNames("page", {
+            "current-page": idx === currentPage
+          })}
+          onClick={() => setCurrentPage(idx)}
+          title={`Page ${idx + 1}`}
+        />
+      ))}
+      <button
+        className={classNames("next", { disabled: nextDisabled })}
+        disabled={nextDisabled}
+        onClick={
+          nextDisabled ? () => { } : () => setCurrentPage(currentPage + 1)
+        }
+        title="Next"
+      />
+    </div>
+  );
+
   return (
     <>
       <div className={classNames("theme-selector", className)}>
-        {page.map(([key, { theme }]) => {
-          const customImages = (theme.images.custom_backgrounds || []).map(
-            item => {
-              const customImage = { ...item };
-              customImage.image = images[item.name] && images[item.name].image;
-              return customImage;
-            }
-          );
-          return (
-            <div
-              key={key}
-              className={classNames("theme-selector-preview", previewClassName)}
-            >
-              {onDelete && (
-                <button
-                  className="delete-theme"
-                  onClick={() => onDelete(key)}
-                  title="Delete"
-                >
-                  <img src={iconClose} />
-                </button>
-              )}
-              <Browser
-                {...{
-                  size: "small",
-                  theme,
-                  customImages,
-                  onClick: () => onClick(theme)
-                }}
-              />
-            </div>
-          );
-        })}
+        {pageContent}
       </div>
 
       <footer
@@ -70,36 +103,7 @@ export const PaginatedThemeSelector = ({
           "theme-selector-footer-expanded": pageCount > 1
         })}
       >
-        {pageCount > 1 && (
-          <div className="page-selector">
-            <button
-              className={classNames("previous", { disabled: prevDisabled })}
-              disabled={prevDisabled}
-              onClick={
-                prevDisabled ? () => {} : () => setCurrentPage(currentPage - 1)
-              }
-              title="Previous"
-            />
-            {[...Array(pageCount)].map((_, idx) => (
-              <button
-                key={idx}
-                className={classNames("page", {
-                  "current-page": idx === currentPage
-                })}
-                onClick={() => setCurrentPage(idx)}
-                title={`Page ${idx + 1}`}
-              />
-            ))}
-            <button
-              className={classNames("next", { disabled: nextDisabled })}
-              disabled={nextDisabled}
-              onClick={
-                nextDisabled ? () => {} : () => setCurrentPage(currentPage + 1)
-              }
-              title="Next"
-            />
-          </div>
-        )}
+        {footerPager}
         <StorageSpaceInformation />
       </footer>
     </>
