@@ -1,5 +1,4 @@
 import React from "react";
-import { localStorageSpace } from "../StorageSpaceInformation";
 
 import PaginatedThemeSelector from "../PaginatedThemeSelector";
 
@@ -9,18 +8,12 @@ export const SavedThemeSelector = ({
   savedThemesPage,
   setSavedThemesPage,
   themeCustomImages,
-  storage,
-  setUsedStorage
+  storage
 }) => {
   const { themeStorage } = storage;
   const sortedSavedThemes = Object.entries(savedThemes).sort(
     ([, aData], [, bData]) => bData.modified - aData.modified
   );
-
-  const onDeleteHandler = key => {
-    themeStorage.delete(key);
-    setUsedStorage({ space: localStorageSpace() });
-  };
 
   return (
     <PaginatedThemeSelector
@@ -29,7 +22,7 @@ export const SavedThemeSelector = ({
       className="saved-theme-selector"
       previewClassName="saved-theme-preview"
       onClick={theme => setTheme({ theme })}
-      onDelete={onDeleteHandler}
+      onDelete={key => themeStorage.delete(key)}
       perPage={9}
       currentPage={savedThemesPage}
       setCurrentPage={setSavedThemesPage}

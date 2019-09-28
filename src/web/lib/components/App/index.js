@@ -16,6 +16,7 @@ import Onboarding from "../Onboarding";
 import Banner from "../Banner";
 import ThemeBuilder from "../ThemeBuilder";
 import Browser from "../Browser";
+import { getCustomImages } from "../../../../lib/utils";
 
 import "./index.scss";
 
@@ -100,11 +101,7 @@ export const AppComponent = props => {
     themeHasCustomBackgrounds
   } = props;
 
-  const customImages = (theme.images.custom_backgrounds || []).map(item => {
-    const customImage = { ...item };
-    customImage.image = themeCustomImages[item.name] && themeCustomImages[item.name].image;
-    return customImage;
-  });
+  const customImages = getCustomImages(theme.images.custom_backgrounds, themeCustomImages);
 
   return (
     <Fragment>

@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import Browser from "../Browser";
 import StorageSpaceInformation from "../StorageSpaceInformation";
+import { getCustomImages } from "../../../../lib/utils";
 
 import "./index.scss";
 
@@ -28,13 +29,15 @@ export const PaginatedThemeSelector = ({
   const nextDisabled = currentPage + 1 >= pageCount;
 
   const pageContent = page.map(([key, { theme }]) => {
-    const customImages = (theme.images.custom_backgrounds || []).map(
-      item => {
-        const customImage = { ...item };
-        customImage.image = images[item.name] && images[item.name].image;
-        return customImage;
+    const customImages = getCustomImages(theme.images.custom_backgrounds, images);
+    const cleanTheme = {
+      ...theme,
+      images: {
+        ...theme.images,
+        custom_backgrounds: customImages
       }
-    );
+    };
+
     return (
       <div
         key={key}
@@ -52,9 +55,9 @@ export const PaginatedThemeSelector = ({
         <Browser
           {...{
             size: "small",
-            theme,
+            theme: cleanTheme,
             customImages,
-            onClick: () => onClick(theme)
+            onClick: () => onClick(cleanTheme)
           }}
         />
       </div>

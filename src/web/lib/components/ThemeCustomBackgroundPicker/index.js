@@ -12,7 +12,6 @@ import {
   CUSTOM_BACKGROUND_MAXIMUM_LENGTH,
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
-import { STORAGE_ERROR_MESSAGE_DURATION } from "../StorageSpaceInformation";
 
 import "./index.scss";
 
@@ -194,9 +193,6 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
   componentDidMount() {
     if (this.props.storageErrorMessage) {
-      setTimeout(() => {
-        this.props.setStorageErrorMessage("");
-      }, STORAGE_ERROR_MESSAGE_DURATION);
       this.handleClearBackground();
     }
   }

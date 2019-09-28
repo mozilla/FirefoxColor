@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import StorageIcon from "./StorageIcon";
+import { actions } from "../../../../lib/store";
 
 import "./index.scss";
 
-export const STORAGE_ERROR_MESSAGE = `<span>Sorry! This cannot be added because you are over your storage limit. <br/>
-  Please delete some images or themes to make space.</span>`;
+export const STORAGE_ERROR_MESSAGE = `Sorry! This cannot be added because you are over your storage limit.
+  Please delete some images or themes to make space.`;
 
 export const STORAGE_ERROR_MESSAGE_DURATION = 5000;
 
@@ -21,6 +22,14 @@ export const localStorageSpace = () => {
 };
 
 export const StorageSpaceInformationComponent = props => {
+  React.useEffect(() => {
+    if (props.storageErrorMessage.length > 0) {
+      setTimeout(() => props.setStorageErrorMessage(""),
+        STORAGE_ERROR_MESSAGE_DURATION
+      );
+    }
+  }, [props.storageErrorMessage]);
+
   return (
     <div className="storage-space-information">
       <div className="storage-space-information-content"><StorageIcon /><span>{props.usedStorage}MB out of 5.243MB</span></div>
@@ -36,10 +45,7 @@ export const StorageSpaceInformationComponent = props => {
         <strong className="storage-space-information-error">
           <div
             className="storage-space-information-warning"
-            dangerouslySetInnerHTML={{
-              __html: props.storageErrorMessage
-            }}
-          />
+          >{props.storageErrorMessage}</div>
         </strong>
       )}
     </div>
@@ -54,7 +60,7 @@ export const mapStateToProps = state => {
   };
 };
 
-const StorageSpaceInformation = compose(connect(mapStateToProps))(
+const StorageSpaceInformation = compose(connect(mapStateToProps, { setStorageErrorMessage: actions.ui.setStorageErrorMessage }))(
   StorageSpaceInformationComponent
 );
 

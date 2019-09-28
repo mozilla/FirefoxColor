@@ -281,21 +281,7 @@ export const reducers = {
   theme: undoable(
     handleActions(
       {
-        SET_THEME: (state, { payload }) => {
-          let { theme } = payload;
-
-          if (state.images.custom_backgrounds) {
-            theme = {
-              ...theme,
-              images: {
-                custom_backgrounds: state.images.custom_backgrounds,
-                ...theme.images,
-              }
-            };
-          }
-
-          return normalizeTheme(theme);
-        },
+        SET_THEME: (state, { payload: { theme } }) => normalizeTheme(theme),
         SET_COLORS: (state, { payload: { colors } }) => ({
           ...state,
           colors: normalizeThemeColors(colors)

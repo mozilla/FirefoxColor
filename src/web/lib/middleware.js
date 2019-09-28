@@ -1,6 +1,5 @@
 import { actions, selectors, themeChangeActions } from "../../lib/store";
 import {
-  localStorageSpace,
   STORAGE_ERROR_MESSAGE
 } from "./components/StorageSpaceInformation";
 
@@ -53,11 +52,6 @@ export default function({
         try {
           imageStorage.put(name, importedImage);
           dispatch(actions.images.updateImage({ name, importing: false }));
-          dispatch(
-            actions.ui.setUsedStorage({
-              space: localStorageSpace()
-            })
-          );
         } catch (err) {
           dispatch(actions.ui.setStorageErrorMessage(STORAGE_ERROR_MESSAGE));
           console.error(err);
@@ -70,11 +64,6 @@ export default function({
       const images = action.payload;
       postMessage("deleteImages", { images });
       images.forEach(name => imageStorage.delete(name));
-      dispatch(
-        actions.ui.setUsedStorage({
-          space: localStorageSpace()
-        })
-      );
       return next(action);
     },
     [actions.theme.clearCustomBackground]: (

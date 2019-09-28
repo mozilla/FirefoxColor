@@ -1,9 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import {
-  localStorageSpace,
-  STORAGE_ERROR_MESSAGE,
-  STORAGE_ERROR_MESSAGE_DURATION
+  STORAGE_ERROR_MESSAGE
 } from "../StorageSpaceInformation";
 
 export const ThemeSaveButton = ({
@@ -14,7 +12,6 @@ export const ThemeSaveButton = ({
   userHasEdited,
   modifiedSinceSave,
   setThemeBuilderPanel,
-  setUsedStorage,
   setStorageErrorMessage
 }) => {
   const { themeStorage } = storage;
@@ -24,17 +21,11 @@ export const ThemeSaveButton = ({
     }
 
     try {
-      let space = localStorageSpace();
       themeStorage.put(themeStorage.generateKey(), theme);
       setThemeBuilderPanel(3);
-      setUsedStorage({ space });
     } catch (err) {
       console.error(err);
       setStorageErrorMessage(STORAGE_ERROR_MESSAGE);
-      setTimeout(
-        () => setStorageErrorMessage(""),
-        STORAGE_ERROR_MESSAGE_DURATION
-      );
     }
   };
   return (

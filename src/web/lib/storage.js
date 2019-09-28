@@ -19,7 +19,7 @@ class Storage {
     this.contentName = contentName;
     this.normalize = normalize || (data => data);
     this.checkDuplicate = checkDuplicate || (() => false);
-    this.afterPut = afterPut || (() => {});
+    this.afterPut = afterPut || (() => { });
   }
 
   storageKey = str => `${this.prefix}${str}`;
@@ -141,6 +141,9 @@ function init(store) {
       updateSavedThemesInStore();
       store.dispatch(actions.ui.setCurrentSavedTheme({ currentSavedTheme }));
     }
+
+    const space = localStorageSpace();
+    store.dispatch(actions.ui.setUsedStorage({ space }));
   });
 }
 
