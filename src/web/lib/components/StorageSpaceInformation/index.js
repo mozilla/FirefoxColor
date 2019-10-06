@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import StorageIcon from "./StorageIcon";
 import { actions } from "../../../../lib/store";
 
@@ -23,11 +22,16 @@ export const localStorageSpace = () => {
 
 export const StorageSpaceInformationComponent = props => {
   React.useEffect(() => {
+    let timer;
     if (props.storageErrorMessage.length > 0) {
-      setTimeout(() => props.setStorageErrorMessage(""),
+      timer = setTimeout(() => props.setStorageErrorMessage(""),
         STORAGE_ERROR_MESSAGE_DURATION
       );
     }
+
+    return function cleanup() {
+      clearTimeout(timer);
+    };
   }, [props.storageErrorMessage]);
 
   return (
@@ -60,7 +64,7 @@ export const mapStateToProps = state => {
   };
 };
 
-const StorageSpaceInformation = compose(connect(mapStateToProps, { setStorageErrorMessage: actions.ui.setStorageErrorMessage }))(
+const StorageSpaceInformation = connect(mapStateToProps, { setStorageErrorMessage: actions.ui.setStorageErrorMessage })(
   StorageSpaceInformationComponent
 );
 
