@@ -1,10 +1,8 @@
 import React from "react";
 import classnames from "classnames";
-import {
-  STORAGE_ERROR_MESSAGE
-} from "../StorageSpaceInformation";
+import { connect } from "react-redux";
 
-export const ThemeSaveButton = ({
+export const ThemeSaveButtonComponent = ({
   children,
   name,
   theme,
@@ -12,21 +10,15 @@ export const ThemeSaveButton = ({
   userHasEdited,
   modifiedSinceSave,
   setThemeBuilderPanel,
-  setStorageErrorMessage
+  dispatch
 }) => {
   const { themeStorage } = storage;
   const saveTheme = () => {
     if (!modifiedSinceSave) {
       return;
     }
-
-    try {
-      themeStorage.put(themeStorage.generateKey(), theme);
-      setThemeBuilderPanel(3);
-    } catch (err) {
-      console.error(err);
-      setStorageErrorMessage(STORAGE_ERROR_MESSAGE);
-    }
+    themeStorage.put(themeStorage.generateKey(), theme, dispatch);
+    setThemeBuilderPanel(3);
   };
   return (
     <button
@@ -41,5 +33,7 @@ export const ThemeSaveButton = ({
     </button>
   );
 };
+
+const ThemeSaveButton = connect(null, (dispatch) => ({ dispatch }))(ThemeSaveButtonComponent);
 
 export default ThemeSaveButton;

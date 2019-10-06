@@ -1,7 +1,4 @@
 import { actions, selectors, themeChangeActions } from "../../lib/store";
-import {
-  STORAGE_ERROR_MESSAGE
-} from "./components/StorageSpaceInformation";
 
 export default function({
   postMessage,
@@ -49,13 +46,8 @@ export default function({
       if (image.importing) {
         const { importing, ...importedImage } = image; // eslint-disable-line no-unused-vars
         postMessage("updateImage", { image: importedImage });
-        try {
-          imageStorage.put(name, importedImage);
-          dispatch(actions.images.updateImage({ name, importing: false }));
-        } catch (err) {
-          dispatch(actions.ui.setStorageErrorMessage(STORAGE_ERROR_MESSAGE));
-          console.error(err);
-        }
+        imageStorage.put(name, importedImage, dispatch);
+        dispatch(actions.images.updateImage({ name, importing: false }));
       }
       return rv;
     },

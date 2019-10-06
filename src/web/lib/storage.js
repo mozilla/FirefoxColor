@@ -1,7 +1,7 @@
 import { actions } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
 import { normalizeTheme, themesEqual } from "../../lib/themes";
-import { localStorageSpace } from "./components/StorageSpaceInformation";
+import { localStorageSpace, STORAGE_ERROR_MESSAGE } from "./components/StorageSpaceInformation";
 
 const log = makeLog("web.storage");
 
@@ -27,15 +27,21 @@ class Storage {
   keyFromStorage = str => str.substr(this.prefix.length);
   generateKey = () => `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-  put(key, data) {
+  put(key, data, dispatch) {
     let isDuplicate = this.checkDuplicate(data);
     if (!isDuplicate) {
       const storageKey = this.storageKey(key);
       log("put", storageKey, data);
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({ [this.contentName]: data, modified: Date.now() })
-      );
+      try {
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({ [this.contentName]: data, modified: Date.now() })
+        );
+        dispatch(actions.ui.setStorageErrorMessage(""));
+      } catch (err) {
+        console.error(err);
+        dispatch(actions.ui.setStorageErrorMessage(STORAGE_ERROR_MESSAGE));
+      }
       this.afterPut(data);
       notifySelfForStorage(storageKey);
     }
