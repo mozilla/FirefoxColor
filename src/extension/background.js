@@ -51,16 +51,26 @@ const messageListener = port => message => {
 
 const messageHandlers = {
   fetchTheme: (message, port) => {
-    log("fetchTheme");
-    fetchTheme().then(({ theme: currentTheme }) =>
-      port.postMessage({ type: "fetchedTheme", theme: currentTheme })
-    );
+    // TODO: do we want this at all?
+    fetchTheme().then(({ theme: currentTheme }) => {
+      browser.storage.local.get("hadUIInteraction").then(ui => {
+        if (ui.hadUIInteraction) {
+          return port.postMessage({ type: "fetchedTheme", theme: currentTheme });
+        }
+      });
+    });
   },
   setTheme: message => {
-    const theme = normalizeTheme(message.theme);
-    log("setTheme", theme);
-    storeTheme({ theme });
-    applyTheme({ theme });
+    browser.storage.local.get("hadUIInteraction").then(ui => {
+      if (ui.hadUIInteraction) {
+        const theme = normalizeTheme(message.theme);
+        log("setTheme", theme);
+        storeTheme({ theme });
+        applyTheme({ theme });
+      } else {
+        browser.storage.local.set({ hadUIInteraction: true });
+      }
+    });
   },
   previewTheme: ({ theme }) => {
     log("previewTheme", theme);
@@ -135,6 +145,17 @@ const storeImages = ({ images }) => browser.storage.local.set({ images });
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+
+
+browser.management.onEnabled.addListener((info) => {
+  if (info.type === "theme") {
+    browser.storage.local.set({ hadUIInteraction: false });
+  }
+});
+
+browser.management.onDisabled.addListener((info) => {
+  // TODO:
+});
 
 const applyTheme = ({ theme }) => {
   log("applyTheme", theme);
