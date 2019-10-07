@@ -53,7 +53,7 @@ const messageHandlers = {
   fetchTheme: (message, port) => {
     // TODO: do we want this at all?
     fetchTheme().then(({ theme: currentTheme }) => {
-      browser.storage.local.get("hadUIInteraction").then(ui => {
+      browser.storage.local.get("hadUIInteraction").then(ui => { // eslint-disable-line consistent-return
         if (ui.hadUIInteraction) {
           return port.postMessage({ type: "fetchedTheme", theme: currentTheme });
         }
