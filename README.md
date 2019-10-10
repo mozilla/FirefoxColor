@@ -57,7 +57,9 @@ on this repo. Production release consists of pushing to the `production` branch.
 
 The script `npm run release:dev` in `package.json` takes care of the following:
 
-* Set `ADDON_URL` and `SITE_URL` vars to point at mozilla.github.io/FirefoxColor
+* Sets the `SITE_URL` var to point at mozilla.github.io/FirefoxColor
+
+* Sets the `ADDON_URL` var to point at https://addons-dev.allizom.org/firefox/addon/firefox-color/
 
 * Build the site
 
@@ -95,6 +97,15 @@ Every release requires a version bump, because version numbers cannot be reused.
 | Development | [development](https://github.com/mozilla/FirefoxColor/tree/development) | https://mozilla.github.io/FirefoxColor/ |
 | Stage       | [stage](https://github.com/mozilla/FirefoxColor/tree/stage)             | https://color.stage.mozaws.net/         |
 | Production  | [production](https://github.com/mozilla/FirefoxColor/tree/production)   | https://color.firefox.com/              |
+
+## UI to install the addon:
+
+* Coming from AMO
+  - The user clicks on the "Install" button and after granting permissions, a new tab opens to the addon's home page.
+
+* Coming from the addon's home page:
+  - The user can click on the "Get Firefox Color" button which will link the user back the AMO site in the respective environment.
+
 
 ## Notes
 
