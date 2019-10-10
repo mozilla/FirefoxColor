@@ -69,7 +69,8 @@ export class ThemeCustomBackgroundPicker extends React.Component {
       addImage,
       updateImage,
       themeHasCustomBackgrounds,
-      themeCustomBackgrounds
+      themeCustomBackgrounds,
+      storageErrorMessage
     } = this.props;
     const label = themeHasCustomBackgrounds
       ? "Add another"
@@ -85,38 +86,42 @@ export class ThemeCustomBackgroundPicker extends React.Component {
           onSortStart={this.handleSortStart}
           onSortEnd={this.handleSortEnd}
         />
-        <ImageImporter
-          {...{ addImage, updateImage, onImport: this.handleImageAdd }}
-        >
-          {({ importing, errors, ImportButton }) => (
-            <div className="add-image">
-              {themeCustomBackgrounds.length <
-                CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
-                <ImportButton {...{ label, isPrimary }} />
-              )}
-              {importing && (
-                <div className="status-message importing">Processing...</div>
-              )}
-              {errors && (
-                <React.Fragment>
-                  <Modal>
-                    <ul className="errors">
-                      {errors.tooLarge && (
-                        <li>The image is too large. (1MB maximum size)</li>
-                      )}
-                      {errors.wrongType && (
-                        <li>The file is not an accepted image type.</li>
-                      )}
-                    </ul>
-                  </Modal>
-                </React.Fragment>
-              )}
-            </div>
-          )}
-        </ImageImporter>
-        <p className="privacy-note">
-          Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
+        {!storageErrorMessage && (
+          <ImageImporter
+            {...{ addImage, updateImage, onImport: this.handleImageAdd }}
+          >
+            {({ importing, errors, ImportButton }) => (
+              <div className="add-image">
+                {themeCustomBackgrounds.length <
+                  CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
+                    <ImportButton {...{ label, isPrimary }} />
+                  )}
+                {importing && (
+                  <div className="status-message importing">Processing...</div>
+                )}
+                {errors && (
+                  <React.Fragment>
+                    <Modal>
+                      <ul className="errors">
+                        {errors.tooLarge && (
+                          <li>The image is too large. (1MB maximum size)</li>
+                        )}
+                        {errors.wrongType && (
+                          <li>The file is not an accepted image type.</li>
+                        )}
+                      </ul>
+                    </Modal>
+                  </React.Fragment>
+                )}
+              </div>
+            )}
+          </ImageImporter>
+        )}
+        {!storageErrorMessage && (
+          <p className="privacy-note">
+            Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
         </p>
+        )}
       </form>
     );
   }
@@ -186,8 +191,18 @@ class ThemeCustomBackgroundSelector extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    if (this.props.storageErrorMessage) {
+      this.handleClearBackground();
+    }
+  }
+
   render() {
-    const { handleClearBackground, handleTilingChange } = this;
+    const {
+      handleClearBackground,
+      handleTilingChange,
+      storageErrorMessage
+    } = this;
     const { addImage, updateImage, image } = this.props;
     const { tiling, alignment = "left top" } = this.props.item;
     const [horizontalAlign, verticalAlign] = alignment.split(" ");
@@ -206,7 +221,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
             { selected: alignmentState[alignmentKey] === alignment },
             "align-button",
             `align-button-${
-              isHorizontal ? "horizontal" : "vertical"
+            isHorizontal ? "horizontal" : "vertical"
             }-${alignment}`
           )}
         >
@@ -214,6 +229,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
         </button>
       );
     };
+
+    if (storageErrorMessage) {
+      return <div />;
+    }
 
     return (
       <ImageImporter
@@ -312,7 +331,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     const alignmentState = { horizontalAlign, verticalAlign, ...state };
     const newAlignment = `${alignmentState.horizontalAlign} ${
       alignmentState.verticalAlign
-    }`;
+      }`;
 
     updateCustomBackground({ alignment: newAlignment });
   }

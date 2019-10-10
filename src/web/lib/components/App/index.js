@@ -16,6 +16,7 @@ import Onboarding from "../Onboarding";
 import Banner from "../Banner";
 import ThemeBuilder from "../ThemeBuilder";
 import Browser from "../Browser";
+import { getCustomImages } from "../../../../lib/utils";
 
 import "./index.scss";
 
@@ -77,7 +78,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(actions.ui.showExportThemeDialog(args)),
     exportTheme: args =>
       dispatch(actions.ui.exportTheme(performThemeExport(args))),
-    clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme())
+    clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme()),
+    setUsedStorage: args => dispatch(actions.ui.setUsedStorage(args)),
+    setStorageErrorMessage: args =>
+      dispatch(actions.ui.setStorageErrorMessage(args))
   };
 };
 
@@ -97,11 +101,7 @@ export const AppComponent = props => {
     themeHasCustomBackgrounds
   } = props;
 
-  const customImages = (theme.images.custom_backgrounds || []).map(item => {
-    const customImage = { ...item };
-    customImage.image = themeCustomImages[item.name].image;
-    return customImage;
-  });
+  const customImages = getCustomImages(theme.images.custom_backgrounds, themeCustomImages);
 
   return (
     <Fragment>

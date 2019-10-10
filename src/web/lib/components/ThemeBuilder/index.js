@@ -117,7 +117,7 @@ export const ThemeBuilder = props => {
       case "ArrowRight": {
         nextTab =
           tabsElement.children[
-            Math.min(tabList.length - 1, currentTabIndex + 1)
+          Math.min(tabList.length - 1, currentTabIndex + 1)
           ];
         break;
       }

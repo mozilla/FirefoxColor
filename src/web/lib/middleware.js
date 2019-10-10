@@ -46,7 +46,7 @@ export default function({
       if (image.importing) {
         const { importing, ...importedImage } = image; // eslint-disable-line no-unused-vars
         postMessage("updateImage", { image: importedImage });
-        imageStorage.put(name, importedImage);
+        imageStorage.put(name, importedImage, dispatch);
         dispatch(actions.images.updateImage({ name, importing: false }));
       }
       return rv;
@@ -83,7 +83,7 @@ export default function({
     );
 
     // Scan through undo/redo stack for images still in use.
-    [selectors.themePast(state), selectors.themeFuture(state)].forEach(
+    [(selectors.themePast(state), selectors.themeFuture(state))].forEach(
       themes => {
         themes
           .filter(theme => theme.images && theme.images.custom_backgrounds)
@@ -94,16 +94,6 @@ export default function({
           });
       }
     );
-
-    // Scan through saved themes for images still in use.
-    const savedThemes = Object.values(selectors.savedThemes(state) || {});
-    savedThemes
-      .filter(({ theme }) => theme.images && theme.images.custom_backgrounds)
-      .forEach(({ theme }) => {
-        theme.images.custom_backgrounds.forEach(background =>
-          usedImages.add(background.name)
-        );
-      });
 
     // Finally, come up with the list of images not used anywhere.
     const toDelete = Object.keys(selectors.themeCustomImages(state)).filter(
