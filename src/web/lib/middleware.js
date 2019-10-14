@@ -11,6 +11,8 @@ export default function({
     const meta = action.meta || {};
     if (!meta.skipAddon && themeChangeActions.includes(action.type)) {
       postMessage("setTheme", { theme: selectors.theme(getState()) });
+    } else if (action.type === "REVERT_ALL") {
+      postMessage("revertAll");
     }
     return returnValue;
   };

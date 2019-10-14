@@ -9,6 +9,7 @@ import {
 import ThemeSaveButton from "../ThemeSaveButton";
 import ThemeUrl from "../ThemeUrl";
 
+import iconForget from "./icon_forget.svg";
 import iconUndo from "./icon_undo.svg";
 import iconRedo from "./icon_redo.svg";
 import iconHeart from "./icon_heart.svg";
@@ -45,6 +46,9 @@ export const AppHeader = props => {
     }
   }, [props.themeCustomBackgrounds]);
 
+  const revertAll = () => {
+    props.revertAll();
+  };
 
   const handleExportClick = () => {
     showExportThemeDialog(true);
@@ -93,22 +97,22 @@ export const AppHeader = props => {
     disabledCheck = true,
     children = null
   ) => (
-    <React.Fragment>
-      <button
-        title={text}
-        className={classnames("app-header__button", `${text}`, {
-          disabled: !disabledCheck
-        })}
-        onClick={onClickButton}
-      >
-        <div className="app-header__button-icon">
-          <img src={icon} width="20" height="auto" aria-hidden="true" />
-        </div>
-        <span>{text}</span>
-      </button>
-      {children}
-    </React.Fragment>
-  );
+      <React.Fragment>
+        <button
+          title={text}
+          className={classnames("app-header__button", `${text}`, {
+            disabled: !disabledCheck
+          })}
+          onClick={onClickButton}
+        >
+          <div className="app-header__button-icon">
+            <img src={icon} width="20" height="auto" aria-hidden="true" />
+          </div>
+          <span>{text}</span>
+        </button>
+        {children}
+      </React.Fragment>
+    );
 
   const withUpdate = onClickButton => {
     onClickButton();
@@ -124,6 +128,7 @@ export const AppHeader = props => {
         </div>
       </div>
       <div className="app-header__controls">
+        {headerButton(revertAll, iconForget, "Revert All")}
         {headerButton(withUpdate.bind(null, undo), iconUndo, "Undo", themeCanUndo)}
         {headerButton(withUpdate.bind(null, redo), iconRedo, "Redo", themeCanRedo)}
         {headerButton(withUpdate.bind(null, handleRandomClick), iconRandomize, "Random")}
