@@ -159,6 +159,27 @@
       "storage",
       "tabs"
     ],
+    "theme_icons": [{
+      "light": "images/logo.svg",
+      "dark": "images/logo-white.svg",
+      "size": 16
+    }, {
+      "light": "images/logo.svg",
+      "dark": "images/logo-white.svg",
+      "size": 32
+    }, {
+      "light": "images/logo.svg",
+      "dark": "images/logo-white.svg",
+      "size": 48
+    }, {
+      "light": "images/logo.svg",
+      "dark": "images/logo-white.svg",
+      "size": 96
+    }, {
+      "light": "images/logo.svg",
+      "dark": "images/logo-white.svg",
+      "size": 128
+    }],
     "browser_action": {
       "browser_style": true,
       "default_title": "Firefox Color",
@@ -182,12 +203,6 @@
         "run_at": "document_start"
       }
     ],
-    "icons": {
-      "32": "images/logo.svg",
-      "48": "images/logo.svg",
-      "96": "images/logo.svg",
-      "128": "images/logo.svg"
-    },
     "applications": {
       "gecko": {
         "id": "FirefoxColor@mozilla.com",
