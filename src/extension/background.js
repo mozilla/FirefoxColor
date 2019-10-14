@@ -11,6 +11,22 @@ let customBackgrounds = {};
 let isThemePreview = false;
 
 const init = () => {
+  browser.management.onEnabled.addListener((addon) => {
+    browser.storage.local.set({ enabledFFTheme: addon });
+  });
+
+  browser.management.getAll().then(addons => {
+    addons.forEach(addon => {
+      if (addon.type === "theme" && addon.enabled) {
+        browser.storage.local.set({ enabledFFTheme: addon });
+      }
+    });
+  });
+
+  browser.management.onInstalled.addListener(() => {
+    browser.storage.local.set({ hadUIInteraction: false });
+  });
+
   browser.browserAction.onClicked.addListener(() => {
     queryAndFocusTab("fromAddon=true");
   });
@@ -50,8 +66,16 @@ const messageListener = port => message => {
 };
 
 const messageHandlers = {
+  revertAll: (message) => {
+    browser.theme.reset();
+    browser.storage.local.set({ hadUIInteraction: false });
+    browser.storage.local.get("enabledFFTheme").then(({ enabledFFTheme }) => {
+      if (enabledFFTheme.id) {
+        browser.management.setEnabled(enabledFFTheme.id, true);
+      }
+    });
+  },
   fetchTheme: (message, port) => {
-    // TODO: do we want this at all?
     fetchTheme().then(({ theme: currentTheme }) => {
       browser.storage.local.get("hadUIInteraction").then(ui => { // eslint-disable-line consistent-return
         if (ui.hadUIInteraction) {
@@ -147,15 +171,6 @@ const BLANK_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 
-browser.management.onEnabled.addListener((info) => {
-  if (info.type === "theme") {
-    browser.storage.local.set({ hadUIInteraction: false });
-  }
-});
-
-browser.management.onDisabled.addListener((info) => {
-  // TODO:
-});
 
 const applyTheme = ({ theme }) => {
   log("applyTheme", theme);
