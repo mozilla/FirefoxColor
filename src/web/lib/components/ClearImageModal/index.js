@@ -18,7 +18,7 @@ class ClearImageModal extends React.Component {
   render() {
     return (
       <Modal toggleModal={this.toggalModal} displayModal={this.setDisplayModal}>
-        Deleting this image will remove it from any saved themes you have. Do you want to proceed
+        Deleting this image will remove it from any saved themes you have. Do you want to proceed?
       </Modal>
     );
   }
