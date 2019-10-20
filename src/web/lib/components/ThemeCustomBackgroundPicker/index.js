@@ -1,6 +1,8 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
+import { compose } from "redux";
+import { withCookies } from "react-cookie";
 import {
   SortableContainer,
   SortableElement,
@@ -14,7 +16,7 @@ import {
 } from "../../../../lib/constants";
 
 import "./index.scss";
-
+import ClearImageModal from "../ClearImageModal";
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
 
@@ -191,6 +193,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
     super(props);
   }
 
+  state = {
+    deleteCustomBackground: false
+  }
+
   componentDidMount() {
     if (this.props.storageErrorMessage) {
       this.handleClearBackground();
@@ -298,6 +304,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
+              <div className="modal-wrapper">
+                {!this.props.cookies.get("clearImageModal") && this.state.deleteCustomBackground && <ClearImageModal {...this.props} />}
+
+              </div>
               <button title={"Delete"} className="clear" onClick={handleClearBackground} />
             </li>
           );
@@ -307,7 +317,13 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 
   handleClearBackground = () => {
-    this.props.clearCustomBackground();
+    this.setState({
+      deleteCustomBackground: true
+    });
+
+    if (this.props.cookies.get("clearImageModal")) {
+      this.props.clearCustomBackground();
+    }
   };
 
   handleTilingChange = ev => {
@@ -337,9 +353,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 }
 
-const SortableThemeCustomBackgroundSelector = SortableElement(
-  ThemeCustomBackgroundSelector
-);
+const SortableThemeCustomBackgroundSelector = compose(
+  SortableElement,
+  withCookies,
+)(ThemeCustomBackgroundSelector);
 
 class ImageImporter extends React.Component {
   constructor(props) {

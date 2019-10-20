@@ -1,0 +1,12 @@
+.modal-wrapper {
+  position: absolute;
+  right: -10px;
+  top: -20px;
+
+  .modal {
+    position: relative;
+    right: 100px;
+    z-index: 99999;
+    top: 150px;
+  }
+}
