@@ -166,7 +166,12 @@ window.addEventListener("message", ({ source, data: message }) => {
   }
 });
 
-// Periodically ping the extension to detect install / uninstall, since we have
+document.addEventListener("click", event => {
+  if (event.target.closest(".onboarding__panels")) return;
+  postMessage("activateExt");
+});
+
+// Periodicelly ping the extension to detect install / uninstall, since we have
 // no access to mozAddonManager.
 setInterval(() => {
   postMessage("ping");

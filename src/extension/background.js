@@ -11,10 +11,6 @@ let customBackgrounds = {};
 let isThemePreview = false;
 
 const init = () => {
-  browser.management.onEnabled.addListener((addon) => {
-    browser.storage.local.set({ enabledFFTheme: addon });
-  });
-
   browser.management.getAll().then(addons => {
     addons.forEach(addon => {
       if (addon.type === "theme" && addon.enabled) {
@@ -66,14 +62,8 @@ const messageListener = port => message => {
 };
 
 const messageHandlers = {
-  revertAll: (message) => {
-    browser.theme.reset();
-    browser.storage.local.set({ hadUIInteraction: false });
-    browser.storage.local.get("enabledFFTheme").then(({ enabledFFTheme }) => {
-      if (enabledFFTheme.id) {
-        browser.management.setEnabled(enabledFFTheme.id, true);
-      }
-    });
+  activateExt: (message) => {
+    browser.storage.local.set({ hadUIInteraction: true });
   },
   fetchTheme: (message, port) => {
     fetchTheme().then(({ theme: currentTheme }) => {
@@ -91,8 +81,6 @@ const messageHandlers = {
         log("setTheme", theme);
         storeTheme({ theme });
         applyTheme({ theme });
-      } else {
-        browser.storage.local.set({ hadUIInteraction: true });
       }
     });
   },
