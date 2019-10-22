@@ -66,6 +66,8 @@
     }
 
     &.disabled {
+      pointer-events: none;
+
       .app-header__button-icon,
       span {
         opacity: .5;
