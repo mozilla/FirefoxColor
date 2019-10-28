@@ -9,6 +9,17 @@ export const Modal = ({ toggleModal, displayModal, children }) => {
     e.stopPropagation();
     toggleModal({ display: false });
   };
+
+  const handleKeyPress = event => {
+    if (event.keyCode === 27) {
+      toggleModal({ display: false });
+      console.log(event.keyCode);
+      document.removeEventListener("keydown", handleKeyPress);
+    }
+  };
+
+  document.addEventListener("keydown", handleKeyPress);
+  
   return (
     <div
       className={classNames("modal", { "modal--display": displayModal })}
