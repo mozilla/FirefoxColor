@@ -70,6 +70,27 @@
   line-height: 32px;
   padding: 20px;
   text-align: center;
+  overflow: hidden;
+}
+
+@keyframes animatedBackground {
+  0% { transform: translateX(182px); }
+  100% { transform: translateX(0); }
+}
+
+.stuff {
+  animation: animatedBackground 500ms;
+  margin-bottom: 12px;
+
+  svg {
+    &:first-child {
+      transform: translate(-22px, -70px);
+    }
+
+    &:last-child {
+      transform: translate(30px, 6px);
+    }
+  }
 }
 
 .onboarding__icon {
@@ -81,4 +102,9 @@
   overflow: hidden;
   transition: background-position 500ms;
   width: 280px;
+
+  &.onboarding__icon--close {
+    background-image: none;
+    height: 0;
+  }
 }
