@@ -3,6 +3,8 @@ import React from "react";
 import classnames from "classnames";
 
 import "./index.scss";
+import LogoIcon from "./LogoIcon";
+import SparklesIcon from "./SparklesIcon";
 
 const PANEL_COLORS = ["#0a84ff", "#b5007f", "#8000d7", "#d76e00", "#0a84ff"];
 
@@ -11,7 +13,7 @@ const PANEL_STRINGS = [
   "Use the markers to build new themes.",
   "Every theme you create has a sharable URL.",
   "Or just save your creations for yourself.",
-  "And don't forget to give us feedback!"
+  "Let's get started!"
 ];
 const PANEL_SPRITE_OFFSET = -280;
 
@@ -45,13 +47,19 @@ export default class Onboarding extends React.Component {
     }
     return (
       <button className="dismissable" onClick={this.handleDismiss} title="Done">
-        All set
+        Ok
       </button>
     );
   }
 
   render() {
     const { index, isDisplayed } = this.state;
+    const lastSlide = PANEL_STRINGS.length - 1 === index;
+
+    const backgroundXStyles = !lastSlide ? {
+      backgroundPositionX: index * PANEL_SPRITE_OFFSET
+    } : {};
+
     return (
       <div
         className={classnames("onboarding", {
@@ -64,9 +72,16 @@ export default class Onboarding extends React.Component {
         >
           <div className="onboarding__content">
             <div
-              className="onboarding__icon"
-              style={{ backgroundPositionX: index * PANEL_SPRITE_OFFSET }}
+              className={classnames("onboarding__icon", { "onboarding__icon--close": lastSlide })}
+              style={backgroundXStyles}
             />
+            {lastSlide &&
+              <div className="stuff">
+                <SparklesIcon />
+                <LogoIcon width="100" height="100" />
+                <SparklesIcon />
+              </div>
+            }
             {PANEL_STRINGS[index]}
           </div>
           <span>{this.renderButton(index)}</span>
