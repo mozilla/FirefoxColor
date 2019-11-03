@@ -68,6 +68,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(actions.ui.setDisplayLegalModal(args)),
     setDisplayShareModal: args =>
       dispatch(actions.ui.setDisplayShareModal(args)),
+    setDisplayRemoveImageModal: args =>
+      dispatch(actions.ui.setDisplayRemoveImageModal(args)),
     setThemeBuilderPanel: args =>
       dispatch(actions.ui.setThemeBuilderPanel(args)),
     undo: () => dispatch(actions.theme.undo()),
