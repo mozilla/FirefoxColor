@@ -1,12 +1,42 @@
-.modal-wrapper {
+.modal-wrapper--clear-image {
   position: absolute;
   right: -10px;
   top: -20px;
+
+  .modal--display {
+    border-radius: 4px;
+  }
+
+  .modal__content {
+    animation: none;
+  }
 
   .modal {
     position: relative;
     right: 100px;
     z-index: 99999;
     top: 150px;
+  }
+
+  .modal__toggle {
+    display: none;
+  }
+
+  .modal__buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  button {
+    background: var(--blue-50);
+    height: 40px;
+    border: none;
+    font-size: 14px;
+    color: var(--white);
+    cursor: pointer;
+    padding: 0 10px;
+    min-width: 90px;
+    border-radius: 2px;
+    margin: 20px 10px 0;
   }
 }
