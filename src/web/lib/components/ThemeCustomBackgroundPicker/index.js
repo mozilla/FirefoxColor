@@ -14,9 +14,9 @@ import {
   CUSTOM_BACKGROUND_MAXIMUM_LENGTH,
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
+import ClearImageModal from "../ClearImageModal";
 
 import "./index.scss";
-import ClearImageModal from "../ClearImageModal";
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
 
