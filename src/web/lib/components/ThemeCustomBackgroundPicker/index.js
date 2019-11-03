@@ -300,7 +300,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              {!this.props.cookies.get("clearImageModal") && this.props.displayRemoveImageModal && <div className="modal-wrapper--clear-image"><ClearImageModal {...this.props} /></div>}
+              {this.props.displayRemoveImageModal && <div className="modal-wrapper--clear-image"><ClearImageModal {...this.props} /></div>}
 
               <button title={"Delete"} className="clear" onClick={handleClearBackground} />
             </li>
