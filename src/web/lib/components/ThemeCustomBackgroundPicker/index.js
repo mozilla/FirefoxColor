@@ -193,10 +193,6 @@ class ThemeCustomBackgroundSelector extends React.Component {
     super(props);
   }
 
-  state = {
-    deleteCustomBackground: false
-  }
-
   componentDidMount() {
     if (this.props.storageErrorMessage) {
       this.handleClearBackground();
@@ -304,10 +300,8 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              <div className="modal-wrapper">
-                {!this.props.cookies.get("clearImageModal") && this.state.deleteCustomBackground && <ClearImageModal {...this.props} />}
+              {!this.props.cookies.get("clearImageModal") && this.props.displayRemoveImageModal && <div className="modal-wrapper--clear-image"><ClearImageModal {...this.props} /></div>}
 
-              </div>
               <button title={"Delete"} className="clear" onClick={handleClearBackground} />
             </li>
           );
@@ -317,12 +311,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 
   handleClearBackground = () => {
-    this.setState({
-      deleteCustomBackground: true
-    });
-
     if (this.props.cookies.get("clearImageModal")) {
       this.props.clearCustomBackground();
+    } else {
+      this.props.setDisplayRemoveImageModal({ display: true });
     }
   };
 
