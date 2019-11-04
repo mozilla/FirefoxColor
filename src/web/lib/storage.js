@@ -41,6 +41,7 @@ class Storage {
       } catch (err) {
         console.error(err);
         dispatch(actions.ui.setStorageErrorMessage(STORAGE_ERROR_MESSAGE));
+        throw err;
       }
       this.afterPut(data);
       notifySelfForStorage(storageKey);
