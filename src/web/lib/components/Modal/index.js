@@ -14,8 +14,8 @@ export const Modal = ({ toggleModal, displayModal, children }) => {
     document.addEventListener("keydown", handleKeyPress);
     
     return () => {
-      document.removeEventListener("keydown", handleKeyPress)
-    }
+      document.removeEventListener("keydown", handleKeyPress);
+    };
   }, []);
 
   const handleKeyPress = event => {
