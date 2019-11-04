@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
 
 import iconClose from "../../../../images/close-16.svg";
@@ -10,15 +10,19 @@ export const Modal = ({ toggleModal, displayModal, children }) => {
     toggleModal({ display: false });
   };
 
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
+    
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress)
+    }
+  }, []);
+
   const handleKeyPress = event => {
     if (event.keyCode === 27) {
       toggleModal({ display: false });
-      console.log(event.keyCode);
-      document.removeEventListener("keydown", handleKeyPress);
     }
   };
-
-  document.addEventListener("keydown", handleKeyPress);
   
   return (
     <div
