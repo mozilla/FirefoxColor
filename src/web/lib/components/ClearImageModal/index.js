@@ -6,7 +6,7 @@ import "./index.scss";
 
 
 class ClearImageModal extends React.Component {
-  componentWillUnmount() {
+  componentDidMount() {
     this.props.cookies.set("clearImageModal", true, { path: "/" });
   }
 
