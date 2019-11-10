@@ -1,35 +1,29 @@
 import React from "react";
-import { withCookies } from "react-cookie";
 import Modal from "../Modal";
 
 import "./index.scss";
 
 
-class ClearImageModal extends React.Component {
-  componentDidMount() {
-    this.props.cookies.set("clearImageModal", true, { path: "/" });
+export default class ClearImageModal extends React.Component {
+  confirmRemoveBackground = () => {
+    this.props.clearCustomBackground();
+    localStorage.setItem("clearImageModal", true);
   }
 
-  toggalModal = ({
-    display = false }) => {
-    if (display) {
-      this.props.clearCustomBackground();
-    }
-
+  cancelRemoveBackground = () => {
     this.props.setDisplayRemoveImageModal({ display: false });
+    localStorage.setItem("clearImageModal", true);
   }
 
   render() {
     return (
-      <Modal toggleModal={this.toggalModal} displayModal>
+      <Modal displayModal>
         <p>Deleting this image will remove it from any saved themes you have. Do you want to proceed?</p>
         <div className="modal__buttons">
-          <button onClick={this.toggalModal.bind(null, { display: true })}>Okay</button>
-          <button onClick={this.toggalModal.bind(null, { display: false })}>Cancel</button>
+          <button onClick={this.confirmRemoveBackground}>Okay</button>
+          <button onClick={this.cancelRemoveBackground}>Cancel</button>
         </div>
       </Modal>
     );
   }
 }
-
-export default withCookies(ClearImageModal);

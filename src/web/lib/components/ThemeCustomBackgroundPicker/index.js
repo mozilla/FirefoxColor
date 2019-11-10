@@ -1,8 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
-import { compose } from "redux";
-import { withCookies } from "react-cookie";
 import {
   SortableContainer,
   SortableElement,
@@ -311,7 +309,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 
   handleClearBackground = () => {
-    if (this.props.cookies.get("clearImageModal")) {
+    if (localStorage.getItem("clearImageModal")) {
       this.props.clearCustomBackground();
     } else {
       this.props.setDisplayRemoveImageModal({ display: true });
@@ -345,10 +343,9 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 }
 
-const SortableThemeCustomBackgroundSelector = compose(
-  SortableElement,
-  withCookies,
-)(ThemeCustomBackgroundSelector);
+const SortableThemeCustomBackgroundSelector = SortableElement(
+  ThemeCustomBackgroundSelector
+);
 
 class ImageImporter extends React.Component {
   constructor(props) {
