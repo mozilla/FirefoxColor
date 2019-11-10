@@ -7,10 +7,14 @@ import "./index.scss";
 export default class ClearImageModal extends React.Component {
   confirmRemoveBackground = () => {
     this.props.clearCustomBackground();
-    localStorage.setItem("clearImageModal", true);
+    this.onCloseModal();
   }
 
   cancelRemoveBackground = () => {
+    this.onCloseModal();
+  }
+
+  onCloseModal = () => {
     this.props.setDisplayRemoveImageModal({ display: false });
     localStorage.setItem("clearImageModal", true);
   }
