@@ -36,6 +36,7 @@ export const actions = {
     "SET_PRESET_THEMES_PAGE",
     "SET_DISPLAY_LEGAL_MODAL",
     "SET_DISPLAY_SHARE_MODAL",
+    "SET_DISPLAY_REMOVE_IMAGE_MODAL",
     "SET_THEME_BUILDER_PANEL",
     "SHOW_EXPORT_THEME_DIALOG",
     "EXPORT_THEME",
@@ -80,6 +81,7 @@ export const selectors = {
   selectedColor: state => state.ui.selectedColor,
   displayLegalModal: state => state.ui.displayLegalModal,
   displayShareModal: state => state.ui.displayShareModal,
+  displayRemoveImageModal: state => state.ui.displayRemoveImageModal,
   shouldOfferPendingTheme: state =>
     state.ui.hasExtension &&
     !state.ui.firstRun &&
@@ -144,6 +146,10 @@ export const reducers = {
       SET_DISPLAY_SHARE_MODAL: (state, { payload: { display } }) => ({
         ...state,
         displayShareModal: display
+      }),
+      SET_DISPLAY_REMOVE_IMAGE_MODAL: (state, { payload: { display } }) => ({
+        ...state,
+        displayRemoveImageModal: display
       }),
       SET_PENDING_THEME: (state, { payload: { theme } }) => ({
         ...state,
@@ -240,6 +246,7 @@ export const reducers = {
       loaderDelayExpired: false,
       displayLegalModal: false,
       displayShareModal: false,
+      displayRemoveImageModal: false,
       themeBuilderPanel: 1,
       shouldShowExportThemeDialog: false,
       exportedTheme: null,
