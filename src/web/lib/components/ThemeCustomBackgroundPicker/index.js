@@ -298,7 +298,14 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              {this.props.displayRemoveImageModal && <div className="modal-wrapper--clear-image"><ClearImageModal {...this.props} /></div>}
+              {this.props.displayRemoveImageModal && (
+                <div className="modal-wrapper--clear-image">
+                  <ClearImageModal
+                    confirm={this.confirm}
+                    cancel={this.onCloseModal}
+                  />
+                </div>
+              )}
 
               <button title={"Delete"} className="clear" onClick={handleClearBackground} />
             </li>
@@ -306,6 +313,16 @@ class ThemeCustomBackgroundSelector extends React.Component {
         }}
       </ImageImporter>
     );
+  }
+
+  confirm = () => {
+    this.props.clearCustomBackground();
+    this.onCloseModal();
+  }
+
+  onCloseModal = () => {
+    this.props.setDisplayRemoveImageModal({ display: false });
+    localStorage.setItem("clearImageModal", true);
   }
 
   handleClearBackground = () => {
