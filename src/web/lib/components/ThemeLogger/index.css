@@ -1,0 +1,20 @@
+.theme-logger {
+  height: 100%;
+  overflow: auto;
+  background: #000;
+  width: 100%;
+}
+
+.theme-logger pre {
+  color: lime;
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 20px;
+  padding: 10px;
+  -webkit-user-select: text;
+      -ms-user-select: text;
+          user-select: text;
+  -moz-user-select: text;
+}
+/*# sourceMappingURL=index.css.map */

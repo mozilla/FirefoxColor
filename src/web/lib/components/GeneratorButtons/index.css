@@ -1,0 +1,44 @@
+.generator-buttons h2 {
+  margin-top: 0;
+}
+
+.generator-buttons .generator-buttons__button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 18px;
+  height: 34px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-decoration: none;
+  -webkit-transition: background 50ms;
+  transition: background 50ms;
+  min-width: 180px;
+  padding: 0 18px;
+  text-align: center;
+  color: var(--white);
+  background: var(--blue-50);
+  margin: 0 0 20px 0;
+  width: 100%;
+}
+
+.generator-buttons .generator-buttons__button:hover:not(:disabled), .generator-buttons .generator-buttons__button:focus:not(:disabled) {
+  background-color: var(--blue-60);
+}
+
+.generator-buttons .generator-buttons__button:active:not(:disabled) {
+  background-color: var(--blue-70);
+}
+
+.generator-buttons .generator-buttons__button:disabled {
+  opacity: .5;
+  cursor: disabled;
+}
+/*# sourceMappingURL=index.css.map */

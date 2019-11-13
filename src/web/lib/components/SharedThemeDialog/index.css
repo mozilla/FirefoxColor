@@ -1,0 +1,184 @@
+.shared-theme-dialog-wrapper {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-animation-duration: 250ms;
+          animation-duration: 250ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-name: fade-in;
+          animation-name: fade-in;
+  background: rgba(12, 12, 13, 0.6);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  left: 0;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog {
+  border-radius: var(--large-unit-border-radius);
+  -webkit-box-shadow: var(--large-unit-box-shadow);
+          box-shadow: var(--large-unit-box-shadow);
+  background-color: var(--white-a96);
+  -webkit-animation-delay: 500ms;
+          animation-delay: 500ms;
+  -webkit-animation-duration: 250ms;
+          animation-duration: 250ms;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+  -webkit-animation-name: pop-in;
+          animation-name: pop-in;
+  background: #30324f;
+  border-radius: 6px;
+  height: 437px;
+  opacity: 0;
+  overflow: hidden;
+  position: relative;
+  width: 600px;
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .preview {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-image: url(./stars-bg.svg);
+  background-repeat: no-repeat;
+  border-radius: 6px 6px 0 0;
+  height: 282px;
+  left: 21px;
+  position: absolute;
+  top: 50px;
+  width: calc(100% - 42px);
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .browser {
+  width: 80%;
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: var(--white);
+  bottom: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 155px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  width: 100%;
+  z-index: 20000;
+  -webkit-box-shadow: 0 0 20px rgba(12, 12, 13, 0.3);
+          box-shadow: 0 0 20px rgba(12, 12, 13, 0.3);
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 16px;
+  height: 34px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-decoration: none;
+  -webkit-transition: background 50ms;
+  transition: background 50ms;
+  min-width: 160px;
+  padding: 0 16px;
+  text-align: center;
+  color: var(--white);
+  background: var(--blue-50);
+  margin: 10px;
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button:hover:not(:disabled), .shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button:focus:not(:disabled) {
+  background-color: var(--blue-60);
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button:active:not(:disabled) {
+  background-color: var(--blue-70);
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button:disabled {
+  opacity: .5;
+  cursor: disabled;
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button.skip {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 2px;
+  border: none;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 16px;
+  height: 34px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-decoration: none;
+  -webkit-transition: background 50ms;
+  transition: background 50ms;
+  min-width: 160px;
+  padding: 0 16px;
+  text-align: center;
+  color: var(--grey-90);
+  background-color: rgba(12, 12, 13, 0.1);
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button.skip:hover:not(:disabled), .shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button.skip:focus:not(:disabled) {
+  background-color: rgba(12, 12, 13, 0.2);
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button.skip:active:not(:disabled) {
+  background-color: rgba(12, 12, 13, 0.3);
+}
+
+.shared-theme-dialog-wrapper .shared-theme-dialog .options .buttons button.skip:disabled {
+  color: var(--grey-40);
+  cursor: default;
+}
+/*# sourceMappingURL=index.css.map */

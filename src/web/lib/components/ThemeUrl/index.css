@@ -1,0 +1,106 @@
+.theme-url {
+  background: var(--white-100);
+  -webkit-box-shadow: 0 0 0 1px var(--grey-90-a10), 0 10px 20px var(--grey-90-a20);
+          box-shadow: 0 0 0 1px var(--grey-90-a10), 0 10px 20px var(--grey-90-a20);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 10px;
+  position: absolute;
+  top: 60px;
+  right: 8px;
+  width: 280px;
+}
+
+.theme-url.disabled {
+  display: none;
+}
+
+.theme-url.extension {
+  right: 182px;
+}
+
+.theme-url::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+  position: absolute;
+  top: -8px;
+  right: 32px;
+}
+
+.theme-url::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid var(--grey-90-a10);
+  position: absolute;
+  top: -9px;
+  right: 30px;
+  z-index: -10;
+}
+
+.theme-url h2 {
+  margin-top: 0;
+  cursor: text;
+}
+
+.theme-url p {
+  cursor: text;
+  font-size: 14px;
+  line-height: 1.5rem;
+}
+
+.theme-url label {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 100%;
+          flex: 1 0 100%;
+}
+
+.theme-url input[type="text"] {
+  border-radius: 3px 0 0 3px;
+  border: 1px solid var(--grey-30);
+  font-size: 12px;
+  height: 32px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 0 10px;
+}
+
+.theme-url input[type="submit"] {
+  color: var(--white);
+  background: var(--blue-50);
+  border-radius: 0 3px 3px 0;
+  border: 0;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 72px;
+          flex: 0 0 72px;
+  font-size: 12px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.theme-url input[type="submit"]:hover:not(:disabled), .theme-url input[type="submit"]:focus:not(:disabled) {
+  background-color: var(--blue-60);
+}
+
+.theme-url input[type="submit"]:active:not(:disabled) {
+  background-color: var(--blue-70);
+}
+
+.theme-url input[type="submit"]:disabled {
+  opacity: .5;
+  cursor: disabled;
+}
+/*# sourceMappingURL=index.css.map */

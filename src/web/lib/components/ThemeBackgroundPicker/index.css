@@ -1,0 +1,20 @@
+.theme-background-picker {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.theme-background-picker-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 320px;
+  width: 100%;
+}
+/*# sourceMappingURL=index.css.map */

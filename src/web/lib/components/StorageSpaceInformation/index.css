@@ -1,0 +1,44 @@
+.storage-space-information {
+  font-size: 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  line-height: 1.5;
+}
+
+.storage-space-information-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.storage-space-information-content span {
+  padding: 0 5px;
+}
+
+.storage-space-information-warning {
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.storage-space-information-error {
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.1;
+  max-width: 440px;
+}
+/*# sourceMappingURL=index.css.map */

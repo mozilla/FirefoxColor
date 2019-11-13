@@ -1,0 +1,131 @@
+.browser-tabs {
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.browser-tabs__inner {
+  display: -ms-grid;
+  display: grid;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.browser-tabs__tab {
+  -moz-user-select: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+}
+
+.browser-tabs__tab-inner {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+}
+
+.browser-tabs__tab-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  opacity: 0;
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+  -webkit-transition: opacity 200ms, -webkit-transform 75ms;
+  transition: opacity 200ms, -webkit-transform 75ms;
+  transition: transform 75ms, opacity 200ms;
+  transition: transform 75ms, opacity 200ms, -webkit-transform 75ms;
+  -webkit-transform-origin: center top;
+          transform-origin: center top;
+  -webkit-transition-timing-function: cubic-bezier(0.17, 0.67, 0.83, 0.67);
+          transition-timing-function: cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.browser-tabs--large {
+  height: 54px;
+}
+
+.browser-tabs--large > .browser-tabs__inner {
+  -ms-grid-columns: (minmax(180px, 240px))[3];
+      grid-template-columns: repeat(3, minmax(180px, 240px));
+  -ms-grid-rows: 54px;
+      grid-template-rows: 54px;
+  padding: 0 64px;
+}
+
+.browser-tabs--large .browser-tabs__title {
+  border-radius: 5px;
+  height: 10px;
+  width: 128px;
+}
+
+.browser-tabs--medium {
+  height: 40px;
+  padding: 0 36px;
+  border-radius: 4px 4px 0 0;
+}
+
+.browser-tabs--medium > .browser-tabs__inner {
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -ms-grid-rows: 40px;
+      grid-template-rows: 40px;
+}
+
+.browser-tabs--medium .browser-tabs__tab {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.browser-tabs--medium .browser-tabs__title {
+  border-radius: 4px;
+  height: 8px;
+  width: 80px;
+}
+
+.browser-tabs--small {
+  height: 20px;
+  padding: 0 16px;
+}
+
+.browser-tabs--small > .browser-tabs__inner {
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -ms-grid-rows: 20px;
+      grid-template-rows: 20px;
+}
+
+.browser-tabs--small .browser-tabs__tab {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.browser-tabs--small .browser-tabs__title {
+  margin-top: 1px;
+  border-radius: 2px;
+  height: 4px;
+  width: 32px;
+}
+/*# sourceMappingURL=index.css.map */

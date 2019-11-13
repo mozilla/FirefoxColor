@@ -1,0 +1,166 @@
+.browser-tools {
+  position: relative;
+  width: 100%;
+  z-index: 10;
+}
+
+.browser-tools .browser-tools__inner {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.browser-tools .browser-tools__field {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.browser-tools .browser-tools__field .browser-tools__button {
+  padding: 0;
+}
+
+.browser-tools .browser-tools__field-text {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.browser-tools .browser-tools__button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  margin: 0;
+}
+
+.browser-tools .browser-tools__button > div > div {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.browser-tools .browser-tools__button-inner {
+  border-radius: 50%;
+}
+
+.browser-tools--large > .browser-tools__inner {
+  height: 60px;
+  padding: 0 10px;
+}
+
+.browser-tools--large .browser-tools__field {
+  border-radius: 3px;
+  font-size: 20px;
+  height: 36px;
+  margin: 0 10px;
+}
+
+.browser-tools--large .browser-tools__field .browser-tools__field-text {
+  border-radius: 5px;
+  height: 10px;
+  margin: 0 0 0 40px;
+}
+
+.browser-tools--large .browser-tools__field .browser-tools__button {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 18px;
+          flex: 0 0 18px;
+  height: 18px;
+  margin: 16px;
+}
+
+.browser-tools--large .browser-tools__field .browser-tools__button-inner {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 18px;
+          flex: 0 0 18px;
+  height: 18px;
+}
+
+.browser-tools--large .browser-tools__button {
+  padding: 8px;
+}
+
+.browser-tools--large .browser-tools__button-inner {
+  height: 24px;
+  width: 24px;
+}
+
+.browser-tools--large img,
+.browser-tools--large svg {
+  height: 24px;
+  width: 24px;
+}
+
+.browser-tools--medium .browser-tools__inner {
+  height: 56px;
+  padding: 0 10px;
+}
+
+.browser-tools--medium .browser-tools__field {
+  border-radius: 4px;
+  height: 32px;
+  margin: 0 10px;
+}
+
+.browser-tools--medium .browser-tools__field .browser-tools__field-text {
+  border-radius: 4px;
+  height: 10px;
+  margin: 0 72px 0 20px;
+}
+
+.browser-tools--medium .browser-tools__button {
+  padding: 0 10px;
+}
+
+.browser-tools--medium .browser-tools__button-inner {
+  height: 20px;
+  width: 20px;
+}
+
+.browser-tools--small .browser-tools__inner {
+  height: 30px;
+  padding: 0 4px 0 2px;
+}
+
+.browser-tools--small .browser-tools__field {
+  border-radius: 2px;
+  height: 14px;
+  margin: 0 4px;
+}
+
+.browser-tools--small .browser-tools__field .browser-tools__field-text {
+  border-radius: 2px;
+  height: 4px;
+  margin: 0 30px 0 8px;
+}
+
+.browser-tools--small .browser-tools__button {
+  padding: 0 4px;
+}
+
+.browser-tools--small .browser-tools__button-inner {
+  height: 8px;
+  width: 8px;
+}
+/*# sourceMappingURL=index.css.map */

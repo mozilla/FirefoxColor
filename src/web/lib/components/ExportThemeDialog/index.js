@@ -82,7 +82,7 @@ class ExportThemeDialog extends React.Component {
           <p>
             Grab the XPI if you want to submit your theme to the{" "}
             <a
-              href="https://addons.mozilla.org/"
+              href="https://addons.mozilla.org/en-US/firefox/"
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -36,12 +36,15 @@ $grid: 4px;
 }
 
 @mixin buttonPrimary {
+  transition: 0.7s;
   color: var(--white);
   background-color: var(--green-60);
   box-shadow: 0 -3px 0 var(--grey-90-a10) inset;
 
   &:hover,
   &:focus {
+    transition: 0.7s;
+    color: #f5f5f5;
     background-color: var(--green-70);
   }
 

@@ -1,0 +1,121 @@
+.app-header {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: var(--grey-10);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 64px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 15px;
+  position: relative;
+  width: 100%;
+  z-index: 2;
+}
+
+.app-header .app-header__content {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.app-header .app-header__icon {
+  background-image: url(../../../../images/logo.svg);
+  background-position: center 1px;
+  background-repeat: no-repeat;
+  background-size: 32px auto;
+  height: 32px;
+  margin-right: 10px;
+  width: 32px;
+}
+
+.app-header h1 {
+  font-size: 24px;
+  letter-spacing: -.2px;
+  margin: 0;
+}
+
+.app-header .app-header__controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.app-header .app-header__spacer {
+  background: var(--grey-90-a10);
+  height: 46px;
+  width: 1px;
+  margin: 10px;
+}
+
+.app-header .app-header__button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: transparent;
+  border: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 64px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0;
+  width: 64px;
+}
+
+.app-header .app-header__button .app-header__button-icon {
+  -webkit-box-align: Center;
+      -ms-flex-align: Center;
+          align-items: Center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 20px;
+  margin-bottom: 1px;
+  width: 22px;
+}
+
+.app-header .app-header__button.disabled {
+  pointer-events: none;
+}
+
+.app-header .app-header__button.disabled .app-header__button-icon,
+.app-header .app-header__button.disabled span {
+  opacity: .5;
+}
+
+.app-header .app-header__button:not(.disabled) {
+  cursor: pointer;
+}
+
+.app-header .app-header__button:not(.disabled):hover {
+  background: var(--grey-90-a05);
+}
+
+.app-header .app-header__button:not(.disabled):active {
+  background: var(--grey-90-a10);
+}
+
+@media (max-width: 720px) {
+  .app-header header {
+    display: none;
+  }
+}
+/*# sourceMappingURL=index.css.map */

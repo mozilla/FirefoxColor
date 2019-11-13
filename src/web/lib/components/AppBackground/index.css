@@ -1,0 +1,46 @@
+.app-background {
+  bottom: 0;
+  left: 0;
+  opacity: .6;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.app-background::after {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.15)), color-stop(25%, transparent));
+  background: linear-gradient(rgba(0, 0, 0, 0.15), transparent 25%);
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+.app-background .app-background__texture-1 {
+  background: url(../../../../images/bg_texture_01.svg);
+  background-repeat: no-repeat;
+  background-size: 466px 644px;
+  height: 644px;
+  opacity: .5;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 446px;
+}
+
+.app-background .app-background__texture-2 {
+  background: url(../../../../images/bg_texture_02.svg);
+  background-repeat: no-repeat;
+  background-size: 236px 411px;
+  bottom: 40px;
+  height: 411px;
+  left: 0;
+  opacity: .3;
+  position: absolute;
+  width: 236px;
+}
+/*# sourceMappingURL=index.css.map */

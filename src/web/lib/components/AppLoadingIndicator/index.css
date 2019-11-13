@@ -1,0 +1,170 @@
+.app-loading-indicator {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: var(--white);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 20000;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.app-loading-indicator .app-loading-indicator__spinner {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 74px;
+  width: 74px;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-loading-indicator .app-loading-indicator__spinner::before {
+  content: "";
+  -webkit-animation-duration: 8s;
+          animation-duration: 8s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  -webkit-animation-name: rainbow;
+          animation-name: rainbow;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-box-shadow: 0 0 0 6px inset #bf4040;
+          box-shadow: 0 0 0 6px inset #bf4040;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 1px;
+}
+
+.app-loading-indicator .app-loading-indicator__spinner::after {
+  content: "";
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 72px;
+  height: 72px;
+  -webkit-animation: rotate linear 1.88s infinite;
+          animation: rotate linear 1.88s infinite;
+  -webkit-transform-origin: left top;
+          transform-origin: left top;
+  background: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  top: 37px;
+  left: 37px;
+}
+
+.app-loading-indicator .app-loading-indicator__quote {
+  font-size: 24px;
+  line-height: 32px;
+  margin: 40px 0 20px;
+  max-width: 360px;
+  text-align: center;
+}
+
+.app-loading-indicator .app-loading-indicator__attribution {
+  font-style: oblique;
+  margin: 0;
+  max-width: 360px;
+}
+
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0);
+            transform: rotate(0);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes rainbow {
+  0% {
+    -webkit-box-shadow: 0 0 0 6px inset #bf4040;
+            box-shadow: 0 0 0 6px inset #bf4040;
+  }
+  16% {
+    -webkit-box-shadow: 0 0 0 6px inset #bfbf40;
+            box-shadow: 0 0 0 6px inset #bfbf40;
+  }
+  32% {
+    -webkit-box-shadow: 0 0 0 6px inset #40bf40;
+            box-shadow: 0 0 0 6px inset #40bf40;
+  }
+  48% {
+    -webkit-box-shadow: 0 0 0 6px inset #40bfbf;
+            box-shadow: 0 0 0 6px inset #40bfbf;
+  }
+  64% {
+    -webkit-box-shadow: 0 0 0 6px inset #4040bf;
+            box-shadow: 0 0 0 6px inset #4040bf;
+  }
+  80% {
+    -webkit-box-shadow: 0 0 0 6px inset #bf40bf;
+            box-shadow: 0 0 0 6px inset #bf40bf;
+  }
+  96% {
+    -webkit-box-shadow: 0 0 0 6px inset #bf4040;
+            box-shadow: 0 0 0 6px inset #bf4040;
+  }
+}
+
+@keyframes rainbow {
+  0% {
+    -webkit-box-shadow: 0 0 0 6px inset #bf4040;
+            box-shadow: 0 0 0 6px inset #bf4040;
+  }
+  16% {
+    -webkit-box-shadow: 0 0 0 6px inset #bfbf40;
+            box-shadow: 0 0 0 6px inset #bfbf40;
+  }
+  32% {
+    -webkit-box-shadow: 0 0 0 6px inset #40bf40;
+            box-shadow: 0 0 0 6px inset #40bf40;
+  }
+  48% {
+    -webkit-box-shadow: 0 0 0 6px inset #40bfbf;
+            box-shadow: 0 0 0 6px inset #40bfbf;
+  }
+  64% {
+    -webkit-box-shadow: 0 0 0 6px inset #4040bf;
+            box-shadow: 0 0 0 6px inset #4040bf;
+  }
+  80% {
+    -webkit-box-shadow: 0 0 0 6px inset #bf40bf;
+            box-shadow: 0 0 0 6px inset #bf40bf;
+  }
+  96% {
+    -webkit-box-shadow: 0 0 0 6px inset #bf4040;
+            box-shadow: 0 0 0 6px inset #bf4040;
+  }
+}
+/*# sourceMappingURL=index.css.map */

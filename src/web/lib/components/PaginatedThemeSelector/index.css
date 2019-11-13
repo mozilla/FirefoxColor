@@ -1,0 +1,167 @@
+.theme-selector-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  grid-column: 1 / -1;
+  -ms-grid-row: 4;
+  -ms-grid-row-span: 1;
+  grid-row: 4 / 5;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 80px;
+}
+
+.theme-selector-footer.theme-selector-footer-expanded {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.theme-selector-footer div.page-selector {
+  margin-bottom: 8px;
+}
+
+.theme-selector-footer div.page-selector button {
+  background: transparent;
+  border: 0;
+  color: transparent;
+  cursor: pointer;
+  height: 18px;
+  margin: 2px;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  white-space: nowrap;
+  width: 18px;
+  z-index: 2;
+}
+
+.theme-selector-footer div.page-selector button.page::before {
+  border-radius: 8px;
+  border: 2px solid var(--grey-40);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  content: "";
+  height: 10px;
+  left: 4px;
+  position: absolute;
+  top: 4px;
+  width: 10px;
+}
+
+.theme-selector-footer div.page-selector button.current-page::before {
+  background: var(--grey-60);
+  border: 0;
+  content: "";
+}
+
+.theme-selector-footer div.page-selector button.previous,
+.theme-selector-footer div.page-selector button.next {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 10px 18px;
+  opacity: .7;
+  -webkit-transition: opacity 125ms;
+  transition: opacity 125ms;
+}
+
+.theme-selector-footer div.page-selector button.previous:hover,
+.theme-selector-footer div.page-selector button.next:hover {
+  opacity: 1;
+}
+
+.theme-selector-footer div.page-selector button.previous.disabled,
+.theme-selector-footer div.page-selector button.next.disabled {
+  cursor: auto;
+  opacity: .3;
+}
+
+.theme-selector-footer div.page-selector button.previous {
+  background-image: url(./arrow_left.svg);
+}
+
+.theme-selector-footer div.page-selector button.next {
+  background-image: url(./arrow_right.svg);
+}
+
+.theme-selector {
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 24px;
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+  -ms-grid-rows: (1fr)[3] 18px;
+      grid-template-rows: repeat(3, 1fr) 18px;
+  padding: 20px 24px 0;
+  width: 100%;
+  height: 300px;
+}
+
+.theme-selector-preview {
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  -webkit-transition: -webkit-box-shadow 100ms;
+  transition: -webkit-box-shadow 100ms;
+  transition: box-shadow 100ms;
+  transition: box-shadow 100ms, -webkit-box-shadow 100ms;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.theme-selector-preview:hover {
+  -webkit-box-shadow: 0 0 0 3px var(--blue-40);
+          box-shadow: 0 0 0 3px var(--blue-40);
+}
+
+.theme-selector-preview:hover button {
+  opacity: 1;
+  visibility: visible;
+}
+
+.theme-selector-preview button {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.9)), to(rgba(255, 255, 255, 0.95)));
+  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95));
+  border-radius: 50%;
+  border: 0;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 36px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  opacity: 0;
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  -webkit-transition: opacity 125ms, -webkit-box-shadow 125ms;
+  transition: opacity 125ms, -webkit-box-shadow 125ms;
+  transition: opacity 125ms, box-shadow 125ms;
+  transition: opacity 125ms, box-shadow 125ms, -webkit-box-shadow 125ms;
+  visibility: hidden;
+  width: 36px;
+  z-index: 2;
+}
+
+.theme-selector-preview button:hover {
+  -webkit-box-shadow: 0 0 0 3px var(--blue-40);
+          box-shadow: 0 0 0 3px var(--blue-40);
+}
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,39 @@
+.app {
+  display: -ms-grid;
+  display: grid;
+  grid-gap: 32px;
+  -ms-grid-rows: 64px 1fr 72px;
+      grid-template-rows: 64px 1fr 72px;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app__main {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 20px minmax(600px, 1080px) 20px;
+      grid-template-columns: 20px minmax(600px, 1080px) 20px;
+  -ms-grid-rows: 1fr;
+      grid-template-rows: 1fr;
+  margin: 0 auto;
+  position: relative;
+}
+
+.app__main > .browser {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-column: 2 / 3;
+  min-height: 600px;
+}
+
+.app__main .app__firefox {
+  background-color: var(--grey-10);
+  background-image: url(./flat-firefox.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 164px 164px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+/*# sourceMappingURL=index.css.map */

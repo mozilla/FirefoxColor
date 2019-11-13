@@ -11,7 +11,7 @@ const UNOFFICIAL_SITE_IDS = ["local", "github"];
 
 const nodeEnv = process.env.NODE_ENV || "production";
 const siteHost = process.env.HOST || "localhost";
-const sitePort = process.env.PORT || "8080";
+const sitePort = process.env.PORT || "8000";
 const siteUrl = process.env.SITE_URL || `http://${siteHost}:${sitePort}/`;
 const siteId = process.env.SITE_ID || "";
 const downloadFirefoxUtmSource =
