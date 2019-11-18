@@ -199,7 +199,6 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
   render() {
     const {
-      handleClearBackground,
       handleTilingChange,
       storageErrorMessage
     } = this;
@@ -307,7 +306,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
                 </div>
               )}
 
-              <button title={"Delete"} className="clear" onClick={handleClearBackground} />
+              <button title={"Delete"} className="clear" onClick={this.handleClearBackground} />
             </li>
           );
         }}
@@ -316,7 +315,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 
   confirm = () => {
-    this.props.clearCustomBackground();
+    this.removeImage();
     this.onCloseModal();
   }
 
@@ -327,11 +326,18 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
   handleClearBackground = () => {
     if (localStorage.getItem("clearImageModal")) {
-      this.props.clearCustomBackground();
+      this.removeImage();
     } else {
       this.props.setDisplayRemoveImageModal({ display: true });
     }
   };
+
+  removeImage = () => {
+    // TODO: update / remove /resave theme without this image.
+    const { image } = this.props;
+    this.props.clearCustomBackground();
+    this.props.storage.imageStorage.delete(image.name);
+  }
 
   handleTilingChange = ev => {
     this.props.updateCustomBackground({ tiling: ev.target.value });
