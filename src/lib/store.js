@@ -43,7 +43,8 @@ export const actions = {
     "SET_EXPORT_THEME_PROGRESS",
     "CLEAR_EXPORTED_THEME",
     "SET_USED_STORAGE",
-    "SET_STORAGE_ERROR_MESSAGE"
+    "SET_STORAGE_ERROR_MESSAGE",
+    "SET_CURRENT_THEME_ID"
   ),
   theme: {
     ...createActions(
@@ -74,6 +75,7 @@ export const actions = {
 };
 
 export const selectors = {
+  currentThemeId: state => state.ui.currentThemeId,
   hasExtension: state => state.ui.hasExtension,
   themeBuilderPanel: state => state.ui.themeBuilderPanel,
   firstRun: state => state.ui.firstRun,
@@ -137,6 +139,12 @@ export const reducers = {
         return {
           ...state,
           storageErrorMessage: payload
+        };
+      },
+      SET_CURRENT_THEME_ID: (state, { payload: { key } }) => {
+        return {
+          ...state,
+          currentThemeId: key
         };
       },
       SET_DISPLAY_LEGAL_MODAL: (state, { payload: { display } }) => ({
@@ -252,7 +260,8 @@ export const reducers = {
       exportedTheme: null,
       exportedThemeProgress: false,
       storageErrorMessage: "",
-      usedStorage: 0
+      usedStorage: 0,
+      currentThemeId: null
     }
   ),
   images: handleActions(

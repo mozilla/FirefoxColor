@@ -333,7 +333,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
   };
 
   removeImage = () => {
-    // TODO: update / remove /resave theme without this image.
+    // TODO: update / remove /resave theme/s without this image.
     const { image } = this.props;
     this.props.clearCustomBackground();
     this.props.storage.imageStorage.delete(image.name);

@@ -1,4 +1,5 @@
 import React from "react";
+// import { connect } from "react-redux";
 
 import PaginatedThemeSelector from "../PaginatedThemeSelector";
 
@@ -9,46 +10,19 @@ export const SavedThemeSelector = ({
   setSavedThemesPage,
   themeCustomImages,
   storage,
-  clearCustomBackground
+  clearCustomBackground,
+  setCurrentThemeId
 }) => {
-  const { themeStorage, imageStorage } = storage;
+  const { themeStorage } = storage;
   const sortedSavedThemes = Object.entries(savedThemes).sort(
     ([, aData], [, bData]) => bData.modified - aData.modified
   );
 
   const deleteTheme = (key) => {
-    // Get the current theme.
-    const currentTheme = JSON.parse(localStorage.getItem(`THEME-${key}`));
-    // Get the current theme's custom background images.
-    const currentImageNames = (currentTheme.theme.images.custom_backgrounds || []).map(img => img.name);
-
-    if (currentImageNames.length) {
-      let allThemeImages = [];
-
-      // Find all matching custom images in the other saved themes.
-      sortedSavedThemes.forEach(([id, theme]) => {
-        // Let's skip the current theme.
-        if (id === key) return;
-
-        const { images } = theme.theme;
-        if (images.custom_backgrounds) {
-          images.custom_backgrounds.forEach(bg => {
-            if (currentImageNames.includes(bg.name)) {
-              allThemeImages.push(bg.name);
-            }
-          });
-        }
-      });
-
-      const notUsedImages = currentImageNames.filter(image => !allThemeImages.includes(image));
-
-      notUsedImages.forEach((image) => {
-        clearCustomBackground({ index: 0 });
-        imageStorage.delete(image);
-      });
-    }
-
+    // This is so we can track which theme to delete in some other places.
+    setCurrentThemeId({ key });
     themeStorage.delete(key);
+    clearCustomBackground({ index: 0 });
   };
 
   return (
