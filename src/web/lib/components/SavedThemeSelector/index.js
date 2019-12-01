@@ -9,8 +9,7 @@ export const SavedThemeSelector = ({
   setSavedThemesPage,
   themeCustomImages,
   storage,
-  clearCustomBackground,
-  setCurrentThemeId
+  clearCustomBackground
 }) => {
   const { themeStorage } = storage;
   const sortedSavedThemes = Object.entries(savedThemes).sort(
@@ -18,8 +17,6 @@ export const SavedThemeSelector = ({
   );
 
   const deleteTheme = (key) => {
-    // This is so we can track which theme to delete in some other places.
-    setCurrentThemeId({ key });
     themeStorage.delete(key);
     clearCustomBackground({ index: 0 });
   };

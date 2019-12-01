@@ -73,7 +73,6 @@ export default function({
 
   const purgeImages = (getState, dispatch) => {
     const state = getState();
-    const { currentThemeId } = state.ui;
 
     const imageNames = backgrounds =>
       backgrounds.map(background => background.name);
@@ -96,13 +95,8 @@ export default function({
       }
     );
 
-    const themesExcludingCurrentTheme = Object.entries(selectors.savedThemes(state)).filter(([key, theme]) => {
-      if (key !== currentThemeId) return theme;
-      return false;
-    }).map(([_, item]) => item);
-
     // Scan through saved themes for images still in use.
-    const savedThemes = themesExcludingCurrentTheme;
+    const savedThemes = Object.values(selectors.savedThemes(state) || {});
     savedThemes
       .filter(({ theme }) => theme.images && theme.images.custom_backgrounds)
       .forEach(({ theme }) => {

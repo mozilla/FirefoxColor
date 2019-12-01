@@ -24,8 +24,7 @@ export const ThemeBuilder = props => {
     setSavedThemesPage,
     storage,
     themeCustomImages,
-    clearCustomBackground,
-    setCurrentThemeId
+    clearCustomBackground
   } = props;
 
   const tabList = [
@@ -91,8 +90,7 @@ export const ThemeBuilder = props => {
               setSavedThemesPage,
               themeCustomImages,
               storage,
-              clearCustomBackground,
-              setCurrentThemeId
+              clearCustomBackground
             }}
           />
         );
