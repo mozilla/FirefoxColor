@@ -82,19 +82,6 @@ export default function({
       imageNames(selectors.themeCustomBackgrounds(state))
     );
 
-    // Scan through undo/redo stack for images still in use.
-    [(selectors.themePast(state), selectors.themeFuture(state))].forEach(
-      themes => {
-        themes
-          .filter(theme => theme.images && theme.images.custom_backgrounds)
-          .forEach(theme => {
-            imageNames(theme.images.custom_backgrounds).forEach(name =>
-              usedImages.add(name)
-            );
-          });
-      }
-    );
-
     // Scan through saved themes for images still in use.
     const savedThemes = Object.values(selectors.savedThemes(state) || {});
     savedThemes
