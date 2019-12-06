@@ -96,13 +96,13 @@ export const selectors = {
   themePast: state => state.theme.past,
   themeFuture: state => state.theme.future,
   themeCanUndo: state => {
-    const { ui, theme } = state;
-    return theme.past.length > 0 && ui.userHasEdited;
+    const { theme } = state;
+    const { present, past } = theme;
+    const presentImagesLength = present && present.images && present.images.custom_backgrounds && present.images.custom_backgrounds.length;
+    const pastImagesLength = past.length && past[past.length - 1] && past[past.length - 1].images && past[past.length - 1].images.custom_backgrounds && past[past.length - 1].images.custom_backgrounds.length;
+    return past.length > 0 && presentImagesLength >= pastImagesLength;
   },
-  themeCanRedo: state => {
-    const { ui, theme } = state;
-    return theme.future.length > 0 && ui.userHasEdited;
-  },
+  themeCanRedo: state => state.theme.future.length > 0,
   themeCustomImages: state => state.images.images,
   themeCustomBackgrounds: state =>
     state.theme.present.images.custom_backgrounds || [],
@@ -229,16 +229,10 @@ export const reducers = {
         exportedTheme: null,
         exportedThemeProgress: false
       }),
-      [combineActions(...themeChangeActions)]: (state, { meta = {} }) => {
-        let userHasEdited = meta.userEdit;
-        if (typeof userHasEdited === "undefined") {
-          userHasEdited = true;
-        }
-        return {
-          ...state,
-          userHasEdited
-        };
-      },
+      [combineActions(...themeChangeActions)]: (state, { meta = {} }) => ({
+        ...state,
+        userHasEdited: meta.userEdit ? true : state.userHasEdited
+      })
     },
     {
       userHasEdited: false,
@@ -386,10 +380,10 @@ export const reducers = {
       // from add-on and ?theme are applied but skip the buffer
       syncFilter: true,
       filter: (action, currentState, previousHistory) => {
+        // Issue #227: Skip history for identical themes
         if (themesEqual(previousHistory.present, currentState)) {
           return false;
         }
-
         return action.meta && action.meta.userEdit;
       }
     }

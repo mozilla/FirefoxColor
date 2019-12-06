@@ -44,16 +44,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   ].reduce(
     (acc, name) => ({
       ...acc,
-      [name]: args => {
-        let userEdit = true;
-        if (name === "clearCustomBackground") {
-          userEdit = false;
-        }
+      [name]: args =>
         dispatch({
           ...actions.theme[name](args),
-          meta: { userEdit }
-        });
-      }
+          meta: { userEdit: true }
+        })
     }),
     {}
   );
