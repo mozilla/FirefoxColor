@@ -390,10 +390,6 @@ export const reducers = {
           return false;
         }
 
-        if (action.type === "CLEAR_CUSTOM_BACKGROUND") {
-          ActionCreators.redo();
-        }
-
         return action.meta && action.meta.userEdit;
       }
     }
