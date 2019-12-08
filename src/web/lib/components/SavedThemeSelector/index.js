@@ -8,12 +8,18 @@ export const SavedThemeSelector = ({
   savedThemesPage,
   setSavedThemesPage,
   themeCustomImages,
-  storage
+  storage,
+  clearCustomBackground
 }) => {
   const { themeStorage } = storage;
   const sortedSavedThemes = Object.entries(savedThemes).sort(
     ([, aData], [, bData]) => bData.modified - aData.modified
   );
+
+  const deleteTheme = (key) => {
+    themeStorage.delete(key);
+    clearCustomBackground({ index: 0 });
+  };
 
   return (
     <PaginatedThemeSelector
@@ -22,7 +28,7 @@ export const SavedThemeSelector = ({
       className="saved-theme-selector"
       previewClassName="saved-theme-preview"
       onClick={theme => setTheme({ theme })}
-      onDelete={key => themeStorage.delete(key)}
+      onDelete={key => deleteTheme(key)}
       perPage={9}
       currentPage={savedThemesPage}
       setCurrentPage={setSavedThemesPage}
