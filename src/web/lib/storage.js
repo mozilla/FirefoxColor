@@ -2,6 +2,7 @@ import { actions } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
 import { normalizeTheme, themesEqual } from "../../lib/themes";
 import { localStorageSpace, STORAGE_ERROR_MESSAGE } from "./components/StorageSpaceInformation";
+import { storedImages } from "./middleware";
 
 const log = makeLog("web.storage");
 
@@ -122,7 +123,13 @@ function init(store) {
 
   const loadAllImagesIntoStore = () => {
     const items = Object.values(imageStorage.list()).reduce(
-      (acc, { data: item }) => ({ ...acc, [item.name]: item }),
+      (acc, { data: item }) => {
+        storedImages.set(item.name, item);
+        return {
+          ...acc,
+          [item.name]: item
+        };
+      },
       {}
     );
     log("loadAllImagesIntoStore", items);

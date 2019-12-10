@@ -1,6 +1,8 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import {
   SortableContainer,
   SortableElement,
@@ -13,12 +15,13 @@ import {
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
 import ClearImageModal from "../ClearImageModal";
+import { storedImages } from "../../middleware";
 
 import "./index.scss";
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
 
-export class ThemeCustomBackgroundPicker extends React.Component {
+class ThemeCustomBackgroundPickerComponent extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -80,6 +83,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
       <form className="custom-background" onSubmit={e => e.preventDefault()}>
         <BackgroundList
           {...this.props}
+          dispatch={this.props.dispatch}
           helperClass="dragHelper"
           useDragHandle={true}
           shouldCancelStart={this.handleShouldCancelStart}
@@ -127,6 +131,8 @@ export class ThemeCustomBackgroundPicker extends React.Component {
   }
 }
 
+export const ThemeCustomBackgroundPicker = connect(null, (dispatch) => ({ dispatch }))(ThemeCustomBackgroundPickerComponent);
+
 const modalRoot = document.getElementById("modal");
 
 class Modal extends React.Component {
@@ -156,23 +162,43 @@ const BackgroundList = SortableContainer(props => {
     themeCustomBackgrounds,
     themeCustomImages
   } = props;
+
+  const getImage = (name) => {
+    let image = storedImages.get(name);
+
+    if (image) {
+      // eslint-disable-next-line no-unused-vars
+      const { importing, ...rest } = image;
+
+      const newImage = {
+        ...rest
+      };
+      // add the image back into local storage.
+      props.storage.imageStorage.put(image.name, newImage, props.dispatch);
+      return newImage;
+    }
+    return null;
+  };
+
   return (
     <ul className="backgroundList">
-      {themeCustomBackgrounds.map((item, index) => (
-        <SortableThemeCustomBackgroundSelector
-          key={index}
-          {...{
-            ...props,
-            item,
-            index,
-            image: themeCustomImages[item.name],
-            clearCustomBackground: (args = {}) =>
-              clearCustomBackground({ index, ...args }),
-            updateCustomBackground: (args = {}) =>
-              updateCustomBackground({ index, ...args })
-          }}
-        />
-      ))}
+      {themeCustomBackgrounds.map((item, index) => {
+        return (
+          <SortableThemeCustomBackgroundSelector
+            key={index}
+            {...{
+              ...props,
+              item,
+              index,
+              image: themeCustomImages[item.name] || getImage(item.name),
+              clearCustomBackground: (args = {}) =>
+                clearCustomBackground({ index, ...args }),
+              updateCustomBackground: (args = {}) =>
+                updateCustomBackground({ index, ...args })
+            }}
+          />
+        );
+      })}
     </ul>
   );
 });
@@ -333,10 +359,13 @@ class ThemeCustomBackgroundSelector extends React.Component {
   };
 
   removeImage = () => {
-    // TODO: update / remove /resave theme/s without this image.
     const { image } = this.props;
+
+    if (image) {
+      this.props.storage.imageStorage.delete(image.name);
+    }
+
     this.props.clearCustomBackground();
-    this.props.storage.imageStorage.delete(image.name);
   }
 
   handleTilingChange = ev => {
@@ -366,7 +395,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 }
 
-const SortableThemeCustomBackgroundSelector = SortableElement(
+const SortableThemeCustomBackgroundSelector = compose(connect(null, (dispatch) => ({ dispatch })), SortableElement)(
   ThemeCustomBackgroundSelector
 );
 

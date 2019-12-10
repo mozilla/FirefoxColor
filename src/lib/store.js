@@ -95,13 +95,7 @@ export const selectors = {
   theme: state => state.theme.present,
   themePast: state => state.theme.past,
   themeFuture: state => state.theme.future,
-  themeCanUndo: state => {
-    const { theme } = state;
-    const { present, past } = theme;
-    const presentImagesLength = present && present.images && present.images.custom_backgrounds && present.images.custom_backgrounds.length;
-    const pastImagesLength = past.length && past[past.length - 1] && past[past.length - 1].images && past[past.length - 1].images.custom_backgrounds && past[past.length - 1].images.custom_backgrounds.length;
-    return past.length > 0 && presentImagesLength >= pastImagesLength;
-  },
+  themeCanUndo: state => state.theme.past.length > 0,
   themeCanRedo: state => state.theme.future.length > 0,
   themeCustomImages: state => state.images.images,
   themeCustomBackgrounds: state =>
