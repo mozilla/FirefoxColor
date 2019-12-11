@@ -15,7 +15,7 @@ import {
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
 import ClearImageModal from "../ClearImageModal";
-import { storedImages } from "../../middleware";
+import { temporaryImageStore } from "../../middleware";
 
 import "./index.scss";
 import iconHAlignLeft from "./icon_align_left.svg";
@@ -164,7 +164,7 @@ const BackgroundList = SortableContainer(props => {
   } = props;
 
   const getImage = (name) => {
-    const image = storedImages.get(name);
+    const image = temporaryImageStore.get(name);
     if (image) {
       props.updateImage({ ...image, importing: true });
     }

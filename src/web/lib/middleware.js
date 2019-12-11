@@ -1,5 +1,5 @@
 import { actions, selectors, themeChangeActions } from "../../lib/store";
-export let storedImages = new Map();
+export let temporaryImageStore = new Map();
 
 export default function({
   postMessage,
@@ -47,7 +47,7 @@ export default function({
       if (image.importing) {
         const { importing, ...importedImage } = image; // eslint-disable-line no-unused-vars
         postMessage("updateImage", { image: importedImage });
-        storedImages.set(name, importedImage);
+        temporaryImageStore.set(name, importedImage);
         imageStorage.put(name, importedImage, dispatch);
         dispatch(actions.images.updateImage({ name, importing: false }));
       }
