@@ -105,7 +105,7 @@
     "mocha-webpack": "1.1.0",
     "mock-require": "3.0.3",
     "node-sass": "4.11.0",
-    "nodemon": "1.18.10",
+    "nodemon": "2.0.2",
     "npm-run-all": "4.1.4",
     "onchange": "5.2.0",
     "prettier": "1.16.4",
