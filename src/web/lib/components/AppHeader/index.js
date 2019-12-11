@@ -37,12 +37,35 @@ export const AppHeader = props => {
       : setTheme({ theme: generateRandomTheme() });
   };
 
+  React.useEffect(() => {
+    syncImages();
+  }, [props.presentImages]);
+
   const handleExportClick = () => {
     showExportThemeDialog(true);
   };
 
   const onShareClick = () => {
     setDisplayShareModal({ display: !displayShareModal });
+  };
+
+  // sync images in local storage with custom backgrounds in preview on undo/redo
+  const syncImages = () => {
+    const localStorageKeys = Object.keys(localStorage);
+
+    const imagesInStorage = localStorageKeys.filter(key => {
+      if (key.startsWith("IMAGE-")) return key;
+      return false;
+    }).map(item => item.substring(6));
+
+    const customImages = props.presentImages.custom_backgrounds || [];
+    let previewImages = JSON.stringify(customImages);
+
+    imagesInStorage.forEach((_, i) => {
+      if (!previewImages.includes(imagesInStorage[i])) {
+        props.deleteImages([imagesInStorage[i]]);
+      }
+    });
   };
 
   const headerButton = (

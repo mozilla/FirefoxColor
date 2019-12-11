@@ -164,18 +164,9 @@ const BackgroundList = SortableContainer(props => {
   } = props;
 
   const getImage = (name) => {
-    let image = storedImages.get(name);
-
+    const image = storedImages.get(name);
     if (image) {
-      // eslint-disable-next-line no-unused-vars
-      const { importing, ...rest } = image;
-
-      const newImage = {
-        ...rest
-      };
-      // add the image back into local storage.
-      props.storage.imageStorage.put(image.name, newImage, props.dispatch);
-      return newImage;
+      props.updateImage({ ...image, importing: true });
     }
     return null;
   };
@@ -362,7 +353,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     const { image } = this.props;
 
     if (image) {
-      this.props.storage.imageStorage.delete(image.name);
+      this.props.deleteImages([image]);
     }
 
     this.props.clearCustomBackground();

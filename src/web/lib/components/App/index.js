@@ -26,6 +26,7 @@ const mapStateToProps = state => {
     {}
   );
   return {
+    presentImages: state.theme.present.images,
     ...mappedSelectors
   };
 };
@@ -57,7 +58,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ...themeUserEditDispatchers,
     addImage: args => dispatch(actions.images.addImage(args)),
     updateImage: args => dispatch(actions.images.updateImage(args)),
-    deleteImage: args => dispatch(actions.images.deleteImage(args)),
+    deleteImages: args => dispatch(actions.images.deleteImages(args)),
     clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
     setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
     setSavedThemesPage: page =>
