@@ -37,9 +37,13 @@ export const AppHeader = props => {
       : setTheme({ theme: generateRandomTheme() });
   };
 
+  const [update, setUpdate] = React.useState(false);
+
   React.useEffect(() => {
-    syncImages();
-  }, [props.presentImages]);
+    if (update) {
+      syncImages();
+    }
+  }, [props.themeCustomBackgrounds]);
 
   const handleExportClick = () => {
     showExportThemeDialog(true);
@@ -49,23 +53,34 @@ export const AppHeader = props => {
     setDisplayShareModal({ display: !displayShareModal });
   };
 
-  // sync images in local storage with custom backgrounds in preview on undo/redo
+  // sync images in local storage with custom backgroundsin preview/saved themes on undo/redo
   const syncImages = () => {
-    const localStorageKeys = Object.keys(localStorage);
+    let currentImages = new Set();
 
-    const imagesInStorage = localStorageKeys.filter(key => {
-      if (key.startsWith("IMAGE-")) return key;
+    props.themeCustomBackgrounds
+      .forEach(({ name }) => currentImages.add(name));
+
+    const savedThemes = Object.values(props.savedThemes) || [];
+    let savedImagesInThemes = new Set();
+
+    savedThemes
+      .filter(({ theme }) => theme.images && theme.images.custom_backgrounds)
+      .map(({ theme }) => theme.images.custom_backgrounds.forEach(background => savedImagesInThemes.add(background.name)));
+
+
+    const toDelete = Object.keys(localStorage).filter(key => {
+      if (key.startsWith("IMAGE-")) {
+        const name = key.substring(6);
+        // If an image isnt found in the current custom background images list and isn't in any
+        // saved theme we can delete the image from local storage.
+        if (!currentImages.has(name) && !savedImagesInThemes.has(name)) return key;
+      }
       return false;
     }).map(item => item.substring(6));
 
-    const customImages = props.presentImages.custom_backgrounds || [];
-    let previewImages = JSON.stringify(customImages);
-
-    imagesInStorage.forEach((_, i) => {
-      if (!previewImages.includes(imagesInStorage[i])) {
-        props.deleteImages([imagesInStorage[i]]);
-      }
-    });
+    if (toDelete.length) {
+      props.deleteImages(toDelete);
+    }
   };
 
   const headerButton = (
@@ -74,23 +89,36 @@ export const AppHeader = props => {
     text,
     disabledCheck = true,
     children = null
-  ) => (
-    <React.Fragment>
-      <button
-        title={text}
-        className={classnames("app-header__button", `${text}`, {
-          disabled: !disabledCheck
-        })}
-        onClick={onClickButton}
-      >
-        <div className="app-header__button-icon">
-          <img src={icon} width="20" height="auto" aria-hidden="true" />
-        </div>
-        <span>{text}</span>
-      </button>
-      {children}
-    </React.Fragment>
-  );
+  ) => {
+    const handleButtonClick = (event) => {
+      const { currentTarget } = event;
+      onClickButton();
+
+      if (currentTarget.title === "Undo" || currentTarget.title === "Redo") {
+        setUpdate(true);
+      } else {
+        setUpdate(false);
+      }
+    };
+
+    return (
+      <React.Fragment>
+        <button
+          title={text}
+          className={classnames("app-header__button", `${text}`, {
+            disabled: !disabledCheck
+          })}
+          onClick={handleButtonClick}
+        >
+          <div className="app-header__button-icon">
+            <img src={icon} width="20" height="auto" aria-hidden="true" />
+          </div>
+          <span>{text}</span>
+        </button>
+        {children}
+      </React.Fragment>
+    );
+  };
 
   return (
     <header className="app-header">

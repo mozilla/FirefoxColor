@@ -26,7 +26,6 @@ const mapStateToProps = state => {
     {}
   );
   return {
-    presentImages: state.theme.present.images,
     ...mappedSelectors
   };
 };
