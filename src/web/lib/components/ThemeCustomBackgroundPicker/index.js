@@ -26,6 +26,37 @@ class ThemeCustomBackgroundPickerComponent extends React.Component {
     super(props);
   }
 
+  componentDidUpdate(prevProps) {
+    const { themeCustomBackgrounds } = this.props;
+
+    // sync images in local storage with custom backgroundsin preview on undo/redo
+    if (prevProps.themeCustomBackgrounds.length !== themeCustomBackgrounds.length) {
+      const keys = Object.keys(this.props.themeCustomImages);
+
+      if (prevProps.themeCustomBackgrounds.length !== 0 && themeCustomBackgrounds.length === 0) {
+        prevProps.themeCustomBackgrounds.forEach((_, i) => {
+          this.props.clearCustomBackground({
+            index: i
+          });
+        });
+      } else if (prevProps.themeCustomBackgrounds.length < themeCustomBackgrounds.length) {
+        themeCustomBackgrounds.forEach(({ name }) => {
+          if (!keys.includes(name)) {
+            this.addImageToStorage(name);
+          }
+        });
+      } else {
+        prevProps.themeCustomBackgrounds.forEach((_, i) => {
+          if (!themeCustomBackgrounds[i]) {
+            this.props.clearCustomBackground({
+              index: i
+            });
+          }
+        });
+      }
+    }
+  }
+
   handleImageAdd = ({ name }) => {
     this.props.addCustomBackground({
       name,
@@ -65,6 +96,13 @@ class ThemeCustomBackgroundPickerComponent extends React.Component {
 
   handleSortEnd = ({ oldIndex, newIndex }) => {
     this.props.moveCustomBackground({ oldIndex, newIndex });
+  };
+
+  addImageToStorage = (name) => {
+    const image = temporaryImageStore.get(name);
+    if (image) {
+      this.props.updateImage({ ...image, importing: true });
+    }
   };
 
   render() {
@@ -163,14 +201,6 @@ const BackgroundList = SortableContainer(props => {
     themeCustomImages
   } = props;
 
-  const getImage = (name) => {
-    const image = temporaryImageStore.get(name);
-    if (image) {
-      props.updateImage({ ...image, importing: true });
-    }
-    return null;
-  };
-
   return (
     <ul className="backgroundList">
       {themeCustomBackgrounds.map((item, index) => {
@@ -181,7 +211,7 @@ const BackgroundList = SortableContainer(props => {
               ...props,
               item,
               index,
-              image: themeCustomImages[item.name] || getImage(item.name),
+              image: themeCustomImages[item.name],
               clearCustomBackground: (args = {}) =>
                 clearCustomBackground({ index, ...args }),
               updateCustomBackground: (args = {}) =>
@@ -353,7 +383,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     const { image } = this.props;
 
     if (image) {
-      this.props.deleteImages([image]);
+      this.props.deleteImages([image.name]);
     }
 
     this.props.clearCustomBackground();
