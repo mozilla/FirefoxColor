@@ -1,8 +1,6 @@
 import React from "react";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
-import { connect } from "react-redux";
-import { compose } from "redux";
 import {
   SortableContainer,
   SortableElement,
@@ -21,7 +19,7 @@ import "./index.scss";
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
 
-class ThemeCustomBackgroundPickerComponent extends React.Component {
+export class ThemeCustomBackgroundPicker extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -34,9 +32,9 @@ class ThemeCustomBackgroundPickerComponent extends React.Component {
       const keys = Object.keys(this.props.themeCustomImages);
 
       if (prevProps.themeCustomBackgrounds.length !== 0 && themeCustomBackgrounds.length === 0) {
-        prevProps.themeCustomBackgrounds.forEach((_, i) => {
+        prevProps.themeCustomBackgrounds.forEach((_, index) => {
           this.props.clearCustomBackground({
-            index: i
+            index
           });
         });
       } else if (prevProps.themeCustomBackgrounds.length < themeCustomBackgrounds.length) {
@@ -46,10 +44,10 @@ class ThemeCustomBackgroundPickerComponent extends React.Component {
           }
         });
       } else {
-        prevProps.themeCustomBackgrounds.forEach((_, i) => {
-          if (!themeCustomBackgrounds[i]) {
+        prevProps.themeCustomBackgrounds.forEach((_, index) => {
+          if (!themeCustomBackgrounds[index]) {
             this.props.clearCustomBackground({
-              index: i
+              index
             });
           }
         });
@@ -121,7 +119,6 @@ class ThemeCustomBackgroundPickerComponent extends React.Component {
       <form className="custom-background" onSubmit={e => e.preventDefault()}>
         <BackgroundList
           {...this.props}
-          dispatch={this.props.dispatch}
           helperClass="dragHelper"
           useDragHandle={true}
           shouldCancelStart={this.handleShouldCancelStart}
@@ -169,8 +166,6 @@ class ThemeCustomBackgroundPickerComponent extends React.Component {
   }
 }
 
-export const ThemeCustomBackgroundPicker = connect(null, (dispatch) => ({ dispatch }))(ThemeCustomBackgroundPickerComponent);
-
 const modalRoot = document.getElementById("modal");
 
 class Modal extends React.Component {
@@ -200,26 +195,23 @@ const BackgroundList = SortableContainer(props => {
     themeCustomBackgrounds,
     themeCustomImages
   } = props;
-
   return (
     <ul className="backgroundList">
-      {themeCustomBackgrounds.map((item, index) => {
-        return (
-          <SortableThemeCustomBackgroundSelector
-            key={index}
-            {...{
-              ...props,
-              item,
-              index,
-              image: themeCustomImages[item.name],
-              clearCustomBackground: (args = {}) =>
-                clearCustomBackground({ index, ...args }),
-              updateCustomBackground: (args = {}) =>
-                updateCustomBackground({ index, ...args })
-            }}
-          />
-        );
-      })}
+      {themeCustomBackgrounds.map((item, index) => (
+        <SortableThemeCustomBackgroundSelector
+          key={index}
+          {...{
+            ...props,
+            item,
+            index,
+            image: themeCustomImages[item.name],
+            clearCustomBackground: (args = {}) =>
+              clearCustomBackground({ index, ...args }),
+            updateCustomBackground: (args = {}) =>
+              updateCustomBackground({ index, ...args })
+          }}
+        />
+      ))}
     </ul>
   );
 });
@@ -416,7 +408,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 }
 
-const SortableThemeCustomBackgroundSelector = compose(connect(null, (dispatch) => ({ dispatch })), SortableElement)(
+const SortableThemeCustomBackgroundSelector = SortableElement(
   ThemeCustomBackgroundSelector
 );
 
