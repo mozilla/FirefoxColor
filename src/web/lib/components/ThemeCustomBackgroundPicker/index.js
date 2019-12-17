@@ -228,6 +228,10 @@ const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
 class ThemeCustomBackgroundSelector extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      index: null
+    };
   }
 
   componentDidMount() {
@@ -336,7 +340,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              {this.props.displayRemoveImageModal && (
+              {this.props.displayRemoveImageModal && this.state.index === this.props.index && (
                 <div className="modal-wrapper--clear-image">
                   <ClearImageModal
                     confirm={this.confirm}
@@ -366,8 +370,16 @@ class ThemeCustomBackgroundSelector extends React.Component {
   handleClearBackground = () => {
     if (localStorage.getItem("clearImageModal")) {
       this.removeImage();
+      if (this.state.index !== null) {
+        this.setState({
+          index: null
+        });
+      }
     } else {
       this.props.setDisplayRemoveImageModal({ display: true });
+      this.setState({
+        index: this.props.index
+      });
     }
   };
 
