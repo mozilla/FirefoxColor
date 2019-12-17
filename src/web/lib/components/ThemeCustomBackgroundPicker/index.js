@@ -124,6 +124,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
           shouldCancelStart={this.handleShouldCancelStart}
           onSortStart={this.handleSortStart}
           onSortEnd={this.handleSortEnd}
+          addImageToStorage={this.addImageToStorage}
         />
         {!storageErrorMessage && (
           <ImageImporter
@@ -193,7 +194,8 @@ const BackgroundList = SortableContainer(props => {
     clearCustomBackground,
     updateCustomBackground,
     themeCustomBackgrounds,
-    themeCustomImages
+    themeCustomImages,
+    addImageToStorage
   } = props;
   return (
     <ul className="backgroundList">
@@ -204,7 +206,7 @@ const BackgroundList = SortableContainer(props => {
             ...props,
             item,
             index,
-            image: themeCustomImages[item.name],
+            image: themeCustomImages[item.name] || addImageToStorage(item.name),
             clearCustomBackground: (args = {}) =>
               clearCustomBackground({ index, ...args }),
             updateCustomBackground: (args = {}) =>
