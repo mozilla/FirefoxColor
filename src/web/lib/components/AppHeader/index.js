@@ -37,6 +37,15 @@ export const AppHeader = props => {
       : setTheme({ theme: generateRandomTheme() });
   };
 
+  const [shouldUpdate, setUpdate] = React.useState(false);
+
+  React.useEffect(() => {
+    if (shouldUpdate) {
+      syncImages();
+    }
+  }, [props.themeCustomBackgrounds]);
+
+
   const handleExportClick = () => {
     showExportThemeDialog(true);
   };
@@ -45,29 +54,69 @@ export const AppHeader = props => {
     setDisplayShareModal({ display: !displayShareModal });
   };
 
+  // sync images in local storage with custom backgroundsin preview/saved themes on undo/redo
+  const syncImages = () => {
+    let currentImages = new Set();
+
+    props.themeCustomBackgrounds
+      .forEach(({ name }) => currentImages.add(name));
+
+    let savedImagesInThemes = new Set();
+
+    Object.values(props.savedThemes).forEach(({ theme }) => {
+      (theme.images.custom_backgrounds || []).forEach(bg => {
+        savedImagesInThemes.add(bg.name);
+      });
+    });
+
+    const toDelete = Object.keys(localStorage).filter(key => {
+      if (key.startsWith("IMAGE-")) {
+        const name = key.substring(6);
+        // If an image isnt found in the current custom background images list and isn't in any
+        // saved theme we can delete the image from local storage on undo/redo.
+        if (!currentImages.has(name) && !savedImagesInThemes.has(name)) return key;
+      }
+      return false;
+    }).map(item => item.substring(6));
+
+
+    if (toDelete.length) {
+      props.deleteImages(toDelete);
+    }
+  };
+
   const headerButton = (
     onClickButton,
     icon,
     text,
     disabledCheck = true,
     children = null
-  ) => (
-    <React.Fragment>
-      <button
-        title={text}
-        className={classnames("app-header__button", `${text}`, {
-          disabled: !disabledCheck
-        })}
-        onClick={onClickButton}
-      >
-        <div className="app-header__button-icon">
-          <img src={icon} width="20" height="auto" aria-hidden="true" />
-        </div>
-        <span>{text}</span>
-      </button>
-      {children}
-    </React.Fragment>
-  );
+
+  ) => {
+    const handleButtonClick = (event) => {
+      const { currentTarget: { title } } = event;
+      onClickButton();
+      setUpdate(title === "Undo" || title === "Redo" || title === "Random");
+    };
+
+    return (
+      <React.Fragment>
+        <button
+          title={text}
+          className={classnames("app-header__button", `${text}`, {
+            disabled: !disabledCheck
+          })}
+          onClick={handleButtonClick}
+        >
+          <div className="app-header__button-icon">
+            <img src={icon} width="20" height="auto" aria-hidden="true" />
+          </div>
+          <span>{text}</span>
+        </button>
+        {children}
+      </React.Fragment>
+    );
+  };
 
   return (
     <header className="app-header">

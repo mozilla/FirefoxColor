@@ -25,33 +25,19 @@ export class ThemeCustomBackgroundPicker extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { themeCustomBackgrounds } = this.props;
+    const { themeCustomBackgrounds, themeCustomImages } = this.props;
 
-    // sync images in local storage with custom backgroundsin preview on undo/redo
+    // sync images in local storage with custom backgrounds in preview on undo/redo
+    // when custom background changes.
     if (prevProps.themeCustomBackgrounds.length !== themeCustomBackgrounds.length) {
-      const keys = Object.keys(this.props.themeCustomImages);
+      const keys = Object.keys(themeCustomImages);
 
-      if (prevProps.themeCustomBackgrounds.length !== 0 && themeCustomBackgrounds.length === 0) {
-        prevProps.themeCustomBackgrounds.forEach((_, index) => {
-          this.props.clearCustomBackground({
-            index
-          });
-        });
-      } else if (prevProps.themeCustomBackgrounds.length < themeCustomBackgrounds.length) {
-        themeCustomBackgrounds.forEach(({ name }) => {
-          if (!keys.includes(name)) {
-            this.addImageToStorage(name);
-          }
-        });
-      } else {
-        prevProps.themeCustomBackgrounds.forEach((_, index) => {
-          if (!themeCustomBackgrounds[index]) {
-            this.props.clearCustomBackground({
-              index
-            });
-          }
-        });
-      }
+      themeCustomBackgrounds.forEach(({ name }) => {
+        const imageInStorage = this.props.storage.imageStorage.get(name);
+        if (!keys.includes(name) && !imageInStorage) {
+          this.addImageToStorage(name);
+        }
+      });
     }
   }
 
@@ -194,8 +180,7 @@ const BackgroundList = SortableContainer(props => {
     clearCustomBackground,
     updateCustomBackground,
     themeCustomBackgrounds,
-    themeCustomImages,
-    addImageToStorage
+    themeCustomImages
   } = props;
   return (
     <ul className="backgroundList">
@@ -206,7 +191,7 @@ const BackgroundList = SortableContainer(props => {
             ...props,
             item,
             index,
-            image: themeCustomImages[item.name] || addImageToStorage(item.name),
+            image: themeCustomImages[item.name],
             clearCustomBackground: (args = {}) =>
               clearCustomBackground({ index, ...args }),
             updateCustomBackground: (args = {}) =>
