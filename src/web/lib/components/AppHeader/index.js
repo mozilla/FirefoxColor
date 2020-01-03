@@ -69,16 +69,17 @@ export const AppHeader = props => {
       });
     });
 
-    const toDelete = Object.keys(localStorage).filter(key => {
+    const toDelete = [];
+    Object.keys(localStorage).forEach(key => {
       if (key.startsWith("IMAGE-")) {
         const name = key.substring(6);
         // If an image isnt found in the current custom background images list and isn't in any
         // saved theme we can delete the image from local storage on undo/redo.
-        if (!currentImages.has(name) && !savedImagesInThemes.has(name)) return key;
+        if (!currentImages.has(name) && !savedImagesInThemes.has(name)) {
+          toDelete.push(name);
+        }
       }
-      return false;
-    }).map(item => item.substring(6));
-
+    });
 
     if (toDelete.length) {
       props.deleteImages(toDelete);
@@ -93,12 +94,6 @@ export const AppHeader = props => {
     children = null
 
   ) => {
-    const handleButtonClick = (event) => {
-      const { currentTarget: { title } } = event;
-      onClickButton();
-      setUpdate(title === "Undo" || title === "Redo" || title === "Random");
-    };
-
     return (
       <React.Fragment>
         <button
@@ -106,7 +101,7 @@ export const AppHeader = props => {
           className={classnames("app-header__button", `${text}`, {
             disabled: !disabledCheck
           })}
-          onClick={handleButtonClick}
+          onClick={onClickButton}
         >
           <div className="app-header__button-icon">
             <img src={icon} width="20" height="auto" aria-hidden="true" />
@@ -118,6 +113,11 @@ export const AppHeader = props => {
     );
   };
 
+  const withUpdate = onClickButton => {
+    onClickButton();
+    setUpdate(true);
+  };
+
   return (
     <header className="app-header">
       <div className="app-header__content">
@@ -127,9 +127,9 @@ export const AppHeader = props => {
         </div>
       </div>
       <div className="app-header__controls">
-        {headerButton(undo, iconUndo, "Undo", themeCanUndo)}
-        {headerButton(redo, iconRedo, "Redo", themeCanRedo)}
-        {headerButton(handleRandomClick, iconRandomize, "Random")}
+        {headerButton(withUpdate.bind(null, undo), iconUndo, "Undo", themeCanUndo)}
+        {headerButton(withUpdate.bind(null, redo), iconRedo, "Redo", themeCanRedo)}
+        {headerButton(withUpdate.bind(null, handleRandomClick), iconRandomize, "Random")}
 
         <div className="app-header__spacer" />
 
