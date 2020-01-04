@@ -92,26 +92,23 @@ export const AppHeader = props => {
     text,
     disabledCheck = true,
     children = null
-
-  ) => {
-    return (
-      <React.Fragment>
-        <button
-          title={text}
-          className={classnames("app-header__button", `${text}`, {
-            disabled: !disabledCheck
-          })}
-          onClick={onClickButton}
-        >
-          <div className="app-header__button-icon">
-            <img src={icon} width="20" height="auto" aria-hidden="true" />
-          </div>
-          <span>{text}</span>
-        </button>
-        {children}
-      </React.Fragment>
-    );
-  };
+  ) => (
+    <React.Fragment>
+      <button
+        title={text}
+        className={classnames("app-header__button", `${text}`, {
+          disabled: !disabledCheck
+        })}
+        onClick={onClickButton}
+      >
+        <div className="app-header__button-icon">
+          <img src={icon} width="20" height="auto" aria-hidden="true" />
+        </div>
+        <span>{text}</span>
+      </button>
+      {children}
+    </React.Fragment>
+  );
 
   const withUpdate = onClickButton => {
     onClickButton();
