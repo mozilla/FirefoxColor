@@ -13,6 +13,7 @@ import {
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
 import ClearImageModal from "../ClearImageModal";
+import { temporaryImageStore } from "../../middleware";
 
 import "./index.scss";
 import iconHAlignLeft from "./icon_align_left.svg";
@@ -21,6 +22,23 @@ import iconVAlignCenter from "./icon_align_center.svg";
 export class ThemeCustomBackgroundPicker extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { themeCustomBackgrounds, themeCustomImages } = this.props;
+
+    // sync images in local storage with custom backgrounds in preview on undo/redo
+    // when custom background changes.
+    if (prevProps.themeCustomBackgrounds.length !== themeCustomBackgrounds.length) {
+      const keys = Object.keys(themeCustomImages);
+
+      themeCustomBackgrounds.forEach(({ name }) => {
+        const imageInStorage = this.props.storage.imageStorage.get(name);
+        if (!keys.includes(name) && !imageInStorage) {
+          this.addImageToStorage(name);
+        }
+      });
+    }
   }
 
   handleImageAdd = ({ name }) => {
@@ -64,6 +82,13 @@ export class ThemeCustomBackgroundPicker extends React.Component {
     this.props.moveCustomBackground({ oldIndex, newIndex });
   };
 
+  addImageToStorage = (name) => {
+    const image = temporaryImageStore.get(name);
+    if (image) {
+      this.props.updateImage({ ...image, importing: true });
+    }
+  };
+
   render() {
     const {
       addImage,
@@ -85,6 +110,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
           shouldCancelStart={this.handleShouldCancelStart}
           onSortStart={this.handleSortStart}
           onSortEnd={this.handleSortEnd}
+          addImageToStorage={this.addImageToStorage}
         />
         {!storageErrorMessage && (
           <ImageImporter
@@ -189,6 +215,10 @@ const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
 class ThemeCustomBackgroundSelector extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      index: null
+    };
   }
 
   componentDidMount() {
@@ -297,7 +327,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              {this.props.displayRemoveImageModal && (
+              {this.props.displayRemoveImageModal && this.state.index === this.props.index && (
                 <div className="modal-wrapper--clear-image">
                   <ClearImageModal
                     confirm={this.confirm}
@@ -327,16 +357,27 @@ class ThemeCustomBackgroundSelector extends React.Component {
   handleClearBackground = () => {
     if (localStorage.getItem("clearImageModal")) {
       this.removeImage();
+      if (this.state.index !== null) {
+        this.setState({
+          index: null
+        });
+      }
     } else {
       this.props.setDisplayRemoveImageModal({ display: true });
+      this.setState({
+        index: this.props.index
+      });
     }
   };
 
   removeImage = () => {
-    // TODO: update / remove /resave theme/s without this image.
     const { image } = this.props;
+
+    if (image) {
+      this.props.deleteImages([image.name]);
+    }
+
     this.props.clearCustomBackground();
-    this.props.storage.imageStorage.delete(image.name);
   }
 
   handleTilingChange = ev => {
