@@ -4,7 +4,7 @@ jobs:
 
   build_and_test:
     docker:
-      - image: circleci/node:8.11.2@sha256:495a13db597b5306f05ae728489fedb9faa4defbac24ca0e00e8cc1eca95396d
+      - image: circleci/node:10.18.1@sha256:6bb2f0665d1d46a963ffabff6334deb363a92e6bcfaaa6753b9d0ea3084680fd
     environment:
       ADDON_URL: https://addons.mozilla.org/firefox/addon/firefox-color/
     working_directory: ~/FirefoxColor
@@ -39,7 +39,7 @@ jobs:
 
   deploy_development:
     docker:
-      - image: circleci/node:8.11.2@sha256:495a13db597b5306f05ae728489fedb9faa4defbac24ca0e00e8cc1eca95396d
+      - image: circleci/node:10.18.1@sha256:6bb2f0665d1d46a963ffabff6334deb363a92e6bcfaaa6753b9d0ea3084680fd
     working_directory: ~/FirefoxColor
     steps:
       - attach_workspace:
