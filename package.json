@@ -61,7 +61,7 @@
     "release:dev": "cross-env ADDON_URL='https://addons-dev.allizom.org/firefox/addon/firefox-color/' SITE_URL='https://mozilla.github.io/FirefoxColor/' SITE_ID=github npm run release:base"
   },
   "engines": {
-    "node": ">=8.9.4"
+    "node": ">=10.18.1"
   },
   "license": "MPL-2.0",
   "repository": "mozilla/FirefoxColor",
