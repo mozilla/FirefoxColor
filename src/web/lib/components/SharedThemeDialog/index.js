@@ -3,9 +3,11 @@ import Browser from "../Browser";
 import "./index.scss";
 
 export const SharedThemeDialog = ({
+  theme,
   pendingTheme,
   setTheme,
-  clearPendingTheme
+  clearPendingTheme,
+  previewTheme
 }) => {
   const onApply = () => {
     setTheme({ theme: pendingTheme });
@@ -19,10 +21,13 @@ export const SharedThemeDialog = ({
       onSkip();
     }
   };
+  const onHover = theme => {
+    previewTheme({ theme });
+  };
   return (
     <div className="shared-theme-dialog-wrapper" onClick={onClickBackdrop}>
       <div className="shared-theme-dialog">
-        <div className="preview">
+        <div className="preview" onMouseEnter={() => onHover(pendingTheme)} onMouseLeave={() => onHover(theme)}>
           <Browser {...{ size: "medium", theme: pendingTheme }} />
         </div>
         <div className="options">

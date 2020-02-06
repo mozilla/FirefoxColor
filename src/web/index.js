@@ -166,7 +166,7 @@ window.addEventListener("message", ({ source, data: message }) => {
   }
 });
 
-// Periodicelly ping the extension to detect install / uninstall, since we have
+// Periodically ping the extension to detect install / uninstall, since we have
 // no access to mozAddonManager.
 setInterval(() => {
   postMessage("ping");
@@ -191,6 +191,10 @@ const performThemeExport = args =>
     ({ default: perform }) => perform({ ...args, store, bgImages })
   );
 
+const previewTheme = data => {
+  postMessage("setTheme", { ...data, isPreview: true });
+};
+
 render(
   <Provider store={store}>
     <App
@@ -202,7 +206,8 @@ render(
         isMobile,
         isFirefox,
         loaderQuote,
-        performThemeExport
+        performThemeExport,
+        previewTheme
       }}
     />
   </Provider>,

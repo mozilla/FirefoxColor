@@ -51,7 +51,9 @@ const messageHandlers = {
   setTheme: message => {
     const theme = normalizeTheme(message.theme);
     log("setTheme", theme);
-    storeTheme({ theme });
+    if (!message.isPreview) {
+     storeTheme({ theme });
+    }
     applyTheme({ theme });
   },
   ping: (message, port) => {
