@@ -192,7 +192,7 @@ const performThemeExport = args =>
   );
 
 const previewTheme = data => {
-  postMessage("setTheme", { ...data, isPreview: true });
+  postMessage("previewTheme", data);
 };
 
 render(

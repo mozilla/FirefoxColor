@@ -8,6 +8,8 @@ const siteUrl = process.env.SITE_URL;
 
 let customBackgrounds = {};
 
+let isThemePreview = false;
+
 const init = () => {
   browser.browserAction.onClicked.addListener(() => {
     queryAndFocusTab("fromAddon=true");
@@ -15,6 +17,9 @@ const init = () => {
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
     port.postMessage({ type: "hello" });
+    port.onDisconnect.addListener(() => {
+      if (isThemePreview) fetchTheme().then(applyTheme);
+    });
   });
   browser.windows.onCreated.addListener(() => {
     fetchTheme().then(applyTheme);
@@ -51,10 +56,19 @@ const messageHandlers = {
   setTheme: message => {
     const theme = normalizeTheme(message.theme);
     log("setTheme", theme);
-    if (!message.isPreview) {
-     storeTheme({ theme });
-    }
+    storeTheme({ theme });
     applyTheme({ theme });
+  },
+  previewTheme: message => {
+    if (message.theme) {
+      const theme = normalizeTheme(message.theme);
+      log("previewTheme", theme);
+      applyTheme({ theme });
+      isThemePreview = true;
+    } else {
+      fetchTheme().then(applyTheme);
+      isThemePreview = false;
+    }
   },
   ping: (message, port) => {
     port.postMessage({ type: "pong" });
