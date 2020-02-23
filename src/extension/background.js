@@ -18,7 +18,10 @@ const init = () => {
     port.onMessage.addListener(messageListener(port));
     port.postMessage({ type: "hello" });
     port.onDisconnect.addListener(() => {
-      if (isThemePreview) fetchTheme().then(applyTheme);
+      if (isThemePreview) {
+        isThemePreview = false;
+        fetchTheme().then(applyTheme);
+      }
     });
   });
   browser.windows.onCreated.addListener(() => {
