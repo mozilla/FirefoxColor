@@ -62,11 +62,11 @@ const messageHandlers = {
     storeTheme({ theme });
     applyTheme({ theme });
   },
-  previewTheme: message => {
-    if (message.theme) {
-      const theme = normalizeTheme(message.theme);
-      log("previewTheme", theme);
-      applyTheme({ theme });
+  previewTheme: ({ theme }) => {
+    log("previewTheme", theme);
+    if (theme) {
+      const previewTheme = normalizeTheme(theme);
+      applyTheme({ theme: previewTheme });
       isThemePreview = true;
     } else {
       fetchTheme().then(applyTheme);
