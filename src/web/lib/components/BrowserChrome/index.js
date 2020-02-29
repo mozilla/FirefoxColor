@@ -33,7 +33,6 @@ const BrowserChrome = ({
               position: "absolute",
               height: "100%",
               width: "100%",
-              backgroundSize: "50% auto",
               zIndex: 4 - index
             }}
           />
