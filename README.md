@@ -6,7 +6,7 @@
 
 ## Get Started
 
-1. Install Node 8.9.4+ (e.g. using [node version manger][nvm])
+1. Install Node 10.18.1+ (e.g. using [node version manger][nvm])
 
 1. Clone the repo, install dependencies, start the dev environment:
    ```
