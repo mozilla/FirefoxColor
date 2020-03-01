@@ -19,6 +19,16 @@ import "./index.scss";
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
 
+
+const mapErrors = (errors) => {
+  if (errors.tooLarge) {
+    return "The image is too large. (1MB maximum size)";
+  } else if (errors.wrongType) {
+    return "The file is not an accepted image type.";
+  }
+  return "";
+};
+
 export class ThemeCustomBackgroundPicker extends React.Component {
   constructor(props) {
     super(props);
@@ -129,12 +139,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
                   <React.Fragment>
                     <Modal>
                       <ul className="errors">
-                        {errors.tooLarge && (
-                          <li>The image is too large. (1MB maximum size)</li>
-                        )}
-                        {errors.wrongType && (
-                          <li>The file is not an accepted image type.</li>
-                        )}
+                        <li>{mapErrors(errors)}</li>
                       </ul>
                     </Modal>
                   </React.Fragment>
@@ -206,7 +211,7 @@ const BackgroundList = SortableContainer(props => {
 const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
   <span
     className={classNames("drag-handle", "status-icon", icon)}
-    title={!errors ? "" : JSON.stringify(errors)}
+    title={mapErrors(errors)}
   >
     &nbsp;
   </span>
