@@ -8,6 +8,14 @@ import "./index.scss";
 
 import iconClose from "./close.svg";
 
+const usePrevious = value => {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
+
 export const PaginatedThemeSelector = ({
   themes,
   className,
@@ -20,6 +28,14 @@ export const PaginatedThemeSelector = ({
   images = []
 }) => {
   const itemCount = themes.length;
+  const previousCount = usePrevious(themes.length);
+
+  React.useEffect(() => {
+  if (itemCount !== previousCount && previousCount !== null && itemCount % perPage === 0 && currentPage !== 0) {
+    setCurrentPage(currentPage - 1);
+  }
+ }, [itemCount]);
+
   const pageCount = Math.ceil(itemCount / perPage);
   const startIdx = perPage * currentPage;
   const endIdx = startIdx + perPage;
