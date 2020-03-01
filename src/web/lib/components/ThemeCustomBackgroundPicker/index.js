@@ -20,10 +20,15 @@ import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
 
 
-const mapErrors = (errors) => {
-  if (errors.tooLarge) {
+const mapErrors = ({ tooLarge, wrongType}) => {
+  if (tooLarge && wrongType) {
+    return `
+    The image is too large. (1MB maximum size) 
+    The file is not an accepted image type.
+    `;
+  } else if (tooLarge) {
     return "The image is too large. (1MB maximum size)";
-  } else if (errors.wrongType) {
+  } else if (wrongType) {
     return "The file is not an accepted image type.";
   }
   return "";
@@ -138,9 +143,9 @@ export class ThemeCustomBackgroundPicker extends React.Component {
                 {errors && (
                   <React.Fragment>
                     <Modal>
-                      <ul className="errors">
-                        <li>{mapErrors(errors)}</li>
-                      </ul>
+                      <div className="errors">
+                        <span>{mapErrors(errors)}</span>
+                      </div>
                     </Modal>
                   </React.Fragment>
                 )}
