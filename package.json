@@ -130,7 +130,7 @@
   },
   "dependencies": {
     "classnames": "2.2.6",
-    "clipboard": "2.0.4",
+    "clipboard": "2.0.5",
     "email-addresses": "3.0.3",
     "fira": "github:mozilla/fira#4.202",
     "json-url": "2.3.4",
