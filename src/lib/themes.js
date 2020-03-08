@@ -33,6 +33,14 @@ export const themesEqual = (themeA, themeB) => {
     }
   }
 
+  if (themeA.images && !themeA.images.custom_backgrounds) {
+      themeA.images.custom_backgrounds = [];
+  }
+
+  if (themeB.images && !themeB.images.custom_backgrounds) {
+      themeB.images.custom_backgrounds = [];
+  }
+  
   const hasCustomImagesA =
     "images" in themeA && "custom_backgrounds" in themeA.images;
   const hasCustomImagesB =
