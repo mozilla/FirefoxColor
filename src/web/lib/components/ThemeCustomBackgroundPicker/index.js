@@ -21,17 +21,14 @@ import iconVAlignCenter from "./icon_align_center.svg";
 
 
 const mapErrors = ({ tooLarge, wrongType}) => {
-  if (tooLarge && wrongType) {
-    return `
-    The image is too large. (1MB maximum size) 
-    The file is not an accepted image type.
-    `;
-  } else if (tooLarge) {
-    return "The image is too large. (1MB maximum size)";
-  } else if (wrongType) {
-    return "The file is not an accepted image type.";
+  let errors = [];
+  if (tooLarge) {
+    errors.push("The image is too large. (1MB maximum size)");
+  } 
+  if (wrongType) {
+    errors.push("The file is not an accepted image type.");
   }
-  return "";
+  return errors;
 };
 
 export class ThemeCustomBackgroundPicker extends React.Component {
@@ -143,9 +140,9 @@ export class ThemeCustomBackgroundPicker extends React.Component {
                 {errors && (
                   <React.Fragment>
                     <Modal>
-                      <div className="errors">
-                        <span>{mapErrors(errors)}</span>
-                      </div>
+                      <ul className="errors">
+                        {mapErrors(errors).map((error, i) => <li key={i}>{error}</li>)}
+                      </ul>
                     </Modal>
                   </React.Fragment>
                 )}
@@ -216,7 +213,7 @@ const BackgroundList = SortableContainer(props => {
 const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
   <span
     className={classNames("drag-handle", "status-icon", icon)}
-    title={mapErrors(errors)}
+    title={mapErrors(errors).join("\n")}
   >
     &nbsp;
   </span>
