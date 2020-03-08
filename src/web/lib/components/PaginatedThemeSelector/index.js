@@ -22,8 +22,9 @@ export const PaginatedThemeSelector = ({
   const itemCount = themes.length;
 
   React.useEffect(() => {
-    if (itemCount && itemCount % perPage === 0 && currentPage) {
-      setCurrentPage(currentPage - 1);
+    const pageCount = Math.ceil(itemCount / perPage);
+    if (itemCount && currentPage >= pageCount) {
+      setCurrentPage(pageCount - 1);
     }
  }, [itemCount]);
 
