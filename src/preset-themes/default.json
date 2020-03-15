@@ -50,8 +50,6 @@
     }
   },
   "images": {
-    "additional_backgrounds": [
-      "./bg-009.svg"
-    ]
+    "additional_backgrounds": ["./bg-009.svg"]
   }
 }

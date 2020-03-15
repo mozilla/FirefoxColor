@@ -11,7 +11,7 @@ const defaultTheme = presetThemesContext("./default.json");
 
 const IMAGE_PROPS = ["name", "tiling", "alignment"];
 
-export const themesEqual = (themeA, themeB) => {  
+export const themesEqual = (themeA, themeB) => {
   if (!!themeA !== !!themeB) {
     return false;
   }
