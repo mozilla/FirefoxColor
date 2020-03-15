@@ -11,7 +11,7 @@ const defaultTheme = presetThemesContext("./default.json");
 
 const IMAGE_PROPS = ["name", "tiling", "alignment"];
 
-export const themesEqual = (themeA, themeB) => {
+export const themesEqual = (themeA, themeB) => {  
   if (!!themeA !== !!themeB) {
     return false;
   }
@@ -33,17 +33,8 @@ export const themesEqual = (themeA, themeB) => {
     }
   }
 
-  if (themeA.images && !themeA.images.custom_backgrounds) {
-      themeA.images.custom_backgrounds = [];
-  }
-
-  if (themeB.images && !themeB.images.custom_backgrounds) {
-      themeB.images.custom_backgrounds = [];
-  }
-
-    const imagesA = themeA.images && themeA.images.custom_backgrounds || [];
-    const imagesB = themeB.images && themeB.images.custom_backgrounds || [] ;
-
+  const imagesA = themeA.images && themeA.images.custom_backgrounds || [];
+  const imagesB = themeB.images && themeB.images.custom_backgrounds || [] ;
     if (imagesA.length !== imagesB.length) {
       return false;
     }
