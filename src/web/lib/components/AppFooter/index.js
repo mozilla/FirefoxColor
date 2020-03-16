@@ -8,7 +8,8 @@ import iconTwitter from "./twitter-logo.svg";
 import "./index.scss";
 
 export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
-  const toggleModal = name => {
+  const toggleModal = (e, name) => {
+    e.preventDefault();
     setDisplayLegalModal({ display: true });
   };
   return (
@@ -30,14 +31,14 @@ export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
         <a
           className="app-footer__legal-link"
           href="#"
-          onClick={() => toggleModal("Privacy")}
+          onClick={(e) => toggleModal(e, "Privacy")}
         >
           Privacy
         </a>
         <a
           className="app-footer__legal-link"
           href="#"
-          onClick={() => toggleModal("Terms")}
+          onClick={(e) => toggleModal(e, "Terms")}
         >
           Terms
         </a>
