@@ -98,6 +98,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
     const image = temporaryImageStore.get(name);
     if (image) {
       this.props.updateImage({ ...image, importing: true });
+      this.props.updateCustomBackground({ name });
     }
   };
 
