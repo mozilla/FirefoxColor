@@ -172,7 +172,7 @@ document.addEventListener("click", event => {
   }
 });
 
-// Periodicelly ping the extension to detect install / uninstall, since we have
+// Periodically ping the extension to detect install / uninstall, since we have
 // no access to mozAddonManager.
 setInterval(() => {
   postMessage("ping");
