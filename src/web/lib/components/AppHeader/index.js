@@ -45,6 +45,8 @@ export const AppHeader = props => {
       syncImages();
     }
   }, [props.themeCustomBackgrounds]);
+
+
   const handleExportClick = () => {
     showExportThemeDialog(true);
   };
