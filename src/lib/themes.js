@@ -33,27 +33,18 @@ export const themesEqual = (themeA, themeB) => {
     }
   }
 
-  const hasCustomImagesA =
-    "images" in themeA && "custom_backgrounds" in themeA.images;
-  const hasCustomImagesB =
-    "images" in themeB && "custom_backgrounds" in themeB.images;
-  if (hasCustomImagesA !== hasCustomImagesB) {
+  const imagesA = themeA.images && themeA.images.custom_backgrounds || [];
+  const imagesB = themeB.images && themeB.images.custom_backgrounds || [] ;
+  if (imagesA.length !== imagesB.length) {
     return false;
   }
-  if (hasCustomImagesA && hasCustomImagesB) {
-    const imagesA = themeA.images.custom_backgrounds;
-    const imagesB = themeB.images.custom_backgrounds;
-    if (imagesA.length !== imagesB.length) {
-      return false;
-    }
-    for (let idx = 0; idx < imagesA.length; idx++) {
-      for (let propIdx = 0; propIdx < IMAGE_PROPS.length; propIdx++) {
-        if (
-          imagesA[idx][IMAGE_PROPS[propIdx]] !==
-          imagesB[idx][IMAGE_PROPS[propIdx]]
-        ) {
-          return false;
-        }
+  for (let idx = 0; idx < imagesA.length; idx++) {
+    for (let propIdx = 0; propIdx < IMAGE_PROPS.length; propIdx++) {
+      if (
+        imagesA[idx][IMAGE_PROPS[propIdx]] !==
+        imagesB[idx][IMAGE_PROPS[propIdx]]
+      ) {
+        return false;
       }
     }
   }

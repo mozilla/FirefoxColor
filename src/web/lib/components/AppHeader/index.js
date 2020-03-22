@@ -43,7 +43,7 @@ export const AppHeader = props => {
     if (shouldUpdate) {
       syncImages();
     }
-  }, [props.themeCustomBackgrounds]);
+  }, [shouldUpdate]);
 
 
   const handleExportClick = () => {
@@ -84,6 +84,7 @@ export const AppHeader = props => {
     if (toDelete.length) {
       props.deleteImages(toDelete);
     }
+    setUpdate(false);
   };
 
   const headerButton = (
