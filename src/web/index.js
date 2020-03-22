@@ -167,7 +167,7 @@ window.addEventListener("message", ({ source, data: message }) => {
 });
 
 document.addEventListener("click", event => {
-  if (event.target.title === "Revert All") {
+  if (event.target.closest("[title='Revert All']")) {
     postMessage("revertAll");
   }
 });

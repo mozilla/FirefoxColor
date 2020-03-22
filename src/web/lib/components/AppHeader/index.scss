@@ -57,21 +57,12 @@
     padding: 0;
     width: 64px;
 
-    span {
-      pointer-events: none;
-    }
-
     .app-header__button-icon {
       align-items: Center;
       display: flex;
       height: 20px;
       margin-bottom: 1px;
       width: 22px;
-      pointer-events: none;
-
-      img {
-        pointer-events: none;
-      }
     }
 
     &.disabled {
