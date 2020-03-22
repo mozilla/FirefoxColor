@@ -83,8 +83,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme()),
     setUsedStorage: args => dispatch(actions.ui.setUsedStorage(args)),
     setStorageErrorMessage: args =>
-      dispatch(actions.ui.setStorageErrorMessage(args)),
-    revertAll: () => dispatch(actions.ui.revertAll())
+      dispatch(actions.ui.setStorageErrorMessage(args))
   };
 };
 
