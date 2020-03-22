@@ -167,8 +167,9 @@ window.addEventListener("message", ({ source, data: message }) => {
 });
 
 document.addEventListener("click", event => {
-  if (event.target.closest(".onboarding__panels")) return;
-  postMessage("activateExt");
+  if (event.target.title === "Revert All") {
+    postMessage("revertAll");
+  }
 });
 
 // Periodicelly ping the extension to detect install / uninstall, since we have
