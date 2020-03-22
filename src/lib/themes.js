@@ -35,19 +35,19 @@ export const themesEqual = (themeA, themeB) => {
 
   const imagesA = themeA.images && themeA.images.custom_backgrounds || [];
   const imagesB = themeB.images && themeB.images.custom_backgrounds || [] ;
-    if (imagesA.length !== imagesB.length) {
-      return false;
-    }
-    for (let idx = 0; idx < imagesA.length; idx++) {
-      for (let propIdx = 0; propIdx < IMAGE_PROPS.length; propIdx++) {
-        if (
-          imagesA[idx][IMAGE_PROPS[propIdx]] !==
-          imagesB[idx][IMAGE_PROPS[propIdx]]
-        ) {
-          return false;
-        }
+  if (imagesA.length !== imagesB.length) {
+    return false;
+  }
+  for (let idx = 0; idx < imagesA.length; idx++) {
+    for (let propIdx = 0; propIdx < IMAGE_PROPS.length; propIdx++) {
+      if (
+        imagesA[idx][IMAGE_PROPS[propIdx]] !==
+        imagesB[idx][IMAGE_PROPS[propIdx]]
+      ) {
+        return false;
       }
     }
+  }
 
   // TODO: Skipping title equality, because user themes don't have titles yet.
 
