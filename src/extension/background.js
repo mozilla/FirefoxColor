@@ -50,9 +50,6 @@ const messageListener = port => message => {
 };
 
 const messageHandlers = {
-  activateExt: (message) => {
-    browser.storage.local.set({ hadUIInteraction: true });
-  },
   fetchTheme: (message, port) => {
     log("fetchTheme");
     fetchTheme().then(({ theme: currentTheme }) =>
