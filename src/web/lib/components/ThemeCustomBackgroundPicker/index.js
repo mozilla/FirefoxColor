@@ -36,12 +36,22 @@ export class ThemeCustomBackgroundPicker extends React.Component {
     super(props);
   }
 
-  componentDidUpdate(prevProps) {
-    const { themeCustomBackgrounds, themeCustomImages } = this.props;
-
+  componentDidMount() {
     // sync images in local storage with custom backgrounds in preview on undo/redo
     // when custom background changes.
-    if (prevProps.themeCustomBackgrounds.length !== themeCustomBackgrounds.length) {
+    this.syncImages(this.props.themeCustomImages);
+  }
+
+  componentDidUpdate(prevProps) {
+    // sync images in local storage with custom backgrounds in preview on undo/redo
+    // when custom background changes.
+    this.syncImages(prevProps.themeCustomBackgrounds);
+  }
+
+  syncImages(comparisonFactor) {
+    const { themeCustomBackgrounds, themeCustomImages } = this.props;
+
+    if (comparisonFactor.length !== themeCustomBackgrounds.length) {
       const keys = Object.keys(themeCustomImages);
 
       themeCustomBackgrounds.forEach(({ name }) => {
