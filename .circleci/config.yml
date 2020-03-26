@@ -7,6 +7,7 @@ jobs:
       - image: circleci/node:10.18.1@sha256:8230f70c03b6ecf521a34125fb090ec4b47068205454e5820859c00260c9bd23
     environment:
       ADDON_URL: https://addons.mozilla.org/firefox/addon/firefox-color/
+      SITE_URL: https://color.firefox.com/
     working_directory: ~/FirefoxColor
     steps:
       - checkout
