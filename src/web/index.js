@@ -150,11 +150,14 @@ window.addEventListener("message", ({ source, data: message }) => {
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
-        const state = store.getState();
-        postMessage("addImages", {
-          images: selectors.themeCustomImages(state)
-        });
-        postMessage("setTheme", { theme: selectors.theme(state) });
+        // check if the current page was a shared theme link and set a default theme accordingly or do nothing.
+        if (!params.theme) {
+          const state = store.getState();
+          postMessage("addImages", {
+            images: selectors.themeCustomImages(state)
+          });
+          postMessage("setTheme", { theme: selectors.theme(state) });
+        }
       }
     }
     if (message.type === "fetchedTheme") {
@@ -278,6 +281,8 @@ if (!params.theme) {
   // The add-on may never answer, so start the loader delay.
   startLoaderDelay();
 } else {
+  // trigger a message to fetch and apply the current theme that the browser already has.
+  postMessage("fetchTheme");
   log("Received shared theme");
   urlDecodeTheme(params.theme)
     .then(theme => {
