@@ -20,7 +20,7 @@ const isDev = nodeEnv === "development";
 
 const defaultEnv = {
   NODE_ENV: nodeEnv,
-  ADDON_URL: "https://addons.mozilla.org/firefox/addon/firefox-color/",
+  ADDON_URL: "addon.xpi",
   SITE_URL: siteUrl,
   DOWNLOAD_FIREFOX_UTM_SOURCE: downloadFirefoxUtmSource,
   LOADER_DELAY_PERIOD: "2000"

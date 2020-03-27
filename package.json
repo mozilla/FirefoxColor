@@ -58,7 +58,7 @@
     "test:js": "mocha --require src/lib/test-setup.js --recursive \"src/**/*-test.js\"",
     "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/mozilla/FirefoxColor.git\"",
     "release:base": "npm-run-all clean build:web sign && mv addon.xpi build/web && npm run deploy",
-    "release:dev": "cross-env ADDON_URL='https://addons-dev.allizom.org/firefox/addon/firefox-color/' SITE_URL='https://mozilla.github.io/FirefoxColor/' SITE_ID=github npm run release:base"
+    "release:dev": "cross-env ADDON_URL='https://mozilla.github.io/FirefoxColor/addon.xpi' SITE_URL='https://mozilla.github.io/FirefoxColor/' SITE_ID=github npm run release:base"
   },
   "engines": {
     "node": ">=10.18.1"
