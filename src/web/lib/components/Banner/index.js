@@ -16,7 +16,7 @@ export const Banner = ({ isFirefox, addonUrl }) => {
               href={addonUrl}
               className="banner__button"
             >
-              Install Firefox Color
+              Get Firefox Color
             </a>
           </Fragment>
         )}

@@ -5,7 +5,8 @@ import "./index.scss";
 export const SharedThemeDialog = ({
   pendingTheme,
   setTheme,
-  clearPendingTheme
+  clearPendingTheme,
+  previewTheme
 }) => {
   const onApply = () => {
     setTheme({ theme: pendingTheme });
@@ -19,10 +20,17 @@ export const SharedThemeDialog = ({
       onSkip();
     }
   };
+  const onHover = mouseEnter => {
+    if (mouseEnter) {
+      previewTheme({ theme: pendingTheme });
+    } else {
+      previewTheme({});
+    }
+  };
   return (
     <div className="shared-theme-dialog-wrapper" onClick={onClickBackdrop}>
       <div className="shared-theme-dialog">
-        <div className="preview">
+        <div className="preview" onMouseEnter={() => onHover(true)} onMouseLeave={() => onHover(false)}>
           <Browser {...{ size: "medium", theme: pendingTheme }} />
         </div>
         <div className="options">

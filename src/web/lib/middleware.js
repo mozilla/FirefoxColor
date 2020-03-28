@@ -1,4 +1,5 @@
 import { actions, selectors, themeChangeActions } from "../../lib/store";
+export let temporaryImageStore = new Map();
 
 export default function({
   postMessage,
@@ -46,7 +47,8 @@ export default function({
       if (image.importing) {
         const { importing, ...importedImage } = image; // eslint-disable-line no-unused-vars
         postMessage("updateImage", { image: importedImage });
-        imageStorage.put(name, importedImage);
+        temporaryImageStore.set(name, importedImage);
+        imageStorage.put(name, importedImage, dispatch);
         dispatch(actions.images.updateImage({ name, importing: false }));
       }
       return rv;
@@ -80,19 +82,6 @@ export default function({
     // Start from the set of images used in the current theme.
     const usedImages = new Set(
       imageNames(selectors.themeCustomBackgrounds(state))
-    );
-
-    // Scan through undo/redo stack for images still in use.
-    [selectors.themePast(state), selectors.themeFuture(state)].forEach(
-      themes => {
-        themes
-          .filter(theme => theme.images && theme.images.custom_backgrounds)
-          .forEach(theme => {
-            imageNames(theme.images.custom_backgrounds).forEach(name =>
-              usedImages.add(name)
-            );
-          });
-      }
     );
 
     // Scan through saved themes for images still in use.

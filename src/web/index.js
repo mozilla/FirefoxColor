@@ -45,17 +45,37 @@ const urlEncodeTheme = ({ hasCustomBackgrounds = false, theme }) => {
   return hasCustomBackgrounds
     ? Promise.resolve(baseUrl)
     : jsonCodec
-        .compress(normalizeTheme(theme))
-        .then(value => `${baseUrl}?theme=${value}`);
+      .compress(normalizeTheme(theme))
+      .then(value => `${baseUrl}?theme=${value}`);
 };
 
 const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
 
-const postMessage = (type, data = {}) =>
+const postMessage = (type, data = {}) => {
+  // Add old lwt aliases for compatibility with Firefox Color 2.1.4 and earlier
+  // (new Firefox Color versions will remove these properties before applying it,
+  // while on older version it would make the theme to still look as expected).
+  if (type === "setTheme" && data.theme) {
+    // Deep-clone to avoid mutating the input parameter.
+    data = JSON.parse(JSON.stringify(data));
+    const { theme } = data;
+    if (theme.colors) {
+      if (!theme.colors.accentcolor && theme.colors.frame) {
+        theme.colors.accentcolor = theme.colors.frame;
+      }
+      if (!theme.colors.textcolor && theme.colors.tab_background_text) {
+        theme.colors.textcolor = theme.colors.tab_background_text;
+      }
+    }
+    if (theme.images && !theme.images.headerURL && theme.images.theme_frame) {
+      theme.images.headerURL = theme.images.theme_frame;
+    }
+  }
   window.postMessage(
     { ...data, type, channel: `${CHANNEL_NAME}-extension` },
     "*"
   );
+};
 
 const composeEnhancers = composeWithDevTools({});
 
@@ -80,6 +100,44 @@ window.addEventListener("popstate", ({ state: { theme } }) =>
     }
   })
 );
+
+window.addEventListener("beforeunload", (e) => {
+  const state = store.getState();
+  const imageNames = backgrounds =>
+    backgrounds.map(background => background.name);
+  const currentImages = new Set(
+    imageNames(selectors.themeCustomBackgrounds(state))
+  );
+  const localStorageKeys = Object.keys(localStorage);
+  const localStorageEntries = Object.entries(localStorage);
+
+  let themeImages = [];
+
+  // Search for any images that are used in themes.
+  localStorageEntries.forEach((_, index) => {
+    if (localStorageKeys[index].startsWith("THEME")) {
+      const item = localStorage.getItem(localStorageKeys[index]);
+      const itemParsed = JSON.parse(item);
+      if (!itemParsed.theme.images.custom_backgrounds) return;
+      itemParsed.theme.images.custom_backgrounds.map(bgs => {
+        if (localStorageKeys.includes(`IMAGE-${bgs.name}`)) {
+          themeImages.push(bgs.name);
+        }
+      });
+    }
+  });
+
+  // Remove duplicates images that come up.
+  const themeImagesSet = new Set(themeImages);
+
+  // Remove images that are not used in saved themes or are currently in the custom background
+  // view.
+  const toDelete = Object.keys(selectors.themeCustomImages(state)).filter(name => {
+    return !currentImages.has(name) && !themeImagesSet.has(name);
+  });
+
+  store.dispatch(actions.images.deleteImages(toDelete));
+});
 
 window.addEventListener("message", ({ source, data: message }) => {
   if (
@@ -108,7 +166,7 @@ window.addEventListener("message", ({ source, data: message }) => {
   }
 });
 
-// Periodicelly ping the extension to detect install / uninstall, since we have
+// Periodically ping the extension to detect install / uninstall, since we have
 // no access to mozAddonManager.
 setInterval(() => {
   postMessage("ping");
@@ -133,6 +191,10 @@ const performThemeExport = args =>
     ({ default: perform }) => perform({ ...args, store, bgImages })
   );
 
+const previewTheme = data => {
+  postMessage("previewTheme", data);
+};
+
 render(
   <Provider store={store}>
     <App
@@ -144,7 +206,8 @@ render(
         isMobile,
         isFirefox,
         loaderQuote,
-        performThemeExport
+        performThemeExport,
+        previewTheme
       }}
     />
   </Provider>,

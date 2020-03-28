@@ -100,6 +100,20 @@ describe("lib/store", () => {
       images = selectors.themeCustomImages(store.getState());
       expect(Object.keys(images)).to.have.lengthOf(0);
     });
+
+    it("should track used storage", () => {
+      const usedSpace = 5;
+      store.dispatch(actions.ui.setUsedStorage({ space: usedSpace }));
+      const { ui } = store.getState();
+      expect(ui.usedStorage).to.have.equal(usedSpace);
+    });
+
+    it("should set a storage error message", () => {
+      const error = "Storage Error";
+      store.dispatch(actions.ui.setStorageErrorMessage(error));
+      const { ui } = store.getState();
+      expect(ui.storageErrorMessage).to.have.equal(error);
+    });
   });
 
   describe("custom backgrounds", () => {

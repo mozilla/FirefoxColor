@@ -23,7 +23,8 @@ export const ThemeBuilder = props => {
     savedThemesPage,
     setSavedThemesPage,
     storage,
-    themeCustomImages
+    themeCustomImages,
+    clearCustomBackground
   } = props;
 
   const tabList = [
@@ -88,7 +89,8 @@ export const ThemeBuilder = props => {
               savedThemesPage,
               setSavedThemesPage,
               themeCustomImages,
-              storage
+              storage,
+              clearCustomBackground
             }}
           />
         );
@@ -117,7 +119,7 @@ export const ThemeBuilder = props => {
       case "ArrowRight": {
         nextTab =
           tabsElement.children[
-            Math.min(tabList.length - 1, currentTabIndex + 1)
+          Math.min(tabList.length - 1, currentTabIndex + 1)
           ];
         break;
       }
