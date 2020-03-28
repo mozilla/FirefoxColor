@@ -5,7 +5,7 @@ import { DOWNLOAD_FIREFOX_URL } from "../../../../lib/constants";
 
 import "./index.scss";
 
-export const Banner = ({ isFirefox, addonUrl }) => {
+export const Banner = ({ isFirefox, addonUrl, siteUrl }) => {
   return (
     <div className={classnames("banner", { "banner--ff-ad": !isFirefox })}>
       <div className="banner__content">
@@ -13,7 +13,7 @@ export const Banner = ({ isFirefox, addonUrl }) => {
           <Fragment>
             <h2>Build Beautiful Firefox Themes</h2>
             <a
-              href={addonUrl}
+              href={siteUrl.includes("color.firefox.com") ? addonUrl : `${siteUrl}build/web/testing.html`}
               className="banner__button"
             >
               Get Firefox Color

@@ -96,6 +96,7 @@ export const AppComponent = props => {
     firstRun,
     isFirefox,
     addonUrl,
+    siteUrl,
     setSelectedColor,
     selectedColor,
     theme,
@@ -134,6 +135,7 @@ export const AppComponent = props => {
                         {...{
                           isFirefox,
                           addonUrl,
+                          siteUrl,
                           selectedColor,
                           setSelectedColor
                         }}
