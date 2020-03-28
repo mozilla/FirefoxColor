@@ -59,8 +59,12 @@ const messageHandlers = {
   setTheme: message => {
     const theme = normalizeTheme(message.theme);
     log("setTheme", theme);
-    storeTheme({ theme });
-    applyTheme({ theme });
+    if (!message.defaultFromWeb) {
+      storeTheme({ theme });
+      applyTheme({ theme });
+    } else {
+      log("setTheme: Ignored");
+    }
   },
   previewTheme: ({ theme }) => {
     log("previewTheme", theme);
@@ -81,10 +85,14 @@ const messageHandlers = {
     customBackgrounds[image.name] = image;
     storeImages({ images: customBackgrounds });
   },
-  addImages: ({ images = {} }) => {
-    log("addImages", images, customBackgrounds);
-    Object.assign(customBackgrounds, images);
-    storeImages({ images: customBackgrounds });
+  addImages: ({ images = {}, defaultFromWeb }) => {
+    if (!defaultFromWeb) {
+      log("addImages", images, customBackgrounds);
+      Object.assign(customBackgrounds, images);
+      storeImages({ images: customBackgrounds });
+    } else {
+      log("addImages: Ignored");
+    }
   },
   updateImage: ({ image }) => {
     log("updateImage", image, customBackgrounds);

@@ -152,9 +152,10 @@ window.addEventListener("message", ({ source, data: message }) => {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
         const state = store.getState();
         postMessage("addImages", {
-          images: selectors.themeCustomImages(state)
+          images: selectors.themeCustomImages(state),
+          defaultFromWeb: true
         });
-        postMessage("setTheme", { theme: selectors.theme(state) });
+        postMessage("setTheme", { theme: selectors.theme(state), defaultFromWeb: true });
       }
     }
     if (message.type === "fetchedTheme") {
