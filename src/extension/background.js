@@ -58,8 +58,9 @@ const messageHandlers = {
   },
   setTheme: message => {
     const theme = normalizeTheme(message.theme);
-    log("setTheme", theme);
+    // checks defaultFromWeb, if it's present ignore the message.
     if (!message.defaultFromWeb) {
+      log("setTheme", theme);
       storeTheme({ theme });
       applyTheme({ theme });
     } else {
@@ -86,6 +87,7 @@ const messageHandlers = {
     storeImages({ images: customBackgrounds });
   },
   addImages: ({ images = {}, defaultFromWeb }) => {
+    // checks defaultFromWeb, if it's present ignore the message.
     if (!defaultFromWeb) {
       log("addImages", images, customBackgrounds);
       Object.assign(customBackgrounds, images);

@@ -151,6 +151,7 @@ window.addEventListener("message", ({ source, data: message }) => {
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
         const state = store.getState();
+        // the defaultFromWeb flag here tells the extension to ignore the call, since the user already has a theme
         postMessage("addImages", {
           images: selectors.themeCustomImages(state),
           defaultFromWeb: true
