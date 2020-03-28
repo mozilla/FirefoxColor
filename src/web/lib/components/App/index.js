@@ -16,6 +16,7 @@ import Onboarding from "../Onboarding";
 import Banner from "../Banner";
 import ThemeBuilder from "../ThemeBuilder";
 import Browser from "../Browser";
+import { getCustomImages } from "../../../../lib/utils";
 
 import "./index.scss";
 
@@ -56,7 +57,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     ...themeUserEditDispatchers,
     addImage: args => dispatch(actions.images.addImage(args)),
     updateImage: args => dispatch(actions.images.updateImage(args)),
-    deleteImage: args => dispatch(actions.images.deleteImage(args)),
+    deleteImages: args => dispatch(actions.images.deleteImages(args)),
     clearPendingTheme: () => dispatch(actions.ui.clearPendingTheme()),
     setSelectedColor: args => dispatch(actions.ui.setSelectedColor(args)),
     setSavedThemesPage: page =>
@@ -67,6 +68,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(actions.ui.setDisplayLegalModal(args)),
     setDisplayShareModal: args =>
       dispatch(actions.ui.setDisplayShareModal(args)),
+    setDisplayRemoveImageModal: args =>
+      dispatch(actions.ui.setDisplayRemoveImageModal(args)),
     setThemeBuilderPanel: args =>
       dispatch(actions.ui.setThemeBuilderPanel(args)),
     undo: () => dispatch(actions.theme.undo()),
@@ -77,7 +80,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(actions.ui.showExportThemeDialog(args)),
     exportTheme: args =>
       dispatch(actions.ui.exportTheme(performThemeExport(args))),
-    clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme())
+    clearExportedTheme: () => dispatch(actions.ui.clearExportedTheme()),
+    setUsedStorage: args => dispatch(actions.ui.setUsedStorage(args)),
+    setStorageErrorMessage: args =>
+      dispatch(actions.ui.setStorageErrorMessage(args))
   };
 };
 
@@ -97,11 +103,7 @@ export const AppComponent = props => {
     themeHasCustomBackgrounds
   } = props;
 
-  const customImages = (theme.images.custom_backgrounds || []).map(item => {
-    const customImage = { ...item };
-    customImage.image = themeCustomImages[item.name].image;
-    return customImage;
-  });
+  const customImages = getCustomImages(theme.images.custom_backgrounds, themeCustomImages);
 
   return (
     <Fragment>

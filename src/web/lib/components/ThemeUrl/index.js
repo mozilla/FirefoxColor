@@ -2,7 +2,6 @@ import React from "react";
 import classnames from "classnames";
 import onClickOutside from "react-onclickoutside";
 
-import Metrics from "../../../../lib/metrics";
 import { themesEqual } from "../../../../lib/themes";
 
 import "./index.scss";
@@ -16,7 +15,6 @@ class ThemeUrl extends React.Component {
     };
     this.handleCopied = () => {
       this.setState({ copied: true });
-      Metrics.shareClick();
     };
   }
 

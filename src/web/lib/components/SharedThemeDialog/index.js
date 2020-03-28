@@ -1,20 +1,18 @@
 import React from "react";
-import Metrics from "../../../../lib/metrics";
 import Browser from "../Browser";
 import "./index.scss";
 
 export const SharedThemeDialog = ({
   pendingTheme,
   setTheme,
-  clearPendingTheme
+  clearPendingTheme,
+  previewTheme
 }) => {
   const onApply = () => {
-    Metrics.receiveTheme("apply", pendingTheme);
     setTheme({ theme: pendingTheme });
     clearPendingTheme();
   };
   const onSkip = () => {
-    Metrics.receiveTheme("reject", pendingTheme);
     clearPendingTheme();
   };
   const onClickBackdrop = ev => {
@@ -22,10 +20,17 @@ export const SharedThemeDialog = ({
       onSkip();
     }
   };
+  const onHover = mouseEnter => {
+    if (mouseEnter) {
+      previewTheme({ theme: pendingTheme });
+    } else {
+      previewTheme({});
+    }
+  };
   return (
     <div className="shared-theme-dialog-wrapper" onClick={onClickBackdrop}>
       <div className="shared-theme-dialog">
-        <div className="preview">
+        <div className="preview" onMouseEnter={() => onHover(true)} onMouseLeave={() => onHover(false)}>
           <Browser {...{ size: "medium", theme: pendingTheme }} />
         </div>
         <div className="options">

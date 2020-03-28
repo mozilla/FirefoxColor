@@ -3,7 +3,6 @@ import React from "react";
 import PaginatedThemeSelector from "../PaginatedThemeSelector";
 
 import { presetThemes } from "../../../../lib/themes";
-import Metrics from "../../../../lib/metrics";
 
 export const PresetThemeSelector = ({
   setTheme,
@@ -23,7 +22,6 @@ export const PresetThemeSelector = ({
       previewClassName="preset-theme-preview"
       onClick={theme => {
         setTheme({ theme });
-        Metrics.themeChangeFull(theme.title);
       }}
       perPage={9}
       currentPage={presetThemesPage}

@@ -12,15 +12,45 @@ import {
   CUSTOM_BACKGROUND_MAXIMUM_LENGTH,
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
 } from "../../../../lib/constants";
+import ClearImageModal from "../ClearImageModal";
+import { temporaryImageStore } from "../../middleware";
 
 import "./index.scss";
-
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
+
+
+const mapErrors = ({ tooLarge, wrongType}) => {
+  let errors = [];
+  if (tooLarge) {
+    errors.push("The image is too large. (1MB maximum size)");
+  } 
+  if (wrongType) {
+    errors.push("The file is not an accepted image type.");
+  }
+  return errors;
+};
 
 export class ThemeCustomBackgroundPicker extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { themeCustomBackgrounds, themeCustomImages } = this.props;
+
+    // sync images in local storage with custom backgrounds in preview on undo/redo
+    // when custom background changes.
+    if (prevProps.themeCustomBackgrounds.length !== themeCustomBackgrounds.length) {
+      const keys = Object.keys(themeCustomImages);
+
+      themeCustomBackgrounds.forEach(({ name }) => {
+        const imageInStorage = this.props.storage.imageStorage.get(name);
+        if (!keys.includes(name) && !imageInStorage) {
+          this.addImageToStorage(name);
+        }
+      });
+    }
   }
 
   handleImageAdd = ({ name }) => {
@@ -64,12 +94,21 @@ export class ThemeCustomBackgroundPicker extends React.Component {
     this.props.moveCustomBackground({ oldIndex, newIndex });
   };
 
+  addImageToStorage = (name) => {
+    const image = temporaryImageStore.get(name);
+    if (image) {
+      this.props.updateImage({ ...image, importing: true });
+      this.props.updateCustomBackground({ name });
+    }
+  };
+
   render() {
     const {
       addImage,
       updateImage,
       themeHasCustomBackgrounds,
-      themeCustomBackgrounds
+      themeCustomBackgrounds,
+      storageErrorMessage
     } = this.props;
     const label = themeHasCustomBackgrounds
       ? "Add another"
@@ -84,39 +123,39 @@ export class ThemeCustomBackgroundPicker extends React.Component {
           shouldCancelStart={this.handleShouldCancelStart}
           onSortStart={this.handleSortStart}
           onSortEnd={this.handleSortEnd}
+          addImageToStorage={this.addImageToStorage}
         />
-        <ImageImporter
-          {...{ addImage, updateImage, onImport: this.handleImageAdd }}
-        >
-          {({ importing, errors, ImportButton }) => (
-            <div className="add-image">
-              {themeCustomBackgrounds.length <
-                CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
-                <ImportButton {...{ label, isPrimary }} />
-              )}
-              {importing && (
-                <div className="status-message importing">Processing...</div>
-              )}
-              {errors && (
-                <React.Fragment>
-                  <Modal>
-                    <ul className="errors">
-                      {errors.tooLarge && (
-                        <li>The image is too large. (1MB maximum size)</li>
-                      )}
-                      {errors.wrongType && (
-                        <li>The file is not an accepted image type.</li>
-                      )}
-                    </ul>
-                  </Modal>
-                </React.Fragment>
-              )}
-            </div>
-          )}
-        </ImageImporter>
-        <p className="privacy-note">
-          Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
+        {!storageErrorMessage && (
+          <ImageImporter
+            {...{ addImage, updateImage, onImport: this.handleImageAdd }}
+          >
+            {({ importing, errors, ImportButton }) => (
+              <div className="add-image">
+                {themeCustomBackgrounds.length <
+                  CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
+                    <ImportButton {...{ label, isPrimary }} />
+                  )}
+                {importing && (
+                  <div className="status-message importing">Processing...</div>
+                )}
+                {errors && (
+                  <React.Fragment>
+                    <Modal>
+                      <ul className="errors">
+                        {mapErrors(errors).map((error, i) => <li key={i}>{error}</li>)}
+                      </ul>
+                    </Modal>
+                  </React.Fragment>
+                )}
+              </div>
+            )}
+          </ImageImporter>
+        )}
+        {!storageErrorMessage && (
+          <p className="privacy-note">
+            Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
         </p>
+        )}
       </form>
     );
   }
@@ -175,7 +214,7 @@ const BackgroundList = SortableContainer(props => {
 const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
   <span
     className={classNames("drag-handle", "status-icon", icon)}
-    title={!errors ? "" : JSON.stringify(errors)}
+    title={mapErrors(errors).join("\n")}
   >
     &nbsp;
   </span>
@@ -184,10 +223,23 @@ const DragHandle = SortableHandle(({ icon = "importing", errors }) => (
 class ThemeCustomBackgroundSelector extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      index: null
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.storageErrorMessage) {
+      this.handleClearBackground();
+    }
   }
 
   render() {
-    const { handleClearBackground, handleTilingChange } = this;
+    const {
+      handleTilingChange,
+      storageErrorMessage
+    } = this;
     const { addImage, updateImage, image } = this.props;
     const { tiling, alignment = "left top" } = this.props.item;
     const [horizontalAlign, verticalAlign] = alignment.split(" ");
@@ -206,7 +258,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
             { selected: alignmentState[alignmentKey] === alignment },
             "align-button",
             `align-button-${
-              isHorizontal ? "horizontal" : "vertical"
+            isHorizontal ? "horizontal" : "vertical"
             }-${alignment}`
           )}
         >
@@ -214,6 +266,10 @@ class ThemeCustomBackgroundSelector extends React.Component {
         </button>
       );
     };
+
+    if (storageErrorMessage) {
+      return <div />;
+    }
 
     return (
       <ImageImporter
@@ -279,7 +335,16 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              <button title={"Delete"} className="clear" onClick={handleClearBackground} />
+              {this.props.displayRemoveImageModal && this.state.index === this.props.index && (
+                <div className="modal-wrapper--clear-image">
+                  <ClearImageModal
+                    confirm={this.confirm}
+                    cancel={this.onCloseModal}
+                  />
+                </div>
+              )}
+
+              <button title={"Delete"} className="clear" onClick={this.handleClearBackground} />
             </li>
           );
         }}
@@ -287,9 +352,41 @@ class ThemeCustomBackgroundSelector extends React.Component {
     );
   }
 
+  confirm = () => {
+    this.removeImage();
+    this.onCloseModal();
+  }
+
+  onCloseModal = () => {
+    this.props.setDisplayRemoveImageModal({ display: false });
+    localStorage.setItem("clearImageModal", true);
+  }
+
   handleClearBackground = () => {
-    this.props.clearCustomBackground();
+    if (localStorage.getItem("clearImageModal")) {
+      this.removeImage();
+      if (this.state.index !== null) {
+        this.setState({
+          index: null
+        });
+      }
+    } else {
+      this.props.setDisplayRemoveImageModal({ display: true });
+      this.setState({
+        index: this.props.index
+      });
+    }
   };
+
+  removeImage = () => {
+    const { image } = this.props;
+
+    if (image) {
+      this.props.deleteImages([image.name]);
+    }
+
+    this.props.clearCustomBackground();
+  }
 
   handleTilingChange = ev => {
     this.props.updateCustomBackground({ tiling: ev.target.value });
@@ -312,7 +409,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     const alignmentState = { horizontalAlign, verticalAlign, ...state };
     const newAlignment = `${alignmentState.horizontalAlign} ${
       alignmentState.verticalAlign
-    }`;
+      }`;
 
     updateCustomBackground({ alignment: newAlignment });
   }

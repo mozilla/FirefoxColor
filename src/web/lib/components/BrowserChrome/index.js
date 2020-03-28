@@ -18,7 +18,7 @@ const BrowserChrome = ({
         backgroundImage: !themeHasCustomBackgrounds
           ? headerBackgroundImage
           : null,
-        backgroundColor: colors.accentcolor
+        backgroundColor: colors.frame
       }}
     >
       {customImages.map((image, index) => {
@@ -33,7 +33,6 @@ const BrowserChrome = ({
               position: "absolute",
               height: "100%",
               width: "100%",
-              backgroundSize: "50% auto",
               zIndex: 4 - index
             }}
           />

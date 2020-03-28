@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import classnames from "classnames";
 
 import { DOWNLOAD_FIREFOX_URL } from "../../../../lib/constants";
-import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
@@ -15,10 +14,9 @@ export const Banner = ({ isFirefox, addonUrl }) => {
             <h2>Build Beautiful Firefox Themes</h2>
             <a
               href={addonUrl}
-              onClick={() => Metrics.installStart()}
               className="banner__button"
             >
-              Install Firefox Color
+              Get Firefox Color
             </a>
           </Fragment>
         )}

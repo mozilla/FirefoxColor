@@ -36,11 +36,14 @@ export const actions = {
     "SET_PRESET_THEMES_PAGE",
     "SET_DISPLAY_LEGAL_MODAL",
     "SET_DISPLAY_SHARE_MODAL",
+    "SET_DISPLAY_REMOVE_IMAGE_MODAL",
     "SET_THEME_BUILDER_PANEL",
     "SHOW_EXPORT_THEME_DIALOG",
     "EXPORT_THEME",
     "SET_EXPORT_THEME_PROGRESS",
-    "CLEAR_EXPORTED_THEME"
+    "CLEAR_EXPORTED_THEME",
+    "SET_USED_STORAGE",
+    "SET_STORAGE_ERROR_MESSAGE"
   ),
   theme: {
     ...createActions(
@@ -78,6 +81,7 @@ export const selectors = {
   selectedColor: state => state.ui.selectedColor,
   displayLegalModal: state => state.ui.displayLegalModal,
   displayShareModal: state => state.ui.displayShareModal,
+  displayRemoveImageModal: state => state.ui.displayRemoveImageModal,
   shouldOfferPendingTheme: state =>
     state.ui.hasExtension &&
     !state.ui.firstRun &&
@@ -109,12 +113,26 @@ export const selectors = {
   shouldShowExportThemeDialog: state => !!state.ui.shouldShowExportThemeDialog,
   exportedTheme: state => state.ui.exportedTheme,
   shouldOfferExportedTheme: state => !!state.ui.exportedTheme,
-  isThemeExportInProgress: state => !!state.ui.exportedThemeProgress
+  isThemeExportInProgress: state => !!state.ui.exportedThemeProgress,
+  storageErrorMessage: state => state.ui.storageErrorMessage,
+  usedStorage: state => state.ui.usedStorage
 };
 
 export const reducers = {
   ui: handleActions(
     {
+      SET_USED_STORAGE: (state, { payload: { space } }) => {
+        return {
+          ...state,
+          usedStorage: space
+        };
+      },
+      SET_STORAGE_ERROR_MESSAGE: (state, { payload }) => {
+        return {
+          ...state,
+          storageErrorMessage: payload
+        };
+      },
       SET_DISPLAY_LEGAL_MODAL: (state, { payload: { display } }) => ({
         ...state,
         displayLegalModal: display
@@ -122,6 +140,10 @@ export const reducers = {
       SET_DISPLAY_SHARE_MODAL: (state, { payload: { display } }) => ({
         ...state,
         displayShareModal: display
+      }),
+      SET_DISPLAY_REMOVE_IMAGE_MODAL: (state, { payload: { display } }) => ({
+        ...state,
+        displayRemoveImageModal: display
       }),
       SET_PENDING_THEME: (state, { payload: { theme } }) => ({
         ...state,
@@ -218,10 +240,13 @@ export const reducers = {
       loaderDelayExpired: false,
       displayLegalModal: false,
       displayShareModal: false,
+      displayRemoveImageModal: false,
       themeBuilderPanel: 1,
       shouldShowExportThemeDialog: false,
       exportedTheme: null,
-      exportedThemeProgress: false
+      exportedThemeProgress: false,
+      storageErrorMessage: "",
+      usedStorage: 0
     }
   ),
   images: handleActions(

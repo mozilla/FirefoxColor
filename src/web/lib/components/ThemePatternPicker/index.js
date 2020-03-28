@@ -4,11 +4,10 @@ import "./index.scss";
 
 import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
-import Metrics from "../../../../lib/metrics";
 
 console.log(bgImages);
 
-const Pattern = ({ src, backgroundId, active, setBackground, accentcolor }) => (
+const Pattern = ({ src, backgroundId, active, setBackground, frame }) => (
   <div>
     <input
       id={`theme-pattern-${backgroundId}`}
@@ -17,7 +16,6 @@ const Pattern = ({ src, backgroundId, active, setBackground, accentcolor }) => (
       onChange={e => {
         if (e.target.checked) {
           setBackground({ url: src });
-          Metrics.themeChangeBackground(backgroundId);
         }
       }}
       type="radio"
@@ -27,7 +25,7 @@ const Pattern = ({ src, backgroundId, active, setBackground, accentcolor }) => (
         htmlFor={`theme-pattern-${backgroundId}`}
         className="theme-pattern-picker__color"
         style={{
-          backgroundColor: accentcolor,
+          backgroundColor: frame,
           backgroundImage: `url(${bgImages(src)})`
         }}
       />
@@ -59,7 +57,7 @@ class ThemeBackgroundPicker extends React.Component {
 
   render() {
     const { theme, setBackground } = this.props;
-    const accentcolor = colorToCSS(theme.colors.accentcolor);
+    const frame = colorToCSS(theme.colors.frame);
     return (
       <div className="theme-pattern-picker">
         <p>Pick a pattern for your theme...</p>
@@ -70,7 +68,7 @@ class ThemeBackgroundPicker extends React.Component {
               {...{
                 src,
                 backgroundId,
-                accentcolor,
+                frame,
                 setBackground,
                 active: theme.images.additional_backgrounds[0] === src
               }}
