@@ -28,8 +28,9 @@ log("startup");
 
 const clipboard = new Clipboard(".clipboardButton");
 
-const addonUrl = process.env.ADDON_URL;
 const siteUrl = process.env.SITE_URL;
+const addonUrl = siteUrl.includes("color.firefox.com") ? process.env.ADDON_URL : `${siteUrl}build/web/testing.html`;
+
 
 // Period after which app loading indicator will disappear if add-on not found
 // Default (2000) found in webpack.common.js
@@ -201,7 +202,6 @@ render(
     <App
       {...{
         addonUrl,
-        siteUrl,
         urlEncodeTheme,
         clipboard,
         storage,
