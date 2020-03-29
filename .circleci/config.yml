@@ -1,7 +1,6 @@
 version: 2.1
 
 jobs:
-
   build_and_test:
     docker:
       - image: circleci/node:10.18.1@sha256:8230f70c03b6ecf521a34125fb090ec4b47068205454e5820859c00260c9bd23
@@ -12,8 +11,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run: sudo npm install -g npm@latest
       - run: sudo npm install -g greenkeeper-lockfile@1
       - run: greenkeeper-lockfile-update
@@ -46,7 +45,7 @@ jobs:
           at: .
       - run: git config --global user.email "lorchard@mozilla.com"
       - run: git config --global user.name "Les Orchard"
-      - run: npm run release:dev
+      - run: npm run deploy
 
   deploy_to_aws:
     parameters:
