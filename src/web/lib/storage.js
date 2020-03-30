@@ -1,6 +1,8 @@
 import { actions } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
 import { normalizeTheme, themesEqual } from "../../lib/themes";
+import { localStorageSpace, STORAGE_ERROR_MESSAGE } from "./components/StorageSpaceInformation";
+import { temporaryImageStore } from "./middleware";
 
 const log = makeLog("web.storage");
 
@@ -18,7 +20,7 @@ class Storage {
     this.contentName = contentName;
     this.normalize = normalize || (data => data);
     this.checkDuplicate = checkDuplicate || (() => false);
-    this.afterPut = afterPut || (() => {});
+    this.afterPut = afterPut || (() => { });
   }
 
   storageKey = str => `${this.prefix}${str}`;
@@ -26,15 +28,22 @@ class Storage {
   keyFromStorage = str => str.substr(this.prefix.length);
   generateKey = () => `${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
-  put(key, data) {
+  put(key, data, dispatch) {
     let isDuplicate = this.checkDuplicate(data);
     if (!isDuplicate) {
       const storageKey = this.storageKey(key);
       log("put", storageKey, data);
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({ [this.contentName]: data, modified: Date.now() })
-      );
+      try {
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify({ [this.contentName]: data, modified: Date.now() })
+        );
+        dispatch(actions.ui.setStorageErrorMessage(""));
+      } catch (err) {
+        console.error(err);
+        dispatch(actions.ui.setStorageErrorMessage(STORAGE_ERROR_MESSAGE));
+        throw err;
+      }
       this.afterPut(data);
       notifySelfForStorage(storageKey);
     }
@@ -106,9 +115,21 @@ function init(store) {
     store.dispatch(actions.ui.setSavedThemes({ savedThemes }));
   };
 
+  const getUsedStorage = () => {
+    const space = localStorageSpace();
+    log("getUsedStorage", space);
+    store.dispatch(actions.ui.setUsedStorage({ space }));
+  };
+
   const loadAllImagesIntoStore = () => {
     const items = Object.values(imageStorage.list()).reduce(
-      (acc, { data: item }) => ({ ...acc, [item.name]: item }),
+      (acc, { data: item }) => {
+        temporaryImageStore.set(item.name, item);
+        return {
+          ...acc,
+          [item.name]: item
+        };
+      },
       {}
     );
     log("loadAllImagesIntoStore", items);
@@ -123,6 +144,7 @@ function init(store) {
 
   loadAllImagesIntoStore();
   updateSavedThemesInStore();
+  getUsedStorage();
 
   window.addEventListener("storage", e => {
     log("storage event", e);
@@ -133,6 +155,9 @@ function init(store) {
       updateSavedThemesInStore();
       store.dispatch(actions.ui.setCurrentSavedTheme({ currentSavedTheme }));
     }
+
+    const space = localStorageSpace();
+    store.dispatch(actions.ui.setUsedStorage({ space }));
   });
 }
 

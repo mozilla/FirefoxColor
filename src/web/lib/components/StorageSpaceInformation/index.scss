@@ -1,0 +1,30 @@
+.storage-space-information {
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.5;
+}
+
+.storage-space-information-content {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    padding: 0 5px;
+  }
+}
+
+.storage-space-information-warning {
+  text-align: center;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+.storage-space-information-error {
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.1;
+  max-width: 440px;
+}

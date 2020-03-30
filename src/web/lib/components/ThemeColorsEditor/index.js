@@ -4,7 +4,7 @@ import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
 import { colorLabels, colorsWithAlpha, ESC } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
-import Metrics from "../../../../lib/metrics";
+import StorageSpaceInformation from "../StorageSpaceInformation";
 
 import "./index.scss";
 
@@ -41,7 +41,6 @@ class ThemeColorsEditor extends React.Component {
 
   handleColorChange = (name, color) => {
     this.props.setColor({ name, color: color.rgb });
-    Metrics.themeChangeColor(name);
   };
 
   componentDidMount() {
@@ -72,29 +71,37 @@ class ThemeColorsEditor extends React.Component {
 
     return (
       <div className="theme-colors-editor">
-        <ul className="theme-colors-editor__list">
-          {colorKeys.map((name, idx) => {
-            const color = colors[name];
-            return [
-              <li
-                key={`dt-${idx}`}
-                className={classnames(name, "theme-unit", "theme-unit--color", {
-                  selected: selectedColor === name
-                })}
-                onClick={ev => this.handleClick(ev, name)}
-              >
-                <span
-                  className="theme-unit__swatch"
-                  style={{ backgroundColor: colorToCSS(color) }}
-                  title={colorLabels[name]}
-                />
-                <span className="theme-unit__label" title={colorLabels[name]}>
-                  {colorLabels[name]}
-                </span>
-              </li>
-            ];
-          })}
-        </ul>
+        <div className="theme-colors-editor-main">
+          <ul className="theme-colors-editor__list">
+            {colorKeys.map((name, idx) => {
+              const color = colors[name];
+              return [
+                <li
+                  key={`dt-${idx}`}
+                  className={classnames(
+                    name,
+                    "theme-unit",
+                    "theme-unit--color",
+                    {
+                      selected: selectedColor === name
+                    }
+                  )}
+                  onClick={ev => this.handleClick(ev, name)}
+                >
+                  <span
+                    className="theme-unit__swatch"
+                    style={{ backgroundColor: colorToCSS(color) }}
+                    title={colorLabels[name]}
+                  />
+                  <span className="theme-unit__label" title={colorLabels[name]}>
+                    {colorLabels[name]}
+                  </span>
+                </li>
+              ];
+            })}
+          </ul>
+          <StorageSpaceInformation />
+        </div>
         <div className="theme-colors-editor__picker">
           {selectedColor && (
             <SketchPicker

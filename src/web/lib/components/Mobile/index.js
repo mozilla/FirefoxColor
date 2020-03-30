@@ -1,6 +1,5 @@
 import React from "react";
 
-import Metrics from "../../../../lib/metrics";
 
 import "./index.scss";
 
@@ -18,7 +17,6 @@ export const Mobile = () => (
       </p>
       <a
         href="https://testpilot.firefox.com/experiments/color"
-        onClick={() => Metrics.linkClick("mobile-learn-more")}
       >
         Learn More
       </a>

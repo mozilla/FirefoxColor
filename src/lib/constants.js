@@ -24,8 +24,8 @@ export const CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT = "right top";
 export const colorLabels = {
   toolbar: "Toolbar Color",
   toolbar_text: "Toolbar Icons and Text",
-  accentcolor: "Background Color",
-  textcolor: "Background Tab Text Color",
+  frame: "Background Color",
+  tab_background_text: "Background Tab Text Color",
   toolbar_field: "Search Bar Color",
   toolbar_field_text: "Search Text",
   tab_line: "Tab Highlight Color",
@@ -34,8 +34,14 @@ export const colorLabels = {
 };
 
 export const fallbackColors = {
-  popup: "toolbar",
-  popup_text: "textcolor"
+  frame: "accentcolor",
+  // "popup" falls back to "frame" if "popup" is void.
+  // If "frame" is somehow void, then "toolbar" is used instead.
+  // This is for no particular reason, besides backwards-compatibility.
+  // Similarly for "popup_text".
+  popup: ["frame", "toolbar"],
+  popup_text: ["toolbar_text", "tab_background_text", "textcolor"],
+  tab_background_text: "textcolor",
 };
 
 export const colorsWithAlpha = ["toolbar", "toolbar_field"];

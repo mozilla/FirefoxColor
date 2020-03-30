@@ -1,58 +1,32 @@
 import { makeLog } from "../lib/utils";
 import { convertToBrowserTheme, normalizeTheme } from "../lib/themes";
 import { bgImages } from "../lib/assets";
-import Metrics from "../lib/metrics";
 
 const log = makeLog("background");
 
 const siteUrl = process.env.SITE_URL;
 
-const siteTabMetrics = {};
-
 let customBackgrounds = {};
 
-const init = () => {
-  Metrics.init("addon");
+let isThemePreview = false;
 
+const init = () => {
   browser.browserAction.onClicked.addListener(() => {
     queryAndFocusTab("fromAddon=true");
   });
-
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
     port.postMessage({ type: "hello" });
-  });
-
-  browser.tabs.query({}).then(tabs => {
-    tabs.filter(tab => tab.url.includes(siteUrl)).forEach(tab => {
-      if (!siteTabMetrics[tab.id]) {
-        siteTabMetrics[tab.id] = {};
+    port.onDisconnect.addListener(() => {
+      if (isThemePreview) {
+        isThemePreview = false;
+        fetchTheme().then(applyTheme);
       }
     });
   });
-
-  browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (tab.url.includes(siteUrl)) {
-      if (!siteTabMetrics[tab.id]) {
-        siteTabMetrics[tab.id] = {};
-      }
-    } else if (siteTabMetrics[tab.id]) {
-      finishVisit(tab.id);
-      delete siteTabMetrics[tab.id];
-    }
-  });
-
-  browser.tabs.onRemoved.addListener(tabId => {
-    if (siteTabMetrics[tabId]) {
-      finishVisit(tabId);
-      delete siteTabMetrics[tabId];
-    }
-  });
-
   browser.windows.onCreated.addListener(() => {
     fetchTheme().then(applyTheme);
   });
-
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
     if (firstRunDone) {
@@ -68,12 +42,6 @@ const init = () => {
       setFirstRunDone();
     }
   });
-};
-
-const finishVisit = tabId => {
-  log("finishVisit", tabId, siteTabMetrics[tabId]);
-  Metrics.applyParameters(siteTabMetrics[tabId]);
-  Metrics.finishVisit();
 };
 
 const messageListener = port => message => {
@@ -94,10 +62,16 @@ const messageHandlers = {
     storeTheme({ theme });
     applyTheme({ theme });
   },
-  setMetrics: (message, port) => {
-    const tabId = port.sender.tab.id;
-    siteTabMetrics[tabId] = message.params;
-    log("setMetrics for tab", tabId);
+  previewTheme: ({ theme }) => {
+    log("previewTheme", theme);
+    if (theme) {
+      const previewTheme = normalizeTheme(theme);
+      applyTheme({ theme: previewTheme });
+      isThemePreview = true;
+    } else {
+      fetchTheme().then(applyTheme);
+      isThemePreview = false;
+    }
   },
   ping: (message, port) => {
     port.postMessage({ type: "pong" });

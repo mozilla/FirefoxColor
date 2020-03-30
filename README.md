@@ -6,7 +6,7 @@
 
 ## Get Started
 
-1. Install Node 8.9.4+ (e.g. using [node version manger][nvm])
+1. Install Node 10.18.1+ (e.g. using [node version manger][nvm])
 
 1. Clone the repo, install dependencies, start the dev environment:
    ```
@@ -53,11 +53,13 @@ that are handy to know about:
 ## Build & Release
 
 Deploying a development release consists of pushing to the `development` branch
-on this repo. Production release process is TBD.
+on this repo. Production release consists of pushing to the `production` branch.
 
 The script `npm run release:dev` in `package.json` takes care of the following:
 
-* Set `ADDON_URL` and `SITE_URL` vars to point at mozilla.github.io/FirefoxColor
+* Sets the `SITE_URL` var to point at mozilla.github.io/FirefoxColor
+
+* Sets the `ADDON_URL` var to point at https://addons-dev.allizom.org/firefox/addon/firefox-color/
 
 * Build the site
 
@@ -75,6 +77,35 @@ test runs.
 
 [ghtoken]: https://github.com/settings/tokens
 [sign]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#web-ext_sign
+
+## Build, test and publish add-on
+The script `npm run xpi` in `package.json` generates unsigned xpi files, which
+are added to `build/web` (and published to the root of `SITE_URL` by CircleCI),
+on all branches (development, stage, production). These XPIs can be loaded at
+`about:debugging` for manual testing.
+
+- `firefox-color-stage-unsigned.xpi` - test with Stage (testing only).
+- `firefox-color-unsigned.xpi` - test with Production (release candidate).
+
+After passing QA, the XPI can be published by manually uploading it to AMO.
+Every release requires a version bump, because version numbers cannot be reused.
+
+### Environment list
+
+| Environment | Github Branch                                                           | URL                                     |
+|-------------|-------------------------------------------------------------------------|-----------------------------------------|
+| Development | [development](https://github.com/mozilla/FirefoxColor/tree/development) | https://mozilla.github.io/FirefoxColor/ |
+| Stage       | [stage](https://github.com/mozilla/FirefoxColor/tree/stage)             | https://color.stage.mozaws.net/         |
+| Production  | [production](https://github.com/mozilla/FirefoxColor/tree/production)   | https://color.firefox.com/              |
+
+## UI to install the addon:
+
+* Coming from AMO
+  - The user clicks on the "Install" button and after granting permissions, a new tab opens to the addon's home page.
+
+* Coming from the addon's home page:
+  - The user can click on the "Get Firefox Color" button which will link the user back the AMO site in the respective environment.
+
 
 ## Notes
 

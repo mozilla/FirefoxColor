@@ -23,7 +23,7 @@ const BrowserTabs = ({
               className={`browser-tabs__tab ${isTabSelected}`}
               style={{
                 backgroundColor: isTabSelected ? colors.toolbar : "transparent",
-                color: isTabSelected ? colors.toolbar_text : colors.textcolor,
+                color: isTabSelected ? colors.toolbar_text : colors.tab_background_text,
                 boxShadow: isTabSelected ? `0 3px ${colors.tab_line} inset` : ""
               }}
             >
@@ -63,7 +63,7 @@ const BrowserTabs = ({
                     padding: "3px",
                     outline:
                       (isTabSelected && selectedColor === "toolbar_text") ||
-                      (!isTabSelected && selectedColor === "textcolor")
+                      (!isTabSelected && selectedColor === "tab_background_text")
                         ? selectSettings.active
                         : selectSettings.inactive
                   }}
@@ -73,7 +73,7 @@ const BrowserTabs = ({
                     style={{
                       backgroundColor: isTabSelected
                         ? colors.toolbar_text
-                        : colors.textcolor
+                        : colors.tab_background_text
                     }}
                   />
                 </span>
