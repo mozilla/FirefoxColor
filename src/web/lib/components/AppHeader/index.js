@@ -15,7 +15,7 @@ import iconHeart from "./icon_heart.svg";
 import iconRandomize from "./icon_randomize.svg";
 import iconShare from "./icon_share.svg";
 import iconExport from "./icon_export.svg";
-
+import { temporaryImageStore } from "../../middleware";
 import "./index.scss";
 
 export const AppHeader = props => {
@@ -59,7 +59,14 @@ export const AppHeader = props => {
     let currentImages = new Set();
 
     props.themeCustomBackgrounds
-      .forEach(({ name }) => currentImages.add(name));
+      .forEach(({ name }) => { 
+        currentImages.add(name);
+        const image = temporaryImageStore.get(name);
+        if (image) {
+          props.updateImage({ ...image, importing: true });
+          props.updateCustomBackground({ name });
+        }
+      });
 
     let savedImagesInThemes = new Set();
 
