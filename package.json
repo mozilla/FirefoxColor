@@ -57,8 +57,7 @@
     "validate:themes": "node ./bin/validate-themes.js",
     "test": "npm-run-all --parallel test:*",
     "test:js": "mocha --require src/lib/test-setup.js --recursive \"src/**/*-test.js\"",
-    "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/mozilla/FirefoxColor.git\"",
-    "compile": "./compile.sh"
+    "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/mozilla/FirefoxColor.git\""
   },
   "engines": {
     "node": ">=10.18.1"

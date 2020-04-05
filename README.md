@@ -95,7 +95,7 @@ Every release requires a version bump, because version numbers cannot be reused.
   - The user clicks on the "Install" button and after granting permissions, a new tab opens to the addon's home page.
 
 * Coming from the addon's home page:
-  - The user can click on the "Get Firefox Color" button which will link over to the AMO site when coming from production, or it will link back to the testing.html page which displays links to the unsigned.xpis for each environment.
+  - The user can click on the "Get Firefox Color" button which will link over to the AMO site when coming from production or it will link back to the testing.html. The testing page displays links to the unsigned.xpis for each environment.
 
 
 ## Notes
