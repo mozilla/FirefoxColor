@@ -17,7 +17,7 @@ jobs:
       - run: greenkeeper-lockfile-update
       - run: npm ci
       - run: greenkeeper-lockfile-upload
-      - run: bash ./compile.sh
+      - run: bash ./gen-environment.sh >> $BASH_ENV
       - run: npm run lint
       - run: npm run build
       - run: |

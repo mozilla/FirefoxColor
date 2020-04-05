@@ -55,9 +55,19 @@ that are handy to know about:
 Deploying a development release consists of pushing to the `development` branch
 on this repo. Production release consists of pushing to the `production` branch.
 
-The script `npm run deploy` in `package.json` takes care of the following:
+Upon push, CircleCI will run the following steps, as defined in the `.circleci/config.yml` file:
 
-* Deploys the site to Github Pages
+* Run gen-environment.sh to define the `SITE_URL` and `ADDON_URL` applicable to the current branch.
+
+* Run code linter
+
+* Build the site for the current branch
+
+* Build the add-ons for all build targets (development, stage, release).
+
+* Run tests on the current branch.
+
+When pushed to the development branch, `npm run deploy` is run to deploy the site to Github Pages.
 
 Signing depends on [`WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` environment
 variables being set for use by `web-ext sign`][sign]. Deployment depends on
@@ -95,7 +105,7 @@ Every release requires a version bump, because version numbers cannot be reused.
   - The user clicks on the "Install" button and after granting permissions, a new tab opens to the addon's home page.
 
 * Coming from the addon's home page:
-  - The user can click on the "Get Firefox Color" button which will link over to the AMO site when coming from production or it will link back to the testing.html. The testing page displays links to the unsigned.xpis for each environment.
+  The user can click on the "Get Firefox Color" button which will direct the user to a page from where the add-on can be installed, usually AMO.
 
 
 ## Notes
