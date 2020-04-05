@@ -44,7 +44,7 @@ There are a few environment variables used in building the site and extension
 that are handy to know about:
 
 - `PORT` - (default: `8080`) Port at which the webpack dev server will start up
-- `NODE_ENV` - (default: `production`) setting to `development` will enable some features for development work 
+- `NODE_ENV` - (default: `production`) setting to `development` will enable some features for development work
 - `SITE_URL` - (default: `http://localhost:8080`) the URL where the web app is hosted
 - `SITE_ID` - (default: empty string) the ID of the site for the extension - e.g. "", "local", "stage", "dev"
 - `DOWNLOAD_FIREFOX_UTM_SOURCE` - host name used in metrics when the button to download Firefox is clicked
@@ -55,19 +55,19 @@ that are handy to know about:
 Deploying a development release consists of pushing to the `development` branch
 on this repo. Production release consists of pushing to the `production` branch.
 
-The script `npm run release:dev` in `package.json` takes care of the following:
+Upon push, CircleCI will run the following steps, as defined in the `.circleci/config.yml` file:
 
-* Sets the `SITE_URL` var to point at mozilla.github.io/FirefoxColor
+* Run gen-environment.sh to define the `SITE_URL` and `ADDON_URL` applicable to the current branch.
 
-* Sets the `ADDON_URL` var to point at https://addons-dev.allizom.org/firefox/addon/firefox-color/
+* Run code linter
 
-* Build the site
+* Build the site for the current branch
 
-* Build & sign the add-on
+* Build the add-ons for all build targets (development, stage, release).
 
-* Copy the signed add-on into the site
+* Run tests on the current branch.
 
-* Deploy the site to Github Pages
+When pushed to the development branch, `npm run deploy` is run to deploy the site to Github Pages.
 
 Signing depends on [`WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` environment
 variables being set for use by `web-ext sign`][sign]. Deployment depends on
@@ -84,6 +84,7 @@ are added to `build/web` (and published to the root of `SITE_URL` by CircleCI),
 on all branches (development, stage, production). These XPIs can be loaded at
 `about:debugging` for manual testing.
 
+- `firefox-color-dev-unsigned.xpi` - test with Development (testing only).
 - `firefox-color-stage-unsigned.xpi` - test with Stage (testing only).
 - `firefox-color-unsigned.xpi` - test with Production (release candidate).
 
@@ -104,7 +105,7 @@ Every release requires a version bump, because version numbers cannot be reused.
   - The user clicks on the "Install" button and after granting permissions, a new tab opens to the addon's home page.
 
 * Coming from the addon's home page:
-  - The user can click on the "Get Firefox Color" button which will link the user back the AMO site in the respective environment.
+  The user can click on the "Get Firefox Color" button which will direct the user to a page from where the add-on can be installed, usually AMO.
 
 
 ## Notes
