@@ -109,7 +109,7 @@
     "onchange": "5.2.0",
     "prettier": "1.16.4",
     "react-hot-loader": "4.12.20",
-    "react-svg": "7.2.14",
+    "react-svg": "11.0.17",
     "require-context": "1.1.0",
     "rimraf": "2.6.3",
     "sass-loader": "7.1.0",
