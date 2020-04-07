@@ -85,7 +85,7 @@
     "chai": "4.1.2",
     "copy-webpack-plugin": "5.0.1",
     "cross-env": "5.2.0",
-    "css-loader": "2.1.1",
+    "css-loader": "3.5.1",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.10.0",
     "eslint": "5.15.3",
