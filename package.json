@@ -97,7 +97,7 @@
     "file-loader": "3.0.1",
     "generate-asset-webpack-plugin": "0.3.0",
     "gh-pages": "2.1.1",
-    "html-webpack-plugin": "4.0.0",
+    "html-webpack-plugin": "4.1.0",
     "image-webpack-loader": "4.6.0",
     "mini-css-extract-plugin": "0.5.0",
     "mocha": "6.1.4",
