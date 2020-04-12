@@ -24,19 +24,9 @@ const init = () => {
       }
     });
   });
-  browser.windows.onCreated.addListener(() => {
-    fetchTheme().then(applyTheme);
-  });
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
-    if (firstRunDone) {
-      fetchImages()
-        .then(({ images }) => {
-          customBackgrounds = images || {};
-          return fetchTheme();
-        })
-        .then(applyTheme);
-    } else {
+    if (!firstRunDone) {
       log("Opening first run tab");
       queryAndFocusTab("firstRun=true", true);
       setFirstRunDone();
@@ -50,17 +40,38 @@ const messageListener = port => message => {
 };
 
 const messageHandlers = {
+  activateExtension: () => {
+    browser.storage.local.set({ hadUIInteraction: true });
+  },
   fetchTheme: (message, port) => {
     log("fetchTheme");
     fetchTheme().then(({ theme: currentTheme }) =>
       port.postMessage({ type: "fetchedTheme", theme: currentTheme })
     );
   },
+  revertAll: (message) => {
+    log("revertAllThemes", message);
+    browser.storage.local.set({ hadUIInteraction: false });
+  },
   setTheme: message => {
-    const theme = normalizeTheme(message.theme);
-    log("setTheme", theme);
-    storeTheme({ theme });
-    applyTheme({ theme });
+    browser.storage.local.get("hadUIInteraction").then(ui => {
+      if (ui.hadUIInteraction) {
+       const theme = normalizeTheme(message.theme);
+        log("setTheme", theme);
+
+        // TODO: finish testing
+        // storeTheme({ theme });
+        // applyTheme({ theme });
+
+        storeTheme({ theme });
+        fetchImages()
+          .then(({ images }) => {
+            customBackgrounds = images || {};
+            return fetchTheme();
+          })
+          .then(applyTheme);
+          }
+    });
   },
   previewTheme: ({ theme }) => {
     log("previewTheme", theme);
@@ -96,12 +107,6 @@ const messageHandlers = {
     log("deleteImages", images, customBackgrounds);
     images.forEach(name => delete customBackgrounds[name]);
     storeImages({ images: customBackgrounds });
-  },
-  revertAll: (message, port) => {
-    log("revertAllThemes", message);
-    browser.theme.reset();
-    messageHandlers.setTheme(message);
-    messageHandlers.fetchTheme(message, port);
   },
   default: message => {
     log("unexpected message", message);
@@ -141,6 +146,19 @@ const storeImages = ({ images }) => browser.storage.local.set({ images });
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+
+  browser.management.onEnabled.addListener((info) => {
+    if (info.type === "theme") {
+      browser.storage.local.set({ hadUIInteraction: false });
+    }
+  });
+
+  browser.storage.onChanged.addListener(ui => {
+    if (ui && ui.hadUIInteraction && !ui.hadUIInteraction.newValue || !ui) {
+      browser.theme.reset();
+    }
+  });
+  
 
 const applyTheme = ({ theme }) => {
   log("applyTheme", theme);

@@ -166,12 +166,6 @@ window.addEventListener("message", ({ source, data: message }) => {
   }
 });
 
-document.addEventListener("click", event => {
-  if (event.target.closest("[title='Revert All']")) {
-    postMessage("revertAll");
-  }
-});
-
 // Periodically ping the extension to detect install / uninstall, since we have
 // no access to mozAddonManager.
 setInterval(() => {

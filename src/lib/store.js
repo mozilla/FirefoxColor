@@ -43,7 +43,8 @@ export const actions = {
     "SET_EXPORT_THEME_PROGRESS",
     "CLEAR_EXPORTED_THEME",
     "SET_USED_STORAGE",
-    "SET_STORAGE_ERROR_MESSAGE"
+    "SET_STORAGE_ERROR_MESSAGE",
+    "REVERT_ALL"
   ),
   theme: {
     ...createActions(
@@ -137,6 +138,12 @@ export const reducers = {
         ...state,
         displayLegalModal: display
       }),
+      REVERT_ALL: (state) => {
+        return {
+          ...state,
+          revertAll: true
+        };
+      },
       SET_DISPLAY_SHARE_MODAL: (state, { payload: { display } }) => ({
         ...state,
         displayShareModal: display
@@ -225,6 +232,7 @@ export const reducers = {
       }),
       [combineActions(...themeChangeActions)]: (state, { meta = {} }) => ({
         ...state,
+        revertAll: false,
         userHasEdited: meta.userEdit ? true : state.userHasEdited
       })
     },
@@ -246,7 +254,8 @@ export const reducers = {
       exportedTheme: null,
       exportedThemeProgress: false,
       storageErrorMessage: "",
-      usedStorage: 0
+      usedStorage: 0,
+      revertAll: false
     }
   ),
   images: handleActions(
