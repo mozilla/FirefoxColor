@@ -5,7 +5,6 @@ import "./index.scss";
 import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
 
-console.log(bgImages);
 
 const Pattern = ({ src, backgroundId, active, setBackground, frame }) => (
   <div>
