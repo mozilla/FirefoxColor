@@ -44,6 +44,7 @@ module.exports = merge(common.webpackConfig, {
       homepage: common.siteUrl
     }),
     new CopyWebpackPlugin([
+      { from: "./src/web/testing.html", to: "testing.html" },
       { from: "./src/web/robots.txt", to: "robots.txt" },
       { from: "./src/web/favicon.ico", to: "favicon.ico" },
       { from: "./src/images", to: "images" },
