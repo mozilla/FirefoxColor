@@ -160,7 +160,7 @@ export const normalizeThemeColors = (colors = {}) => {
 
 // Utility to ensure normal properties and values in app theme state
 export const normalizeTheme = (data = {}) => {
-  if (!data) return;
+  if (!data) return undefined;
   const images = data.images ? data.images : {};
   const colors = data.colors ? data.colors : {};
 
