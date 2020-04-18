@@ -146,14 +146,9 @@ const storeImages = ({ images }) => browser.storage.local.set({ images });
 const BLANK_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
-  browser.management.onEnabled.addListener((info) => {
-    if (info.type === "theme") {
-      browser.storage.local.set({ hadUIInteraction: false });
-    }
-  });
 
   browser.storage.onChanged.addListener(ui => {
-    if (ui && ui.hadUIInteraction && !ui.hadUIInteraction.newValue || !ui) {
+    if (!ui || ui.hadUIInteraction && !ui.hadUIInteraction.newValue) {
       browser.theme.reset();
     }
   });
