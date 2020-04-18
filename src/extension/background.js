@@ -26,7 +26,14 @@ const init = () => {
   });
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
-    if (!firstRunDone) {
+    if (firstRunDone) {
+      fetchImages()
+        .then(({ images }) => {
+          customBackgrounds = images || {};
+          return fetchTheme();
+        })
+        .then(applyTheme);
+    } else {
       log("Opening first run tab");
       queryAndFocusTab("firstRun=true", true);
       setFirstRunDone();
@@ -52,26 +59,18 @@ const messageHandlers = {
   revertAll: (message) => {
     log("revertAllThemes", message);
     browser.storage.local.set({ hadUIInteraction: false });
+    storeTheme({ theme: null });
+    queryAndFocusTab("", true);
   },
   setTheme: message => {
     browser.storage.local.get("hadUIInteraction").then(ui => {
       if (ui.hadUIInteraction) {
-       const theme = normalizeTheme(message.theme);
+        const theme = normalizeTheme(message.theme);
         log("setTheme", theme);
-
-        // TODO: finish testing
-        // storeTheme({ theme });
-        // applyTheme({ theme });
-
         storeTheme({ theme });
-        fetchImages()
-          .then(({ images }) => {
-            customBackgrounds = images || {};
-            return fetchTheme();
-          })
-          .then(applyTheme);
-          }
-    });
+        applyTheme({ theme });
+      }
+   });
   },
   previewTheme: ({ theme }) => {
     log("previewTheme", theme);
@@ -120,7 +119,7 @@ const queryAndFocusTab = (params, reload = false) => {
       if (reload) {
         browser.tabs.update(siteTab.id, {
           active: true,
-          url: `${siteTab.url}${siteTab.url.includes("?") ? "&" : "?"}${params}`
+          url: params ? `${siteTab.url}${siteTab.url.includes("?") ? "&" : "?"}${params}` : siteTab.url
         });
       } else {
         browser.tabs.update(siteTab.id, { active: true });
