@@ -25,7 +25,7 @@ export default function({
 
     const { search } = window.location;
 
-    // If the user does anything with a theme or the url has any params (for for first run or share for eg), 
+    // If the user does anything with a theme or the url has any params (for firstRun or share for eg), 
     // the theme will be activated.
     if (meta.userEdit || Boolean(search)) {
       postMessage("activateExtension");
