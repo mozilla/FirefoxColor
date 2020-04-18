@@ -60,7 +60,7 @@ const messageHandlers = {
     log("revertAllThemes", message);
     browser.storage.local.set({ hadUIInteraction: false });
     storeTheme({ theme: null });
-    queryAndFocusTab("", true);
+    queryAndFocusTab(null, true);
   },
   setTheme: message => {
     browser.storage.local.get("hadUIInteraction").then(ui => {

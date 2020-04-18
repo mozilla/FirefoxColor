@@ -25,7 +25,7 @@ export default function({
 
     const { search } = window.location;
 
-    if (meta.userEdit || Boolean(search) && !search.includes("firstRun")) {
+    if (meta.userEdit || Boolean(search)) {
       postMessage("activateExtension");
     }
 
