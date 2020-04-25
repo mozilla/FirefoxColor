@@ -19,10 +19,28 @@
    This will start a webpack-dev-server instance at port 8080 and start a
    watcher that will rebuild the browser extension with every file change.
 
-1. In Firefox 57 + open `about:debugging` and load the
-   `build/extension/manifest.json` file.
+1. To load the extension locally you can do this in the following ways:
 
-1. Visit `http://localhost:8080` to see the web-based theme editor - changes
+	  - In Firefox 57 + open `about:debugging` and load the
+	      `build/extension/manifest.json` file.
+
+	  - run the following steps:
+
+	  	```
+	    	rm -rf addon.xpi
+	    	npm run package
+	    	npm run start
+	   	```
+
+		  This will add an xpi file to the root of your project which you can drag to the browser. You will need to give it permissions when done with this latter method.
+
+
+		To debug the background page, you can go to Tools -> Web Developer -> Remote Debugging and click on the "Inspect" button.
+
+		To toggle the addon on and off or remove, you can go to `about:addons`
+
+
+4. Visit `http://localhost:8080` to see the web-based theme editor - changes
    should be relayed through the temporarily installed add-on and alter the
    browser theme
 
