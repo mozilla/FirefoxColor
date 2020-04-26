@@ -12,6 +12,7 @@ import {
 export const themeChangeActions = [
   "SET_THEME",
   "SET_COLOR",
+  "CLEAR_COLOR",
   "SET_BACKGROUND",
   "ADD_CUSTOM_BACKGROUND",
   "UPDATE_CUSTOM_BACKGROUND",
@@ -50,6 +51,7 @@ export const actions = {
       {},
       "SET_THEME",
       "SET_COLOR",
+      "CLEAR_COLOR",
       "SET_BACKGROUND",
       "ADD_CUSTOM_BACKGROUND",
       "UPDATE_CUSTOM_BACKGROUND",
@@ -297,6 +299,15 @@ export const reducers = {
           ...state,
           colors: { ...state.colors, [name]: normalizeThemeColor(name, color) }
         }),
+        CLEAR_COLOR: (state, { payload: { name } }) => {
+          var newColors = Object.assign({}, state.colors);
+          delete newColors[name];
+          return {
+            ...state,
+            colors: newColors
+          };
+        },
+
         SET_BACKGROUND: (state, { payload: { url } }) => ({
           ...state,
           images: { ...state.images, additional_backgrounds: [url] }

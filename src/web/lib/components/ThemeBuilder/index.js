@@ -17,6 +17,7 @@ export const ThemeBuilder = props => {
     themeBuilderPanel,
     selectedColor,
     setColor,
+    clearColor,
     setSelectedColor,
     setThemeBuilderPanel,
     setTheme,
@@ -24,7 +25,9 @@ export const ThemeBuilder = props => {
     setSavedThemesPage,
     storage,
     themeCustomImages,
-    clearCustomBackground
+    clearCustomBackground,
+    hasExtension,
+    addonUrl
   } = props;
 
   const tabList = [
@@ -35,6 +38,10 @@ export const ThemeBuilder = props => {
     {
       name: "Custom colors",
       id: "colors"
+    },
+    {
+      name: "Advanced colors",
+      id: "advanced-colors"
     },
     {
       name: "Custom backgrounds",
@@ -74,11 +81,27 @@ export const ThemeBuilder = props => {
               theme,
               selectedColor,
               setColor,
+              clearColor,
               setSelectedColor
             }}
           />
         );
-      case "backgrounds":
+      case "advanced-colors":
+          return (
+            <ThemeColorsEditor
+              {...{
+                theme,
+                selectedColor,
+                setColor,
+                clearColor,
+                setSelectedColor,
+                advancedColors: true,
+                hasExtension,
+                addonUrl
+              }}
+            />
+          );
+        case "backgrounds":
         return <ThemeBackgroundPicker {...props} />;
       case "saved-themes":
         return (

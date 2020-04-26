@@ -36,6 +36,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   const themeUserEditDispatchers = [
     "setBackground",
     "setColor",
+    "setColors",
+    "clearColor",
     "setTheme",
     "addCustomBackground",
     "updateCustomBackground",

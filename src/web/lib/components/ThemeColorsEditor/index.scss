@@ -13,15 +13,15 @@
 
 .theme-colors-editor__list {
   display: grid;
-  grid-template-rows: repeat(5, 44px);
+  grid-template-rows: repeat(20, 44px);
   grid-gap: $grid;
   grid-template-columns: 1fr 1fr;
   margin: 0;
   padding: $grid * 4;
   position: relative;
   flex: 1 1 640px;
-  grid-auto-flow: column;
   height: 320px;
+  overflow: auto;
 
   .theme-unit {
     align-items: center;
@@ -49,16 +49,31 @@
     }
   }
 
-  .theme-unit__label {
-    flex: 1;
-  }
-
   .theme-unit__swatch {
     border-radius: 2px;
     border: 1px solid var(--grey-90-a30);
     height: 20px;
     width: 20px;
     margin-right: $grid * 4;
+  }
+
+  .theme-unit__default {
+    border-radius: 2px;
+    border: 1px dashed var(--grey-90-a30);
+    height: 20px;
+    width: 20px;
+    margin-right: $grid * 4;
+  }
+
+  .theme-unit__revert {
+    height: 20px;
+    width: auto;
+    margin-left: 16px;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
   }
 }
 
@@ -77,10 +92,10 @@
     height: 100%;
     justify-content: center;
     padding: $grid * 3;
+  }
 
-    p {
-      flex: 0 0 170px;
-    }
+  .theme-colors-editor__prompt-description {
+    flex: 0 0 170px;
   }
 
   .theme-colors-editor__prompt-arrow {
@@ -95,4 +110,17 @@
   box-sizing: border-box !important;
   box-shadow: none !important;
   border-radius: 0 !important;
+}
+
+.use-default {
+  border-radius: 2px;
+  border: 1px dashed var(--grey-90-a30);
+  height: 16px;
+  width: 16px;
+  margin-left: 10px;
+  background-color: white;
+}
+
+button::-moz-focus-inner {
+  border: 0;
 }

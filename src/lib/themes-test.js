@@ -93,6 +93,30 @@ describe("lib/themes", () => {
       // Input object should not have been changed.
       expect(themeInput).to.deep.equal(deprecatedTheme);
     });
+
+    it("should include advanced colors themes", () => {
+      const advancedColors = ["button_background_active", "button_background_hover", "frame_inactive",
+        "icons_attention", "icons", "ntp_background", "ntp_text", "popup_border", "popup_highlight_text",
+        "popup_highlight", "sidebar_border", "sidebar_highlight_text", "sidebar_highlight", "sidebar_text", "sidebar",
+        "tab_background_separator", "tab_loading", "tab_selected", "tab_text", "toolbar_bottom_separator",
+        "toolbar_field_border_focus", "toolbar_field_border", "toolbar_field_focus", "toolbar_field_highlight_text",
+        "toolbar_field_highlight", "toolbar_field_separator", "toolbar_field_text_focus", "toolbar_top_separator",
+        "toolbar_vertical_separator"
+      ];
+      advancedColors.forEach(advancedColor => {
+        const theme = {
+          colors: {
+            ...presetThemesContext("./default.json").colors,
+          },
+          title: ["custom theme"],
+        };
+        theme.colors[advancedColor] = { r: 12, g: 34, b: 56 };
+
+        const output = subject(theme);
+
+        expect(output.colors[advancedColor]).to.deep.equal({ r: 12, g: 34, b: 56 });
+      });
+    });
   });
 
   describe("convertToBrowserTheme", () => {

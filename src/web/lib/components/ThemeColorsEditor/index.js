@@ -2,11 +2,12 @@ import React from "react";
 import classnames from "classnames";
 import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
-import { colorLabels, colorsWithAlpha, ESC } from "../../../../lib/constants";
+import { colorsWithAlpha, ESC, colorLabels, advancedColorLabels } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
 import StorageSpaceInformation from "../StorageSpaceInformation";
 
 import "./index.scss";
+import iconClear from "./backspace.svg";
 
 const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
 
@@ -43,6 +44,12 @@ class ThemeColorsEditor extends React.Component {
     this.props.setColor({ name, color: color.rgb });
   };
 
+  handleClearColor = (name) => {
+    const { setSelectedColor } = this.props;
+    this.props.clearColor({name});
+    setSelectedColor({ name: null });
+  };
+
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
   }
@@ -54,16 +61,21 @@ class ThemeColorsEditor extends React.Component {
   render() {
     const {
       theme: { colors },
-      selectedColor
+      selectedColor,
+      advancedColors,
+      hasExtension,
+      addonUrl
     } = this.props;
 
+    const labels = advancedColors ? advancedColorLabels : colorLabels;
+
     // Select only the color properties from the theme.
-    const colorKeys = Object.keys(colors).filter(name => name in colorLabels);
+    const colorKeys = Object.keys(labels);
 
     // Dedupe colors for swatch presets
     const uniqueColorArray = [
       ...new Set(
-        colorKeys.map(name => {
+        Object.keys(Object.assign({}, colorLabels, advancedColorLabels)).map(name => {
           return colorToCSS(colors[name]);
         })
       )
@@ -88,14 +100,22 @@ class ThemeColorsEditor extends React.Component {
                   )}
                   onClick={ev => this.handleClick(ev, name)}
                 >
-                  <span
-                    className="theme-unit__swatch"
-                    style={{ backgroundColor: colorToCSS(color) }}
-                    title={colorLabels[name]}
-                  />
-                  <span className="theme-unit__label" title={colorLabels[name]}>
-                    {colorLabels[name]}
+                  {color ?
+                    <span
+                      className="theme-unit__swatch"
+                      style={{backgroundColor: colorToCSS(color)}}
+                      title={labels[name]}
+                    />
+                    : <span
+                      className="theme-unit__default"
+                      title={labels[name]}
+                    />
+                  }
+
+                  <span className="theme-unit__label" title={labels[name]}>
+                    {labels[name]}
                   </span>
+
                 </li>
               ];
             })}
@@ -104,24 +124,42 @@ class ThemeColorsEditor extends React.Component {
         </div>
         <div className="theme-colors-editor__picker">
           {selectedColor && (
-            <SketchPicker
-              color={colors[selectedColor]}
-              width="270px"
-              disableAlpha={!colorsWithAlpha.includes(selectedColor)}
-              onChangeComplete={nextColor =>
-                this.handleColorChange(selectedColor, nextColor)
-              }
-              presetColors={uniqueColorArray}
-            />
+            <div>
+              <SketchPicker
+                color={colors[selectedColor]}
+                width="270px"
+                disableAlpha={!colorsWithAlpha.includes(selectedColor)}
+                onChangeComplete={nextColor =>
+                  this.handleColorChange(selectedColor, nextColor)
+                }
+                presetColors={uniqueColorArray}
+              />
+              <button className={"use-default"}
+                      title="Use Firefox&quot;s default style for this color"
+                      onClick={ev => this.handleClearColor(selectedColor)}/>
+            </div>
           )}
           {!selectedColor && (
             <div className="theme-colors-editor__prompt">
               <div className="theme-colors-editor__prompt-arrow" />
-              <p>Pick a color to start customizing Firefox.</p>
+              <div className="theme-colors-editor__prompt-description" >
+                <p>Pick a color to start customizing Firefox.</p>
+                {advancedColors && hasExtension &&
+                  <div>
+                    <p>Advanced colors are previewed in Firefox instead of this page.</p>
+                  </div>
+                }
+                {advancedColors && !hasExtension &&
+                  <div>
+                    <p>Advanced colors are not shown in the preview on this page.</p>
+                    <p>Install the <a href={addonUrl}>Firefox Color extension</a> to experience the full preview.</p>
+                  </div>
+                }
+              </div>
             </div>
           )}
         </div>
-      </div>
+      </div >
     );
   }
 }

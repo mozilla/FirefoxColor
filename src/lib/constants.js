@@ -33,6 +33,38 @@ export const colorLabels = {
   popup_text: "Popup Text"
 };
 
+export const advancedColorLabels = {
+  button_background_active: "Button Background Active",
+  button_background_hover: "Button Background Hover",
+  frame_inactive: "Frame Inactive",
+  icons_attention: "Icons Attention",
+  icons: "Icons",
+  ntp_background: "New Tab Background Color",
+  ntp_text: "New Tab Text",
+  popup_border: "Popup Border",
+  popup_highlight_text: "Popup Highlight Text",
+  popup_highlight: "Popup Highlight",
+  sidebar_border: "Sidebar Border",
+  sidebar_highlight_text: "Sidebar Highlight Text",
+  sidebar_highlight: "Sidebar Highlight",
+  sidebar_text: "Sidebar Text",
+  sidebar: "Sidebar",
+  tab_background_separator: "Tab Background Separator",
+  tab_loading: "Tab Loading",
+  tab_selected: "Tab Selected",
+  tab_text: "Tab Text",
+  toolbar_bottom_separator: "Toolbar Bottom Separator",
+  toolbar_field_border_focus: "Toolbar Field Border Focus",
+  toolbar_field_border: "Toolbar Field Border",
+  toolbar_field_focus: "Toolbar Field Focus",
+  toolbar_field_highlight_text: "Toolbar Field Highlight Text",
+  toolbar_field_highlight: "Toolbar Field Highlight",
+  toolbar_field_separator: "Toolbar Field Separator",
+  toolbar_field_text_focus: "Toolbar Field Text Focus",
+  toolbar_top_separator: "Toolbar Top Separator",
+  toolbar_vertical_separator: "Toolbar Vertical Separator"
+};
+
 export const fallbackColors = {
   frame: "accentcolor",
   // "popup" falls back to "frame" if "popup" is void.
