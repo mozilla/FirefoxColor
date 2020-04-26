@@ -24,6 +24,9 @@ const init = () => {
       }
     });
   });
+  browser.windows.onCreated.addListener(() => {
+    fetchTheme().then(applyTheme);
+  });
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
     if (firstRunDone) {
@@ -47,9 +50,6 @@ const messageListener = port => message => {
 };
 
 const messageHandlers = {
-  activateExtension: () => {
-    browser.storage.local.set({ hadUIInteraction: true });
-  },
   fetchTheme: (message, port) => {
     log("fetchTheme");
     fetchTheme().then(({ theme: currentTheme }) =>
@@ -58,19 +58,15 @@ const messageHandlers = {
   },
   revertAll: (message) => {
     log("revertAllThemes", message);
-    browser.storage.local.set({ hadUIInteraction: false });
     storeTheme({ theme: null });
     queryAndFocusTab(null, true);
+    browser.theme.reset();
   },
   setTheme: message => {
-    browser.storage.local.get("hadUIInteraction").then(ui => {
-      if (ui.hadUIInteraction) {
-        const theme = normalizeTheme(message.theme);
-        log("setTheme", theme);
-        storeTheme({ theme });
-        applyTheme({ theme });
-      }
-   });
+    const theme = normalizeTheme(message.theme);
+    log("setTheme", theme);
+    storeTheme({ theme });
+    applyTheme({ theme });
   },
   previewTheme: ({ theme }) => {
     log("previewTheme", theme);
@@ -145,14 +141,6 @@ const storeImages = ({ images }) => browser.storage.local.set({ images });
 // Blank 1x1 PNG from http://png-pixel.com/
 const BLANK_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-
-
-  browser.storage.onChanged.addListener(ui => {
-    if (!ui || ui.hadUIInteraction && !ui.hadUIInteraction.newValue) {
-      browser.theme.reset();
-    }
-  });
-  
 
 const applyTheme = ({ theme }) => {
   log("applyTheme", theme);

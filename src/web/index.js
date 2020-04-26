@@ -154,13 +154,17 @@ window.addEventListener("message", ({ source, data: message }) => {
         postMessage("addImages", {
           images: selectors.themeCustomImages(state)
         });
-        postMessage("setTheme", { theme: selectors.theme(state) });
+
+        const hasEdited = selectors.userHasEdited(store.getState());
+        if (hasEdited) {
+          postMessage("setTheme", { theme: selectors.theme(state) });
+        }
       }
     }
     if (message.type === "fetchedTheme") {
       store.dispatch({
         ...actions.theme.setTheme({ theme: message.theme }),
-        meta: { fromAddon: true }
+        meta: { skipAddon: true }
       });
     }
   }
