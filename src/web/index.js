@@ -151,12 +151,13 @@ window.addEventListener("message", ({ source, data: message }) => {
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
         const state = store.getState();
-        postMessage("addImages", {
-          images: selectors.themeCustomImages(state)
-        });
+        const hasEdited = selectors.userHasEdited(state);
 
-        const hasEdited = selectors.userHasEdited(store.getState());
         if (hasEdited) {
+          postMessage("addImages", {
+            images: selectors.themeCustomImages(state)
+          });
+
           postMessage("setTheme", { theme: selectors.theme(state) });
         }
       }
@@ -294,7 +295,7 @@ if (!params.theme) {
           // Skip updating history for this theme, because it came from the URL
           skipHistory: true,
           // Skip updating the add-on for this theme, because it needs approval
-          skipAddon: true
+          skipAddon: false
         }
       });
       // Set the pending theme - only matters if add-on is installed
