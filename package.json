@@ -106,7 +106,7 @@
     "node-sass": "4.13.1",
     "nodemon": "1.18.10",
     "npm-run-all": "4.1.4",
-    "onchange": "5.2.0",
+    "onchange": "7.0.1",
     "prettier": "1.16.4",
     "react-hot-loader": "4.12.20",
     "react-svg": "7.2.14",
