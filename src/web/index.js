@@ -151,16 +151,21 @@ window.addEventListener("message", ({ source, data: message }) => {
       if (!hasExtension) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
         const state = store.getState();
-        postMessage("addImages", {
-          images: selectors.themeCustomImages(state)
-        });
-        postMessage("setTheme", { theme: selectors.theme(state) });
+        const hasEdited = selectors.userHasEdited(state);
+
+        if (hasEdited) {
+          postMessage("addImages", {
+            images: selectors.themeCustomImages(state)
+          });
+
+          postMessage("setTheme", { theme: selectors.theme(state) });
+        }
       }
     }
     if (message.type === "fetchedTheme") {
       store.dispatch({
         ...actions.theme.setTheme({ theme: message.theme }),
-        meta: { fromAddon: true }
+        meta: { skipAddon: true }
       });
     }
   }

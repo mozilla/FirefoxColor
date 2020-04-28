@@ -24,9 +24,6 @@ const init = () => {
       }
     });
   });
-  browser.windows.onCreated.addListener(() => {
-    fetchTheme().then(applyTheme);
-  });
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
     if (firstRunDone) {
@@ -55,6 +52,12 @@ const messageHandlers = {
     fetchTheme().then(({ theme: currentTheme }) =>
       port.postMessage({ type: "fetchedTheme", theme: currentTheme })
     );
+  },
+  revertAll: (message) => {
+    log("revertAllThemes", message);
+    storeTheme({ theme: null });
+    queryAndFocusTab(null, true);
+    browser.theme.reset();
   },
   setTheme: message => {
     const theme = normalizeTheme(message.theme);
@@ -109,7 +112,7 @@ const queryAndFocusTab = (params, reload = false) => {
       if (reload) {
         browser.tabs.update(siteTab.id, {
           active: true,
-          url: `${siteTab.url}${siteTab.url.includes("?") ? "&" : "?"}${params}`
+          url: params ? `${siteTab.url}${siteTab.url.includes("?") ? "&" : "?"}${params}` : siteTab.url
         });
       } else {
         browser.tabs.update(siteTab.id, { active: true });

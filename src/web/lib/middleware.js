@@ -11,6 +11,10 @@ export default function({
     const meta = action.meta || {};
     if (!meta.skipAddon && themeChangeActions.includes(action.type)) {
       postMessage("setTheme", { theme: selectors.theme(getState()) });
+    } else if (action.type === "REVERT_ALL") {
+      postMessage("revertAll");
+      // Remove any theme params from the url.
+      window.history.pushState({theme: null}, "", "/");
     }
     return returnValue;
   };
@@ -18,13 +22,16 @@ export default function({
   const updateHistoryMiddleware = ({ getState }) => next => action => {
     const returnValue = next(action);
     const meta = action.meta || {};
+
     if (!meta.skipHistory && themeChangeActions.includes(action.type)) {
       const state = getState();
       const theme = selectors.theme(state);
       const hasCustomBackgrounds = selectors.themeHasCustomBackgrounds(state);
-      urlEncodeTheme({ theme, hasCustomBackgrounds }).then(url =>
-        window.history.pushState({ theme }, "", url)
-      );
+      urlEncodeTheme({ theme, hasCustomBackgrounds }).then(url => {
+        if (meta.userEdit) {
+          window.history.pushState({ theme }, "", url);
+        }
+      });
     }
     return returnValue;
   };
