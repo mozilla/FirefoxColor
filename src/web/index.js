@@ -295,7 +295,7 @@ if (!params.theme) {
           // Skip updating history for this theme, because it came from the URL
           skipHistory: true,
           // Skip updating the add-on for this theme, because it needs approval
-          skipAddon: false
+          skipAddon: true
         }
       });
       // Set the pending theme - only matters if add-on is installed

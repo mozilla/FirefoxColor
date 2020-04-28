@@ -24,9 +24,6 @@ const init = () => {
       }
     });
   });
-  browser.windows.onCreated.addListener(() => {
-    fetchTheme().then(applyTheme);
-  });
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
     if (firstRunDone) {
