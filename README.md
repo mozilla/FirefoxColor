@@ -19,10 +19,28 @@
    This will start a webpack-dev-server instance at port 8080 and start a
    watcher that will rebuild the browser extension with every file change.
 
-1. In Firefox 57 + open `about:debugging` and load the
-   `build/extension/manifest.json` file.
+1. To activate the extension:
 
-1. Visit `http://localhost:8080` to see the web-based theme editor - changes
+   1. Find the XPI for the environment:
+
+      - Locally: `npm run package` which adds an addon.xpi to the root of the project
+
+      - DEV / STAGE: Visit the dev or stage version of the website and click on "Get Firefox Color" (i.e. open testing.html) and use one of the referenced XPI files
+
+   2. Now load the XPI (from the previous step) to the browser by one of the following ways:
+
+      - Go to `about:debugging` and click on "Load Temporary Add-on..." and add the xpi
+
+      - (or) Go to `about:config` and add setting `xpinstall.signatures.required` and set to `false`. Next drag and drop the XPI to the browser. Note you must use Beta, Dev or Nightly browser with this approach.
+
+notes:
+
+To debug the background file, go to `about:debugging` and click the "Inspect" button
+
+To toggle the add-on on and off or remove, you can go to `about:addons`
+
+
+4. Visit `http://localhost:8080` to see the web-based theme editor - changes
    should be relayed through the temporarily installed add-on and alter the
    browser theme
 
