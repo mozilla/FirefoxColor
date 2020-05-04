@@ -21,21 +21,17 @@
 
 1. To activate the extension:
 
-   1. Use Firefox 57 + Dev or Nightly browser
-
-   2. Go to `about:config` and add setting `xpinstall.signatures.required` and set to `false`
-
-   3. Find the XPI for the environment:
+   1. Find the XPI for the environment:
 
       - Locally: `npm run package` which adds an addon.xpi to the root of the project
 
       - DEV / STAGE: Visit the dev or stage version of the website and click on "Get Firefox Color" (i.e. open testing.html) and use one of the referenced XPI files
 
-   4. Now load the XPI (from the previous step) to the browser by one of the following ways:
+   2. Now load the XPI (from the previous step) to the browser by one of the following ways:
 
       - Go to `about:debugging` and click on "Load Temporary Add-on..." and add the xpi
 
-      - (or) drag and drop the XPI to the browser
+      - (or) Go to `about:config` and add setting `xpinstall.signatures.required` and set to `false`. Next drag and drop the XPI to the browser. Note you must use Beta, Dev or Nightly browser with this approach.
 
 notes:
 
