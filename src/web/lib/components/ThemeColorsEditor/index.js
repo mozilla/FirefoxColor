@@ -7,9 +7,6 @@ import { colorToCSS } from "../../../../lib/themes";
 import StorageSpaceInformation from "../StorageSpaceInformation";
 
 import "./index.scss";
-import iconClear from "./backspace.svg";
-import {presetThemesContext} from "../../../../lib/assets";
-const defaultTheme = presetThemesContext("./default.json");
 
 const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
 
@@ -48,12 +45,7 @@ class ThemeColorsEditor extends React.Component {
 
   handleClearColor = (name) => {
     const { setSelectedColor } = this.props;
-    const defaultColor = defaultTheme.colors[name];
-    if (defaultColor) {
-      this.props.setColor({ name, color: defaultColor });
-    } else {
-      this.props.clearColor({name});
-    }
+    this.props.clearColor({name});
     setSelectedColor({ name: null });
   };
 
@@ -141,9 +133,11 @@ class ThemeColorsEditor extends React.Component {
                 }
                 presetColors={uniqueColorArray}
               />
-              <button className={"use-default"}
-                      title="Use Firefox&quot;s default style for this color"
-                      onClick={ev => this.handleClearColor(selectedColor)}/>
+              {advancedColors &&
+                <button className={"use-default"}
+                        title="Use Firefox&quot;s default style for this color"
+                        onClick={ev => this.handleClearColor(selectedColor)}/>
+              }
             </div>
           )}
           {!selectedColor && (
