@@ -155,6 +155,7 @@ class ThemeColorsEditor extends React.Component {
                 {advancedColors && hasExtension && updatedExtensionVersion &&
                   <div>
                     <p>Advanced colors are previewed in Firefox instead of this page.</p>
+                    <p>Learn more about each property from the <a href="https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme#colors">official documentation</a>.</p>
                   </div>
                 }
                 {advancedColors && hasExtension && !updatedExtensionVersion &&
