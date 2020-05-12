@@ -149,7 +149,7 @@ window.addEventListener("message", ({ source, data: message }) => {
       outstandingPings = 0;
       const hasExtension = selectors.hasExtension(store.getState());
       if (!hasExtension) {
-        store.dispatch(actions.ui.setHasExtension({ hasExtension: true }));
+        store.dispatch(actions.ui.setHasExtension({ hasExtension: true, extensionVersion: message.extensionVersion }));
         const state = store.getState();
         postMessage("addImages", {
           images: selectors.themeCustomImages(state)

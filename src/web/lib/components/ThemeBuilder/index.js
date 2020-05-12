@@ -27,6 +27,7 @@ export const ThemeBuilder = props => {
     themeCustomImages,
     clearCustomBackground,
     hasExtension,
+    extensionVersion,
     addonUrl
   } = props;
 
@@ -97,6 +98,7 @@ export const ThemeBuilder = props => {
                 setSelectedColor,
                 advancedColors: true,
                 hasExtension,
+                extensionVersion,
                 addonUrl
               }}
             />

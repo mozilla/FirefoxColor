@@ -10,6 +10,8 @@ let customBackgrounds = {};
 
 let isThemePreview = false;
 
+const extensionVersion = browser.runtime.getManifest().version;
+
 const init = () => {
   browser.browserAction.onClicked.addListener(() => {
     queryAndFocusTab("fromAddon=true");
@@ -74,7 +76,7 @@ const messageHandlers = {
     }
   },
   ping: (message, port) => {
-    port.postMessage({ type: "pong" });
+    port.postMessage({ type: "pong", extensionVersion});
   },
   addImage: ({ image }) => {
     log("addImage", image, customBackgrounds);

@@ -5,6 +5,7 @@ import onClickOutside from "react-onclickoutside";
 import { colorsWithAlpha, ESC, colorLabels, advancedColorLabels } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
 import StorageSpaceInformation from "../StorageSpaceInformation";
+import semverCompare from "semver-compare";
 
 import "./index.scss";
 
@@ -63,10 +64,14 @@ class ThemeColorsEditor extends React.Component {
       selectedColor,
       advancedColors,
       hasExtension,
+      extensionVersion,
       addonUrl
     } = this.props;
 
     const labels = advancedColors ? advancedColorLabels : colorLabels;
+
+    let requiredVersion = "2.1.5";
+    const updatedExtensionVersion = extensionVersion && semverCompare(extensionVersion, requiredVersion) >= 0;
 
     // Select only the color properties from the theme.
     const colorKeys = Object.keys(labels);
@@ -144,11 +149,18 @@ class ThemeColorsEditor extends React.Component {
             <div className="theme-colors-editor__prompt">
               <div className="theme-colors-editor__prompt-arrow" />
               <div className="theme-colors-editor__prompt-description" >
-                <p>Pick a color to start customizing Firefox.</p>
-                {advancedColors && hasExtension &&
+                {!advancedColors &&
+                  <p>Pick a color to start customizing Firefox.</p>
+                }
+                {advancedColors && hasExtension && updatedExtensionVersion &&
                   <div>
                     <p>Advanced colors are previewed in Firefox instead of this page.</p>
                   </div>
+                }
+                {advancedColors && hasExtension && !updatedExtensionVersion &&
+                <div>
+                  <p>Please update your <a href={addonUrl}>Firefox Color extension</a> to a version higher than {requiredVersion} if you want to use this feature.</p>
+                </div>
                 }
                 {advancedColors && !hasExtension &&
                   <div>

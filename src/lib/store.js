@@ -77,6 +77,7 @@ export const actions = {
 
 export const selectors = {
   hasExtension: state => state.ui.hasExtension,
+  extensionVersion: state => state.ui.extensionVersion,
   themeBuilderPanel: state => state.ui.themeBuilderPanel,
   firstRun: state => state.ui.firstRun,
   loaderDelayExpired: state => state.ui.loaderDelayExpired,
@@ -190,9 +191,10 @@ export const reducers = {
         ...state,
         selectedColor: name
       }),
-      SET_HAS_EXTENSION: (state, { payload: { hasExtension } }) => ({
+      SET_HAS_EXTENSION: (state, { payload: { hasExtension, extensionVersion } }) => ({
         ...state,
-        hasExtension
+        hasExtension,
+        extensionVersion
       }),
       SET_FIRST_RUN: (state, { payload: firstRun }) => ({
         ...state,
@@ -239,6 +241,7 @@ export const reducers = {
       currentSavedTheme: null,
       selectedColor: null,
       hasExtension: false,
+      extensionVersion: null,
       loaderDelayExpired: false,
       displayLegalModal: false,
       displayShareModal: false,
