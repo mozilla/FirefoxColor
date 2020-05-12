@@ -148,7 +148,8 @@ window.addEventListener("message", ({ source, data: message }) => {
     if (message.type === "hello" || message.type === "pong") {
       outstandingPings = 0;
       const hasExtension = selectors.hasExtension(store.getState());
-      if (!hasExtension) {
+      const extensionVersion = selectors.extensionVersion(store.getState());
+      if (!hasExtension || extensionVersion !== message.extensionVersion) {
         store.dispatch(actions.ui.setHasExtension({ hasExtension: true, extensionVersion: message.extensionVersion }));
         const state = store.getState();
         postMessage("addImages", {

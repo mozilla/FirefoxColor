@@ -70,7 +70,7 @@ class ThemeColorsEditor extends React.Component {
 
     const labels = advancedColors ? advancedColorLabels : colorLabels;
 
-    let requiredVersion = "2.1.5";
+    let requiredVersion = "2.1.6";
     const updatedExtensionVersion = extensionVersion && semverCompare(extensionVersion, requiredVersion) >= 0;
 
     // Select only the color properties from the theme.
@@ -159,7 +159,7 @@ class ThemeColorsEditor extends React.Component {
                 }
                 {advancedColors && hasExtension && !updatedExtensionVersion &&
                 <div>
-                  <p>Please update your <a href={addonUrl}>Firefox Color extension</a> to a version higher than {requiredVersion} if you want to use this feature.</p>
+                  <p>Please update your <a href={addonUrl}>Firefox Color extension</a> to version {requiredVersion} or higher if you want to use this feature.</p>
                 </div>
                 }
                 {advancedColors && !hasExtension &&
