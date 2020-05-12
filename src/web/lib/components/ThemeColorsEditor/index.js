@@ -8,6 +8,8 @@ import StorageSpaceInformation from "../StorageSpaceInformation";
 
 import "./index.scss";
 import iconClear from "./backspace.svg";
+import {presetThemesContext} from "../../../../lib/assets";
+const defaultTheme = presetThemesContext("./default.json");
 
 const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
 
@@ -46,7 +48,12 @@ class ThemeColorsEditor extends React.Component {
 
   handleClearColor = (name) => {
     const { setSelectedColor } = this.props;
-    this.props.clearColor({name});
+    const defaultColor = defaultTheme.colors[name];
+    if (defaultColor) {
+      this.props.setColor({ name, color: defaultColor });
+    } else {
+      this.props.clearColor({name});
+    }
     setSelectedColor({ name: null });
   };
 
