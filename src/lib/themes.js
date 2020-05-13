@@ -4,6 +4,7 @@ import {
   alphaEqualityTolerance,
   fallbackColors,
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT,
+  colorLabels,
   advancedColorLabels
 } from "./constants";
 import { presetThemesContext, bgImages } from "./assets";
@@ -62,11 +63,10 @@ export const themesEqual = (themeA, themeB) => {
     return true;
   }
 
-  if (Object.keys(themeA.colors).length !== Object.keys(themeB.colors).length) {
-    return false;
-  }
-
-  const colorNames = Object.keys(defaultTheme.colors);
+  const colorNames = [
+    ...Object.keys(colorLabels),
+    ...Object.keys(advancedColorLabels)
+  ];
 
   for (let name of colorNames) {
     const inA = name in themeA.colors;

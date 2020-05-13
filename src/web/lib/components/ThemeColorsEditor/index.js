@@ -14,6 +14,14 @@ const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
 class ThemeColorsEditor extends React.Component {
   constructor(props) {
     super(props);
+    this.colorPicker = null;
+    this.setColorPickerRef = element => {
+      this.colorPicker = element;
+    };
+    const colors = this.props.theme.colors;
+    this.lastSelectedColors = {
+      ...colors,
+    };
   }
 
   handleClick(ev, name) {
@@ -41,7 +49,12 @@ class ThemeColorsEditor extends React.Component {
   };
 
   handleColorChange = (name, color) => {
+    this.lastSelectedColors[name] = color.rgb;
     this.props.setColor({ name, color: color.rgb });
+  };
+
+  selectLastColor = (name) => {
+    this.props.setColor({name, color: this.lastSelectedColors[name]});
   };
 
   handleClearColor = (name) => {
@@ -119,38 +132,35 @@ class ThemeColorsEditor extends React.Component {
           <StorageSpaceInformation />
         </div>
         <div className="theme-colors-editor__picker">
-          {selectedColor && (
-            <div>
-              {advancedColors &&
-              <p>Select a color:</p>
+          {selectedColor && advancedColors && 
+            <div className="theme-colors-editor__options">
+              <label>
+                <input type="radio" value="default" checked={!colors[selectedColor]}
+                        onChange={ev => this.handleClearColor(selectedColor)}/>
+                use Firefox&#39;s default style for this color
+              </label>
+              <label>
+                <input type="radio" value="other" checked={!!colors[selectedColor]}
+                        onChange={ev =>
+                          this.selectLastColor(selectedColor)
+                        }/>
+                or select a color:
+              </label>
+            </div>           
+          }
+          {selectedColor &&
+            <SketchPicker
+              className={advancedColors && !colors[selectedColor] ? "theme-colors-editor__disabled" : ""}
+              color={colors[selectedColor]}
+              width="270px"
+              disableAlpha={!colorsWithAlpha.includes(selectedColor)}
+              onChangeComplete={nextColor =>
+                this.handleColorChange(selectedColor, nextColor)
               }
-              <div>
-                {advancedColors &&
-                <label>
-                  <input type="checkbox" value="default" checked={!colors[selectedColor]}
-                         onClick={ev => this.handleClearColor(selectedColor)}/>
-                  use default
-                </label>
-                }
-              </div>
-              <div>
-                {advancedColors &&
-                <label>
-                  other:
-                </label>
-                }
-                <SketchPicker
-                  color={colors[selectedColor]}
-                  width="270px"
-                  disableAlpha={!colorsWithAlpha.includes(selectedColor)}
-                  onChangeComplete={nextColor =>
-                    this.handleColorChange(selectedColor, nextColor)
-                  }
-                  presetColors={uniqueColorArray}
-                />
-              </div>
-            </div>
-          )}
+              presetColors={uniqueColorArray}
+              ref={this.setColorPickerRef}
+            />
+          }
           {!selectedColor && (
             <div className="theme-colors-editor__prompt">
               <div className="theme-colors-editor__prompt-arrow" />

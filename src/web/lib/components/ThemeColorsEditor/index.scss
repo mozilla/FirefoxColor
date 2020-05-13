@@ -73,6 +73,7 @@
   flex: 0 0 270px;
   border-left: 1px solid var(--grey-30);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
 
@@ -96,6 +97,19 @@
     background: url("../../../../images/arrowhead-left.svg");
     margin-right: $grid * 4;
   }
+}
+
+.theme-colors-editor__options {
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-colors-editor__disabled {
+  filter: grayscale(100%);
+}
+
+.theme-colors-editor__disabled:hover {
+  filter: grayscale(70%);
 }
 
 .sketch-picker {
