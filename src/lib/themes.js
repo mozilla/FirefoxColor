@@ -62,6 +62,10 @@ export const themesEqual = (themeA, themeB) => {
     return true;
   }
 
+  if (Object.keys(themeA.colors).length !== Object.keys(themeB.colors).length) {
+    return false;
+  }
+
   const colorNames = Object.keys(defaultTheme.colors);
 
   for (let name of colorNames) {

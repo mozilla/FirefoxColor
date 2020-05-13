@@ -303,7 +303,7 @@ export const reducers = {
           colors: { ...state.colors, [name]: normalizeThemeColor(name, color) }
         }),
         CLEAR_COLOR: (state, { payload: { name } }) => {
-          var newColors = Object.assign({}, state.colors);
+          const newColors = Object.assign({}, state.colors);
           delete newColors[name];
           return {
             ...state,

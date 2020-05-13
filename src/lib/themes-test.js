@@ -247,6 +247,15 @@ describe("lib/themes", () => {
       ).to.be.false;
     });
 
+    it("should reject difference in number of colors", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 255, g: 255, b: 255 }, ntp_background: { r: 0, g: 0, b: 255 } } },
+          { colors: { toolbar: { r: 255, g: 255, b: 255 } } }
+        )
+      ).to.be.false;
+    });
+
     it("should reject difference in custom backgrounds", () => {
       expect(
         subject(
