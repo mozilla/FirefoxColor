@@ -121,23 +121,35 @@ class ThemeColorsEditor extends React.Component {
         <div className="theme-colors-editor__picker">
           {selectedColor && (
             <div>
-              <SketchPicker
-                color={colors[selectedColor]}
-                width="270px"
-                disableAlpha={!colorsWithAlpha.includes(selectedColor)}
-                onChangeComplete={nextColor =>
-                  this.handleColorChange(selectedColor, nextColor)
-                }
-                presetColors={uniqueColorArray}
-              />
               {advancedColors &&
-              <div className="use-default"
-                title="Use Firefox&#39;s default style for this color"
-                onClick={ev => this.handleClearColor(selectedColor)}>
-                  <span/>
-                  Use default color
-              </div>
+              <p>Select a color:</p>
               }
+              <div>
+                {advancedColors &&
+                <label>
+                  <input type="radio" value="default" checked={!colors[selectedColor]}
+                         onClick={ev => this.handleClearColor(selectedColor)}/>
+                  use default
+                </label>
+                }
+              </div>
+              <div>
+                {advancedColors &&
+                <label>
+                  <input type="radio" value="other" checked={!!colors[selectedColor]}/>
+                  other:
+                </label>
+                }
+                <SketchPicker
+                  color={colors[selectedColor]}
+                  width="270px"
+                  disableAlpha={!colorsWithAlpha.includes(selectedColor)}
+                  onChangeComplete={nextColor =>
+                    this.handleColorChange(selectedColor, nextColor)
+                  }
+                  presetColors={uniqueColorArray}
+                />
+              </div>
             </div>
           )}
           {!selectedColor && (

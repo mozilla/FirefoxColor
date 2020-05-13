@@ -103,21 +103,3 @@
   box-shadow: none !important;
   border-radius: 0 !important;
 }
-
-.use-default {
-  display: inline-flex;
-  background-color: white;
-  border: none;
-  cursor: pointer;
-  margin-left: 8px;
-}
-
-.use-default span {
-  border-radius: 2px;
-  border: 1px dashed var(--grey-90-a30);
-  height: 16px;
-  width: 16px;
-  margin-left: 2px;
-  margin-right: 10px;
-  background-color: white;
-}
