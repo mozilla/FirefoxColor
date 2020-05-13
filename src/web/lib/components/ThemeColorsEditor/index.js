@@ -127,7 +127,7 @@ class ThemeColorsEditor extends React.Component {
               <div>
                 {advancedColors &&
                 <label>
-                  <input type="radio" value="default" checked={!colors[selectedColor]}
+                  <input type="checkbox" value="default" checked={!colors[selectedColor]}
                          onClick={ev => this.handleClearColor(selectedColor)}/>
                   use default
                 </label>
@@ -136,7 +136,6 @@ class ThemeColorsEditor extends React.Component {
               <div>
                 {advancedColors &&
                 <label>
-                  <input type="radio" value="other" checked={!!colors[selectedColor]}/>
                   other:
                 </label>
                 }
