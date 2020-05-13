@@ -18,7 +18,7 @@ const init = () => {
   });
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
-    port.postMessage({ type: "hello" });
+    port.postMessage({ type: "hello", extensionVersion});
     port.onDisconnect.addListener(() => {
       if (isThemePreview) {
         isThemePreview = false;

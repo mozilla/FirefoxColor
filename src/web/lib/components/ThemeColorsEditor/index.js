@@ -45,9 +45,7 @@ class ThemeColorsEditor extends React.Component {
   };
 
   handleClearColor = (name) => {
-    const { setSelectedColor } = this.props;
     this.props.clearColor({name});
-    setSelectedColor({ name: null });
   };
 
   componentDidMount() {
@@ -71,7 +69,7 @@ class ThemeColorsEditor extends React.Component {
     const labels = advancedColors ? advancedColorLabels : colorLabels;
 
     let requiredVersion = "2.1.6";
-    const updatedExtensionVersion = extensionVersion && semverCompare(extensionVersion, requiredVersion) >= 0;
+    const hasAdvancedThemeSupport = extensionVersion && semverCompare(extensionVersion, requiredVersion) >= 0;
 
     // Select only the color properties from the theme.
     const colorKeys = Object.keys(labels);
@@ -79,7 +77,7 @@ class ThemeColorsEditor extends React.Component {
     // Dedupe colors for swatch presets
     const uniqueColorArray = [
       ...new Set(
-        Object.keys(Object.assign({}, colorLabels, advancedColorLabels)).map(name => {
+        Object.keys({...colorLabels, ...advancedColorLabels}).map(name => {
           return colorToCSS(colors[name]);
         })
       )
@@ -104,17 +102,11 @@ class ThemeColorsEditor extends React.Component {
                   )}
                   onClick={ev => this.handleClick(ev, name)}
                 >
-                  {color ?
-                    <span
-                      className="theme-unit__swatch"
-                      style={{backgroundColor: colorToCSS(color)}}
-                      title={labels[name]}
-                    />
-                    : <span
-                      className="theme-unit__default"
-                      title={labels[name]}
-                    />
-                  }
+                  <span
+                    className="theme-unit__swatch"
+                    style={color ? {backgroundColor: colorToCSS(color)} : {borderStyle: "dashed"}}
+                    title={labels[name]}
+                  />
 
                   <span className="theme-unit__label" title={labels[name]}>
                     {labels[name]}
@@ -139,9 +131,12 @@ class ThemeColorsEditor extends React.Component {
                 presetColors={uniqueColorArray}
               />
               {advancedColors &&
-                <button className={"use-default"}
-                        title="Use Firefox&quot;s default style for this color"
-                        onClick={ev => this.handleClearColor(selectedColor)}/>
+              <div className="use-default"
+                title="Use Firefox&#39;s default style for this color"
+                onClick={ev => this.handleClearColor(selectedColor)}>
+                  <span/>
+                  Use default color
+              </div>
               }
             </div>
           )}
@@ -152,13 +147,12 @@ class ThemeColorsEditor extends React.Component {
                 {!advancedColors &&
                   <p>Pick a color to start customizing Firefox.</p>
                 }
-                {advancedColors && hasExtension && updatedExtensionVersion &&
+                {advancedColors && hasExtension && hasAdvancedThemeSupport &&
                   <div>
                     <p>Advanced colors are previewed in Firefox instead of this page.</p>
-                    <p>Learn more about each property from the <a href="https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme#colors">official documentation</a>.</p>
                   </div>
                 }
-                {advancedColors && hasExtension && !updatedExtensionVersion &&
+                {advancedColors && hasExtension && !hasAdvancedThemeSupport &&
                 <div>
                   <p>Please update your <a href={addonUrl}>Firefox Color extension</a> to version {requiredVersion} or higher if you want to use this feature.</p>
                 </div>
@@ -169,11 +163,12 @@ class ThemeColorsEditor extends React.Component {
                     <p>Install the <a href={addonUrl}>Firefox Color extension</a> to experience the full preview.</p>
                   </div>
                 }
+                <p>Learn more about each property from the <a href="https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme#colors">official documentation</a>.</p>
               </div>
             </div>
           )}
         </div>
-      </div >
+      </div>
     );
   }
 }

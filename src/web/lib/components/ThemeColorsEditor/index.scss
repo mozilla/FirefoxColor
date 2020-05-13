@@ -57,14 +57,6 @@
     margin-right: $grid * 4;
   }
 
-  .theme-unit__default {
-    border-radius: 2px;
-    border: 1px dashed var(--grey-90-a30);
-    height: 20px;
-    width: 20px;
-    margin-right: $grid * 4;
-  }
-
   .theme-unit__revert {
     height: 20px;
     width: auto;
@@ -113,14 +105,19 @@
 }
 
 .use-default {
+  display: inline-flex;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.use-default span {
   border-radius: 2px;
   border: 1px dashed var(--grey-90-a30);
   height: 16px;
   width: 16px;
-  margin-left: 10px;
+  margin-left: 2px;
+  margin-right: 10px;
   background-color: white;
-}
-
-button::-moz-focus-inner {
-  border: 0;
 }
