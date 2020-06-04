@@ -14,14 +14,6 @@ const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
 class ThemeColorsEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.colorPicker = null;
-    this.setColorPickerRef = element => {
-      this.colorPicker = element;
-    };
-    const colors = this.props.theme.colors;
-    this.lastSelectedColors = {
-      ...colors,
-    };
   }
 
   handleClick(ev, name) {
@@ -49,15 +41,17 @@ class ThemeColorsEditor extends React.Component {
   };
 
   handleColorChange = (name, color) => {
-    this.lastSelectedColors[name] = color.rgb;
+    this.lastSelectedColor = color.rgb;
     this.props.setColor({ name, color: color.rgb });
   };
 
   selectLastColor = (name) => {
-    this.props.setColor({name, color: this.lastSelectedColors[name]});
+    this.props.setColor({name, color: this.lastSelectedColor});
   };
 
   handleClearColor = (name) => {
+    const { theme: {colors} } = this.props;
+    this.lastSelectedColor = colors[name];
     this.props.clearColor({name});
   };
 
@@ -151,14 +145,13 @@ class ThemeColorsEditor extends React.Component {
           {selectedColor &&
             <SketchPicker
               className={advancedColors && !colors[selectedColor] ? "theme-colors-editor__disabled" : ""}
-              color={colors[selectedColor]}
+              color={colors[selectedColor] || this.lastSelectedColor}
               width="270px"
               disableAlpha={!colorsWithAlpha.includes(selectedColor)}
               onChangeComplete={nextColor =>
                 this.handleColorChange(selectedColor, nextColor)
               }
               presetColors={uniqueColorArray}
-              ref={this.setColorPickerRef}
             />
           }
           {!selectedColor && (
