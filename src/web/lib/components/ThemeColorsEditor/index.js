@@ -41,12 +41,8 @@ class ThemeColorsEditor extends React.Component {
   };
 
   handleColorChange = (name, color) => {
-    this.lastSelectedColor = color.rgb;
-    this.props.setColor({ name, color: color.rgb });
-  };
-
-  selectLastColor = (name) => {
-    this.props.setColor({name, color: this.lastSelectedColor});
+    this.lastSelectedColor = color;
+    this.props.setColor({ name, color });
   };
 
   handleClearColor = (name) => {
@@ -136,7 +132,7 @@ class ThemeColorsEditor extends React.Component {
               <label>
                 <input type="radio" value="other" checked={!!colors[selectedColor]}
                         onChange={ev =>
-                          this.selectLastColor(selectedColor)
+                          this.handleColorChange(selectedColor, this.lastSelectedColor)
                         }/>
                 or select a color:
               </label>
@@ -149,7 +145,7 @@ class ThemeColorsEditor extends React.Component {
               width="270px"
               disableAlpha={!colorsWithAlpha.includes(selectedColor)}
               onChangeComplete={nextColor =>
-                this.handleColorChange(selectedColor, nextColor)
+                this.handleColorChange(selectedColor, nextColor.rgb)
               }
               presetColors={uniqueColorArray}
             />
