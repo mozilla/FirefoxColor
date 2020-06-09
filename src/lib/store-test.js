@@ -233,4 +233,19 @@ describe("lib/store", () => {
       expect(result()).to.deep.equal(["4", "0", "2", "3", "1"]);
     });
   });
+
+  describe("Managing advanced colors", () => {
+    it("should set ntp_background", () => {
+      store.dispatch(actions.theme.setColor({ name: "ntp_background", color: {r: 255, g: 0, b: 0} }));
+
+      expect(store.getState().theme.present.colors.ntp_background).to.deep.equal({r: 255, g: 0, b: 0});
+    });
+
+    it("should clear ntp_background", () => {
+      store.dispatch(actions.theme.setColor({ name: "ntp_background", color: {r: 255, g: 0, b: 0} }));
+      store.dispatch(actions.theme.clearColor({ name: "ntp_background"}));
+
+      expect(store.getState().theme.present.colors.ntp_background).to.be.undefined;
+    });
+  });
 });

@@ -10,13 +10,15 @@ let customBackgrounds = {};
 
 let isThemePreview = false;
 
+const extensionVersion = browser.runtime.getManifest().version;
+
 const init = () => {
   browser.browserAction.onClicked.addListener(() => {
     queryAndFocusTab("fromAddon=true");
   });
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
-    port.postMessage({ type: "hello" });
+    port.postMessage({ type: "hello", extensionVersion});
     port.onDisconnect.addListener(() => {
       if (isThemePreview) {
         isThemePreview = false;
@@ -77,7 +79,7 @@ const messageHandlers = {
     }
   },
   ping: (message, port) => {
-    port.postMessage({ type: "pong" });
+    port.postMessage({ type: "pong", extensionVersion});
   },
   addImage: ({ image }) => {
     log("addImage", image, customBackgrounds);

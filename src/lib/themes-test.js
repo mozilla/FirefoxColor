@@ -93,6 +93,47 @@ describe("lib/themes", () => {
       // Input object should not have been changed.
       expect(themeInput).to.deep.equal(deprecatedTheme);
     });
+
+    it("should include advanced colors themes", () => {
+      const advancedColors = ["button_background_active", "button_background_hover", "frame_inactive",
+        "icons_attention", "icons", "ntp_background", "ntp_text", "popup_border", "popup_highlight_text",
+        "popup_highlight", "sidebar_border", "sidebar_highlight_text", "sidebar_highlight", "sidebar_text", "sidebar",
+        "tab_background_separator", "tab_loading", "tab_selected", "tab_text", "toolbar_bottom_separator",
+        "toolbar_field_border_focus", "toolbar_field_border", "toolbar_field_focus", "toolbar_field_highlight_text",
+        "toolbar_field_highlight", "toolbar_field_separator", "toolbar_field_text_focus", "toolbar_top_separator",
+        "toolbar_vertical_separator"
+      ];
+      advancedColors.forEach(advancedColor => {
+        const theme = {
+          colors: {
+            ...presetThemesContext("./default.json").colors,
+            [advancedColor]: { r: 12, g: 34, b: 56 }
+          },
+          title: ["custom theme"],
+        };
+
+        const output = subject(theme);
+
+        expect(output.colors[advancedColor]).to.deep.equal({ r: 12, g: 34, b: 56 });
+      });
+    });
+
+    it("should ignore deprecated colors themes", () => {
+      const deprecatedColors = ["accentcolor", "textcolor"];
+      deprecatedColors.forEach(deprecatedColor => {
+        const theme = {
+          colors: {
+            ...presetThemesContext("./default.json").colors,
+            [deprecatedColor]: { r: 12, g: 34, b: 56 }
+          },
+          title: ["custom theme"],
+        };
+
+        const output = subject(theme);
+
+        expect(output.colors[deprecatedColor]).to.be.undefined;
+      });
+    });
   });
 
   describe("convertToBrowserTheme", () => {
@@ -221,6 +262,33 @@ describe("lib/themes", () => {
           { colors: { toolbar: { r: 255, g: 255, b: 128 } } }
         )
       ).to.be.false;
+    });
+
+    it("should reject difference in RGB channels for advanced colors", () => {
+      expect(
+        subject(
+          { colors: { ntp_background: { r: 0, g: 0, b: 255 } } },
+          { colors: { ntp_background: { r: 255, g: 0, b: 0 } } },
+        )
+      ).to.be.false;
+    });
+
+    it("should reject difference in number of colors", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 255, g: 255, b: 255 }, ntp_background: { r: 0, g: 0, b: 255 } } },
+          { colors: { toolbar: { r: 255, g: 255, b: 255 } } }
+        )
+      ).to.be.false;
+    });
+
+    it("should accept difference in unsupported colors", () => {
+      expect(
+        subject(
+          { colors: { textcolor: { r: 1, g: 2, b: 3 } } },
+          { colors: { textcolor: { r: 4, g: 5, b: 6 } } }
+        )
+      ).to.be.true;
     });
 
     it("should reject difference in custom backgrounds", () => {

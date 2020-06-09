@@ -3,7 +3,9 @@ import {
   colorsWithAlpha,
   alphaEqualityTolerance,
   fallbackColors,
-  CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT
+  CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT,
+  colorLabels,
+  advancedColorLabels
 } from "./constants";
 import { presetThemesContext, bgImages } from "./assets";
 
@@ -61,7 +63,10 @@ export const themesEqual = (themeA, themeB) => {
     return true;
   }
 
-  const colorNames = Object.keys(defaultTheme.colors);
+  const colorNames = [
+    ...Object.keys(colorLabels),
+    ...Object.keys(advancedColorLabels)
+  ];
 
   for (let name of colorNames) {
     const inA = name in themeA.colors;
@@ -146,6 +151,13 @@ export const normalizeThemeColors = (colors = {}) => {
     const color = normalizeThemeColor(name, matchedColor, defaultColors[name]);
     out[name] = color;
   });
+  Object.keys(advancedColorLabels).forEach(name => {
+    const matchedColor = resolveColor(name);
+    if (matchedColor) {
+      out[name] = normalizeThemeColor(name, matchedColor);
+    }
+  });
+
   return out;
 };
 
