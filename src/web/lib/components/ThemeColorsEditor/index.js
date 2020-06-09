@@ -41,13 +41,10 @@ class ThemeColorsEditor extends React.Component {
   };
 
   handleColorChange = (name, color) => {
-    this.lastSelectedColor = color;
     this.props.setColor({ name, color });
   };
 
   handleClearColor = (name) => {
-    const { theme: {colors} } = this.props;
-    this.lastSelectedColor = colors[name];
     this.props.clearColor({name});
   };
 
@@ -85,6 +82,11 @@ class ThemeColorsEditor extends React.Component {
         })
       )
     ];
+
+    const selectedColorValue = colors[selectedColor];
+    if (selectedColorValue) {
+      this.lastSelectedColor = selectedColorValue;
+    }
 
     return (
       <div className="theme-colors-editor">
@@ -125,12 +127,12 @@ class ThemeColorsEditor extends React.Component {
           {selectedColor && advancedColors && 
             <div className="theme-colors-editor__options">
               <label>
-                <input type="radio" value="default" checked={!colors[selectedColor]}
+                <input type="radio" value="default" checked={!selectedColorValue}
                         onChange={ev => this.handleClearColor(selectedColor)}/>
                 use Firefox&#39;s default style for this color
               </label>
               <label>
-                <input type="radio" value="other" checked={!!colors[selectedColor]}
+                <input type="radio" value="other" checked={!!selectedColorValue}
                         onChange={ev =>
                           this.handleColorChange(selectedColor, this.lastSelectedColor)
                         }/>
@@ -140,8 +142,8 @@ class ThemeColorsEditor extends React.Component {
           }
           {selectedColor &&
             <SketchPicker
-              className={advancedColors && !colors[selectedColor] ? "theme-colors-editor__disabled" : ""}
-              color={colors[selectedColor] || this.lastSelectedColor}
+              className={advancedColors && !selectedColorValue ? "theme-colors-editor__disabled" : ""}
+              color={selectedColorValue || this.lastSelectedColor}
               width="270px"
               disableAlpha={!colorsWithAlpha.includes(selectedColor)}
               onChangeComplete={nextColor =>
