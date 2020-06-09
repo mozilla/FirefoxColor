@@ -12,7 +12,7 @@
    ```
    git clone https://github.com/mozilla/FirefoxColor.git
    cd FirefoxColor
-   npm install
+   npm ci
    npm start
    ```
 
