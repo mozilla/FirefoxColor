@@ -109,12 +109,13 @@ const messageHandlers = {
 
 const queryAndFocusTab = (params, reload = false) => {
   browser.tabs.query({ currentWindow: true }).then(tabs => {
-    const siteTab = tabs.find(tab => tab.url.includes(siteUrl));
+    const siteTab = tabs.find(tab => tab.url.startsWith(siteUrl));
     if (siteTab) {
+      const tabUrl = new URL(siteTab.url);
       if (reload) {
         browser.tabs.update(siteTab.id, {
           active: true,
-          url: params ? `${siteTab.url}${siteTab.url.includes("?") ? "&" : "?"}${params}` : siteTab.url
+          url: `${siteUrl}${tabUrl.search ? tabUrl.search + "&" : "?"}${params}${tabUrl.hash}`
         });
       } else {
         browser.tabs.update(siteTab.id, { active: true });
