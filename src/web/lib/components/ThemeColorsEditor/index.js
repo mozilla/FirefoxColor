@@ -129,7 +129,7 @@ class ThemeColorsEditor extends React.Component {
               <label>
                 <input type="radio" value="default" checked={!selectedColorValue}
                         onChange={ev => this.handleClearColor(selectedColor)}/>
-                use Firefox&#39;s default style for this color
+                use Firefox&#39;s default style
               </label>
               <label>
                 <input type="radio" value="other" checked={!!selectedColorValue}
