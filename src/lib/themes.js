@@ -261,10 +261,11 @@ export const convertToBrowserTheme = (themeData, bgImages, customBackgrounds) =>
   Object.keys(theme.colors).forEach(key => {
     newTheme.colors[key] = colorToCSS(theme.colors[key]);
   });
-
-  // TODO: we will need to actually create this field in
-  // theme manifests as part of #93.
-  newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
+  if (!theme.colors.tab_loading) {
+    // TODO: we will need to actually create this field in
+    // theme manifests as part of #93.
+    newTheme.colors.tab_loading = colorToCSS(theme.colors.tab_line);
+  }
 
   return newTheme;
 };

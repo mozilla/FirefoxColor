@@ -217,6 +217,15 @@ describe("lib/themes", () => {
       expect(subject(theme, bgImages, [])).to.deep.equal(expectedTheme);
     });
 
+    it("should use tab loading when present", () => {
+      const theme = {
+        colors: {
+          tab_loading: { r: 255, g: 255, b: 0 },
+        },
+      };
+      expect(subject(theme, bgImages, []).colors.tab_loading).to.equal("rgb(255, 255, 0)");
+    });
+
     // TODO: Add test for third parameter (customBackgrounds) of convertToBrowserTheme.
   });
 
