@@ -18,7 +18,7 @@ export const ThemeSaveButtonComponent = ({
       return;
     }
     themeStorage.put(themeStorage.generateKey(), theme, dispatch);
-    setThemeBuilderPanel(3);
+    setThemeBuilderPanel(4);
   };
   return (
     <button
