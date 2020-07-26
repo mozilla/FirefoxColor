@@ -16,7 +16,7 @@ describe("lib/themes", () => {
     it("should properly remove alpha channel in colors without alpha", () => {
       const input = { r: 255, g: 255, b: 255, a: 0.5299999713897705 };
       const expected = { r: 255, g: 255, b: 255 };
-      const result = subject("tab_line", input);
+      const result = subject("frame", input);
       expect(result).to.deep.equal(expected);
     });
   });

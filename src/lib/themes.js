@@ -1,6 +1,6 @@
 import tinycolor from "tinycolor2";
 import {
-  colorsWithAlpha,
+  colorsWithoutAlpha,
   alphaEqualityTolerance,
   fallbackColors,
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT,
@@ -125,8 +125,9 @@ export const normalizeThemeBackground = background =>
 
 // Utility to ensure normal & consistent colors
 export const normalizeThemeColor = (name, data, defaultColor) => {
-  const color = makeTinycolor(data || defaultColor).toRgb();
-  if (!colorsWithAlpha.includes(name)) {
+  const inColor = data || defaultColor;
+  const color = makeTinycolor(inColor).toRgb();
+  if (colorsWithoutAlpha.includes(name) || (inColor && !("a" in inColor))) {
     delete color.a;
   }
   return color;

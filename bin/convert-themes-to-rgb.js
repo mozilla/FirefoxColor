@@ -1,16 +1,19 @@
 const fs = require("fs");
 const path = require("path");
 const tinycolor = require("tinycolor2");
-const colorsWithAlpha = ["toolbar", "toolbar_field"];
+const colorsWithoutAlpha = ["tab_background_text", "frame", "sidebar"];
 const themesPath = path.join(__dirname, "..", "src", "preset-themes");
 
 const makeTinycolor = colorIn => {
   let { a, s } = colorIn;
-  return tinycolor({
+  let newColor = tinycolor({
     ...colorIn,
-    a: Math.floor(a) / 100.0,
     s: Math.floor(s) / 100.0
   });
+  if (a) {
+    newColor.a = Math.floor(a) / 100.0;
+  }
+  return newColor;
 };
 
 fs
@@ -21,8 +24,8 @@ fs
     const theme = JSON.parse(data);
     Object.entries(theme.colors).forEach(([name, color]) => {
       const rgba = makeTinycolor(color).toRgb();
-      if (!colorsWithAlpha.includes(name)) {
-        delete rgba.a;
+      if (colorsWithoutAlpha.includes(name) || (color && !("a" in color))) {
+          delete rgba.a;
       }
       theme.colors[name] = rgba;
     });

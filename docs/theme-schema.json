@@ -52,7 +52,7 @@
                     "$ref": "#/definitions/a"
                 }
             },
-            "required": ["r", "g", "b", "a"],
+            "required": ["r", "g", "b"],
             "additionalProperties": false
         }
     },
@@ -70,26 +70,113 @@
                 "tab_background_text": {
                     "$ref": "#/definitions/rgb"
                 },
+                "sidebar": {
+                    "$ref": "#/definitions/rgb"
+                },
+                "button_background_active": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "button_background_hover": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "frame_inactive": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "icons": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "icons_attention": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "ntp_background": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "ntp_text": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "popup": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "popup_border": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "popup_highlight": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "popup_highlight_text": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "popup_text": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "sidebar_border": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "sidebar_highlight": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "sidebar_highlight_text": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "sidebar_text": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "tab_background_separator": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "tab_line": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "tab_loading": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "tab_selected": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "tab_text": {
+                    "$ref": "#/definitions/rgba"
+                },
                 "toolbar": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "toolbar_bottom_separator": {
                     "$ref": "#/definitions/rgba"
                 },
                 "toolbar_field": {
                     "$ref": "#/definitions/rgba"
                 },
+                "toolbar_field_border": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "toolbar_field_border_focus": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "toolbar_field_focus": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "toolbar_field_highlight": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "toolbar_field_highlight_text": {
+                    "$ref": "#/definitions/rgba"
+                },
+                "toolbar_field_separator": {
+                    "$ref": "#/definitions/rgba"
+                },
                 "toolbar_field_text": {
-                    "$ref": "#/definitions/rgb"
+                    "$ref": "#/definitions/rgba"
+                },
+                "toolbar_field_text_focus": {
+                    "$ref": "#/definitions/rgba"
                 },
                 "toolbar_text": {
-                    "$ref": "#/definitions/rgb"
+                    "$ref": "#/definitions/rgba"
                 },
-                "tab_line": {
-                    "$ref": "#/definitions/rgb"
+                "toolbar_top_separator": {
+                    "$ref": "#/definitions/rgba"
                 },
-                "popup": {
-                    "$ref": "#/definitions/rgb"
-                },
-                "popup_text": {
-                    "$ref": "#/definitions/rgb"
+                "toolbar_vertical_separator": {
+                    "$ref": "#/definitions/rgba"
                 }
             },
             "required": ["toolbar", "toolbar_text", "frame", "tab_background_text", "toolbar_field", "toolbar_field_text", "tab_line", "popup", "popup_text"],
