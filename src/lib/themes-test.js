@@ -336,6 +336,42 @@ describe("lib/themes", () => {
       ).to.be.true;
     });
 
+    it("should reject if alpha is transparent and opaque", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
+        )
+      ).to.be.false;
+    });
+
+    it("should reject if alpha is transparent and undefined", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3 } } }
+        )
+      ).to.be.false;
+    });
+
+    it("should reject if alpha is totally transparent and half transparent", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0.5 } } }
+        )
+      ).to.be.false;
+    });
+
+    it("should reject if alpha is totally opaque and half transparent", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0.5 } } }
+        )
+      ).to.be.false;
+    });
+
     it("should reject difference in custom backgrounds", () => {
       expect(
         subject(
