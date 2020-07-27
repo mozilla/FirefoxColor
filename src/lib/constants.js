@@ -76,7 +76,7 @@ export const fallbackColors = {
   tab_background_text: "textcolor",
 };
 
-export const colorsWithAlpha = ["toolbar", "toolbar_field"];
+export const colorsWithoutAlpha = ["tab_background_text", "frame", "sidebar"];
 
 export const alphaEqualityTolerance = 0.02;
 

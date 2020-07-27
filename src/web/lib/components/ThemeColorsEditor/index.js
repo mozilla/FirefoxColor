@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
-import { colorsWithAlpha, ESC, colorLabels, advancedColorLabels } from "../../../../lib/constants";
+import { colorsWithoutAlpha, ESC, colorLabels, advancedColorLabels } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
 import StorageSpaceInformation from "../StorageSpaceInformation";
 import semverCompare from "semver-compare";
@@ -145,7 +145,7 @@ class ThemeColorsEditor extends React.Component {
               className={advancedColors && !selectedColorValue ? "theme-colors-editor__disabled" : ""}
               color={selectedColorValue || this.lastSelectedColor}
               width="270px"
-              disableAlpha={!colorsWithAlpha.includes(selectedColor)}
+              disableAlpha={colorsWithoutAlpha.includes(selectedColor)}
               onChangeComplete={nextColor =>
                 this.handleColorChange(selectedColor, nextColor.rgb)
               }

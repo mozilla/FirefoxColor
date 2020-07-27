@@ -1,6 +1,6 @@
 import tinycolor from "tinycolor2";
 import {
-  colorsWithAlpha,
+  colorsWithoutAlpha,
   alphaEqualityTolerance,
   fallbackColors,
   CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT,
@@ -86,16 +86,9 @@ export const themesEqual = (themeA, themeB) => {
       }
     }
 
-    const alphaInA = "a" in colorA;
-    const alphaInB = "a" in colorB;
-    if (alphaInA !== alphaInB) {
-      return false;
-    }
-    if (
-      alphaInA &&
-      alphaInB &&
-      Math.abs(colorA.a - colorB.a) > alphaEqualityTolerance
-    ) {
+    const alphaA = colorA.a ?? 1;
+    const alphaB = colorB.a ?? 1;
+    if (Math.abs(alphaA - alphaB) > alphaEqualityTolerance) {
       return false;
     }
   }
@@ -125,8 +118,9 @@ export const normalizeThemeBackground = background =>
 
 // Utility to ensure normal & consistent colors
 export const normalizeThemeColor = (name, data, defaultColor) => {
-  const color = makeTinycolor(data || defaultColor).toRgb();
-  if (!colorsWithAlpha.includes(name)) {
+  const inColor = data || defaultColor;
+  const color = makeTinycolor(inColor).toRgb();
+  if (colorsWithoutAlpha.includes(name) || !("a" in inColor) || color.a === 1) {
     delete color.a;
   }
   return color;

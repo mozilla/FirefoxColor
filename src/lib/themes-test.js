@@ -16,7 +16,7 @@ describe("lib/themes", () => {
     it("should properly remove alpha channel in colors without alpha", () => {
       const input = { r: 255, g: 255, b: 255, a: 0.5299999713897705 };
       const expected = { r: 255, g: 255, b: 255 };
-      const result = subject("tab_line", input);
+      const result = subject("frame", input);
       expect(result).to.deep.equal(expected);
     });
   });
@@ -55,7 +55,7 @@ describe("lib/themes", () => {
           frame: { r: 12, g: 34, b: 56 },
           popup: { r: 12, g: 34, b: 56 }, // default to frame.
           popup_text: { r: 7, g: 8, b: 9 }, // default to toolbar_text.
-          toolbar: { r: 1, g: 2, b: 3, a: 1 },
+          toolbar: { r: 1, g: 2, b: 3 },
           toolbar_text: { r: 7, g: 8, b: 9 },
         },
         title: ["old theme without popup"],
@@ -226,6 +226,15 @@ describe("lib/themes", () => {
       expect(subject(theme, bgImages, []).colors.tab_loading).to.equal("rgb(255, 255, 0)");
     });
 
+    it("should discard opaque alpha", () => {
+      const theme = {
+        colors: {
+          tab_loading: { r: 255, g: 255, b: 0, a: 1 },
+        },
+      };
+      expect(subject(theme, bgImages, []).colors.tab_loading).to.equal("rgb(255, 255, 0)");
+    });
+
     // TODO: Add test for third parameter (customBackgrounds) of convertToBrowserTheme.
   });
 
@@ -298,6 +307,69 @@ describe("lib/themes", () => {
           { colors: { textcolor: { r: 4, g: 5, b: 6 } } }
         )
       ).to.be.true;
+    });
+
+    it("should accept if only one has alpha set to opaque", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
+        )
+      ).to.be.true;
+    });
+
+    it("should accept if both alpha are set to opaque", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
+        )
+      ).to.be.true;
+    });
+
+    it("should accept if both alpha are set to transparent", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } } }
+        )
+      ).to.be.true;
+    });
+
+    it("should reject if alpha is transparent and opaque", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
+        )
+      ).to.be.false;
+    });
+
+    it("should reject if alpha is transparent and undefined", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3 } } }
+        )
+      ).to.be.false;
+    });
+
+    it("should reject if alpha is totally transparent and half transparent", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0.5 } } }
+        )
+      ).to.be.false;
+    });
+
+    it("should reject if alpha is totally opaque and half transparent", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0.5 } } }
+        )
+      ).to.be.false;
     });
 
     it("should reject difference in custom backgrounds", () => {
