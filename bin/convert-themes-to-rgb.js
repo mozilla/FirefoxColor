@@ -10,7 +10,7 @@ const makeTinycolor = colorIn => {
     ...colorIn,
     s: Math.floor(s) / 100.0
   });
-  if (a) {
+  if (a != undefined) {
     newColor.a = Math.floor(a) / 100.0;
   }
   return newColor;

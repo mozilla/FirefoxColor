@@ -300,6 +300,15 @@ describe("lib/themes", () => {
       ).to.be.true;
     });
 
+    it("should accept if only one has alpha set to opaque", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
+        )
+      ).to.be.true;
+    });
+
     it("should reject difference in custom backgrounds", () => {
       expect(
         subject(
