@@ -4,8 +4,7 @@
     "toolbar": {
       "r": 235,
       "g": 235,
-      "b": 235,
-      "a": 1
+      "b": 235
     },
     "toolbar_text": {
       "r": 88,
@@ -25,8 +24,7 @@
     "toolbar_field": {
       "r": 248,
       "g": 241,
-      "b": 211,
-      "a": 1
+      "b": 211
     },
     "toolbar_field_text": {
       "r": 118,

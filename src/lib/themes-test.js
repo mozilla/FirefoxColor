@@ -55,7 +55,7 @@ describe("lib/themes", () => {
           frame: { r: 12, g: 34, b: 56 },
           popup: { r: 12, g: 34, b: 56 }, // default to frame.
           popup_text: { r: 7, g: 8, b: 9 }, // default to toolbar_text.
-          toolbar: { r: 1, g: 2, b: 3, a: 1 },
+          toolbar: { r: 1, g: 2, b: 3 },
           toolbar_text: { r: 7, g: 8, b: 9 },
         },
         title: ["old theme without popup"],
@@ -221,6 +221,15 @@ describe("lib/themes", () => {
       const theme = {
         colors: {
           tab_loading: { r: 255, g: 255, b: 0 },
+        },
+      };
+      expect(subject(theme, bgImages, []).colors.tab_loading).to.equal("rgb(255, 255, 0)");
+    });
+
+    it("should discard opaque alpha", () => {
+      const theme = {
+        colors: {
+          tab_loading: { r: 255, g: 255, b: 0, a: 1 },
         },
       };
       expect(subject(theme, bgImages, []).colors.tab_loading).to.equal("rgb(255, 255, 0)");
