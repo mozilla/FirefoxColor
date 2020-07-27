@@ -25,7 +25,7 @@ fs
     Object.entries(theme.colors).forEach(([name, color]) => {
       const rgba = makeTinycolor(color).toRgb();
       if (colorsWithoutAlpha.includes(name) || !("a" in color) || rgba.a === 1) {
-          delete rgba.a;
+        delete rgba.a;
       }
       theme.colors[name] = rgba;
     });

@@ -318,6 +318,24 @@ describe("lib/themes", () => {
       ).to.be.true;
     });
 
+    it("should accept if both alpha are set to opaque", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
+        )
+      ).to.be.true;
+    });
+
+    it("should accept if both alpha are set to transparent", () => {
+      expect(
+        subject(
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } } }
+        )
+      ).to.be.true;
+    });
+
     it("should reject difference in custom backgrounds", () => {
       expect(
         subject(

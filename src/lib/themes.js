@@ -86,19 +86,11 @@ export const themesEqual = (themeA, themeB) => {
       }
     }
 
-    const alphaInA = "a" in colorA;
-    const alphaInB = "a" in colorB;
-    if (alphaInA !== alphaInB) {
-      if ((alphaInA && colorA.a !== 1) || (alphaInB && colorB.a !== 1)) {
-        return false;
-      }
-    } else if (
-        alphaInA &&
-        alphaInB &&
-        Math.abs(colorA.a - colorB.a) > alphaEqualityTolerance
-      ) {
-        return false;
-      }
+    const alphaA = colorA.a ?? 1;
+    const alphaB = colorB.a ?? 1;
+    if (Math.abs(alphaA - alphaB) > alphaEqualityTolerance) {
+      return false;
+    }
   }
 
   return true;
