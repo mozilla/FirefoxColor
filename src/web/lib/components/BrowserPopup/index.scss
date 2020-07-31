@@ -8,7 +8,6 @@
     transform: rotate(45deg);
     position: absolute;
     z-index: -1;
-    background: var(--grey-90-a10);
   }
 
   .browser-popup__caret {
@@ -55,6 +54,8 @@
       height: 22px;
       right: 26px;
       top: -5px;
+      clip-path: polygon(-15px -25px, -15px 28px, 40px -26px);
+      box-shadow: var(--medium-unit-box-shadow);
     }
 
     .browser-popup__caret {
@@ -62,6 +63,7 @@
       height: 20px;
       right: 27px;
       top: -5px;
+      clip-path: polygon(-15px -25px, -15px 28px, 40px -26px);
     }
 
     .browser-popup__item {
