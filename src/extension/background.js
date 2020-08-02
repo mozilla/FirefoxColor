@@ -58,7 +58,7 @@ const messageHandlers = {
   revertAll: (message) => {
     log("revertAllThemes", message);
     storeTheme({ theme: null });
-    queryAndFocusTab(null, true);
+    queryAndFocusTab("", true);
     browser.theme.reset();
   },
   setTheme: message => {
