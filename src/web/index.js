@@ -164,8 +164,12 @@ window.addEventListener("message", ({ source, data: message }) => {
       }
     }
     if (message.type === "fetchedTheme") {
+      // The theme could have been cleared via "Revert All", in which case message.theme is null.
+      // We still need to dispatch `setTheme`, in order to allow the theme engine to prompt for
+      // applying the unknown theme.
+      let theme = message.theme || {};
       store.dispatch({
-        ...actions.theme.setTheme({ theme: message.theme }),
+        ...actions.theme.setTheme({ theme }),
         meta: { skipAddon: true }
       });
     }
