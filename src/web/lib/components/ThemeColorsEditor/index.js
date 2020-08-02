@@ -14,6 +14,8 @@ const DISMISS_CLASSNAMES = ["color__label", "color__swatch"];
 class ThemeColorsEditor extends React.Component {
   constructor(props) {
     super(props);
+
+    this.colorPickerRef = React.createRef();
   }
 
   handleClick(ev, name) {
@@ -85,6 +87,7 @@ class ThemeColorsEditor extends React.Component {
 
     const selectedColorValue = colors[selectedColor];
     if (selectedColorValue) {
+      // Remember last selected color in case the user closes and re-opens the color picker.
       this.lastSelectedColor = selectedColorValue;
     }
 
@@ -134,7 +137,7 @@ class ThemeColorsEditor extends React.Component {
               <label>
                 <input type="radio" value="other" checked={!!selectedColorValue}
                         onChange={ev =>
-                          this.handleColorChange(selectedColor, this.lastSelectedColor)
+                          this.handleColorChange(selectedColor, this.colorPickerRef.current.state.rgb)
                         }/>
                 or select a color:
               </label>
@@ -150,6 +153,7 @@ class ThemeColorsEditor extends React.Component {
                 this.handleColorChange(selectedColor, nextColor.rgb)
               }
               presetColors={uniqueColorArray}
+              ref={this.colorPickerRef}
             />
           }
           {!selectedColor && (

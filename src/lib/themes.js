@@ -120,7 +120,7 @@ export const normalizeThemeBackground = background =>
 export const normalizeThemeColor = (name, data, defaultColor) => {
   const inColor = data || defaultColor;
   const color = makeTinycolor(inColor).toRgb();
-  if (colorsWithoutAlpha.includes(name) || !("a" in inColor) || color.a === 1) {
+  if (colorsWithoutAlpha.includes(name) || color.a === 1) {
     delete color.a;
   }
   return color;

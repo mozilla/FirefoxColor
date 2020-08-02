@@ -19,6 +19,20 @@ describe("lib/themes", () => {
       const result = subject("frame", input);
       expect(result).to.deep.equal(expected);
     });
+
+    it("should default to opaque black for void input, with alpha", () => {
+      const input = null;
+      const expected = { r: 0, g: 0, b: 0 };
+      const result = subject("toolbar", input);
+      expect(result).to.deep.equal(expected);
+    });
+
+    it("should default to opaque black for void input, without alpha", () => {
+      const input = null;
+      const expected = { r: 0, g: 0, b: 0 };
+      const result = subject("frame", input);
+      expect(result).to.deep.equal(expected);
+    });
   });
 
   describe("normalizeTheme", () => {
