@@ -64,12 +64,6 @@
   },
   "license": "MPL-2.0",
   "repository": "mozilla/FirefoxColor",
-  "greenkeeper": {
-    "ignore": [
-      "webpack",
-      "webpack-dev-server"
-    ]
-  },
   "devDependencies": {
     "@babel/core": "7.9.0",
     "@babel/plugin-proposal-class-properties": "7.8.3",

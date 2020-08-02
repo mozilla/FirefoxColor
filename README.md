@@ -1,7 +1,5 @@
 # Firefox Color
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/mozilla/FirefoxColor.svg)](https://greenkeeper.io/)
-
 [![CircleCI](https://circleci.com/gh/mozilla/FirefoxColor.svg?style=svg)](https://circleci.com/gh/mozilla/FirefoxColor)
 
 ## Get Started
