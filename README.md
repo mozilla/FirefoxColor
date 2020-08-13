@@ -17,6 +17,9 @@
    This will start a webpack-dev-server instance at port 8080 and start a
    watcher that will rebuild the browser extension with every file change.
 
+**Note: if MSBUILD : error MSB4132: The tools version "2.0" is unrecognized. Available tools versions are "4.0". occurs don't be panic and instead of installing VS 2013 run this command on CMD admin npm install package.json --msvs_version=2013
+
+
 1. To activate the extension:
 
    1. Find the XPI for the environment:
