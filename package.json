@@ -111,9 +111,9 @@
     "stylelint": "9.10.1",
     "stylelint-config-standard": "18.2.0",
     "web-ext": "2.9.3",
-    "webpack": "4.18.0",
-    "webpack-cli": "3.3.0",
-    "webpack-dev-server": "3.3.1",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12",
+    "webpack-dev-server": "3.11.0",
     "webpack-merge": "4.2.2",
     "write-file-webpack-plugin": "4.5.1"
   },
