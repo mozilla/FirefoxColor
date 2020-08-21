@@ -35,11 +35,13 @@ module.exports = merge(webpackConfig, {
       filename: "manifest.json",
       fn: buildManifest
     }),
-    new CopyWebpackPlugin([
-      { from: "LICENSE" },
-      { from: "src/images/icon.svg", to: "images/" },
-      { from: "src/images/logo.svg", to: "images/" }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "LICENSE" },
+        { from: "src/images/icon.svg", to: "images/" },
+        { from: "src/images/logo.svg", to: "images/" }
+      ]
+    })
   ]
 });
 

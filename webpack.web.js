@@ -43,14 +43,16 @@ module.exports = merge(common.webpackConfig, {
       description: packageMeta.description,
       homepage: common.siteUrl
     }),
-    new CopyWebpackPlugin([
-      { from: "./src/web/testing.html", to: "testing.html" },
-      { from: "./src/web/robots.txt", to: "robots.txt" },
-      { from: "./src/web/favicon.ico", to: "favicon.ico" },
-      { from: "./src/images", to: "images" },
-      // FIXME: Bundling this in webpack causes it to fail, just copy for now
-      { from: "./node_modules/json-url/dist/browser", to: "vendor" }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "./src/web/testing.html", to: "testing.html" },
+        { from: "./src/web/robots.txt", to: "robots.txt" },
+        { from: "./src/web/favicon.ico", to: "favicon.ico" },
+        { from: "./src/images", to: "images" },
+        // FIXME: Bundling this in webpack causes it to fail, just copy for now
+        { from: "./node_modules/json-url/dist/browser", to: "vendor" }
+      ]
+    })
   ]
 });
 
