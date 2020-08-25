@@ -57,7 +57,7 @@ class ThemeUrl extends React.Component {
   render() {
     const { copied, themeUrl } = this.state;
     const { themeHasCustomBackgrounds, hasExtension } = this.props;
-
+      
     if (themeHasCustomBackgrounds) {
       return (
         <div
