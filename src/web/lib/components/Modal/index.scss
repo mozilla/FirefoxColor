@@ -39,9 +39,12 @@
   p {
     margin: 0;
   }
-
-  a:not(.modal__button) {
-    color: var(--blue-50);
+  
+  a{
+  color: blue;
+  }
+  a:visited{
+   color: purple;
   }
 }
 
