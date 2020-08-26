@@ -40,7 +40,7 @@
     margin: 0;
   }
 
-  a:not(.modal__button) {
+  a:not(.modal__button):not(:visited) {
     color: var(--blue-50);
   }
 }
