@@ -16,24 +16,29 @@ export const SavedThemeSelector = ({
     ([, aData], [, bData]) => bData.modified - aData.modified
   );
 
-  const deleteTheme = (key) => {
+  const deleteTheme = key => {
     const themeBeingDeleted = themeStorage.get(key);
     themeStorage.delete(key);
     const { images } = themeBeingDeleted.theme;
 
     // Remove current images from the display and if it's not present in other themes, from local storage .
-    if (images && images.custom_backgrounds && images.custom_backgrounds.length) {
+    if (
+      images &&
+      images.custom_backgrounds &&
+      images.custom_backgrounds.length
+    ) {
       const entries = Object.entries(savedThemes);
       let themes = entries.filter(([entry]) => entry !== key);
       const values = Object.values(themes);
 
-      const savedThemeImages = values.map(([_, item]) => item.theme.images.custom_backgrounds).reduce((acc, item) => {
-        (item || []).forEach((bg, i) => {
-          acc.push(bg.name);
-        });
-        return acc;
-      }, []);
-
+      const savedThemeImages = values
+        .map(([_, item]) => item.theme.images.custom_backgrounds)
+        .reduce((acc, item) => {
+          (item || []).forEach((bg, i) => {
+            acc.push(bg.name);
+          });
+          return acc;
+        }, []);
 
       const { custom_backgrounds: customImages } = images;
       const currentImages = customImages.map(({ name }) => name);

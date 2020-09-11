@@ -30,7 +30,11 @@ export const SharedThemeDialog = ({
   return (
     <div className="shared-theme-dialog-wrapper" onClick={onClickBackdrop}>
       <div className="shared-theme-dialog">
-        <div className="preview" onMouseEnter={() => onHover(true)} onMouseLeave={() => onHover(false)}>
+        <div
+          className="preview"
+          onMouseEnter={() => onHover(true)}
+          onMouseLeave={() => onHover(false)}
+        >
           <Browser {...{ size: "medium", theme: pendingTheme }} />
         </div>
         <div className="options">

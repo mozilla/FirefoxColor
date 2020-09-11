@@ -16,15 +16,18 @@ const makeTinycolor = colorIn => {
   return newColor;
 };
 
-fs
-  .readdirSync(themesPath)
+fs.readdirSync(themesPath)
   .filter(filename => path.extname(filename) === ".json")
   .forEach(filename => {
     const data = fs.readFileSync(path.join(themesPath, filename), "utf8");
     const theme = JSON.parse(data);
     Object.entries(theme.colors).forEach(([name, color]) => {
       const rgba = makeTinycolor(color).toRgb();
-      if (colorsWithoutAlpha.includes(name) || !("a" in color) || rgba.a === 1) {
+      if (
+        colorsWithoutAlpha.includes(name) ||
+        !("a" in color) ||
+        rgba.a === 1
+      ) {
         delete rgba.a;
       }
       theme.colors[name] = rgba;

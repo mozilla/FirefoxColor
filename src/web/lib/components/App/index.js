@@ -106,53 +106,55 @@ export const AppComponent = props => {
     themeHasCustomBackgrounds
   } = props;
 
-  const customImages = getCustomImages(theme.images.custom_backgrounds, themeCustomImages);
+  const customImages = getCustomImages(
+    theme.images.custom_backgrounds,
+    themeCustomImages
+  );
 
   return (
     <Fragment>
       {isMobile && <Mobile />}
       {!isMobile && !loaderDelayExpired && <AppLoadingIndicator {...props} />}
-      {!isMobile &&
-        loaderDelayExpired && (
-          <Fragment>
-            <div className="app">
-              <AppBackground {...props} />
-              {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
-              {<ExportThemeDialog {...props} />}
-              <AppHeader {...props} />
-              <main className="app__main">
-                <Browser
-                  {...{
-                    theme,
-                    themeHasCustomBackgrounds,
-                    customImages,
-                    selectedColor
-                  }}
-                  size="large"
-                  showPopup={hasExtension}
-                >
-                  <Fragment>
-                    {!hasExtension && (
-                      <Banner
-                        {...{
-                          isFirefox,
-                          addonUrl,
-                          selectedColor,
-                          setSelectedColor
-                        }}
-                      />
-                    )}
-                    {hasExtension && <div className="app__firefox" />}
-                    <ThemeBuilder {...props} />
-                  </Fragment>
-                </Browser>
-              </main>
-              <AppFooter {...props} />
-              <TermsPrivacyModal {...props} />
-              {firstRun && <Onboarding />}
-            </div>
-          </Fragment>
-        )}
+      {!isMobile && loaderDelayExpired && (
+        <Fragment>
+          <div className="app">
+            <AppBackground {...props} />
+            {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
+            {<ExportThemeDialog {...props} />}
+            <AppHeader {...props} />
+            <main className="app__main">
+              <Browser
+                {...{
+                  theme,
+                  themeHasCustomBackgrounds,
+                  customImages,
+                  selectedColor
+                }}
+                size="large"
+                showPopup={hasExtension}
+              >
+                <Fragment>
+                  {!hasExtension && (
+                    <Banner
+                      {...{
+                        isFirefox,
+                        addonUrl,
+                        selectedColor,
+                        setSelectedColor
+                      }}
+                    />
+                  )}
+                  {hasExtension && <div className="app__firefox" />}
+                  <ThemeBuilder {...props} />
+                </Fragment>
+              </Browser>
+            </main>
+            <AppFooter {...props} />
+            <TermsPrivacyModal {...props} />
+            {firstRun && <Onboarding />}
+          </div>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

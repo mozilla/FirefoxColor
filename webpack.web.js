@@ -57,11 +57,18 @@ module.exports = merge(common.webpackConfig, {
 });
 
 function buildVersionJSON(compilation, cb) {
-  exec("git --no-pager log --format=format:\"%H\" -1", (err, stdout, stderr) => {
-    cb(null, JSON.stringify({
-      commit: err ? "" : stdout,
-      version: packageMeta.version,
-      source: `https://github.com/${packageMeta.repository}`
-    }, null, "  "));
+  exec('git --no-pager log --format=format:"%H" -1', (err, stdout, stderr) => {
+    cb(
+      null,
+      JSON.stringify(
+        {
+          commit: err ? "" : stdout,
+          version: packageMeta.version,
+          source: `https://github.com/${packageMeta.repository}`
+        },
+        null,
+        "  "
+      )
+    );
   });
 }

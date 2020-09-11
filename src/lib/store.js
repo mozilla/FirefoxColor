@@ -95,18 +95,18 @@ export const selectors = {
   pendingTheme: state => state.ui.pendingTheme,
   savedThemes: state => state.ui.savedThemes,
   savedThemesPage: state => state.ui.savedThemesPage,
-  hasSavedThemes: state => Object.keys(state.ui.savedThemes).length > 0,
+  hasSavedThemes: state => !!Object.keys(state.ui.savedThemes).length,
   theme: state => state.theme.present,
   themePast: state => state.theme.past,
   themeFuture: state => state.theme.future,
-  themeCanUndo: state => state.theme.past.length > 0,
-  themeCanRedo: state => state.theme.future.length > 0,
+  themeCanUndo: state => !!state.theme.past.length,
+  themeCanRedo: state => !!state.theme.future.length,
   themeCustomImages: state => state.images.images,
   themeCustomBackgrounds: state =>
     state.theme.present.images.custom_backgrounds || [],
   themeHasCustomBackgrounds: state => {
     const backgrounds = selectors.themeCustomBackgrounds(state);
-    return !!backgrounds && backgrounds.length > 0;
+    return !!backgrounds && !!backgrounds.length;
   },
   userHasEdited: state => state.ui.userHasEdited,
   presetThemesPage: state => state.ui.presetThemesPage,
@@ -141,7 +141,7 @@ export const reducers = {
         ...state,
         displayLegalModal: display
       }),
-      REVERT_ALL: (state) => {
+      REVERT_ALL: state => {
         return {
           ...state,
           revertAll: true
@@ -198,7 +198,10 @@ export const reducers = {
         ...state,
         selectedColor: name
       }),
-      SET_HAS_EXTENSION: (state, { payload: { hasExtension, extensionVersion } }) => ({
+      SET_HAS_EXTENSION: (
+        state,
+        { payload: { hasExtension, extensionVersion } }
+      ) => ({
         ...state,
         hasExtension,
         extensionVersion

@@ -14,7 +14,7 @@ export default function({
     } else if (action.type === "REVERT_ALL") {
       postMessage("revertAll");
       // Remove any theme params from the url.
-      window.history.pushState({theme: null}, "", "/");
+      window.history.pushState({ theme: null }, "", "/");
     }
     return returnValue;
   };

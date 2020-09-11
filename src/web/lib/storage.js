@@ -1,7 +1,10 @@
 import { actions } from "../../lib/store";
 import { makeLog } from "../../lib/utils";
 import { normalizeTheme, themesEqual } from "../../lib/themes";
-import { localStorageSpace, STORAGE_ERROR_MESSAGE } from "./components/StorageSpaceInformation";
+import {
+  localStorageSpace,
+  STORAGE_ERROR_MESSAGE
+} from "./components/StorageSpaceInformation";
 import { temporaryImageStore } from "./middleware";
 
 const log = makeLog("web.storage");
@@ -20,7 +23,7 @@ class Storage {
     this.contentName = contentName;
     this.normalize = normalize || (data => data);
     this.checkDuplicate = checkDuplicate || (() => false);
-    this.afterPut = afterPut || (() => { });
+    this.afterPut = afterPut || (() => {});
   }
 
   storageKey = str => `${this.prefix}${str}`;

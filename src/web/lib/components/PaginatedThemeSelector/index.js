@@ -26,7 +26,7 @@ export const PaginatedThemeSelector = ({
     if (itemCount && currentPage >= pageCount) {
       setCurrentPage(pageCount - 1);
     }
- }, [itemCount]);
+  }, [itemCount]);
 
   const pageCount = Math.ceil(itemCount / perPage);
   const startIdx = perPage * currentPage;
@@ -37,7 +37,10 @@ export const PaginatedThemeSelector = ({
   const nextDisabled = currentPage + 1 >= pageCount;
 
   const pageContent = page.map(([key, { theme }]) => {
-    const customImages = getCustomImages(theme.images.custom_backgrounds, images);
+    const customImages = getCustomImages(
+      theme.images.custom_backgrounds,
+      images
+    );
     const cleanTheme = {
       ...theme,
       images: {
@@ -78,7 +81,7 @@ export const PaginatedThemeSelector = ({
         className={classNames("previous", { disabled: prevDisabled })}
         disabled={prevDisabled}
         onClick={
-          prevDisabled ? () => { } : () => setCurrentPage(currentPage - 1)
+          prevDisabled ? () => {} : () => setCurrentPage(currentPage - 1)
         }
         title="Previous"
       />
@@ -96,7 +99,7 @@ export const PaginatedThemeSelector = ({
         className={classNames("next", { disabled: nextDisabled })}
         disabled={nextDisabled}
         onClick={
-          nextDisabled ? () => { } : () => setCurrentPage(currentPage + 1)
+          nextDisabled ? () => {} : () => setCurrentPage(currentPage + 1)
         }
         title="Next"
       />

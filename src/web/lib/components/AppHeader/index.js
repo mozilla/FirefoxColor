@@ -46,7 +46,6 @@ export const AppHeader = props => {
     }
   }, [shouldUpdate]);
 
-
   const handleExportClick = () => {
     showExportThemeDialog(true);
   };
@@ -59,8 +58,7 @@ export const AppHeader = props => {
   const syncImages = () => {
     let currentImages = new Set();
 
-    props.themeCustomBackgrounds
-      .forEach(({ name }) => currentImages.add(name));
+    props.themeCustomBackgrounds.forEach(({ name }) => currentImages.add(name));
 
     let savedImagesInThemes = new Set();
 
@@ -131,9 +129,23 @@ export const AppHeader = props => {
       </div>
       <div className="app-header__controls">
         {headerButton(revertAll, iconForget, "Revert All")}
-        {headerButton(withUpdate.bind(null, undo), iconUndo, "Undo", themeCanUndo)}
-        {headerButton(withUpdate.bind(null, redo), iconRedo, "Redo", themeCanRedo)}
-        {headerButton(withUpdate.bind(null, handleRandomClick), iconRandomize, "Random")}
+        {headerButton(
+          withUpdate.bind(null, undo),
+          iconUndo,
+          "Undo",
+          themeCanUndo
+        )}
+        {headerButton(
+          withUpdate.bind(null, redo),
+          iconRedo,
+          "Redo",
+          themeCanRedo
+        )}
+        {headerButton(
+          withUpdate.bind(null, handleRandomClick),
+          iconRandomize,
+          "Random"
+        )}
 
         <div className="app-header__spacer" />
 

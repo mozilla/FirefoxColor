@@ -23,8 +23,9 @@ export const localStorageSpace = () => {
 export const StorageSpaceInformationComponent = props => {
   React.useEffect(() => {
     let timer;
-    if (props.storageErrorMessage.length > 0) {
-      timer = setTimeout(() => props.setStorageErrorMessage(""),
+    if (props.storageErrorMessage.length) {
+      timer = setTimeout(
+        () => props.setStorageErrorMessage(""),
         STORAGE_ERROR_MESSAGE_DURATION
       );
     }
@@ -36,7 +37,10 @@ export const StorageSpaceInformationComponent = props => {
 
   return (
     <div className="storage-space-information">
-      <div className="storage-space-information-content"><StorageIcon /><span>{props.usedStorage}MB out of 5.243MB</span></div>
+      <div className="storage-space-information-content">
+        <StorageIcon />
+        <span>{props.usedStorage}MB out of 5.243MB</span>
+      </div>
       {props.usedStorage > 4.5 && !props.storageErrorMessage && (
         <div className="storage-space-information-warning">
           <span>
@@ -47,9 +51,9 @@ export const StorageSpaceInformationComponent = props => {
       )}
       {props.storageErrorMessage && (
         <strong className="storage-space-information-error">
-          <div
-            className="storage-space-information-warning"
-          >{props.storageErrorMessage}</div>
+          <div className="storage-space-information-warning">
+            {props.storageErrorMessage}
+          </div>
         </strong>
       )}
     </div>
@@ -64,8 +68,9 @@ export const mapStateToProps = state => {
   };
 };
 
-const StorageSpaceInformation = connect(mapStateToProps, { setStorageErrorMessage: actions.ui.setStorageErrorMessage })(
-  StorageSpaceInformationComponent
-);
+const StorageSpaceInformation = connect(
+  mapStateToProps,
+  { setStorageErrorMessage: actions.ui.setStorageErrorMessage }
+)(StorageSpaceInformationComponent);
 
 export default StorageSpaceInformation;

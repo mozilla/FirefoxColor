@@ -10,7 +10,9 @@ const BrowserTabs = ({
 }) => {
   const tabs = ["Tab One", "Tab Two"];
 
-  if (size === "large") tabs.push("Tab Three");
+  if (size === "large") {
+    tabs.push("Tab Three");
+  }
 
   return (
     <div className={`browser-tabs browser-tabs--${size}`}>
@@ -23,47 +25,48 @@ const BrowserTabs = ({
               className={`browser-tabs__tab ${isTabSelected}`}
               style={{
                 backgroundColor: isTabSelected ? colors.toolbar : "transparent",
-                color: isTabSelected ? colors.toolbar_text : colors.tab_background_text,
+                color: isTabSelected
+                  ? colors.toolbar_text
+                  : colors.tab_background_text,
                 boxShadow: isTabSelected ? `0 3px ${colors.tab_line} inset` : ""
               }}
             >
               <div className="browser-tabs__tab-inner">
-                {isTabSelected &&
-                  selectedColor === "tab_line" && (
-                    <div
-                      className="browser-tabs__tab-line-outline"
-                      style={{
-                        position: "absolute",
-                        top: "-3px",
-                        right: "-3px",
-                        left: "-3px",
-                        height: "9px",
-                        outline: selectSettings.active,
-                        transition: selectSettings.transition
-                      }}
-                    />
-                  )}
-                {isTabSelected &&
-                  selectedColor === "toolbar" && (
-                    <div
-                      className="browser-tabs__tab-select-outline"
-                      style={{
-                        position: "absolute",
-                        top: "-3px",
-                        right: "-3px",
-                        bottom: "0",
-                        left: "-3px",
-                        border: selectSettings.active,
-                        borderBottom: 0
-                      }}
-                    />
-                  )}
+                {isTabSelected && selectedColor === "tab_line" && (
+                  <div
+                    className="browser-tabs__tab-line-outline"
+                    style={{
+                      position: "absolute",
+                      top: "-3px",
+                      right: "-3px",
+                      left: "-3px",
+                      height: "9px",
+                      outline: selectSettings.active,
+                      transition: selectSettings.transition
+                    }}
+                  />
+                )}
+                {isTabSelected && selectedColor === "toolbar" && (
+                  <div
+                    className="browser-tabs__tab-select-outline"
+                    style={{
+                      position: "absolute",
+                      top: "-3px",
+                      right: "-3px",
+                      bottom: "0",
+                      left: "-3px",
+                      border: selectSettings.active,
+                      borderBottom: 0
+                    }}
+                  />
+                )}
                 <span
                   style={{
                     padding: "3px",
                     outline:
                       (isTabSelected && selectedColor === "toolbar_text") ||
-                      (!isTabSelected && selectedColor === "tab_background_text")
+                      (!isTabSelected &&
+                        selectedColor === "tab_background_text")
                         ? selectSettings.active
                         : selectSettings.inactive
                   }}

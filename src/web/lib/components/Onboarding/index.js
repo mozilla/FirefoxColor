@@ -56,9 +56,11 @@ export default class Onboarding extends React.Component {
     const { index, isDisplayed } = this.state;
     const lastSlide = PANEL_STRINGS.length - 1 === index;
 
-    const backgroundXStyles = !lastSlide ? {
-      backgroundPositionX: index * PANEL_SPRITE_OFFSET
-    } : {};
+    const backgroundXStyles = !lastSlide
+      ? {
+          backgroundPositionX: index * PANEL_SPRITE_OFFSET
+        }
+      : {};
 
     return (
       <div
@@ -72,16 +74,18 @@ export default class Onboarding extends React.Component {
         >
           <div className="onboarding__content">
             <div
-              className={classnames("onboarding__icon", { "onboarding__icon--close": lastSlide })}
+              className={classnames("onboarding__icon", {
+                "onboarding__icon--close": lastSlide
+              })}
               style={backgroundXStyles}
             />
-            {lastSlide &&
+            {lastSlide && (
               <div className="stuff">
                 <SparklesIcon />
                 <LogoIcon width="100" height="100" />
                 <SparklesIcon />
               </div>
-            }
+            )}
             {PANEL_STRINGS[index]}
           </div>
           <span>{this.renderButton(index)}</span>
