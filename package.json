@@ -99,7 +99,6 @@
     "image-webpack-loader": "4.6.0",
     "mini-css-extract-plugin": "0.5.0",
     "mocha": "8.1.1",
-    "mocha-webpack": "1.1.0",
     "mock-require": "3.0.3",
     "node-sass": "4.14.1",
     "nodemon": "2.0.4",
