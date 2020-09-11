@@ -45,8 +45,8 @@ const urlEncodeTheme = ({ hasCustomBackgrounds = false, theme }) => {
   return hasCustomBackgrounds
     ? Promise.resolve(baseUrl)
     : jsonCodec
-      .compress(normalizeTheme(theme))
-      .then(value => `${baseUrl}?theme=${value}`);
+        .compress(normalizeTheme(theme))
+        .then(value => `${baseUrl}?theme=${value}`);
 };
 
 const urlDecodeTheme = themeString => jsonCodec.decompress(themeString);
@@ -101,7 +101,7 @@ window.addEventListener("popstate", ({ state: { theme } }) =>
   })
 );
 
-window.addEventListener("beforeunload", (e) => {
+window.addEventListener("beforeunload", e => {
   const state = store.getState();
   const imageNames = backgrounds =>
     backgrounds.map(background => background.name);
@@ -118,7 +118,9 @@ window.addEventListener("beforeunload", (e) => {
     if (localStorageKeys[index].startsWith("THEME")) {
       const item = localStorage.getItem(localStorageKeys[index]);
       const itemParsed = JSON.parse(item);
-      if (!itemParsed.theme.images.custom_backgrounds) return;
+      if (!itemParsed.theme.images.custom_backgrounds) {
+        return;
+      }
       itemParsed.theme.images.custom_backgrounds.map(bgs => {
         if (localStorageKeys.includes(`IMAGE-${bgs.name}`)) {
           themeImages.push(bgs.name);
@@ -132,9 +134,11 @@ window.addEventListener("beforeunload", (e) => {
 
   // Remove images that are not used in saved themes or are currently in the custom background
   // view.
-  const toDelete = Object.keys(selectors.themeCustomImages(state)).filter(name => {
-    return !currentImages.has(name) && !themeImagesSet.has(name);
-  });
+  const toDelete = Object.keys(selectors.themeCustomImages(state)).filter(
+    name => {
+      return !currentImages.has(name) && !themeImagesSet.has(name);
+    }
+  );
 
   store.dispatch(actions.images.deleteImages(toDelete));
 });
@@ -150,7 +154,12 @@ window.addEventListener("message", ({ source, data: message }) => {
       const hasExtension = selectors.hasExtension(store.getState());
       const extensionVersion = selectors.extensionVersion(store.getState());
       if (!hasExtension || extensionVersion !== message.extensionVersion) {
-        store.dispatch(actions.ui.setHasExtension({ hasExtension: true, extensionVersion: message.extensionVersion }));
+        store.dispatch(
+          actions.ui.setHasExtension({
+            hasExtension: true,
+            extensionVersion: message.extensionVersion
+          })
+        );
         const state = store.getState();
         const hasEdited = selectors.userHasEdited(state);
 

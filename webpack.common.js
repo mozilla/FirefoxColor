@@ -35,7 +35,8 @@ const commonBabelOptions = {
   cacheDirectory: true,
   presets: [
     [
-      "@babel/preset-env", {
+      "@babel/preset-env",
+      {
         targets: ["last 2 versions"],
         modules: false
       }
@@ -97,18 +98,11 @@ const webpackConfig = {
       },
       {
         test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "sass-loader"
-        ]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader"
-        ]
+        use: [MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
         test: /\.(ttf|woff|eot)$/i,

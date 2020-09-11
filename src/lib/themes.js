@@ -35,8 +35,8 @@ export const themesEqual = (themeA, themeB) => {
     }
   }
 
-  const imagesA = themeA.images && themeA.images.custom_backgrounds || [];
-  const imagesB = themeB.images && themeB.images.custom_backgrounds || [] ;
+  const imagesA = (themeA.images && themeA.images.custom_backgrounds) || [];
+  const imagesB = (themeB.images && themeB.images.custom_backgrounds) || [];
   if (imagesA.length !== imagesB.length) {
     return false;
   }
@@ -129,7 +129,7 @@ export const normalizeThemeColor = (name, data, defaultColor) => {
 export const normalizeThemeColors = (colors = {}) => {
   const out = {};
   const { colors: defaultColors } = defaultTheme;
-  const resolveColor = (name) => {
+  const resolveColor = name => {
     let color = colors[name];
     if (color) {
       return color;
@@ -204,7 +204,11 @@ export const presetThemes = presetThemesContext
   }))
   .sort(({ filename: a }, { filename: b }) => a.localeCompare(b));
 
-export const convertToBrowserTheme = (themeData, bgImages, customBackgrounds) => {
+export const convertToBrowserTheme = (
+  themeData,
+  bgImages,
+  customBackgrounds
+) => {
   const newTheme = {
     images: {},
     properties: {},
@@ -217,7 +221,7 @@ export const convertToBrowserTheme = (themeData, bgImages, customBackgrounds) =>
   const theme = normalizeTheme(themeData);
 
   const custom_backgrounds = theme.images.custom_backgrounds || [];
-  if (custom_backgrounds.length > 0) {
+  if (custom_backgrounds.length) {
     const additional_backgrounds = [];
     const additional_backgrounds_alignment = [];
     const additional_backgrounds_tiling = [];

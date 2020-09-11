@@ -31,14 +31,14 @@ export const AppFooter = ({ hasExtension, setDisplayLegalModal }) => {
         <a
           className="app-footer__legal-link"
           href="#"
-          onClick={(e) => toggleModal(e, "Privacy")}
+          onClick={e => toggleModal(e, "Privacy")}
         >
           Privacy
         </a>
         <a
           className="app-footer__legal-link"
           href="#"
-          onClick={(e) => toggleModal(e, "Terms")}
+          onClick={e => toggleModal(e, "Terms")}
         >
           Terms
         </a>

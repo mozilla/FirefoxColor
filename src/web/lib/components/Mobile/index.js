@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import "./index.scss";
 
 export const Mobile = () => (
@@ -15,11 +14,7 @@ export const Mobile = () => (
       <p>
         Sadly, it&rsquo;s only available for Firefox on Mac, Windows and Linux.
       </p>
-      <a
-        href="https://testpilot.firefox.com/experiments/color"
-      >
-        Learn More
-      </a>
+      <a href="https://testpilot.firefox.com/experiments/color">Learn More</a>
     </div>
   </div>
 );

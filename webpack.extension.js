@@ -84,7 +84,7 @@ function buildManifest(compilation, cb) {
   if (nodeEnv === "development") {
     idSuffix.push("dev");
   }
-  if (idSuffix.length > 0) {
+  if (idSuffix.length) {
     idSuffix = idSuffix.join("-");
     manifest.applications.gecko.id = manifest.applications.gecko.id.replace(
       "@",

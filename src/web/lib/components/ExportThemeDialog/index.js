@@ -15,7 +15,7 @@ class ExportThemeDialog extends React.Component {
     if (panelIndex === 0) {
       return true;
     }
-    if (panelIndex === 1 && themeName.length > 0) {
+    if (panelIndex === 1 && themeName.length) {
       return true;
     }
     return false;
@@ -44,7 +44,7 @@ class ExportThemeDialog extends React.Component {
 
   handleExportClick = () => {
     const { themeName: name } = this.state;
-    if (name.length == 0) {
+    if (!name.length) {
       return;
     }
     const { setExportThemeProgress, exportTheme } = this.props;

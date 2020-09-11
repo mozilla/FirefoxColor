@@ -64,10 +64,7 @@ export const ThemeBuilder = props => {
     });
   }
 
-  const selectedTabIndex = Math.min(
-    tabList.length - 1,
-    themeBuilderPanel
-  );
+  const selectedTabIndex = Math.min(tabList.length - 1, themeBuilderPanel);
 
   const selectedTabId = tabList[selectedTabIndex].id;
 
@@ -88,22 +85,22 @@ export const ThemeBuilder = props => {
           />
         );
       case "advanced-colors":
-          return (
-            <ThemeColorsEditor
-              {...{
-                theme,
-                selectedColor,
-                setColor,
-                clearColor,
-                setSelectedColor,
-                advancedColors: true,
-                hasExtension,
-                extensionVersion,
-                addonUrl
-              }}
-            />
-          );
-        case "backgrounds":
+        return (
+          <ThemeColorsEditor
+            {...{
+              theme,
+              selectedColor,
+              setColor,
+              clearColor,
+              setSelectedColor,
+              advancedColors: true,
+              hasExtension,
+              extensionVersion,
+              addonUrl
+            }}
+          />
+        );
+      case "backgrounds":
         return <ThemeBackgroundPicker {...props} />;
       case "saved-themes":
         return (
@@ -144,7 +141,7 @@ export const ThemeBuilder = props => {
       case "ArrowRight": {
         nextTab =
           tabsElement.children[
-          Math.min(tabList.length - 1, currentTabIndex + 1)
+            Math.min(tabList.length - 1, currentTabIndex + 1)
           ];
         break;
       }
