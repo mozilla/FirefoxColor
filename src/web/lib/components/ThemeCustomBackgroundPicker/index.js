@@ -19,12 +19,11 @@ import "./index.scss";
 import iconHAlignLeft from "./icon_align_left.svg";
 import iconVAlignCenter from "./icon_align_center.svg";
 
-
-const mapErrors = ({ tooLarge, wrongType}) => {
+const mapErrors = ({ tooLarge, wrongType }) => {
   let errors = [];
   if (tooLarge) {
     errors.push("The image is too large. (1MB maximum size)");
-  } 
+  }
   if (wrongType) {
     errors.push("The file is not an accepted image type.");
   }
@@ -41,7 +40,9 @@ export class ThemeCustomBackgroundPicker extends React.Component {
 
     // sync images in local storage with custom backgrounds in preview on undo/redo
     // when custom background changes.
-    if (prevProps.themeCustomBackgrounds.length !== themeCustomBackgrounds.length) {
+    if (
+      prevProps.themeCustomBackgrounds.length !== themeCustomBackgrounds.length
+    ) {
       const keys = Object.keys(themeCustomImages);
 
       themeCustomBackgrounds.forEach(({ name }) => {
@@ -94,7 +95,7 @@ export class ThemeCustomBackgroundPicker extends React.Component {
     this.props.moveCustomBackground({ oldIndex, newIndex });
   };
 
-  addImageToStorage = (name) => {
+  addImageToStorage = name => {
     const image = temporaryImageStore.get(name);
     if (image) {
       this.props.updateImage({ ...image, importing: true });
@@ -133,8 +134,8 @@ export class ThemeCustomBackgroundPicker extends React.Component {
               <div className="add-image">
                 {themeCustomBackgrounds.length <
                   CUSTOM_BACKGROUND_MAXIMUM_LENGTH && (
-                    <ImportButton {...{ label, isPrimary }} />
-                  )}
+                  <ImportButton {...{ label, isPrimary }} />
+                )}
                 {importing && (
                   <div className="status-message importing">Processing...</div>
                 )}
@@ -142,7 +143,9 @@ export class ThemeCustomBackgroundPicker extends React.Component {
                   <React.Fragment>
                     <Modal>
                       <ul className="errors">
-                        {mapErrors(errors).map((error, i) => <li key={i}>{error}</li>)}
+                        {mapErrors(errors).map((error, i) => (
+                          <li key={i}>{error}</li>
+                        ))}
                       </ul>
                     </Modal>
                   </React.Fragment>
@@ -153,8 +156,9 @@ export class ThemeCustomBackgroundPicker extends React.Component {
         )}
         {!storageErrorMessage && (
           <p className="privacy-note">
-            Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your computer.
-        </p>
+            Up to 1 MB. JPG, PNG or BMP. <br /> Images never leave your
+            computer.
+          </p>
         )}
       </form>
     );
@@ -236,10 +240,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
   }
 
   render() {
-    const {
-      handleTilingChange,
-      storageErrorMessage
-    } = this;
+    const { handleTilingChange, storageErrorMessage } = this;
     const { addImage, updateImage, image } = this.props;
     const { tiling, alignment = "left top" } = this.props.item;
     const [horizontalAlign, verticalAlign] = alignment.split(" ");
@@ -258,7 +259,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
             { selected: alignmentState[alignmentKey] === alignment },
             "align-button",
             `align-button-${
-            isHorizontal ? "horizontal" : "vertical"
+              isHorizontal ? "horizontal" : "vertical"
             }-${alignment}`
           )}
         >
@@ -335,16 +336,21 @@ class ThemeCustomBackgroundSelector extends React.Component {
 
               <ImportButton label={errors ? "Retry" : "Replace image"} />
 
-              {this.props.displayRemoveImageModal && this.state.index === this.props.index && (
-                <div className="modal-wrapper--clear-image">
-                  <ClearImageModal
-                    confirm={this.confirm}
-                    cancel={this.onCloseModal}
-                  />
-                </div>
-              )}
+              {this.props.displayRemoveImageModal &&
+                this.state.index === this.props.index && (
+                  <div className="modal-wrapper--clear-image">
+                    <ClearImageModal
+                      confirm={this.confirm}
+                      cancel={this.onCloseModal}
+                    />
+                  </div>
+                )}
 
-              <button title={"Delete"} className="clear" onClick={this.handleClearBackground} />
+              <button
+                title={"Delete"}
+                className="clear"
+                onClick={this.handleClearBackground}
+              />
             </li>
           );
         }}
@@ -355,12 +361,12 @@ class ThemeCustomBackgroundSelector extends React.Component {
   confirm = () => {
     this.removeImage();
     this.onCloseModal();
-  }
+  };
 
   onCloseModal = () => {
     this.props.setDisplayRemoveImageModal({ display: false });
     localStorage.setItem("clearImageModal", true);
-  }
+  };
 
   handleClearBackground = () => {
     if (localStorage.getItem("clearImageModal")) {
@@ -386,7 +392,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     }
 
     this.props.clearCustomBackground();
-  }
+  };
 
   handleTilingChange = ev => {
     this.props.updateCustomBackground({ tiling: ev.target.value });
@@ -409,7 +415,7 @@ class ThemeCustomBackgroundSelector extends React.Component {
     const alignmentState = { horizontalAlign, verticalAlign, ...state };
     const newAlignment = `${alignmentState.horizontalAlign} ${
       alignmentState.verticalAlign
-      }`;
+    }`;
 
     updateCustomBackground({ alignment: newAlignment });
   }
@@ -480,7 +486,7 @@ class ImageImporter extends React.Component {
       tooLarge: file.size > CUSTOM_BACKGROUND_MAXIMUM_SIZE,
       wrongType: !CUSTOM_BACKGROUND_ALLOWED_TYPES.includes(file.type)
     };
-    errorState.error = Object.values(errorState).filter(v => v).length > 0;
+    errorState.error = !!Object.values(errorState).filter(v => v).length;
     // HACK: Ensure a render with a cleared error state before setting
     // the new error state, so that a new modal is animated in
     this.resetErrorState(() => this.setState(errorState));

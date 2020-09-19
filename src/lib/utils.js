@@ -5,8 +5,8 @@ export const makeLog = context => (...args) =>
   DEBUG && console.log(`[FirefoxColor ${context}]`, ...args);
 
 export const getCustomImages = (backgroundImages = [], images = []) => {
-  return backgroundImages.map(
-    item => {
+  return backgroundImages
+    .map(item => {
       let customImage = { ...item };
       let image = JSON.parse(localStorage.getItem(`IMAGE-${item.name}`));
       if (image) {
@@ -14,6 +14,6 @@ export const getCustomImages = (backgroundImages = [], images = []) => {
         return customImage;
       }
       return null;
-    }
-  ).filter(Boolean);
+    })
+    .filter(Boolean);
 };

@@ -13,7 +13,7 @@ export const CUSTOM_BACKGROUND_MAXIMUM_SIZE = 1000000;
 // gifs also seem to break the background
 export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
   "image/jpeg",
-  "image/png",
+  "image/png"
   // "image/gif",
   // "image/bmp"
   // "image/svg+xml"
@@ -73,7 +73,7 @@ export const fallbackColors = {
   // Similarly for "popup_text".
   popup: ["frame", "toolbar"],
   popup_text: ["toolbar_text", "tab_background_text", "textcolor"],
-  tab_background_text: "textcolor",
+  tab_background_text: "textcolor"
 };
 
 export const colorsWithoutAlpha = ["tab_background_text", "frame", "sidebar"];

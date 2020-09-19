@@ -17,7 +17,11 @@ fs.readdirSync(themesPath)
     const data = fs.readFileSync(path.join(themesPath, filename), "utf8");
     const theme = JSON.parse(data);
     if (!validate(theme)) {
-      console.log("Theme validation failed for", filename, ajv.errorsText(validate.errors)); // eslint-disable-line no-console
+      console.log(
+        "Theme validation failed for",
+        filename,
+        ajv.errorsText(validate.errors)
+      ); // eslint-disable-line no-console
       foundInvalid = true;
     }
   });

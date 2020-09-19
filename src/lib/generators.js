@@ -42,7 +42,9 @@ export const generateComplementaryTheme = (color = null) => {
 
 const createA11yColor = (testColor, comparisonColor) => {
   // Just return if A11y already
-  if (tinycolor.isReadable(testColor, comparisonColor)) return testColor;
+  if (tinycolor.isReadable(testColor, comparisonColor)) {
+    return testColor;
+  }
 
   let a11yColor = null;
   let minValidRatio = MAX_CONTRAST_RATIO;

@@ -18,7 +18,7 @@ const init = () => {
   });
   browser.runtime.onConnect.addListener(port => {
     port.onMessage.addListener(messageListener(port));
-    port.postMessage({ type: "hello", extensionVersion});
+    port.postMessage({ type: "hello", extensionVersion });
     port.onDisconnect.addListener(() => {
       if (isThemePreview) {
         isThemePreview = false;
@@ -55,7 +55,7 @@ const messageHandlers = {
       port.postMessage({ type: "fetchedTheme", theme: currentTheme })
     );
   },
-  revertAll: (message) => {
+  revertAll: message => {
     log("revertAllThemes", message);
     storeTheme({ theme: null });
     queryAndFocusTab("", true);
@@ -79,7 +79,7 @@ const messageHandlers = {
     }
   },
   ping: (message, port) => {
-    port.postMessage({ type: "pong", extensionVersion});
+    port.postMessage({ type: "pong", extensionVersion });
   },
   addImage: ({ image }) => {
     log("addImage", image, customBackgrounds);
@@ -115,7 +115,9 @@ const queryAndFocusTab = (params, reload = false) => {
       if (reload) {
         browser.tabs.update(siteTab.id, {
           active: true,
-          url: `${siteUrl}${tabUrl.search ? tabUrl.search + "&" : "?"}${params}${tabUrl.hash}`
+          url: `${siteUrl}${
+            tabUrl.search ? tabUrl.search + "&" : "?"
+          }${params}${tabUrl.hash}`
         });
       } else {
         browser.tabs.update(siteTab.id, { active: true });

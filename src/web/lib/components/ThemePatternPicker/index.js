@@ -5,7 +5,6 @@ import "./index.scss";
 import { colorToCSS } from "../../../../lib/themes";
 import { bgImages } from "../../../../lib/assets";
 
-
 const Pattern = ({ src, backgroundId, active, setBackground, frame }) => (
   <div>
     <input
@@ -41,8 +40,9 @@ class ThemeBackgroundPicker extends React.Component {
   }
 
   handleClick = e => {
-    if (e.target.classList.contains("theme-background-picker__backgrounds"))
+    if (e.target.classList.contains("theme-background-picker__backgrounds")) {
       return;
+    }
     this.setState({ selected: !this.state.selected });
   };
 

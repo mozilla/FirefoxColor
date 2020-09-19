@@ -35,7 +35,9 @@ class ThemeUrl extends React.Component {
   }
 
   handleClickOutside(evt) {
-    if (evt.target.classList.contains("Share")) return;
+    if (evt.target.classList.contains("Share")) {
+      return;
+    }
     this.props.setDisplayShareModal({ display: false });
   }
 

@@ -15,6 +15,7 @@ settings:
 
 plugins:
   - babel
+  - mozilla
 
 parser: babel-eslint
 

@@ -34,6 +34,9 @@ export const ThemeSaveButtonComponent = ({
   );
 };
 
-const ThemeSaveButton = connect(null, (dispatch) => ({ dispatch }))(ThemeSaveButtonComponent);
+const ThemeSaveButton = connect(
+  null,
+  dispatch => ({ dispatch })
+)(ThemeSaveButtonComponent);
 
 export default ThemeSaveButton;

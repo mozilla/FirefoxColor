@@ -35,11 +35,13 @@ module.exports = merge(webpackConfig, {
       filename: "manifest.json",
       fn: buildManifest
     }),
-    new CopyWebpackPlugin([
-      { from: "LICENSE" },
-      { from: "src/images/icon.svg", to: "images/" },
-      { from: "src/images/logo.svg", to: "images/" }
-    ])
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "LICENSE" },
+        { from: "src/images/icon.svg", to: "images/" },
+        { from: "src/images/logo.svg", to: "images/" }
+      ]
+    })
   ]
 });
 
@@ -82,7 +84,7 @@ function buildManifest(compilation, cb) {
   if (nodeEnv === "development") {
     idSuffix.push("dev");
   }
-  if (idSuffix.length > 0) {
+  if (idSuffix.length) {
     idSuffix = idSuffix.join("-");
     manifest.applications.gecko.id = manifest.applications.gecko.id.replace(
       "@",

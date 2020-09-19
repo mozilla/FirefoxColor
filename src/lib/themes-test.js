@@ -53,14 +53,14 @@ describe("lib/themes", () => {
     it("should migrate themes without popup/popup_text", () => {
       const theme = {
         images: {
-          headerURL: "./bg-000.svg",
+          headerURL: "./bg-000.svg"
         },
         colors: {
           frame: { r: 12, g: 34, b: 56 },
           toolbar: { r: 1, g: 2, b: 3, a: 1 },
-          toolbar_text: { r: 7, g: 8, b: 9 },
+          toolbar_text: { r: 7, g: 8, b: 9 }
         },
-        title: ["old theme without popup"],
+        title: ["old theme without popup"]
       };
       const expectedTheme = {
         images: { additional_backgrounds: ["./bg-000.svg"] },
@@ -70,9 +70,9 @@ describe("lib/themes", () => {
           popup: { r: 12, g: 34, b: 56 }, // default to frame.
           popup_text: { r: 7, g: 8, b: 9 }, // default to toolbar_text.
           toolbar: { r: 1, g: 2, b: 3 },
-          toolbar_text: { r: 7, g: 8, b: 9 },
+          toolbar_text: { r: 7, g: 8, b: 9 }
         },
-        title: ["old theme without popup"],
+        title: ["old theme without popup"]
       };
       const output = subject(theme);
       expect(output).to.deep.equal(expectedTheme);
@@ -81,13 +81,13 @@ describe("lib/themes", () => {
     it("should migrate deprecated theme properties", () => {
       const deprecatedTheme = {
         images: {
-          headerURL: "./bg-001.svg",
+          headerURL: "./bg-001.svg"
         },
         colors: {
           accentcolor: { r: 12, g: 34, b: 56 },
-          textcolor: { r: 7, g: 8, b: 9 },
+          textcolor: { r: 7, g: 8, b: 9 }
         },
-        title: ["custom theme"],
+        title: ["custom theme"]
       };
       const expectedTheme = {
         images: { additional_backgrounds: ["./bg-001.svg"] },
@@ -95,9 +95,9 @@ describe("lib/themes", () => {
           ...presetThemesContext("./default.json").colors,
           frame: { r: 12, g: 34, b: 56 },
           tab_background_text: { r: 7, g: 8, b: 9 },
-          popup_text: { r: 7, g: 8, b: 9 }, // defaults to tab_background_text.
+          popup_text: { r: 7, g: 8, b: 9 } // defaults to tab_background_text.
         },
-        title: ["custom theme"],
+        title: ["custom theme"]
       };
       // Deep-clone the original input.
       const themeInput = JSON.parse(JSON.stringify(deprecatedTheme));
@@ -109,12 +109,35 @@ describe("lib/themes", () => {
     });
 
     it("should include advanced colors themes", () => {
-      const advancedColors = ["button_background_active", "button_background_hover", "frame_inactive",
-        "icons_attention", "icons", "ntp_background", "ntp_text", "popup_border", "popup_highlight_text",
-        "popup_highlight", "sidebar_border", "sidebar_highlight_text", "sidebar_highlight", "sidebar_text", "sidebar",
-        "tab_background_separator", "tab_loading", "tab_selected", "tab_text", "toolbar_bottom_separator",
-        "toolbar_field_border_focus", "toolbar_field_border", "toolbar_field_focus", "toolbar_field_highlight_text",
-        "toolbar_field_highlight", "toolbar_field_separator", "toolbar_field_text_focus", "toolbar_top_separator",
+      const advancedColors = [
+        "button_background_active",
+        "button_background_hover",
+        "frame_inactive",
+        "icons_attention",
+        "icons",
+        "ntp_background",
+        "ntp_text",
+        "popup_border",
+        "popup_highlight_text",
+        "popup_highlight",
+        "sidebar_border",
+        "sidebar_highlight_text",
+        "sidebar_highlight",
+        "sidebar_text",
+        "sidebar",
+        "tab_background_separator",
+        "tab_loading",
+        "tab_selected",
+        "tab_text",
+        "toolbar_bottom_separator",
+        "toolbar_field_border_focus",
+        "toolbar_field_border",
+        "toolbar_field_focus",
+        "toolbar_field_highlight_text",
+        "toolbar_field_highlight",
+        "toolbar_field_separator",
+        "toolbar_field_text_focus",
+        "toolbar_top_separator",
         "toolbar_vertical_separator"
       ];
       advancedColors.forEach(advancedColor => {
@@ -123,12 +146,16 @@ describe("lib/themes", () => {
             ...presetThemesContext("./default.json").colors,
             [advancedColor]: { r: 12, g: 34, b: 56 }
           },
-          title: ["custom theme"],
+          title: ["custom theme"]
         };
 
         const output = subject(theme);
 
-        expect(output.colors[advancedColor]).to.deep.equal({ r: 12, g: 34, b: 56 });
+        expect(output.colors[advancedColor]).to.deep.equal({
+          r: 12,
+          g: 34,
+          b: 56
+        });
       });
     });
 
@@ -140,7 +167,7 @@ describe("lib/themes", () => {
             ...presetThemesContext("./default.json").colors,
             [deprecatedColor]: { r: 12, g: 34, b: 56 }
           },
-          title: ["custom theme"],
+          title: ["custom theme"]
         };
 
         const output = subject(theme);
@@ -164,10 +191,10 @@ describe("lib/themes", () => {
           toolbar: "rgb(225, 234, 239)",
           toolbar_field: "rgb(255, 255, 255)",
           toolbar_field_text: "rgb(123, 127, 204)",
-          toolbar_text: "rgb(248, 112, 140)",
+          toolbar_text: "rgb(248, 112, 140)"
         },
         images: {},
-        properties: {},
+        properties: {}
       };
     };
 
@@ -178,17 +205,17 @@ describe("lib/themes", () => {
     it("should support images", () => {
       const theme = {
         images: {
-          theme_frame: "./bg-000.svg",
-        },
+          theme_frame: "./bg-000.svg"
+        }
       };
       const expectedTheme = {
         ...defaultBrowserTheme(),
         images: {
-          additional_backgrounds: [bgImages("./bg-000.svg")],
+          additional_backgrounds: [bgImages("./bg-000.svg")]
         },
         properties: {
           additional_backgrounds_alignment: ["top"],
-          additional_backgrounds_tiling: ["repeat"],
+          additional_backgrounds_tiling: ["repeat"]
         }
       };
       expect(subject(theme, bgImages, [])).to.deep.equal(expectedTheme);
@@ -197,8 +224,8 @@ describe("lib/themes", () => {
     it("should discard non-existing images", () => {
       const theme = {
         images: {
-          theme_frame: "./i-do-not-exist.png",
-        },
+          theme_frame: "./i-do-not-exist.png"
+        }
       };
       expect(subject(theme, bgImages, [])).to.deep.equal(defaultBrowserTheme());
     });
@@ -206,26 +233,26 @@ describe("lib/themes", () => {
     it("should discard deprecated theme properties", () => {
       const theme = {
         images: {
-          theme_frame: "./bg-001.svg",
+          theme_frame: "./bg-001.svg"
         },
         colors: {
           accentcolor: { r: 123, g: 45, b: 67 },
-          textcolor: { r: 234, g: 56, b: 78 },
-        },
+          textcolor: { r: 234, g: 56, b: 78 }
+        }
       };
       const expectedTheme = {
         colors: {
           ...defaultBrowserTheme().colors,
           frame: "rgb(123, 45, 67)",
           tab_background_text: "rgb(234, 56, 78)",
-          popup_text: "rgb(234, 56, 78)",
+          popup_text: "rgb(234, 56, 78)"
         },
         images: {
-          additional_backgrounds: [bgImages("./bg-001.svg")],
+          additional_backgrounds: [bgImages("./bg-001.svg")]
         },
         properties: {
           additional_backgrounds_alignment: ["top"],
-          additional_backgrounds_tiling: ["repeat"],
+          additional_backgrounds_tiling: ["repeat"]
         }
       };
       expect(subject(theme, bgImages, [])).to.deep.equal(expectedTheme);
@@ -234,19 +261,23 @@ describe("lib/themes", () => {
     it("should use tab loading when present", () => {
       const theme = {
         colors: {
-          tab_loading: { r: 255, g: 255, b: 0 },
-        },
+          tab_loading: { r: 255, g: 255, b: 0 }
+        }
       };
-      expect(subject(theme, bgImages, []).colors.tab_loading).to.equal("rgb(255, 255, 0)");
+      expect(subject(theme, bgImages, []).colors.tab_loading).to.equal(
+        "rgb(255, 255, 0)"
+      );
     });
 
     it("should discard opaque alpha", () => {
       const theme = {
         colors: {
-          tab_loading: { r: 255, g: 255, b: 0, a: 1 },
-        },
+          tab_loading: { r: 255, g: 255, b: 0, a: 1 }
+        }
       };
-      expect(subject(theme, bgImages, []).colors.tab_loading).to.equal("rgb(255, 255, 0)");
+      expect(subject(theme, bgImages, []).colors.tab_loading).to.equal(
+        "rgb(255, 255, 0)"
+      );
     });
 
     // TODO: Add test for third parameter (customBackgrounds) of convertToBrowserTheme.
@@ -300,7 +331,7 @@ describe("lib/themes", () => {
       expect(
         subject(
           { colors: { ntp_background: { r: 0, g: 0, b: 255 } } },
-          { colors: { ntp_background: { r: 255, g: 0, b: 0 } } },
+          { colors: { ntp_background: { r: 255, g: 0, b: 0 } } }
         )
       ).to.be.false;
     });
@@ -308,7 +339,12 @@ describe("lib/themes", () => {
     it("should reject difference in number of colors", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 255, g: 255, b: 255 }, ntp_background: { r: 0, g: 0, b: 255 } } },
+          {
+            colors: {
+              toolbar: { r: 255, g: 255, b: 255 },
+              ntp_background: { r: 0, g: 0, b: 255 }
+            }
+          },
           { colors: { toolbar: { r: 255, g: 255, b: 255 } } }
         )
       ).to.be.false;
@@ -326,7 +362,7 @@ describe("lib/themes", () => {
     it("should accept if only one has alpha set to opaque", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 1, g: 2, b: 3 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3 } } },
           { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
         )
       ).to.be.true;
@@ -335,7 +371,7 @@ describe("lib/themes", () => {
     it("should accept if both alpha are set to opaque", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } },
           { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
         )
       ).to.be.true;
@@ -344,7 +380,7 @@ describe("lib/themes", () => {
     it("should accept if both alpha are set to transparent", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } } },
           { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } } }
         )
       ).to.be.true;
@@ -353,7 +389,7 @@ describe("lib/themes", () => {
     it("should reject if alpha is transparent and opaque", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } } },
           { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } }
         )
       ).to.be.false;
@@ -362,7 +398,7 @@ describe("lib/themes", () => {
     it("should reject if alpha is transparent and undefined", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } } },
           { colors: { toolbar: { r: 1, g: 2, b: 3 } } }
         )
       ).to.be.false;
@@ -371,7 +407,7 @@ describe("lib/themes", () => {
     it("should reject if alpha is totally transparent and half transparent", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0 } } },
           { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0.5 } } }
         )
       ).to.be.false;
@@ -380,7 +416,7 @@ describe("lib/themes", () => {
     it("should reject if alpha is totally opaque and half transparent", () => {
       expect(
         subject(
-          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } }, },
+          { colors: { toolbar: { r: 1, g: 2, b: 3, a: 1 } } },
           { colors: { toolbar: { r: 1, g: 2, b: 3, a: 0.5 } } }
         )
       ).to.be.false;

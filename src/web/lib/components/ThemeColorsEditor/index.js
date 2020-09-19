@@ -2,7 +2,12 @@ import React from "react";
 import classnames from "classnames";
 import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
-import { colorsWithoutAlpha, ESC, colorLabels, advancedColorLabels } from "../../../../lib/constants";
+import {
+  colorsWithoutAlpha,
+  ESC,
+  colorLabels,
+  advancedColorLabels
+} from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
 import StorageSpaceInformation from "../StorageSpaceInformation";
 import semverCompare from "semver-compare";
@@ -46,8 +51,8 @@ class ThemeColorsEditor extends React.Component {
     this.props.setColor({ name, color });
   };
 
-  handleClearColor = (name) => {
-    this.props.clearColor({name});
+  handleClearColor = name => {
+    this.props.clearColor({ name });
   };
 
   componentDidMount() {
@@ -71,7 +76,8 @@ class ThemeColorsEditor extends React.Component {
     const labels = advancedColors ? advancedColorLabels : colorLabels;
 
     let requiredVersion = "2.1.6";
-    const hasAdvancedThemeSupport = extensionVersion && semverCompare(extensionVersion, requiredVersion) >= 0;
+    const hasAdvancedThemeSupport =
+      extensionVersion && semverCompare(extensionVersion, requiredVersion) >= 0;
 
     // Select only the color properties from the theme.
     const colorKeys = Object.keys(labels);
@@ -79,7 +85,7 @@ class ThemeColorsEditor extends React.Component {
     // Dedupe colors for swatch presets
     const uniqueColorArray = [
       ...new Set(
-        Object.keys({...colorLabels, ...advancedColorLabels}).map(name => {
+        Object.keys({ ...colorLabels, ...advancedColorLabels }).map(name => {
           return colorToCSS(colors[name]);
         })
       )
@@ -112,14 +118,17 @@ class ThemeColorsEditor extends React.Component {
                 >
                   <span
                     className="theme-unit__swatch"
-                    style={color ? {backgroundColor: colorToCSS(color)} : {borderStyle: "dashed"}}
+                    style={
+                      color
+                        ? { backgroundColor: colorToCSS(color) }
+                        : { borderStyle: "dashed" }
+                    }
                     title={labels[name]}
                   />
 
                   <span className="theme-unit__label" title={labels[name]}>
                     {labels[name]}
                   </span>
-
                 </li>
               ];
             })}
@@ -127,25 +136,40 @@ class ThemeColorsEditor extends React.Component {
           <StorageSpaceInformation />
         </div>
         <div className="theme-colors-editor__picker">
-          {selectedColor && advancedColors && 
+          {selectedColor && advancedColors && (
             <div className="theme-colors-editor__options">
               <label>
-                <input type="radio" value="default" checked={!selectedColorValue}
-                        onChange={ev => this.handleClearColor(selectedColor)}/>
+                <input
+                  type="radio"
+                  value="default"
+                  checked={!selectedColorValue}
+                  onChange={ev => this.handleClearColor(selectedColor)}
+                />
                 use Firefox&#39;s default style
               </label>
               <label>
-                <input type="radio" value="other" checked={!!selectedColorValue}
-                        onChange={ev =>
-                          this.handleColorChange(selectedColor, this.colorPickerRef.current.state.rgb)
-                        }/>
+                <input
+                  type="radio"
+                  value="other"
+                  checked={!!selectedColorValue}
+                  onChange={ev =>
+                    this.handleColorChange(
+                      selectedColor,
+                      this.colorPickerRef.current.state.rgb
+                    )
+                  }
+                />
                 or select a color:
               </label>
-            </div>           
-          }
-          {selectedColor &&
+            </div>
+          )}
+          {selectedColor && (
             <SketchPicker
-              className={advancedColors && !selectedColorValue ? "theme-colors-editor__disabled" : ""}
+              className={
+                advancedColors && !selectedColorValue
+                  ? "theme-colors-editor__disabled"
+                  : ""
+              }
               color={selectedColorValue || this.lastSelectedColor}
               width="270px"
               disableAlpha={colorsWithoutAlpha.includes(selectedColor)}
@@ -155,31 +179,50 @@ class ThemeColorsEditor extends React.Component {
               presetColors={uniqueColorArray}
               ref={this.colorPickerRef}
             />
-          }
+          )}
           {!selectedColor && (
             <div className="theme-colors-editor__prompt">
               <div className="theme-colors-editor__prompt-arrow" />
-              <div className="theme-colors-editor__prompt-description" >
-                {!advancedColors &&
+              <div className="theme-colors-editor__prompt-description">
+                {!advancedColors && (
                   <p>Pick a color to start customizing Firefox.</p>
-                }
-                {advancedColors && hasExtension && hasAdvancedThemeSupport &&
+                )}
+                {advancedColors && hasExtension && hasAdvancedThemeSupport && (
                   <div>
-                    <p>Advanced colors are previewed in Firefox instead of this page.</p>
+                    <p>
+                      Advanced colors are previewed in Firefox instead of this
+                      page.
+                    </p>
                   </div>
-                }
-                {advancedColors && hasExtension && !hasAdvancedThemeSupport &&
-                <div>
-                  <p>Please update your <a href={addonUrl}>Firefox Color extension</a> to version {requiredVersion} or higher if you want to use this feature.</p>
-                </div>
-                }
-                {advancedColors && !hasExtension &&
+                )}
+                {advancedColors && hasExtension && !hasAdvancedThemeSupport && (
                   <div>
-                    <p>Advanced colors are not shown in the preview on this page.</p>
-                    <p>Install the <a href={addonUrl}>Firefox Color extension</a> to experience the full preview.</p>
+                    <p>
+                      Please update your{" "}
+                      <a href={addonUrl}>Firefox Color extension</a> to version{" "}
+                      {requiredVersion} or higher if you want to use this
+                      feature.
+                    </p>
                   </div>
-                }
-                <p>Learn more about each property from the <a href="https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme#colors">official documentation</a>.</p>
+                )}
+                {advancedColors && !hasExtension && (
+                  <div>
+                    <p>
+                      Advanced colors are not shown in the preview on this page.
+                    </p>
+                    <p>
+                      Install the <a href={addonUrl}>Firefox Color extension</a>{" "}
+                      to experience the full preview.
+                    </p>
+                  </div>
+                )}
+                <p>
+                  Learn more about each property from the{" "}
+                  <a href="https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/manifest.json/theme#colors">
+                    official documentation
+                  </a>
+                  .
+                </p>
               </div>
             </div>
           )}

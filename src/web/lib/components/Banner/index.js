@@ -12,10 +12,7 @@ export const Banner = ({ isFirefox, addonUrl }) => {
         {isFirefox && (
           <Fragment>
             <h2>Build Beautiful Firefox Themes</h2>
-            <a
-              href={addonUrl}
-              className="banner__button"
-            >
+            <a href={addonUrl} className="banner__button">
               Get Firefox Color
             </a>
           </Fragment>
