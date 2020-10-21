@@ -87,10 +87,7 @@ const webpackConfig = {
             options: commonBabelOptions
           },
           {
-            include: [
-              path.resolve(__dirname, "node_modules/testpilot-ga"),
-              path.resolve(__dirname, "node_modules/query-string")
-            ],
+            include: [path.resolve(__dirname, "node_modules/query-string")],
             loader: "babel-loader",
             options: commonBabelOptions
           }
