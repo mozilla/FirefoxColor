@@ -113,7 +113,7 @@
     "sinon": "7.3.1",
     "stylelint": "13.6.1",
     "stylelint-config-standard": "18.2.0",
-    "web-ext": "5.0.0",
+    "web-ext": "5.4.1",
     "webpack": "4.44.1",
     "webpack-cli": "3.3.12",
     "webpack-dev-server": "3.11.0",
