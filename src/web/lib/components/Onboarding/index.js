@@ -1,6 +1,7 @@
 import React from "react";
 
 import classnames from "classnames";
+import queryString from "query-string";
 
 import "./index.scss";
 import LogoIcon from "./LogoIcon";
@@ -28,6 +29,16 @@ export default class Onboarding extends React.Component {
 
   handleDismiss = e => {
     if (e.target.classList.contains("dismissable")) {
+      const params = queryString.parse(window.location.search);
+      const pathname = window.location.pathname;
+
+      delete params.firstRun;
+      let stringifiedParams = queryString.stringify(params);
+      stringifiedParams = `${stringifiedParams && "?"}${stringifiedParams}`;
+
+      const newUrl = `${pathname}${stringifiedParams}`;
+      window.history.replaceState(window.history.state, "", newUrl);
+
       this.setState({ isDisplayed: false });
     }
   };
