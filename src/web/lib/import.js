@@ -1,11 +1,40 @@
 import JSZip from "jszip";
+const express = require ('express');
+const multer = require ('multer');
+const path = require ('path');
+const unzipper = require (' ./unzip ');
+const fs = require('fs');
+const JSZip = require('jszip');
 
-var fs = require("fs");
-var JSZip = require("jszip");
+//multer for upload files
+const storage = multer.diskStorage({
+    destination: function( req, file, cb ) {
+        cb( null, path.join(path.dirname(__dirname), 'zip_upload'))
+    },
+    filename: function ( req, file, cb ) {
+        cb ( null, file.fieldname + '-' + Date.now() ) //fieldname will be declared later during development of frontned
+    }
+})
 
-// Logic that reads json file from zip and the filePath will be added
-function jsonReader ( filePath, cb ) {
-    fs.readFile(filePath, "utf-8", (err,data) => {
+const upload = multer ({ storage: storage })
+
+// ./unzip for extracting files inside zip folder
+fs.createReadStream('zip_upload/')
+    .pipe( unzipper.Parse() )
+    .on('entry', function ( entry ) {
+        const fileName = entry.path;
+        const type = entry.type;
+        const size = entry.vars.uncompressedSize;
+        if ( fileName === "theme.zip" ) {
+            entry.pipe( fs.createWriteStream( 'output/path' )); //this will store zip files to output/path
+        } else {
+            entry.autodrain();
+        }
+    });
+
+// Logic that reads json file from zip
+function jsonReader ( filepath, cb ) {
+    fs.readFile(' ./output/path/manifest.json ', "utf-8", (err,data) => {
         if (err) {
             return cb && cb(err);
         }
