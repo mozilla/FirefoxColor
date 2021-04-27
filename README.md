@@ -84,15 +84,19 @@ Upon push, CircleCI will run the following steps, as defined in the `.circleci/c
 * Run tests on the current branch.
 
 When pushed to the development branch, `npm run deploy` is run to deploy the site to Github Pages.
+The stage and and production branches are updated by a push to an AWS S3 bucket.
 
-Signing depends on [`WEB_EXT_API_KEY` and `WEB_EXT_API_SECRET` environment
-variables being set for use by `web-ext sign`][sign]. Deployment depends on
-[`GH_TOKEN` being set with a personal access token from GitHub][ghtoken]. These
+The build includes unsigned xpi files for all branches. To finalize the deployment, the unsigned
+xpi file for the production branch should be uploaded to AMO by an AMO admin
+(who is allowed to upload an add-on with "Firefox" in the name).
+
+Deployment for the development branch depends on
+[`GH_TOKEN` being set with an access token from GitHub][ghtoken].
+The stage and production branches rely on AWS tokens, managed by ops. These
 are currently configured in CircleCI to support deployment after successful
 test runs.
 
 [ghtoken]: https://github.com/settings/tokens
-[sign]: https://developer.mozilla.org/en-US/Add-ons/WebExtensions/web-ext_command_reference#web-ext_sign
 
 ## Build, test and publish add-on
 The script `npm run xpi` in `package.json` generates unsigned xpi files, which
