@@ -17,11 +17,7 @@ jobs:
       - run: bash ./gen-environment.sh >> $BASH_ENV
       - run: npm run lint
       - run: npm run build
-      - run: |
-          # "web-ext build" fails to run if these environment variables are set - https://github.com/mozilla/web-ext/issues/793
-          unset WEB_EXT_API_KEY
-          unset WEB_EXT_API_SECRET
-          npm run xpi
+      - run: npm run xpi
       - run: npm run validate
       - run: npm run test
       - save_cache:

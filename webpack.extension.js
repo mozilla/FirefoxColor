@@ -8,7 +8,6 @@ const GenerateAssetWebpackPlugin = require("generate-asset-webpack-plugin");
 
 const packageMeta = require("./package.json");
 const {
-  UNOFFICIAL_SITE_IDS,
   siteUrl,
   siteId,
   nodeEnv,
@@ -75,11 +74,6 @@ function buildManifest(compilation, cb) {
   let idSuffix = [];
   if (siteId) {
     idSuffix.push(siteId);
-    // HACK: For unofficial site IDs using AMO self-signing, remove "Firefox"
-    // https://github.com/mozilla/addons/issues/690#issuecomment-379829113
-    if (UNOFFICIAL_SITE_IDS.includes(siteId)) {
-      manifest.name = manifest.name.replace("Firefox", "Fx");
-    }
   }
   if (nodeEnv === "development") {
     idSuffix.push("dev");
