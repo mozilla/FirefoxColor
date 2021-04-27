@@ -7,8 +7,6 @@ const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WriteFilePlugin = require("write-file-webpack-plugin");
 
-const UNOFFICIAL_SITE_IDS = ["local", "github"];
-
 const nodeEnv = process.env.NODE_ENV || "production";
 const siteHost = process.env.HOST || "localhost";
 const sitePort = process.env.PORT || "8080";
@@ -138,7 +136,6 @@ const webpackConfig = {
 };
 
 module.exports = {
-  UNOFFICIAL_SITE_IDS,
   siteHost,
   sitePort,
   siteUrl,

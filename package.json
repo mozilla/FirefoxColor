@@ -45,7 +45,6 @@
     "xpi:dev": "cross-env SITE_URL='https://mozilla.github.io/FirefoxColor/' SITE_ID=github npm run package && mv addon.xpi build/web/firefox-color-dev-unsigned.xpi",
     "xpi:stage": "cross-env SITE_URL='https://color.stage.mozaws.net/' SITE_ID='stage' npm run package && mv addon.xpi build/web/firefox-color-stage-unsigned.xpi",
     "xpi:production": "cross-env SITE_URL='https://color.firefox.com/' SITE_ID='' npm run package && mv addon.xpi build/web/firefox-color-unsigned.xpi",
-    "sign": "npm-run-all clean:extension build:extension && web-ext sign --source-dir=build/extension && mv web-ext-artifacts/*.xpi ./addon.xpi",
     "run": "npm run build:extension && web-ext run --source-dir=build/extension",
     "lint": "npm-run-all lint:*",
     "lint:css": "stylelint 'src/**/*.scss'",
