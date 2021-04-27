@@ -76,11 +76,24 @@ class ExportThemeDialog extends React.Component {
     }
 
     if (shouldOfferExportedTheme) {
+      // exportedTheme has XPI MIME set in src/web/lib/export.js
+      const XPI_MIME = "application/x-xpinstall";
+      // To ensure that the file is downloaded loaded than installed,
+      // use the ZIP MIME type in the data:-URL.
+      const ZIP_MIME = "application/zip";
       return (
         <>
           <h2>Ready to download!</h2>
           <p>
-            Grab the XPI if you want to submit your theme to the{" "}
+            Grab the XPI if you want to{" "}
+            <a
+              href="https://extensionworkshop.com/documentation/publish/submitting-an-add-on/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              submit
+            </a>{" "}
+            your theme to the{" "}
             <a
               href="https://addons.mozilla.org/"
               target="_blank"
@@ -94,7 +107,7 @@ class ExportThemeDialog extends React.Component {
             <a
               className="modal__button"
               download="theme.zip"
-              href={exportedTheme}
+              href={exportedTheme.replace(XPI_MIME, ZIP_MIME)}
             >
               theme.zip
             </a>{" "}
@@ -116,8 +129,15 @@ class ExportThemeDialog extends React.Component {
           <>
             <h2>Export your theme</h2>
             <p>
-              Create a compressed version of your theme that you can submit to
-              the{" "}
+              Create a compressed version of your theme that you can{" "}
+              <a
+                href="https://extensionworkshop.com/documentation/publish/submitting-an-add-on/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                submit
+              </a>{" "}
+              to the{" "}
               <a
                 href="https://addons.mozilla.org/"
                 target="_blank"
