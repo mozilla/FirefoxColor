@@ -99,7 +99,7 @@
     "mini-css-extract-plugin": "0.5.0",
     "mocha": "8.1.1",
     "mock-require": "3.0.3",
-    "node-sass": "4.14.1",
+    "node-sass": "7.0.0",
     "nodemon": "2.0.4",
     "npm-run-all": "4.1.4",
     "onchange": "7.0.2",
