@@ -59,7 +59,7 @@
     "deploy": "gh-pages -x -d build/web -r \"https://$GH_TOKEN@github.com/mozilla/FirefoxColor.git\""
   },
   "engines": {
-    "node": ">=10.18.1"
+    "node": ">=14.0.0"
   },
   "license": "MPL-2.0",
   "repository": "mozilla/FirefoxColor",

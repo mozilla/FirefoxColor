@@ -4,7 +4,7 @@ jobs:
 
   build_and_test:
     docker:
-      - image: circleci/node:10.18.1@sha256:8230f70c03b6ecf521a34125fb090ec4b47068205454e5820859c00260c9bd23
+      - image: cimg/node:14.19
     working_directory: ~/FirefoxColor
     steps:
       - checkout
@@ -31,7 +31,7 @@ jobs:
 
   deploy_development:
     docker:
-      - image: circleci/node:10.18.1@sha256:8230f70c03b6ecf521a34125fb090ec4b47068205454e5820859c00260c9bd23
+      - image: cimg/node:14.19
     working_directory: ~/FirefoxColor
     steps:
       - attach_workspace:
@@ -51,7 +51,7 @@ jobs:
       secret-access-key:
         type: env_var_name
     docker:
-      - image: circleci/python:3
+      - image: cimg/python:3
     working_directory: ~/FirefoxColor
     environment:
       ACCESS_KEY_ID: << parameters.access-key-id >>
