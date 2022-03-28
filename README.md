@@ -132,11 +132,11 @@ Every release requires a version bump, because version numbers cannot be reused.
 
 - Further reading for themes
   - Other addons for managing & creating themes
-    - https://addons.mozilla.org/en-US/firefox/collections/ntim/theming-extensions/
+    - https://addons.mozilla.org/firefox/collections/ntim/theming-extensions/
   - An example of a more complex dynamically changing theme
     - https://github.com/mdn/webextensions-examples/tree/master/dynamic-theme
   - Dynamic theme with colors based on favicon
-    - https://addons.mozilla.org/en-US/firefox/addon/vivaldifox/
+    - https://addons.mozilla.org/firefox/addon/vivaldifox/
   - Theme API
     - https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/theme
   - Hacks post on Theme API
