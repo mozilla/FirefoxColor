@@ -1,11 +1,11 @@
 import React from "react";
 import { DEBUG } from "../../../../lib/utils";
 
-import ThemeLogger from "../ThemeLogger";
 import PresetThemeSelector from "../PresetThemeSelector";
 import SavedThemeSelector from "../SavedThemeSelector";
 import ThemeBackgroundPicker from "../ThemeBackgroundPicker";
 import ThemeColorsEditor from "../ThemeColorsEditor";
+import ThemeLogger from "../ThemeLogger";
 
 import "./index.scss";
 
@@ -33,19 +33,19 @@ export const ThemeBuilder = props => {
 
   const tabList = [
     {
-      name: "Preset themes",
+      name: "Preset Themes",
       id: "preset-themes"
     },
     {
-      name: "Custom colors",
+      name: "Custom Colors",
       id: "colors"
     },
     {
-      name: "Advanced colors",
+      name: "Advanced Colors",
       id: "advanced-colors"
     },
     {
-      name: "Custom backgrounds",
+      name: "Custom Backgrounds",
       id: "backgrounds"
     }
   ];
@@ -199,7 +199,7 @@ export const ThemeBuilder = props => {
         id={`theme-builder-tab-content-${selectedTabId}`}
         aria-labelledby={`theme-builder-tab-${selectedTabId}`}
         className="theme-builder__content"
-        tabIndex="0"
+        tabIndex={0}
       >
         {renderThemingSection(selectedTabId)}
       </div>

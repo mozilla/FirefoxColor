@@ -13,21 +13,22 @@
 
 .theme-colors-editor__list {
   display: grid;
-  grid-template-rows: repeat(20, 44px);
+  grid-template-rows: repeat(1fr);
   grid-gap: $grid;
   grid-template-columns: 1fr 1fr;
   margin: 0 0 10px;
   padding: $grid * 4;
   position: relative;
   flex: 1 1 640px;
-  height: 350px;
-  overflow: auto;
+  height: 380px;
+  overflow: none;
 
   .theme-unit {
     align-items: center;
     display: flex;
     padding: 0 16px;
     cursor: pointer;
+    border-radius: 3px;
     transition: background 150ms;
 
     &:hover {

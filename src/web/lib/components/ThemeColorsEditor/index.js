@@ -1,16 +1,16 @@
-import React from "react";
 import classnames from "classnames";
+import React from "react";
 import { SketchPicker } from "react-color";
 import onClickOutside from "react-onclickoutside";
+import semverCompare from "semver-compare";
 import {
-  colorsWithoutAlpha,
-  ESC,
+  advancedColorLabels,
   colorLabels,
-  advancedColorLabels
+  colorsWithoutAlpha,
+  ESC
 } from "../../../../lib/constants";
 import { colorToCSS } from "../../../../lib/themes";
 import StorageSpaceInformation from "../StorageSpaceInformation";
-import semverCompare from "semver-compare";
 
 import "./index.scss";
 
@@ -93,7 +93,7 @@ class ThemeColorsEditor extends React.Component {
 
     const selectedColorValue = colors[selectedColor];
     if (selectedColorValue) {
-      // Remember last selected color in case the user closes and re-opens the color picker.
+      // Remember last selected color incase the user closes and re-opens the color picker.
       this.lastSelectedColor = selectedColorValue;
     }
 
