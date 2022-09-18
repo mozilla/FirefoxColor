@@ -22,13 +22,13 @@ export const CUSTOM_BACKGROUND_ALLOWED_TYPES = [
 export const CUSTOM_BACKGROUND_DEFAULT_ALIGNMENT = "right top";
 
 export const colorLabels = {
-  toolbar: "Toolbar Color",
-  toolbar_text: "Toolbar Icons and Text",
-  frame: "Background Color",
-  tab_background_text: "Background Tab Text Color",
-  toolbar_field: "Search Bar Color",
-  toolbar_field_text: "Search Text",
-  tab_line: "Tab Highlight Color",
+  toolbar: "Toolbar",
+  toolbar_text: "Toolbar Icons And Text",
+  frame: "Background",
+  tab_background_text: "Background Tab Text",
+  toolbar_field: "Searchbar Background",
+  toolbar_field_text: "Searchbar Text",
+  tab_line: "Tab Highlight",
   popup: "Popup Background",
   popup_text: "Popup Text"
 };
@@ -39,7 +39,7 @@ export const advancedColorLabels = {
   frame_inactive: "Frame Inactive",
   icons_attention: "Icons Attention",
   icons: "Icons",
-  ntp_background: "New Tab Background Color",
+  ntp_background: "New Tab Background",
   ntp_text: "New Tab Text",
   popup_border: "Popup Border",
   popup_highlight_text: "Popup Highlight Text",
