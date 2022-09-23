@@ -4,7 +4,7 @@ jobs:
 
   build_and_test:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:lts
     working_directory: ~/FirefoxColor
     steps:
       - checkout
@@ -12,7 +12,6 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-      - run: sudo npm install -g npm@latest
       - run: npm ci
       - run: bash ./gen-environment.sh >> $BASH_ENV
       - run: npm run lint
@@ -31,7 +30,7 @@ jobs:
 
   deploy_development:
     docker:
-      - image: cimg/node:14.19
+      - image: cimg/node:lts
     working_directory: ~/FirefoxColor
     steps:
       - attach_workspace:
