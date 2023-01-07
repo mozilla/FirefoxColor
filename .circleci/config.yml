@@ -12,7 +12,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-      - run: sudo npm install -g npm@latest
+      - run: npm install -g npm@latest
       - run: npm ci
       - run: bash ./gen-environment.sh >> $BASH_ENV
       - run: npm run lint
@@ -61,7 +61,7 @@ jobs:
           at: .
       - run:
           command: |
-            sudo pip install awscli
+            pip install awscli
             export AWS_ACCESS_KEY_ID=${!ACCESS_KEY_ID}
             export AWS_SECRET_ACCESS_KEY=${!SECRET_ACCESS_KEY}
             aws s3 sync --exclude __version__ build/web/ s3://${<< parameters.bucket-name >>}/ --delete
