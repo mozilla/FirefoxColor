@@ -4,7 +4,7 @@
 
 ## Get Started
 
-1. Install Node 10.18.1+ (e.g. using [node version manger][nvm])
+1. Install Node 14+ (e.g., using [node version manger][nvm])
 
 1. Clone the repo, install dependencies, start the dev environment:
    ```
@@ -23,7 +23,7 @@
 
       - Locally: `npm run package` which adds an addon.xpi to the root of the project
 
-      - DEV / STAGE: Visit the dev or stage version of the website and click on "Get Firefox Color" (i.e. open testing.html) and use one of the referenced XPI files
+      - DEV / STAGE: Visit the dev or stage version of the website and click on "Get Firefox Color" (i.e., open testing.html) and use one of the referenced XPI files
 
    2. Now load the XPI (from the previous step) to the browser by one of the following ways:
 
