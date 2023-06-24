@@ -49,7 +49,7 @@ export const advancedColorLabels = {
   sidebar_highlight: "Sidebar Highlight",
   sidebar_text: "Sidebar Text",
   sidebar: "Sidebar",
-  tab_background_separator: "Tab Background Separator",
+  tab_background_separator: "Tab Background Separator (FF88-)",
   tab_loading: "Tab Loading",
   tab_selected: "Tab Selected",
   tab_text: "Tab Text",
@@ -59,7 +59,7 @@ export const advancedColorLabels = {
   toolbar_field_focus: "Toolbar Field Focus",
   toolbar_field_highlight_text: "Toolbar Field Highlight Text",
   toolbar_field_highlight: "Toolbar Field Highlight",
-  toolbar_field_separator: "Toolbar Field Separator",
+  toolbar_field_separator: "Toolbar Field Separator (FF88-)",
   toolbar_field_text_focus: "Toolbar Field Text Focus",
   toolbar_top_separator: "Toolbar Top Separator",
   toolbar_vertical_separator: "Toolbar Vertical Separator"
