@@ -199,7 +199,7 @@ export const ThemeBuilder = props => {
         id={`theme-builder-tab-content-${selectedTabId}`}
         aria-labelledby={`theme-builder-tab-${selectedTabId}`}
         className="theme-builder__content"
-        tabIndex="0"
+        role="tabpanel"
       >
         {renderThemingSection(selectedTabId)}
       </div>
