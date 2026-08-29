@@ -76,7 +76,7 @@ export const PaginatedThemeSelector = ({
   });
 
   const footerPager = pageCount > 1 && (
-    <div className="page-selector">
+    <div className="page-selector" role="navigation" aria-label="pagination">
       <button
         className={classNames("previous", { disabled: prevDisabled })}
         disabled={prevDisabled}
@@ -92,7 +92,10 @@ export const PaginatedThemeSelector = ({
             "current-page": idx === currentPage
           })}
           onClick={() => setCurrentPage(idx)}
-          title={`Page ${idx + 1}`}
+          title={`Page ${idx + 1} of ${pageCount}`}
+          aria-current={
+            currentPage ? "page" : "false"
+          }
         />
       ))}
       <button

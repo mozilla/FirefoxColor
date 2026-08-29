@@ -35,7 +35,7 @@
     button.page {
       &::before {
         border-radius: 8px;
-        border: 2px solid var(--grey-40);
+        border: 2px solid var(--grey-50);
         box-sizing: border-box;
         content: "";
         height: 10px;
@@ -59,7 +59,6 @@
       background-position: center center;
       background-repeat: no-repeat;
       background-size: 10px 18px;
-      opacity: .7;
       transition: opacity 125ms;
 
       &:hover {
