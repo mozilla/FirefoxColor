@@ -71,7 +71,7 @@
     "@babel/preset-env": "7.9.0",
     "@babel/preset-react": "7.9.4",
     "@babel/register": "7.9.0",
-    "addons-linter": "1.9.0",
+    "addons-linter": "1.26.0",
     "ajv": "6.10.0",
     "babel-eslint": "10.1.0",
     "babel-loader": "8.0.6",
