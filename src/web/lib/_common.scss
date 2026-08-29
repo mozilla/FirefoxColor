@@ -37,7 +37,7 @@ $grid: 4px;
 
 @mixin buttonPrimary {
   color: var(--white);
-  background-color: var(--green-60);
+  background-color: var(--green-70);
   box-shadow: 0 -3px 0 var(--grey-90-a10) inset;
 
   &:hover,
