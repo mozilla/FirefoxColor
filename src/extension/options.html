@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Firefox Color Options</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font: message-box;
+      }
+      label {
+        display: block;
+        margin-bottom: 4px;
+      }
+      input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .field {
+        margin-bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Match system light / dark</h2>
+    <p>
+      Paste the shared URL of a theme made in the Firefox Color editor for each
+      appearance. When both are set, the theme follows your system light / dark
+      setting. Clear both to turn this off.
+    </p>
+    <form id="form">
+      <div class="field">
+        <label for="light">Light theme URL</label>
+        <input id="light" type="text" />
+        <span class="status" id="light-status"></span>
+      </div>
+      <div class="field">
+        <label for="dark">Dark theme URL</label>
+        <input id="dark" type="text" />
+        <span class="status" id="dark-status"></span>
+      </div>
+      <button type="submit">Save</button>
+      <span id="result"></span>
+    </form>
+    <script src="options.js"></script>
+  </body>
+</html>

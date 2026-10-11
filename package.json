@@ -125,6 +125,8 @@
     "fira": "github:mozilla/fira#4.202",
     "json-url": "2.3.4",
     "jszip": "3.2.0",
+    "lzma": "2.3.2",
+    "msgpack5": "3.6.0",
     "query-string": "6.4.0",
     "react": "16.13.1",
     "react-color": "2.17.0",
@@ -138,7 +140,8 @@
     "redux-promise": "0.6.0",
     "redux-undo": "1.0.1",
     "semver-compare": "1.0.0",
-    "tinycolor2": "1.4.1"
+    "tinycolor2": "1.4.1",
+    "urlsafe-base64": "1.0.0"
   },
   "extensionManifest": {
     "name": "Firefox Color",
@@ -147,6 +150,9 @@
       "storage",
       "tabs"
     ],
+    "options_ui": {
+      "page": "options.html"
+    },
     "browser_action": {
       "browser_style": true,
       "default_title": "Firefox Color",

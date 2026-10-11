@@ -10,6 +10,19 @@ let customBackgrounds = {};
 
 let isThemePreview = false;
 
+const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+const SYSTEM_SCHEME_KEYS = [
+  "lightThemeUrl",
+  "darkThemeUrl",
+  "lightTheme",
+  "darkTheme"
+];
+
+// True while a light and a dark theme are both configured in the options page
+// and the applied theme follows the system color scheme.
+let followSystemScheme = false;
+
 const extensionVersion = browser.runtime.getManifest().version;
 
 const init = () => {
@@ -22,9 +35,25 @@ const init = () => {
     port.onDisconnect.addListener(() => {
       if (isThemePreview) {
         isThemePreview = false;
-        fetchTheme().then(applyTheme);
+        applyCurrentTheme();
       }
     });
+  });
+  darkQuery.addEventListener("change", () => {
+    if (followSystemScheme && !isThemePreview) {
+      applyCurrentTheme();
+    }
+  });
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (
+      area === "local" &&
+      !isThemePreview &&
+      ("lightTheme" in changes || "darkTheme" in changes)
+    ) {
+      fetchSchemeTheme().then(({ theme }) =>
+        theme ? applyTheme({ theme }) : browser.theme.reset()
+      );
+    }
   });
   fetchFirstRunDone().then(({ firstRunDone }) => {
     log("firstRunDone", firstRunDone);
@@ -32,7 +61,7 @@ const init = () => {
       fetchImages()
         .then(({ images }) => {
           customBackgrounds = images || {};
-          return fetchTheme();
+          return fetchSchemeTheme();
         })
         .then(applyTheme);
     } else {
@@ -58,6 +87,7 @@ const messageHandlers = {
   revertAll: message => {
     log("revertAllThemes", message);
     storeTheme({ theme: null });
+    browser.storage.local.remove(SYSTEM_SCHEME_KEYS);
     queryAndFocusTab("", true);
     browser.theme.reset();
   },
@@ -74,7 +104,7 @@ const messageHandlers = {
       applyTheme({ theme: previewTheme });
       isThemePreview = true;
     } else {
-      fetchTheme().then(applyTheme);
+      applyCurrentTheme();
       isThemePreview = false;
     }
   },
@@ -134,6 +164,23 @@ const setFirstRunDone = () => browser.storage.local.set({ firstRunDone: true });
 
 const fetchTheme = () => browser.storage.local.get("theme");
 
+// When both a light and a dark theme are configured in the options page, the
+// theme follows the system color scheme. Otherwise, use the stored theme.
+const fetchSchemeTheme = () =>
+  browser.storage.local
+    .get(["theme", "lightTheme", "darkTheme"])
+    .then(({ theme, lightTheme, darkTheme }) => {
+      followSystemScheme = !!(lightTheme && darkTheme);
+      if (!followSystemScheme) {
+        return { theme };
+      }
+      return { theme: darkQuery.matches ? darkTheme : lightTheme };
+    });
+
+// Unlike the storage change handler, this does not reset the browser theme
+// when no theme is stored; it is only used to restore the current theme.
+const applyCurrentTheme = () => fetchSchemeTheme().then(applyTheme);
+
 const storeTheme = ({ theme }) => browser.storage.local.set({ theme });
 
 const fetchImages = () => browser.storage.local.get("images");
@@ -152,6 +199,12 @@ const applyTheme = ({ theme }) => {
 
   const newTheme = convertToBrowserTheme(theme, bgImages, customBackgrounds);
 
+  if (followSystemScheme) {
+    // Keep the browser's own color scheme following the OS, so the media query
+    // above reflects the system and not the theme being applied.
+    newTheme.properties.color_scheme = "system";
+  }
+
   // the headerURL is required in < 60,
   // but it creates an ugly text shadow.
   // So only add it for older FFs only.
@@ -160,7 +213,13 @@ const applyTheme = ({ theme }) => {
     newTheme.images.headerURL = BLANK_IMAGE;
   }
 
-  browser.theme.update(newTheme);
+  browser.theme.update(newTheme).catch(() => {
+    // Firefox < 106 does not know the color_scheme property.
+    if (newTheme.properties.color_scheme) {
+      delete newTheme.properties.color_scheme;
+      browser.theme.update(newTheme);
+    }
+  });
 };
 
 init();

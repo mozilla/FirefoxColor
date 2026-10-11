@@ -128,6 +128,24 @@ Every release requires a version bump, because version numbers cannot be reused.
   The user can click on the "Get Firefox Color" button which will direct the user to a page from where the add-on can be installed, usually AMO.
 
 
+## Following the system light / dark setting
+
+The add-on can switch themes automatically when the operating system changes between light and dark appearance. It is configured in the add-on's preferences (`about:addons`, then Firefox Color, then Preferences):
+
+1. In the editor, make the theme you want for light appearance, copy its share URL, and paste it into **Light theme URL**.
+2. Do the same for **Dark theme URL**.
+3. Save.
+
+When both are set, the light or dark theme is applied according to the system appearance, and again whenever it changes. Clear both fields to turn this off; the last theme set in the editor is then used as before.
+
+Notes:
+
+* Only themes that can be shared as a URL work. Themes with custom background images cannot be shared and are rejected.
+* Changing the theme in the editor applies it immediately, and it stays until the system appearance changes.
+* Share URLs are decoded once, when saving. They are not fetched.
+* This relies on the `color_scheme` theme property, so it needs Firefox 106 or later.
+* "Revert All" in the editor also clears these settings.
+
 ## Notes
 
 - Further reading for themes
