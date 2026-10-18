@@ -1,7 +1,7 @@
 .app {
   display: grid;
   grid-gap: 32px;
-  grid-template-rows: 64px 1fr 72px;
+  grid-template-rows: 64px auto 1fr 72px;
   min-height: 100vh;
   width: 100%;
 }

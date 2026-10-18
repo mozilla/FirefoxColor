@@ -14,6 +14,7 @@ import ExportThemeDialog from "../ExportThemeDialog";
 import TermsPrivacyModal from "../TermsPrivacyModal";
 import Onboarding from "../Onboarding";
 import Banner from "../Banner";
+import PreviewNotice from "../PreviewNotice";
 import ThemeBuilder from "../ThemeBuilder";
 import Browser from "../Browser";
 import { getCustomImages } from "../../../../lib/utils";
@@ -122,6 +123,7 @@ export const AppComponent = props => {
             {shouldOfferPendingTheme && <SharedThemeDialog {...props} />}
             {<ExportThemeDialog {...props} />}
             <AppHeader {...props} />
+            <PreviewNotice />
             <main className="app__main">
               <Browser
                 {...{

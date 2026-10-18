@@ -4,6 +4,9 @@ export const DOWNLOAD_FIREFOX_URL = `https://www.mozilla.org/firefox/new/?utm_ca
   process.env.DOWNLOAD_FIREFOX_UTM_SOURCE
 }`;
 
+export const NOVA_BLOG_POST_URL =
+  "https://blog.mozilla.org/addons/2026/09/29/nova-is-here-what-changes-for-your-firefox-theme/";
+
 export const CUSTOM_BACKGROUND_MAXIMUM_LENGTH = 3;
 
 export const CUSTOM_BACKGROUND_MAXIMUM_SIZE = 1000000;

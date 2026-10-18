@@ -1,0 +1,29 @@
+@import "../../common.scss";
+
+.preview-notice {
+  align-self: start;
+  background-color: var(--white-100);
+  border-left: 4px solid var(--blue-50);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px var(--grey-90-a10);
+  margin: 0 auto;
+  max-width: 1080px;
+  padding: 10px 16px;
+  position: relative;
+  width: calc(100% - 40px);
+  z-index: 1;
+}
+
+.preview-notice__text {
+  color: var(--grey-90);
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+  text-align: center;
+}
+
+.preview-notice__link {
+  color: var(--blue-70);
+  font-weight: 600;
+  text-decoration: underline;
+}
