@@ -1,0 +1,33 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          cache: npm
+
+      - run: npm ci
+
+      - name: Set branch environment
+        env:
+          CIRCLE_BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          source ./gen-environment.sh
+          printf 'SITE_URL=%s\nADDON_URL=%s\n' "$SITE_URL" "$ADDON_URL" >> "$GITHUB_ENV"
+
+      - run: npm run lint
+      - run: npm run build
+      - run: npm run xpi
+      - run: npm run validate
+      - run: npm run test
