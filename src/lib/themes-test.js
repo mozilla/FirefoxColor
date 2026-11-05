@@ -116,6 +116,7 @@ describe("lib/themes", () => {
         "icons_attention",
         "icons",
         "ntp_background",
+        "ntp_card_background",
         "ntp_text",
         "popup_border",
         "popup_highlight_text",
