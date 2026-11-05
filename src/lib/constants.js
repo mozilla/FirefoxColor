@@ -40,6 +40,7 @@ export const advancedColorLabels = {
   icons_attention: "Icons Attention",
   icons: "Icons",
   ntp_background: "New Tab Background Color",
+  ntp_card_background: "New Tab Card Background Color",
   ntp_text: "New Tab Text",
   popup_border: "Popup Border",
   popup_highlight_text: "Popup Highlight Text",
